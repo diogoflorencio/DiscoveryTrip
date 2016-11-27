@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "633181942989",
+    "firebase_url": "https://discovrytrip.firebaseio.com",
+    "project_id": "discovrytrip",
+    "storage_bucket": "discovrytrip.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:633181942989:android:3e887bc57de4408c",
+        "android_client_info": {
+          "package_name": "com.example.diogo.discoverytrip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "633181942989-r6qf93g53jrn4itlrb5r51qfnovql8i2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuJZqpYpMG7SP6151au-p8XmcXtxPqoDE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

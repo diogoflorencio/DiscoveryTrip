@@ -3,6 +3,11 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.1"
+    packagingOptions{
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE-FIREBASE.txt'
+        exclude 'META-INF/NOTICE'
+    }
     defaultConfig {
         applicationId "com.example.diogo.discoverytrip"
         minSdkVersion 16
@@ -26,4 +31,8 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.0.1'
     testCompile 'junit:junit:4.12'
+    compile 'com.google.firebase:firebase-core:9.6.1'
+    compile 'com.firebase:firebase-client-android:2.3.1'
 }
+
+apply plugin: 'com.google.gms.google-services'
