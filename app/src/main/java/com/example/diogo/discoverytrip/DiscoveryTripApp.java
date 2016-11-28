@@ -4,6 +4,8 @@ package com.example.diogo.discoverytrip;
  * Created by diogo on 27/11/16.
  */
 import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 
 
 import com.facebook.FacebookSdk;
@@ -15,5 +17,6 @@ public class DiscoveryTripApp extends  Application {
         super.onCreate();
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
+        startActivity(new Intent(getApplicationContext(), Login.class));
     }
 }
