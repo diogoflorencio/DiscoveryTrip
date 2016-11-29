@@ -3,309 +3,336 @@
 
     <item
         is-multidex="true"
-        jar="/home/diogo/.gradle/caches/modules-2/files-2.1/com.firebase/firebase-client-android/2.3.1/be29b24233711c419ce935aa0a1b12ebc49d1c9a/firebase-client-android-2.3.1.jar"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="297d4bcf6ed4e747a1bf7d0d094a2d911a8d3a8e">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-25.0.1_ec229a7819c9317576ed97a3e1eec882adc1f982\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Renato\.gradle\caches\modules-2\files-2.1\com.firebase\firebase-client-android\2.3.1\be29b24233711c419ce935aa0a1b12ebc49d1c9a\firebase-client-android-2.3.1.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
         sha1="be29b24233711c419ce935aa0a1b12ebc49d1c9a">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/firebase-client-android-2.3.1_c5db0db1b63919e33d8201eccf133a93038950e9/classes.dex" />
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\firebase-client-android-2.3.1_b88b4e1bae7f0c13eb2334dfb21a376299d5c5cf\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/jars/libs/internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_6d01bf45c6d025fffe0fc904a53bdd741106e504/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-ui-25.0.1_7fbe37aff3e205e046e87a1b82181769c293e62d/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.1/jars/libs/internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_7dacebe55c6553bc7beb72bda8fd05df1d7a97a6/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/.gradle/caches/modules-2/files-2.1/com.firebase/tubesock/0.0.11/d37cb67277928cf59344b4196af8d9cee1f1a27c/tubesock-0.0.11.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="d37cb67277928cf59344b4196af8d9cee1f1a27c">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/tubesock-0.0.11_180d50724b34845f87d02ade0fd973beb4d2cf26/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-fragment-25.0.1_9206483f30854484e4c1076fd4d78dc094ffa77e/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/.gradle/caches/modules-2/files-2.1/com.firebase/firebase-client-jvm/2.3.1/4d53b7d6983247af02b8fe7e4228fff555a5e828/firebase-client-jvm-2.3.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="4d53b7d6983247af02b8fe7e4228fff555a5e828">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/firebase-client-jvm-2.3.1_3c796188eb98ae2945b1c48380840cafe1528f32/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.android.support/customtabs/25.0.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="94ba691efc31bf53264db0716d9c9ec03843ea31">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-customtabs-25.0.0_efe3a9d8b00e0771c9cb40c4f3373b41e8085f8d/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-applinks/1.4.0/8ad21bf21784dacce5f2043afb97218cc377e835/bolts-applinks-1.4.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="8ad21bf21784dacce5f2043afb97218cc377e835">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/bolts-applinks-1.4.0_03a92d5be155cec22507384039c0b99105e0c00e/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.android.support/cardview-v7/25.0.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="8a372c4191f80489770a231f7be4820b204b886a">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-cardview-v7-25.0.0_3536ea2de48ccc90c1f0010cdf8981503170fe09/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-media-compat-25.0.1_a796e14a7dd379c43d1500380527a7c2bc753756/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.google.firebase/firebase-common/9.6.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="1ef72e72bc0d05602c366582afa9439f58bb31d6">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-common-9.6.1_d0ee9ea872fa3547a11205dca27c4ec7bf7d9133/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/incremental-classes/debug/instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="ff07139b22941286699119cb983bcedc3626de0d">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run-bootstrap_5c7dd8e1cfac1904796e5068c0573777717d2574/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_fce7e2cb5dbc6c75540bc6116996b991d7afe04f/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-compat-25.0.1_b4731c1aee3ce643f2174ad9f1e005cb92da5df9/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.google.firebase/firebase-iid/9.6.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="1e14ebe1cda8491f152083e752ca5bf73cd37bff">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-iid-9.6.1_b421eeaae0d76971925bb24ef8f1e8738c7a18b7/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.17.0/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="23c7c34bfb3cdc0599d49e581486b179bc6b2eee">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.facebook.android-facebook-android-sdk-4.17.0_6827b53c7c6071ad465f83f0a046185cac12dc7b/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-vector-drawable-25.0.1_5a9b169a24fdc7208ac366136cfe32357d4718a1/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Android/Sdk/extras/android/m2repository/com/android/support/support-annotations/25.0.1/support-annotations-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="a09194311f8f89c3e6db09d79f50897a889d615e">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/support-annotations-25.0.1_84141e8a04a9c48b17df65f634ca135169e6d7a6/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-appcompat-v7-25.0.1_240c36466fffd5bfffe54cd733881fad9625b058/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.0.1/jars/classes.jar"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
         sha1="00d4c8eebf2b681073c72a26bd0849549e51c7cb">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-core-utils-25.0.1_03129cd83ea11079c0f223b65f50a911ef47736c/classes.dex" />
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-utils-25.0.1_957ff163b4b9e6fc1d24a946976379b586e3d6e5\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/diogo/.gradle/caches/modules-2/files-2.1/com.parse.bolts/bolts-tasks/1.4.0/d85884acf6810a3bbbecb587f239005cbc846dc4/bolts-tasks-1.4.0.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/bolts-tasks-1.4.0_1c62de50d8da5ec364ccd7bf9066d13e97deedce/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.0.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-support-v4-25.0.1_ad8c71500b34dba6ce1ce7e4be5c19e6ceb7bac4/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics/9.6.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="a1c351dc10b92d638da57f3a6513f87cfbdc9f83">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-9.6.1_1734cf02d33f1c4de3ae351ca525e25f1b5c17fc/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-annotations/2.2.2/285cb9c666f0f0f3dd8a1be04e1f457eb7b15113/jackson-annotations-2.2.2.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="285cb9c666f0f0f3dd8a1be04e1f457eb7b15113">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/jackson-annotations-2.2.2_094ca1952c304c6b899e24f330510aff2be4c97e/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.0.1/jars/libs/internal_impl-25.0.1.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="f83b00041ecfba705603fec40363416c7de69719">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_6fe02b803ecadce74acc72c7d4c8c7eb29b82339/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/9.6.1/jars/classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.1"
-        sha1="4a36600281a648769411ef642c331851732bf29e">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-tasks-9.6.1_c6d9b09de3924097099742139e219abf27b0984c/classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.0.1/jars/libs/internal_impl-25.0.1.jar"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\support-core-utils\25.0.1\jars\libs\internal_impl-25.0.1.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
         sha1="c5b7145fb34779b6639147b8f2f8dd77c0db771b">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/internal_impl-25.0.1_34272494fa9b1ed49439e518644b987f5df93b8a/classes.dex" />
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_7e14cba439521b8f24b56ef5cb3b6d41d84edb4f\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.google.firebase/firebase-analytics-impl/9.6.1/jars/classes.jar"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
-        sha1="0efd1b44f47c134fb245914a1d54a55adbfc2f8d">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.firebase-firebase-analytics-impl-9.6.1_ac191ac0254af7c068646cdfe455b693af00fec6/classes.dex" />
+        sha1="6a1479afe9f1b3645e1cd9a87318976893472818">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-media-compat-25.0.1_5020fdea51f8af5b5a8db4a27e68ae02241f8e4b\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/9.6.1/jars/classes.jar"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics\9.6.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="a1c351dc10b92d638da57f3a6513f87cfbdc9f83">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-analytics-9.6.1_c001da5a293a9d60e4f7b3638637578681c217a2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\customtabs\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="94ba691efc31bf53264db0716d9c9ec03843ea31">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-customtabs-25.0.0_4b8e495d042fa7e79dbed1359c201a11eef48508\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.facebook.android\facebook-android-sdk\4.17.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="23c7c34bfb3cdc0599d49e581486b179bc6b2eee">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.facebook.android-facebook-android-sdk-4.17.0_ec8d3e81780959efe9d06629b377a62b10296783\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\25.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="8a372c4191f80489770a231f7be4820b204b886a">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-cardview-v7-25.0.0_17650acce09818ae406b8c5d369d90b2200ef4ac\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\9.6.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
         sha1="eccaaa9ffa6bb4bfbd2e870f01aaf69655d353be">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.google.android.gms-play-services-basement-9.6.1_47d4866ddea2348b7f7d0249241efc5952168aa2/classes.dex" />
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-basement-9.6.1_a3a27fba1c38b22b18c1f31fc1ce1d838df503ef\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.0.1/jars/classes.jar"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\support-media-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
-        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/com.android.support-animated-vector-drawable-25.0.1_a5536881a4870a6fa461f8d8ab67150ca4634462/classes.dex" />
+        sha1="f83b00041ecfba705603fec40363416c7de69719">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_3749bb953d2b636bd32f80f49ec4e8615d3ccd79\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/diogo/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.2.2/d20be6a5ddd6f8cfd36ebf6dea329873a1c41f1b/jackson-core-2.2.2.jar"
+        jar="C:\Users\Renato\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\25.0.1\support-annotations-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="a09194311f8f89c3e6db09d79f50897a889d615e">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-25.0.1_5e6ec7fce0b7e095998865719eb9d14c2087a21a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Renato\.gradle\caches\modules-2\files-2.1\com.firebase\firebase-client-jvm\2.3.1\4d53b7d6983247af02b8fe7e4228fff555a5e828\firebase-client-jvm-2.3.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="4d53b7d6983247af02b8fe7e4228fff555a5e828">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\firebase-client-jvm-2.3.1_93e001160f2a7d16ee496db78ebd4fb42a04f993\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\transition\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="c1b6ab157e8e12cb08b9ee82bb5e3c5d22632eb3">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-transition-25.0.1_167adc0989e6bb986afbe0f10bd3c511f34e03e0\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="73c650f8214711f258b4f55bd55fa73c6f6a6f65">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_b41f978857d7fc0470011d10960865b20ddc1290\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="26c6eef571592c91f29e56fda0bac73321de0c92">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-fragment-25.0.1_d6d6c5a2210cb816d60f84eb99f563957567c3b1\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.google.firebase\firebase-analytics-impl\9.6.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="0efd1b44f47c134fb245914a1d54a55adbfc2f8d">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-analytics-impl-9.6.1_802532320cf5cc70584206fa388342046d496a6a\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Renato\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.2.2\d20be6a5ddd6f8cfd36ebf6dea329873a1c41f1b\jackson-core-2.2.2.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
         sha1="d20be6a5ddd6f8cfd36ebf6dea329873a1c41f1b">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/jackson-core-2.2.2_74f41e279d4716b8ed33b35ccce5ba9b834efb6d/classes.dex" />
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\jackson-core-2.2.2_1ba518a4c7fb25da3d54a4bb24bf192b2fb2aa41\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/diogo/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.2.2/3c8f6018eaa72d43b261181e801e6f8676c16ef6/jackson-databind-2.2.2.jar"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\support-fragment\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="c0bd6ffb002a85b5e7cad29f8558d1cc59539679">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_1d3c7159228e071098887a1b1efba39cfa78deba\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="bc7e99e8d0fc279a05aa91378530f467ad62d443">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-25.0.1_daed1a5bef5dc47a3cacb6bee09b397f97a0ed48\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Renato\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-annotations\2.2.2\285cb9c666f0f0f3dd8a1be04e1f457eb7b15113\jackson-annotations-2.2.2.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="285cb9c666f0f0f3dd8a1be04e1f457eb7b15113">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\jackson-annotations-2.2.2_f83f2d993e6891efe521df26f0373a81b7a27931\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\design\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="3b236883e0df6002cabb01ce57d00a5b1e5de610">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-design-25.0.1_2fb45c9f2acf16416faf769da57147903038ca37\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="cb7617325e646f6833f5a1000c2c07e900de1fef">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_5e7aebac0782d08d8f058babe5b839391c17daa4\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Renato\.gradle\caches\modules-2\files-2.1\com.firebase\tubesock\0.0.11\d37cb67277928cf59344b4196af8d9cee1f1a27c\tubesock-0.0.11.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d37cb67277928cf59344b4196af8d9cee1f1a27c">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\tubesock-0.0.11_6c9893846f2b945713b0fe0975b581d622ce8f5e\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="f7ac4b327fdb9e2ee386f5adc46164927658de4b">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-25.0.1_5fc09c9fc50c2250243704f785feb6b7ec4c93e5\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="51eba4a4dd73044f90a9d58dd7ca34adbebfcf4e">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-25.0.1_198b61ea5c657e93dac28668ed01672507764d48\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.google.firebase\firebase-common\9.6.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="1ef72e72bc0d05602c366582afa9439f58bb31d6">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-common-9.6.1_8642c5a032358477fcbabddc9616c3f7b3ff3afc\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.google.android.gms\play-services-tasks\9.6.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="4a36600281a648769411ef642c331851732bf29e">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.android.gms-play-services-tasks-9.6.1_0e66bff9ffcf741c58ed9bb67b3a49836c133194\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Renato\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-applinks\1.4.0\8ad21bf21784dacce5f2043afb97218cc377e835\bolts-applinks-1.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="8ad21bf21784dacce5f2043afb97218cc377e835">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\bolts-applinks-1.4.0_a2674ace61ccad49e3aa84e59ec212efbd92401b\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Renato\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-databind\2.2.2\3c8f6018eaa72d43b261181e801e6f8676c16ef6\jackson-databind-2.2.2.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
         sha1="3c8f6018eaa72d43b261181e801e6f8676c16ef6">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/jackson-databind-2.2.2_7192bec3c439e9adc1cd7dae7aebf855dedf06fd/classes.dex" />
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\jackson-databind-2.2.2_fdc29fa51657588631f5d0967f6f3d5a2e18a921\classes.dex" />
     </item>
     <item
         is-multidex="true"
-        jar="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/incremental-runtime-classes/debug/instant-run.jar"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\25.0.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
         revision="25.0.1"
-        sha1="a4b280180d92591b7c16666a7aa9e0ee5f3ab8e2">
-        <dex dex="/home/diogo/Documentos/DiscoveryTrip/app/build/intermediates/transforms/dex/debug/folders/1000/10/instant-run_8678140b8f11201f3e6d8ac29ab703ceacde50b3/classes.dex" />
+        sha1="b24e1c688744078e1fa833ffadf696794761bbe5">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-vector-drawable-25.0.1_99d1fd2f2d9fb7781de57915c7c3c669faf19ead\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.google.firebase\firebase-iid\9.6.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="1e14ebe1cda8491f152083e752ca5bf73cd37bff">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.google.firebase-firebase-iid-9.6.1_466268204e3e3508f1c52b5c3fe825d308446b32\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="e5343c9d19cb19ff55f6b268c7f3fe8c9d224f6f">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_bc087d39bca406fdf1850a77907133e1b7d6806f\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="772bed2d992b67b9d0327f766cc95cd63031dcd3">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-animated-vector-drawable-25.0.1_dbed8cd29f22c5d1765b491fe96716402cb12e89\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\support-compat\25.0.1\jars\libs\internal_impl-25.0.1.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="3af8cc51ef7088e56f132780da8c0bd858b6a6ad">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-25.0.1_e7a4216b25ab625e8bd3a1b776fd3b7fb939bb74\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\Renato\.gradle\caches\modules-2\files-2.1\com.parse.bolts\bolts-tasks\1.4.0\d85884acf6810a3bbbecb587f239005cbc846dc4\bolts-tasks-1.4.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d85884acf6810a3bbbecb587f239005cbc846dc4">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\bolts-tasks-1.4.0_9dc7476821eecc6f71fc3e14ebe1fd57145c84ea\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\exploded-aar\com.android.support\support-v4\25.0.1\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="E:\Renato\Documents\ufcg\7 semestre\P1\DiscoveryTrip\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-25.0.1_8ab4e788754994764df82ab42474453120ae27df\classes.dex" />
     </item>
 
 </items>
