@@ -1,5 +1,6 @@
 package com.example.diogo.discoverytrip;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -16,6 +17,7 @@ import android.widget.TextView;
 
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
+import com.facebook.login.LoginManager;
 
 public class home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -80,7 +82,10 @@ public class home extends AppCompatActivity
             return true;
         }
         if (id == R.id.logout){
-            //TODO AÇÃO DO BOTÃO LOGOUT
+            LoginManager.getInstance().logOut();
+            Intent intent = new Intent(home.this,Login.class);
+            startActivity(intent);
+            finish();
             return true;
         }
         return super.onOptionsItemSelected(item);
