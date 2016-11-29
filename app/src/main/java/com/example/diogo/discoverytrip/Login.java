@@ -37,8 +37,8 @@ public class Login extends AppCompatActivity {
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-
-                textView.setText("Bem vindo");
+                Intent intent = new Intent(Login.this,home.class);
+                startActivity(intent);
             }
 
             @Override
