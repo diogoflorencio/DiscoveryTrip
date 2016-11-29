@@ -45,7 +45,7 @@ public class home extends AppCompatActivity
                 profileTracker.stopTracking();
                 Profile.setCurrentProfile(currentProfile);
                 Profile profile = Profile.getCurrentProfile();
-                TextView textView = (TextView) findViewById(R.id.name);
+                TextView textView = (TextView) findViewById(R.id.user);
                 textView.setText(profile.getName());
             }
         };
