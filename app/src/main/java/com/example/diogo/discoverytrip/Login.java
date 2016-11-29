@@ -60,6 +60,7 @@ public class Login extends AppCompatActivity {
                 profileTracker.startTracking();
                 Intent intent = new Intent(Login.this,home.class);
                 startActivity(intent);
+                finish();
             }
 
             @Override
