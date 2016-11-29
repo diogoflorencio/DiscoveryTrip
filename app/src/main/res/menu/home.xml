@@ -9,6 +9,5 @@
     <item
         android:id="@+id/logout"
         android:orderInCategory="101"
-        android:title="logout"
-        app:showAsAction="never" />
+        android:title="Log out" />
 </menu>

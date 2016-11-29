@@ -79,7 +79,10 @@ public class home extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
-
+        if (id == R.id.logout){
+            //TODO AÇÃO DO BOTÃO LOGOUT
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
