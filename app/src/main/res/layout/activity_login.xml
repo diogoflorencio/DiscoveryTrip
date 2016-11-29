@@ -9,40 +9,89 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.diogo.discoverytrip.Login"
-    android:background="@drawable/background_app">
+    android:background="@drawable/background">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:background="#e0c3cde3">
+        android:background="@drawable/round_border"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="18dp"
+        android:layout_marginRight="18dp">
 
-        <com.facebook.login.widget.LoginButton android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/loginButton"
-            android:layout_gravity="center_horizontal"
-            android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+        <TextView
+            android:text="Fale conosco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView2"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/com_facebook_button_send_background_color_pressed"
+            android:textColorLink="@android:color/holo_blue_dark"
+            android:textColorHighlight="@drawable/com_facebook_button_send_background"
+            android:textColorHint="@drawable/com_facebook_button_send_background"
+            android:textSize="16sp" />
 
         <ImageView
             android:layout_width="200dp"
             android:layout_height="100dp"
             android:id="@+id/imageView2"
             android:src="@drawable/logo_app"
-            android:background="@color/background_floating_material_light"
+            android:layout_marginTop="26dp"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true" />
+
+        <com.facebook.login.widget.LoginButton android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:id="@+id/loginButton"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="56dp"
+            android:layout_below="@+id/imageView2"
+            android:layout_centerHorizontal="true" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_alignBottom="@+id/login_google"
+            android:layout_alignTop="@+id/loginButton">
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="#545454"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1" />
+
+            <TextView
+                android:text="ou"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView3"
+                android:layout_gravity="center_vertical"
+                android:textSize="18sp" />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:background="#545454"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1" />
+        </LinearLayout>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Login with google"
             android:id="@+id/login_google"
-            android:layout_below="@+id/loginButton"
-            android:layout_alignRight="@+id/loginButton"
-            android:layout_alignEnd="@+id/loginButton"
-            android:layout_alignLeft="@+id/loginButton"
-            android:layout_alignStart="@+id/loginButton" />
+            android:layout_marginBottom="68dp"
+            android:layout_above="@+id/textView2"
+            android:layout_centerHorizontal="true" />
 
         <TextView
             android:text="TextView"
