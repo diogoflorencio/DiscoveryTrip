@@ -12,10 +12,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 
 public class home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private ProfileTracker profileTracker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +36,19 @@ public class home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+         profileTracker = new ProfileTracker() {
+
+            @Override
+            protected void onCurrentProfileChanged(
+                    Profile oldProfile, Profile currentProfile) {
+                profileTracker.stopTracking();
+                Profile.setCurrentProfile(currentProfile);
+                Profile profile = Profile.getCurrentProfile();
+                TextView textView = (TextView) findViewById(R.id.name);
+                textView.setText(profile.getName());
+            }
+        };
     }
 
     @Override
