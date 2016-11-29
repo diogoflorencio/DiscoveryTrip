@@ -34,6 +34,8 @@ public class Login extends AppCompatActivity {
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
+        if(AccessToken.getCurrentAccessToken() != null) startActivity(new Intent(Login.this,home.class));
+
         textView = (TextView) findViewById(R.id.textView);
 
 
