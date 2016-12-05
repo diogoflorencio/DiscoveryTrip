@@ -17,6 +17,16 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.PlusOneButton;
+import com.google.android.gms.plus.PlusShare;
+import com.google.android.gms.plus.model.people.Person;
+
 import java.util.Arrays;
 
 public class Login extends AppCompatActivity {

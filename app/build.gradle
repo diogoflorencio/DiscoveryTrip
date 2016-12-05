@@ -1,14 +1,6 @@
 apply plugin: 'com.android.application'
 
 android {
-    signingConfigs {
-        config {
-            keyAlias 'google+key'
-            keyPassword 'senha123'
-           // storeFile file('C:/Users/Dimitre/Desktop/Dimitre/Faculdade/Disciplinas/Projeto 1/DiscoveryTrip/app/keys/google+key.jks')
-          //  storePassword 'senha123'
-        }
-    }
     compileSdkVersion 25
     buildToolsVersion "25.0.1"
     packagingOptions {
@@ -43,7 +35,7 @@ dependencies {
     compile 'com.firebase:firebase-client-android:2.3.1'
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
     compile 'com.android.support:design:25.0.1'
-   // compile 'com.google.android.gms:play-services:10.0.1'
+    compile 'com.google.android.gms:play-services-plus:9.6.1'
 }
 
-apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.gms.google-services'
