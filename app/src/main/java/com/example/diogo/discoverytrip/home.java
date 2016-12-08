@@ -87,7 +87,7 @@ public class home extends AppCompatActivity
         }
         if (id == R.id.logout){
             //log out do google+
-            signOutGooglePlus();
+            //signOutGooglePlus();
 
             LoginManager.getInstance().logOut();
             Intent intent = new Intent(home.this,Login.class);

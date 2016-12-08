@@ -124,8 +124,8 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
 
-        Login myApp = (Login )getApplicationContext();
-        myApp.mGoogleApiClient = mGoogleApiClient;
+        //Login myApp = (Login )getApplicationContext();
+        //myApp.mGoogleApiClient = mGoogleApiClient;
     }
 
     private void revokeAccess() {
