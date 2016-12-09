@@ -1,9 +1,14 @@
 package com.example.diogo.discoverytrip;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,13 +25,21 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationAvailability;
+import com.google.android.gms.location.LocationServices;
 
 public class home extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.
+        OnConnectionFailedListener {
 
     private ProfileTracker profileTracker;
+    private GoogleApiClient googleApiClient;
+    private TextView textView;// log
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +56,10 @@ public class home extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-         profileTracker = new ProfileTracker() {
+        textView = (TextView) findViewById(R.id.log); //log
+        rastrearPosicaoGeografica();
+
+        profileTracker = new ProfileTracker() {
 
             @Override
             protected void onCurrentProfileChanged(
@@ -85,12 +101,12 @@ public class home extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
-        if (id == R.id.logout){
+        if (id == R.id.logout) {
             //log out do google+
             //signOutGooglePlus();
 
             LoginManager.getInstance().logOut();
-            Intent intent = new Intent(home.this,Login.class);
+            Intent intent = new Intent(home.this, Login.class);
             startActivity(intent);
             finish();
             return true;
@@ -99,9 +115,9 @@ public class home extends AppCompatActivity
     }
 
     private void signOutGooglePlus() {
-        Toast.makeText(getApplicationContext(),"deslogando1",Toast.LENGTH_SHORT).show();
-        Login myApp = (Login )getApplicationContext();
-        Toast.makeText(getApplicationContext(),"deslogando2",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "deslogando1", Toast.LENGTH_SHORT).show();
+        Login myApp = (Login) getApplicationContext();
+        Toast.makeText(getApplicationContext(), "deslogando2", Toast.LENGTH_SHORT).show();
 
         if (myApp.mGoogleApiClient.isConnected()) {
             Auth.GoogleSignInApi.signOut(myApp.mGoogleApiClient).setResultCallback(
@@ -116,7 +132,7 @@ public class home extends AppCompatActivity
             //myApp.mGoogleApiClient.connect();
         }
 
-        Toast.makeText(getApplicationContext(),"deslogou",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "deslogou", Toast.LENGTH_SHORT).show();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -142,5 +158,46 @@ public class home extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private synchronized void rastrearPosicaoGeografica() {
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addOnConnectionFailedListener(this)
+                .addConnectionCallbacks(this)
+                .addApi(LocationServices.API)
+                .build();
+        googleApiClient.connect();
+        super.onStart();
+    }
+
+    // ações da location API
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            //return;
+        }
+
+        Location location = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+
+        if(location != null)
+            textView.setText("latitude: "+ location.getLongitude()+" longitude: "+ "location.getLongitude()");
+        else textView.setText("location is null");
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        textView.setText("Suspended " +i);
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        textView.setText("ConnectionFailed "+ connectionResult);
     }
 }
