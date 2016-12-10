@@ -229,7 +229,7 @@ public class home extends AppCompatActivity
             String Text = "Coordenadas de localização atual: " + "\n Lat = "
                     + loc.getLatitude() + "\n Long = " + loc.getLongitude();
             status_gps.setText(Text);
-            //OK
+            //OK!
         }
 
         @Override
