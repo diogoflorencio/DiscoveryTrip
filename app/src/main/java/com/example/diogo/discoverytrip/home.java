@@ -3,8 +3,6 @@ package com.example.diogo.discoverytrip;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -20,7 +18,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
@@ -28,9 +25,6 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 public class home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -44,7 +38,10 @@ public class home extends AppCompatActivity
     //permissoes GPS
     private static final int REQUEST_LOCATION = 2;
 
+    //provedor GPS
     LocationManager mlocManager;
+
+    Localizacao Local;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,24 +63,27 @@ public class home extends AppCompatActivity
         status_gps = (TextView) findViewById(R.id.status_gps);
         localizacao = (TextView) findViewById(R.id.localizacao);
 
-        /* Usando a classe LocationManager para obter as coordenadas do GPS */
+        // Instanciando provedor GPS para obter coordenadas
         mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        Localizacao Local = new Localizacao();
+
+        Local = new Localizacao();
         Local.setHome(this);
 
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION)) {
-                // Display UI and wait for user interaction
-            } else {
+                    android.Manifest.permission.ACCESS_FINE_LOCATION));
+                // Esperando usuário autorizar permissão
+            else
                 ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-            }
         } else {
-
-
+            //requisição de coordenadas ao provedor GPS
             mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,
                     (LocationListener) Local);
-
+            //Set log GPS
             status_gps.setText("Carregando Localização");
             localizacao.setText("");
         }
@@ -189,59 +189,25 @@ public class home extends AppCompatActivity
         return true;
     }
 
-    public void onRequestPermissionsResult(int requestCode,
-                                           String[] permissions,
-                                           int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == REQUEST_LOCATION) {
             if (grantResults.length == 1
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // We can now safely use the API we requested access to
-                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED);
+                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED &&
+                        ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                                PackageManager.PERMISSION_GRANTED);
+               //Requisitando localização do provedor de GPS
+                mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (LocationListener) Local);
+                // Set log GPS
+                status_gps.setText("Carregando Localização");
+                localizacao.setText("");
 
-                Localizacao Local = new Localizacao();
-                Local.setHome(this);
-
-                mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,
-                        (LocationListener) Local);
-
-                    status_gps.setText("Carregando Localização");
-                    localizacao.setText("");
-
-              } else {
-                  // Permission was denied or request was cancelled
-              }
+              } else; //Usuário rejeitou permissões
           }
       }
 
-
-
-
-
-
-
-
-    //*****************************************************************************************************************************
-
-    public void setLocation(Location loc) {
-        //Rastreando endereço a partir das coordenadas
-        if (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0) {
-            try {
-                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-                List<Address> list = geocoder.getFromLocation(
-                        loc.getLatitude(), loc.getLongitude(), 1);
-                if (!list.isEmpty()) {
-                    Address DirCalle = list.get(0);
-                    localizacao.setText("Endereço localizado: \n"
-                            + DirCalle.getAddressLine(0));
-                }
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /* Implementando classe localizacao */
+    // Implementando classe localizacao
     public class Localizacao implements LocationListener {
         home home;
 
@@ -256,13 +222,12 @@ public class home extends AppCompatActivity
         @Override
         public void onLocationChanged(Location loc) {
             // Obtendo coordenadas do GPS
-
             loc.getLatitude();
             loc.getLongitude();
             String Text = "Coordenadas de localização atual: " + "\n Lat = "
                     + loc.getLatitude() + "\n Long = " + loc.getLongitude();
             status_gps.setText(Text);
-            this.home.setLocation(loc);
+            //OK
         }
 
         @Override
@@ -286,6 +251,5 @@ public class home extends AppCompatActivity
             // AVAILABLE -> Disponível
         }
 
-    }/* Fim da classe Localização */
-
+    } //Fim da classe Localização
 }
