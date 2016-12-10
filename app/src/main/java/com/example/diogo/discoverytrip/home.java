@@ -1,8 +1,16 @@
 package com.example.diogo.discoverytrip;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -12,6 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
@@ -19,11 +28,23 @@ import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
 public class home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private ProfileTracker profileTracker;
 
+    // TextView para log GPS
+    TextView status_gps;
+    TextView localizacao;
+
+    //permissoes GPS
+    private static final int REQUEST_LOCATION = 2;
+
+    LocationManager mlocManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,8 +62,33 @@ public class home extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        // instanciando TextViews de log gps
+        status_gps = (TextView) findViewById(R.id.status_gps);
+        localizacao = (TextView) findViewById(R.id.localizacao);
 
-         profileTracker = new ProfileTracker() {
+        /* Usando a classe LocationManager para obter as coordenadas do GPS */
+        mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Localizacao Local = new Localizacao();
+        Local.setHome(this);
+
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)) {
+                // Display UI and wait for user interaction
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+            }
+        } else {
+
+
+            mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,
+                    (LocationListener) Local);
+
+            status_gps.setText("Carregando Localização");
+            localizacao.setText("");
+        }
+
+        profileTracker = new ProfileTracker() {
 
             @Override
             protected void onCurrentProfileChanged(
@@ -84,12 +130,12 @@ public class home extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
-        if (id == R.id.logout){
+        if (id == R.id.logout) {
             //log out do google+
             //signOutGooglePlus();
 
             LoginManager.getInstance().logOut();
-            Intent intent = new Intent(home.this,Login.class);
+            Intent intent = new Intent(home.this, Login.class);
             startActivity(intent);
             finish();
             return true;
@@ -98,9 +144,9 @@ public class home extends AppCompatActivity
     }
 
     private void signOutGooglePlus() {
-        Toast.makeText(getApplicationContext(),"deslogando1",Toast.LENGTH_SHORT).show();
-        Login myApp = (Login )getApplicationContext();
-        Toast.makeText(getApplicationContext(),"deslogando2",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "deslogando1", Toast.LENGTH_SHORT).show();
+        Login myApp = (Login) getApplicationContext();
+        Toast.makeText(getApplicationContext(), "deslogando2", Toast.LENGTH_SHORT).show();
 
         if (myApp.mGoogleApiClient.isConnected()) {
             Auth.GoogleSignInApi.signOut(myApp.mGoogleApiClient).setResultCallback(
@@ -115,7 +161,7 @@ public class home extends AppCompatActivity
             //myApp.mGoogleApiClient.connect();
         }
 
-        Toast.makeText(getApplicationContext(),"deslogou",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), "deslogou", Toast.LENGTH_SHORT).show();
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -142,4 +188,104 @@ public class home extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions,
+                                           int[] grantResults) {
+        if (requestCode == REQUEST_LOCATION) {
+            if (grantResults.length == 1
+                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // We can now safely use the API we requested access to
+                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED);
+
+                Localizacao Local = new Localizacao();
+                Local.setHome(this);
+
+                mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,
+                        (LocationListener) Local);
+
+                    status_gps.setText("Carregando Localização");
+                    localizacao.setText("");
+
+              } else {
+                  // Permission was denied or request was cancelled
+              }
+          }
+      }
+
+
+
+
+
+
+
+
+    //*****************************************************************************************************************************
+
+    public void setLocation(Location loc) {
+        //Rastreando endereço a partir das coordenadas
+        if (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0) {
+            try {
+                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+                List<Address> list = geocoder.getFromLocation(
+                        loc.getLatitude(), loc.getLongitude(), 1);
+                if (!list.isEmpty()) {
+                    Address DirCalle = list.get(0);
+                    localizacao.setText("Endereço localizado: \n"
+                            + DirCalle.getAddressLine(0));
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    /* Implementando classe localizacao */
+    public class Localizacao implements LocationListener {
+        home home;
+
+        public home getHome() {
+            return home;
+        }
+
+        public void setHome(home home) {
+            this.home = home;
+        }
+
+        @Override
+        public void onLocationChanged(Location loc) {
+            // Obtendo coordenadas do GPS
+
+            loc.getLatitude();
+            loc.getLongitude();
+            String Text = "Coordenadas de localização atual: " + "\n Lat = "
+                    + loc.getLatitude() + "\n Long = " + loc.getLongitude();
+            status_gps.setText(Text);
+            this.home.setLocation(loc);
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+            // GPS desativado
+            status_gps.setText("GPS Desativado");
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+            // GPS ativado
+            status_gps.setText("GPS Ativado");
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+            // Método de monitoranmento dos serviços do de GPS
+            // Status do provedor GPS:
+            // OUT_OF_SERVICE -> Servidor fora de serviço
+            // TEMPORARILY_UNAVAILABLE -> temporariamente indisponível aguardando serviço ser restabelecido
+            // AVAILABLE -> Disponível
+        }
+
+    }/* Fim da classe Localização */
+
 }
