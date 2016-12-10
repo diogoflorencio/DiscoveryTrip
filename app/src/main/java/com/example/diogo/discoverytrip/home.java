@@ -4,11 +4,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
+
+
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+
 import android.support.v4.app.ActivityCompat;
+
+import android.support.design.widget.NavigationView;
+
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -22,12 +30,15 @@ import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
 
+
 public class home extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     private ProfileTracker profileTracker;
 
@@ -42,6 +53,7 @@ public class home extends AppCompatActivity
     LocationManager mlocManager;
 
     Localizacao Local;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +70,7 @@ public class home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
 
         // instanciando TextViews de log gps
         status_gps = (TextView) findViewById(R.id.status_gps);
@@ -188,6 +201,7 @@ public class home extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == REQUEST_LOCATION) {
