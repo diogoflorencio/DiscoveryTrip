@@ -61,6 +61,9 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        startActivity(new Intent(Login.this,home.class)); // desligando login
+
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
 
@@ -90,8 +93,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                     }
                 };
                 profileTracker.startTracking();
-                Intent intent = new Intent(Login.this,home.class);
-                startActivity(intent);
+                startActivity(new Intent(Login.this,home.class));
                 finish();
             }
 
