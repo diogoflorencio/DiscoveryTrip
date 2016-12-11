@@ -38,7 +38,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 public class Login extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
     private static final int RC_SIGN_IN = 9001;
-    private TextView textView;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private ProfileTracker profileTracker;
@@ -54,13 +53,8 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
         if(AccessToken.getCurrentAccessToken() != null) startActivity(new Intent(Login.this,home.class));
 
-        textView = (TextView) findViewById(R.id.textView);
-
-
         loginButton = (LoginButton) findViewById(R.id.loginButton);
         loginButton.setReadPermissions("public_profile");
-
-
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -115,19 +109,14 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
     private void handleSignInResult(GoogleSignInResult result) {
         if (result.isSuccess()) {
-            //GoogleSignInAccount acct = result.getSignInAccount();
-            //String personName = acct.getDisplayName();
-            //String personPhotoUrl = acct.getPhotoUrl().toString();
-            //String email = acct.getEmail();
-//            if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
-//                Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
-//                mPersonName= currentPerson.getDisplayName();
-//                mImageUrl=currentPerson.getImage().getUrl();
-//                mEmailAddress = Plus.AccountApi.getAccountName(mGoogleApiClient);
-//            }
-            startActivity(new Intent(Login.this,home.class));
-        } else {
-            // Signed out, show unauthenticated UI.
+            GoogleSignInAccount googleUser = result.getSignInAccount();
+            String googleUserName = googleUser.getDisplayName();
+            String googleUserEmail = googleUser.getEmail();
+            //String googleUserPictureUrl = googleUser.getPhotoUrl().toString();
+            Intent intent = new Intent(Login.this,home.class);
+            intent.putExtra("googleName",googleUserName);
+            intent.putExtra("googleEmail",googleUserEmail);
+            startActivity(intent);
         }
     }
 

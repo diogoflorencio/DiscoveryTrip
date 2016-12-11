@@ -18,6 +18,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
@@ -108,6 +110,18 @@ public class home extends AppCompatActivity
         };
 
         buildGooglePlusConfigs();
+
+        loadGooglePlusData();
+    }
+
+    public void loadGooglePlusData() {
+        Bundle extras = getIntent().getExtras();
+
+        if(extras !=null) {
+            String googleUserName = extras.getString("googleName");
+            String googleUserEmail = extras.getString("googleEmail");
+            Toast.makeText(this, googleUserName +"/"+ googleUserEmail, Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void buildGooglePlusConfigs() {
@@ -178,17 +192,9 @@ public class home extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_localizacao) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_perfil) {
 
         }
 
