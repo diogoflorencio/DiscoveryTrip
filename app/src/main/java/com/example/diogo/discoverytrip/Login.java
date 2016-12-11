@@ -35,25 +35,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
-public class Login extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener, GoogleApiClient.ConnectionCallbacks {
+public class Login extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
+    private static final int RC_SIGN_IN = 9001;
+    private TextView textView;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
-
     private ProfileTracker profileTracker;
+    private GoogleApiClient mGoogleApiClient;
 
-    private TextView textView;
-
-    protected GoogleApiClient mGoogleApiClient;
-    private ConnectionResult connection_result;
-    private SignInButton login_google;
-    private static final int RC_SIGN_IN = 9001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        startActivity(new Intent(Login.this,home.class)); // desligando login
 
         FacebookSdk.sdkInitialize(getApplicationContext());
         setContentView(R.layout.activity_login);
@@ -100,6 +94,10 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         });
 
         findViewById(R.id.login_google).setOnClickListener(this);
+        buildGooglePlusConfigs();
+    }
+
+    public void buildGooglePlusConfigs() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -108,50 +106,34 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-
-        SignInButton signInButton = (SignInButton) findViewById(R.id.login_google);
-        signInButton.setSize(SignInButton.SIZE_STANDARD);
     }
 
     private void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
-
-        //Login myApp = (Login )getApplicationContext();
-        //myApp.mGoogleApiClient = mGoogleApiClient;
-    }
-
-    private void revokeAccess() {
-        Auth.GoogleSignInApi.revokeAccess(mGoogleApiClient).setResultCallback(
-                new ResultCallback<Status>() {
-                    @Override
-                    public void onResult(Status status) {
-                        updateUI(false);
-                    }
-                });
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
-        Toast.makeText(this, String.valueOf(result.isSuccess()), Toast.LENGTH_SHORT).show();
         if (result.isSuccess()) {
-            // Signed in successfully, show authenticated UI.
-            GoogleSignInAccount acct = result.getSignInAccount();
-            startActivity(new Intent(Login.this,home.class));
+            //GoogleSignInAccount acct = result.getSignInAccount();
             //String personName = acct.getDisplayName();
             //String personPhotoUrl = acct.getPhotoUrl().toString();
             //String email = acct.getEmail();
-            updateUI(true);
+//            if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
+//                Person currentPerson = Plus.PeopleApi.getCurrentPerson(mGoogleApiClient);
+//                mPersonName= currentPerson.getDisplayName();
+//                mImageUrl=currentPerson.getImage().getUrl();
+//                mEmailAddress = Plus.AccountApi.getAccountName(mGoogleApiClient);
+//            }
+            startActivity(new Intent(Login.this,home.class));
         } else {
             // Signed out, show unauthenticated UI.
-            updateUI(false);
         }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //callbackManager.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
@@ -168,25 +150,12 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
     }
 
     @Override
-    public void onConnected(@Nullable Bundle bundle) {
-        Toast.makeText(this, "conectou", Toast.LENGTH_SHORT).show();
-
-    }
-
-    @Override
-    public void onConnectionSuspended(int i) {
-        Toast.makeText(this, "conexao suspensa", Toast.LENGTH_SHORT).show();
-
-    }
-
-    @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Toast.makeText(this, "conexao falhou", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Conexao falhou", Toast.LENGTH_SHORT).show();
     }
 
     protected void onStart() {
         super.onStart();
-
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()) {
             // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
@@ -204,14 +173,5 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 }
             });
         }
-    }
-
-    protected void onStop() {
-        super.onStop();
-        mGoogleApiClient.disconnect();
-    }
-
-    private void updateUI(boolean isSignedIn) {
-        //caso queira alterar a UI
     }
 }

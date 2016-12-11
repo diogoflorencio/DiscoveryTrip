@@ -7,6 +7,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -17,16 +18,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
 public class home extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener{
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
     // Dados Login facebook
     private ProfileTracker profileTracker;
@@ -42,6 +45,8 @@ public class home extends AppCompatActivity
     LocationManager mlocManager;
 
     Localizacao Local;
+
+    private GoogleApiClient mGoogleApiClient;
 
 
     @Override
@@ -101,6 +106,19 @@ public class home extends AppCompatActivity
                 textView.setText(profile.getName());
             }
         };
+
+        buildGooglePlusConfigs();
+    }
+
+    public void buildGooglePlusConfigs() {
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
     }
 
     @Override
@@ -132,8 +150,7 @@ public class home extends AppCompatActivity
             return true;
         }
         if (id == R.id.logout) {
-            //log out do google+
-            //signOutGooglePlus();
+            signOutGooglePlus();
 
             LoginManager.getInstance().logOut();
             Intent intent = new Intent(home.this, Login.class);
@@ -145,24 +162,14 @@ public class home extends AppCompatActivity
     }
 
     private void signOutGooglePlus() {
-        Toast.makeText(getApplicationContext(), "deslogando1", Toast.LENGTH_SHORT).show();
-        Login myApp = (Login) getApplicationContext();
-        Toast.makeText(getApplicationContext(), "deslogando2", Toast.LENGTH_SHORT).show();
-
-        if (myApp.mGoogleApiClient.isConnected()) {
-            Auth.GoogleSignInApi.signOut(myApp.mGoogleApiClient).setResultCallback(
-                    new ResultCallback<Status>() {
-                        @Override
-                        public void onResult(Status status) {
-                            // [START_EXCLUDE]
-                            // [END_EXCLUDE]
-                        }
-                    });
-            //myApp.mGoogleApiClient.disconnect();
-            //myApp.mGoogleApiClient.connect();
-        }
-
-        Toast.makeText(getApplicationContext(), "deslogou", Toast.LENGTH_SHORT).show();
+        Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
+                new ResultCallback<Status>() {
+                    @Override
+                    public void onResult(Status status) {
+                        // [START_EXCLUDE]
+                        // [END_EXCLUDE]
+                    }
+                });
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
@@ -208,6 +215,11 @@ public class home extends AppCompatActivity
               } else; //Usuário rejeitou permissões
           }
       }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
 
     // Implementando classe localizacao
     public class Localizacao implements LocationListener {
