@@ -11,20 +11,8 @@ public class AccessTokenJson {
     @SerializedName("access_token")
     private String token;
 
-    @SerializedName("refresh_token")
-    private String refreshtoken;
-
-    public AccessTokenJson(String token, String refreshtoken){
+    public AccessTokenJson(String token){
         this.token = token;
-        this.refreshtoken = refreshtoken;
-    }
-
-    public String getRefreshtoken() {
-        return refreshtoken;
-    }
-
-    public void setRefreshtoken(String refreshtoken) {
-        this.refreshtoken = refreshtoken;
     }
 
     public String getToken() {

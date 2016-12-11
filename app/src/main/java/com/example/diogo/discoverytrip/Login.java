@@ -141,7 +141,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                         };
                         profileTracker.startTracking();
 
-                        postFacebook(getCurrentAccessToken().getToken(), getCurrentAccessToken());
+                        postFacebook(getCurrentAccessToken().getToken());
                     }
 
                     @Override
@@ -158,11 +158,11 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         }
     }
 
-    private void postFacebook(String token, String refreshtoken){
+    private void postFacebook(String token){
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
 
-        Call<ServerResponseLogin> call = apiService.loginFacebook(new AccessTokenJson(token,refreshtoken));
+        Call<ServerResponseLogin> call = apiService.loginFacebook(new AccessTokenJson(token));
         call.enqueue(new Callback<ServerResponseLogin>() {
             @Override
             public void onResponse(Call<ServerResponseLogin> call, Response<ServerResponseLogin> response) {
