@@ -61,6 +61,13 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
         findViewById(R.id.login_google).setOnClickListener(this);
         buildGooglePlusConfigs();
+
+        findViewById(R.id.lblCadastreSe).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Login.this,CadastroActivity.class));
+            }
+        });
     }
 
     public void buildGooglePlusConfigs() {

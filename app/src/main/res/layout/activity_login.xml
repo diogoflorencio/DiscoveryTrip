@@ -16,11 +16,9 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="@drawable/round_border"
-        android:layout_marginLeft="55dp"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="55dp">
+        android:layout_alignParentStart="true">
 
         <ImageView
             android:layout_width="200dp"
@@ -98,15 +96,20 @@
             android:layout_gravity="center_horizontal"
             android:drawableLeft="@android:drawable/ic_lock_idle_lock" />
 
-        <TextView
-            android:text="Cadastre-se"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/txtFaleConosco"
-            android:textColor="@color/com_facebook_button_send_background_color_pressed"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:gravity="bottom|center_horizontal" />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:text="Cadastre-se"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/lblCadastreSe"
+                android:textColor="@color/com_facebook_button_send_background_color_pressed"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="bottom|center_horizontal" />
+        </RelativeLayout>
 
     </LinearLayout>
 
