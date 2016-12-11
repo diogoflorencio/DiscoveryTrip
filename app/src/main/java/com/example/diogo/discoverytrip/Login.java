@@ -47,45 +47,17 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        // iniciando SDK facebook
         FacebookSdk.sdkInitialize(getApplicationContext());
+        
         setContentView(R.layout.activity_login);
 
+        // verificando validade de token facebook
         if(AccessToken.getCurrentAccessToken() != null) startActivity(new Intent(Login.this,home.class));
 
+        //instanciando botão de login facebook
         loginButton = (LoginButton) findViewById(R.id.loginButton);
-        loginButton.setReadPermissions("public_profile");
-
-        callbackManager = CallbackManager.Factory.create();
-
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                profileTracker = new ProfileTracker() {
-
-                    @Override
-                    protected void onCurrentProfileChanged(
-                            Profile oldProfile, Profile currentProfile) {
-                        profileTracker.stopTracking();
-                        Profile.setCurrentProfile(currentProfile);
-                        Profile profile = Profile.getCurrentProfile();
-                    }
-                };
-                profileTracker.startTracking();
-                startActivity(new Intent(Login.this,home.class));
-                finish();
-            }
-
-            @Override
-            public void onCancel() {
-                Toast.makeText(getApplicationContext(),"Login cancelado",Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-                Toast.makeText(getApplicationContext(),"Ocorreu um erro ao realizar login",Toast.LENGTH_SHORT).show();
-            }
-        });
+        loginButton.setOnClickListener(this);
 
         findViewById(R.id.login_google).setOnClickListener(this);
         buildGooglePlusConfigs();
@@ -134,6 +106,42 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         switch (view.getId()) {
             case R.id.login_google:
                 signIn();
+                break;
+            // Click no botão de login do facebook
+            case R.id.loginButton:
+                //permissões do facebook
+                loginButton.setReadPermissions("public_profile");
+                // criando request facebook
+                callbackManager = CallbackManager.Factory.create();
+                //logando ao facebook
+                loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        profileTracker = new ProfileTracker() {
+
+                            @Override
+                            protected void onCurrentProfileChanged(
+                                    Profile oldProfile, Profile currentProfile) {
+                                profileTracker.stopTracking();
+                                Profile.setCurrentProfile(currentProfile);
+                                Profile profile = Profile.getCurrentProfile();
+                            }
+                        };
+                        profileTracker.startTracking();
+                        startActivity(new Intent(Login.this,home.class));
+                        finish();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(getApplicationContext(),"Login cancelado",Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(FacebookException error) {
+                        Toast.makeText(getApplicationContext(),"Ocorreu um erro ao realizar login",Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
         }
     }
