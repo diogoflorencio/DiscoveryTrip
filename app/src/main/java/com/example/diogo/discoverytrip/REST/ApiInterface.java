@@ -1,8 +1,11 @@
 package com.example.diogo.discoverytrip.REST;
 
+import com.example.diogo.discoverytrip.Model.AccessTokenJson;
 import com.example.diogo.discoverytrip.Model.ServerResponse;
+import com.example.diogo.discoverytrip.Model.ServerResponseLogin;
 import com.example.diogo.discoverytrip.Model.User;
 import com.example.diogo.discoverytrip.Model.UsuarioEnvio;
+import com.facebook.AccessToken;
 import com.google.gson.annotations.SerializedName;
 
 import retrofit2.Call;
@@ -22,4 +25,7 @@ public interface ApiInterface {
 
     @GET("api/users/{id}")
     Call<ServerResponse> getUsuario(@Path("id")String id);
+
+    @POST("api/facebook/login")
+    Call<ServerResponseLogin> loginFacebook(@Body AccessTokenJson accessToken);
 }

@@ -3,14 +3,16 @@ package com.example.diogo.discoverytrip;
 import android.content.Intent;
 
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.AccessToken;
+import com.example.diogo.discoverytrip.Model.AccessTokenJson;
+import com.example.diogo.discoverytrip.Model.ServerResponseLogin;
+import com.example.diogo.discoverytrip.REST.ApiClient;
+import com.example.diogo.discoverytrip.REST.ApiInterface;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -23,17 +25,20 @@ import com.facebook.login.widget.LoginButton;
 
 import com.google.android.gms.common.ConnectionResult;
 
-import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
-
-import com.google.android.gms.common.api.Status;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static com.facebook.AccessToken.getCurrentAccessToken;
 
 public class Login extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
@@ -49,11 +54,11 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         super.onCreate(savedInstanceState);
         // iniciando SDK facebook
         FacebookSdk.sdkInitialize(getApplicationContext());
-        
+
         setContentView(R.layout.activity_login);
 
         // verificando validade de token facebook
-        if(AccessToken.getCurrentAccessToken() != null) startActivity(new Intent(Login.this,home.class));
+        if(getCurrentAccessToken() != null) startActivity(new Intent(Login.this,home.class));
 
         //instanciando botão de login facebook
         loginButton = (LoginButton) findViewById(R.id.loginButton);
@@ -135,8 +140,8 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                             }
                         };
                         profileTracker.startTracking();
-                        startActivity(new Intent(Login.this,home.class));
-                        finish();
+
+                        postFacebook(getCurrentAccessToken().getToken(), getCurrentAccessToken());
                     }
 
                     @Override
@@ -151,6 +156,27 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 });
                 break;
         }
+    }
+
+    private void postFacebook(String token, String refreshtoken){
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+
+        Call<ServerResponseLogin> call = apiService.loginFacebook(new AccessTokenJson(token,refreshtoken));
+        call.enqueue(new Callback<ServerResponseLogin>() {
+            @Override
+            public void onResponse(Call<ServerResponseLogin> call, Response<ServerResponseLogin> response) {
+                startActivity(new Intent(Login.this,home.class));
+                finish();
+            }
+
+            @Override
+            public void onFailure(Call<ServerResponseLogin> call, Throwable t) {
+                // Log error here since request failed
+                Toast.makeText(Login.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("App Server Error", t.toString());
+            }
+        });
     }
 
     @Override
