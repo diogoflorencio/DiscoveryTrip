@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,9 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
     private ProfileTracker profileTracker;
     private GoogleApiClient mGoogleApiClient;
 
+    // vai toma
+    private Button vai_toma;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,10 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         //instanciando botão de login facebook
         loginButton = (LoginButton) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(this);
+
+        //instanciando vai toma sua cachorra
+        vai_toma = (Button) findViewById(R.id.vai_toma);
+        vai_toma.setOnClickListener(this);
 
         findViewById(R.id.login_google).setOnClickListener(this);
         buildGooglePlusConfigs();
@@ -143,6 +151,9 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                     }
                 });
                 break;
+            case R.id.vai_toma:
+                startActivity(new Intent(Login.this,home.class));
+                finish();
         }
     }
 
