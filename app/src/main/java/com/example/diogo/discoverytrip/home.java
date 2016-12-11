@@ -10,9 +10,12 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -111,18 +114,17 @@ public class home extends AppCompatActivity
 
         buildGooglePlusConfigs();
 
-        loadGooglePlusData();
+        //loadGooglePlusData();
     }
 
-    public void loadGooglePlusData() {
-        Bundle extras = getIntent().getExtras();
-
-        if(extras !=null) {
-            String googleUserName = extras.getString("googleName");
-            String googleUserEmail = extras.getString("googleEmail");
-            Toast.makeText(this, googleUserName +"/"+ googleUserEmail, Toast.LENGTH_SHORT).show();
-        }
-    }
+//    public void loadGooglePlusData() {
+//        Bundle extras = getIntent().getExtras();
+//
+//        if(extras !=null) {
+//            String googleUserName = extras.getString("googleName");
+//            String googleUserEmail = extras.getString("googleEmail");
+//        }
+//    }
 
     public void buildGooglePlusConfigs() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -186,16 +188,44 @@ public class home extends AppCompatActivity
                 });
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Fragment fragment = null;
 
-        if (id == R.id.nav_localizacao) {
-            // Handle the camera action
-        } else if (id == R.id.nav_perfil) {
+        switch (id) {
+            case R.id.nav_localizacao:
+                new AlertDialog.Builder(home.this)
+                        .setMessage("Localizção")
+                        .show();
+                break;
+            case R.id.nav_perfil:
+                fragment = new PerfilFragment();
+//                Bundle extras = getIntent().getExtras();
+//
+//                if(extras !=null) {
+//                    String googleUserName = extras.getString("googleName");
+//                    String googleUserEmail = extras.getString("googleEmail");
+//                    new AlertDialog.Builder(home.this)
+//                            .setMessage("Nomde: " + googleUserName + " Email: " + googleUserEmail)
+//                            .show();
+//                } else{
+//                    new AlertDialog.Builder(home.this)
+//                            .setMessage("Voce não logou com nenhuma rede social")
+//                            .show();
+//                }
+                break;
+        }
 
+        if (fragment != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            Bundle extras = getIntent().getExtras();
+
+            if(extras !=null) {
+                fragment.setArguments(extras);
+            }
+            fragmentManager.beginTransaction().replace(R.id.content_home, fragment).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
