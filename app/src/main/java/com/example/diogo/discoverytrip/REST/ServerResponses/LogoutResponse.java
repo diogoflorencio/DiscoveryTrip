@@ -1,29 +1,18 @@
-package com.example.diogo.discoverytrip.Model;
+package com.example.diogo.discoverytrip.REST.ServerResponses;
 
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by Renato on 11/12/2016.
+ * Created by Renato on 12/12/2016.
  */
 
-public class ServerResponse {
-
-    @SerializedName("user")
-    private User usuario;
+public class LogoutResponse {
 
     @SerializedName("status")
     private String status;
 
     @SerializedName("message")
     private String message;
-
-    public User getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(User usuario) {
-        this.usuario = usuario;
-    }
 
     public String getStatus() {
         return status;

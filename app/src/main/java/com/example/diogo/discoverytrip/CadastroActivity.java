@@ -9,14 +9,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
-import com.example.diogo.discoverytrip.Model.ServerResponse;
-import com.example.diogo.discoverytrip.Model.User;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponse;
 import com.example.diogo.discoverytrip.Model.UsuarioEnvio;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ApiInterface;
-import com.google.gson.annotations.SerializedName;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -85,7 +81,7 @@ public class CadastroActivity extends AppCompatActivity {
         if(senha.getText().toString().length() < 6){
             throw new DataInputException("Senha deve ter no mínimo 6 caracteres!");
         }
-        if(senha.getText().toString().trim().isEmpty()){
+        if(senha.getText().toString().isEmpty()){
             throw new DataInputException("Senha não pode ser vazia!");
         }
         return true;

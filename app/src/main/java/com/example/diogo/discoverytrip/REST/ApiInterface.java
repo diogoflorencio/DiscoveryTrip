@@ -1,16 +1,19 @@
 package com.example.diogo.discoverytrip.REST;
 
 import com.example.diogo.discoverytrip.Model.AccessTokenJson;
-import com.example.diogo.discoverytrip.Model.ServerResponse;
-import com.example.diogo.discoverytrip.Model.ServerResponseLogin;
-import com.example.diogo.discoverytrip.Model.User;
+import com.example.diogo.discoverytrip.Model.AppLoginJson;
+import com.example.diogo.discoverytrip.REST.ServerResponses.AppLoginResponse;
+import com.example.diogo.discoverytrip.REST.ServerResponses.LogoutResponse;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponse;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponseLogin;
 import com.example.diogo.discoverytrip.Model.UsuarioEnvio;
-import com.facebook.AccessToken;
-import com.google.gson.annotations.SerializedName;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.HEAD;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -28,4 +31,10 @@ public interface ApiInterface {
 
     @POST("api/facebook/login")
     Call<ServerResponseLogin> loginFacebook(@Body AccessTokenJson accessToken);
+
+    @POST("api/login")
+    Call<AppLoginResponse> appLogin(@Body AppLoginJson appLoginJson);
+
+    @DELETE("api/login")
+    Call<LogoutResponse> logout(@Header("Authorization") String authorization);
 }

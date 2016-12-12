@@ -24,7 +24,7 @@
             android:layout_width="200dp"
             android:layout_height="100dp"
             android:id="@+id/imageView2"
-            android:src="@drawable/logo_app"
+            android:src="@mipmap/discoverytrip"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal" />
@@ -42,7 +42,7 @@
             android:id="@+id/login_google"
             android:layout_gravity="center_horizontal"
             tools:visivility="gone"
-            android:layout_marginTop="30dp" /> />
+            android:layout_marginTop="20dp" /> />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/editText"
+            android:id="@+id/txtLoginEmail"
             android:layout_marginTop="20dp"
             android:layout_gravity="center_horizontal"
             android:drawableLeft="@android:drawable/sym_action_email" />
@@ -92,9 +92,15 @@
             android:layout_height="wrap_content"
             android:inputType="textPassword"
             android:ems="10"
-            android:id="@+id/editText2"
+            android:id="@+id/txtLoginSenha"
             android:layout_gravity="center_horizontal"
             android:drawableLeft="@android:drawable/ic_lock_idle_lock" />
+
+        <Button
+            android:text="Login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnLoginApp" />
 
         <RelativeLayout
             android:layout_width="match_parent"

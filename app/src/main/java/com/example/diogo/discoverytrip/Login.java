@@ -7,10 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.Model.AccessTokenJson;
-import com.example.diogo.discoverytrip.Model.ServerResponseLogin;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponseLogin;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ApiInterface;
 import com.facebook.AccessToken;
@@ -48,6 +50,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
     private CallbackManager callbackManager;
     private ProfileTracker profileTracker;
     private GoogleApiClient mGoogleApiClient;
+    private EditText emailLogin, senhaLogin;
 
 
     @Override
@@ -170,7 +173,26 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
             case R.id.lblCadastreSe:
                 startActivity(new Intent(Login.this,CadastroActivity.class));
                 break;
+            case R.id.btnLoginApp:
+                try {
+                    loginApp();
+                } catch (DataInputException e){
+                    Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+                break;
         }
+    }
+
+    private void loginApp()throws DataInputException{
+        emailLogin = (EditText) findViewById(R.id.txtLoginEmail);
+        senhaLogin = (EditText) findViewById(R.id.txtLoginSenha);
+
+        if(emailLogin.getText().toString().trim().isEmpty() ||
+                senhaLogin.getText().toString().isEmpty()){
+            throw new DataInputException("Digite email e senha");
+        }
+
+        //TODO enviar dados para o servidor
     }
 
     private void postFacebook(String token){
