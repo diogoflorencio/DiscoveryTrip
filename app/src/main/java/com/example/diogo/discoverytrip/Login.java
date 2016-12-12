@@ -7,11 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.Model.AccessTokenJson;
+import com.example.diogo.discoverytrip.Model.AppLoginJson;
+import com.example.diogo.discoverytrip.Model.UsuarioEnvio;
+import com.example.diogo.discoverytrip.REST.ServerResponses.AppLoginResponse;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponseLogin;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ApiInterface;
@@ -51,6 +56,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
     private ProfileTracker profileTracker;
     private GoogleApiClient mGoogleApiClient;
     private EditText emailLogin, senhaLogin;
+    private Button btnAppLogin;
 
 
     @Override
@@ -78,6 +84,9 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         loginButton.setOnClickListener(this);
         findViewById(R.id.login_google).setOnClickListener(this);
         findViewById(R.id.lblCadastreSe).setOnClickListener(this);
+        btnAppLogin = (Button) findViewById(R.id.btnLoginApp);
+        btnAppLogin.setOnClickListener(this);
+
     }
 
     public void buildGooglePlusConfigs() {
@@ -177,7 +186,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 try {
                     loginApp();
                 } catch (DataInputException e){
-                    Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Login.this,e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -191,8 +200,23 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 senhaLogin.getText().toString().isEmpty()){
             throw new DataInputException("Digite email e senha");
         }
-
-        //TODO enviar dados para o servidor
+        
+//        ApiInterface apiService =
+//                ApiClient.getClient().create(ApiInterface.class);
+//        Call<AppLoginResponse> call = apiService.appLogin(new AppLoginJson(emailLogin.getText().toString(),senhaLogin.getText().toString()));
+//        call.enqueue(new Callback<AppLoginResponse>() {
+//            @Override
+//            public void onResponse(Call<AppLoginResponse> call, Response<AppLoginResponse> response) {
+//                Toast.makeText(Login.this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show();
+//            }
+//
+//            @Override
+//            public void onFailure(Call<AppLoginResponse> call, Throwable t) {
+//                // Log error here since request failed
+//                Toast.makeText(Login.this, "Não foi possível realizar o cadastro!", Toast.LENGTH_SHORT).show();
+//                Log.e("App Server Error", t.toString());
+//            }
+//        });
     }
 
     private void postFacebook(String token){
