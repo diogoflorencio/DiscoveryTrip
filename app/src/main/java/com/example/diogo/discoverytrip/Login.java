@@ -13,6 +13,7 @@ import com.example.diogo.discoverytrip.Model.AccessTokenJson;
 import com.example.diogo.discoverytrip.Model.ServerResponseLogin;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ApiInterface;
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -52,6 +53,8 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d("Logger", "Oncreate");
+
         // iniciando SDK facebook
         FacebookSdk.sdkInitialize(getApplicationContext());
 
@@ -60,38 +63,40 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         // verificando validade de token facebook
         if(getCurrentAccessToken() != null) startActivity(new Intent(Login.this,home.class));
 
-        //instanciando botão de login facebook
-        loginButton = (LoginButton) findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(this);
-
-        findViewById(R.id.login_google).setOnClickListener(this);
+        // verificando validade de token facebook
+        if(AccessToken.getCurrentAccessToken() != null){
+            startActivity(new Intent(Login.this,home.class));
+        }
         buildGooglePlusConfigs();
 
-        findViewById(R.id.lblCadastreSe).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Login.this,CadastroActivity.class));
-            }
-        });
+        setContentView(R.layout.activity_login);
+
+        loginButton = (LoginButton) findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(this);
+        findViewById(R.id.login_google).setOnClickListener(this);
+        findViewById(R.id.lblCadastreSe).setOnClickListener(this);
     }
 
     public void buildGooglePlusConfigs() {
+        Log.d("Logger", "buildGooglePlusConfigs");
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
 
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
+        this.mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
     }
 
     private void signIn() {
+        Log.d("Logger", "signIn");
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
+        Log.d("Logger", "handleSignInResult");
         if (result.isSuccess()) {
             GoogleSignInAccount googleUser = result.getSignInAccount();
             String googleUserName = googleUser.getDisplayName();
@@ -107,9 +112,12 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("Logger", "onActivityResult");
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
+        } else{
+            callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -117,10 +125,12 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.login_google:
+                Log.d("Logger", "login google");
                 signIn();
                 break;
             // Click no botão de login do facebook
             case R.id.loginButton:
+                Log.d("Logger", "login facebook");
                 //permissões do facebook
                 loginButton.setReadPermissions("public_profile");
                 // criando request facebook
@@ -142,6 +152,8 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                         profileTracker.startTracking();
 
                         postFacebook(getCurrentAccessToken().getToken());
+                        startActivity(new Intent(Login.this,home.class));
+                        finish();
                     }
 
                     @Override
@@ -155,13 +167,15 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                     }
                 });
                 break;
+            case R.id.lblCadastreSe:
+                startActivity(new Intent(Login.this,CadastroActivity.class));
+                break;
         }
     }
 
     private void postFacebook(String token){
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-
         Call<ServerResponseLogin> call = apiService.loginFacebook(new AccessTokenJson(token));
         call.enqueue(new Callback<ServerResponseLogin>() {
             @Override
@@ -181,18 +195,21 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.d("Logger", "onConnectionFailed");
         Toast.makeText(this, "Conexao falhou", Toast.LENGTH_SHORT).show();
     }
 
     protected void onStart() {
         super.onStart();
+        Log.d("Logger", "onStart");
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
         if (opr.isDone()) {
             // If the user's cached credentials are valid, the OptionalPendingResult will be "done"
             // and the GoogleSignInResult will be available instantly.
             GoogleSignInResult result = opr.get();
             handleSignInResult(result);
-        } else {
+        }
+        else {
             // If the user has not previously signed in on this device or the sign-in has expired,
             // this asynchronous branch will attempt to sign in the user silently.  Cross-device
             // single sign-on will occur in this branch.
