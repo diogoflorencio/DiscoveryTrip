@@ -3,6 +3,8 @@ package com.example.diogo.discoverytrip;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -24,6 +26,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
+import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginManager;
@@ -33,6 +37,12 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+
+import static com.facebook.AccessToken.getCurrentAccessToken;
 
 public class home extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
@@ -96,7 +106,7 @@ public class home extends AppCompatActivity
             mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,
                     (LocationListener) Local);
             //Set log GPS
-            status_gps.setText("Carregando Localização");
+            status_gps.setText("Carregando Localização...");
             localizacao.setText("");
         }
 
@@ -168,10 +178,10 @@ public class home extends AppCompatActivity
         }
         if (id == R.id.logout) {
             Log.d("Logger", "logout");
-            signOutGooglePlus();
-            LoginManager.getInstance().logOut();
-            Intent intent = new Intent(home.this, Login.class);
-            startActivity(intent);
+            if(getCurrentAccessToken() != null) {
+                AccessToken.setCurrentAccessToken(null);
+            }else signOutGooglePlus();
+            startActivity(new Intent(home.this, Login.class));
             finish();
             return true;
         }
@@ -253,6 +263,24 @@ public class home extends AppCompatActivity
           }
       }
 
+    public void getEndereco(Location loc) {
+        //Rastreando endereço a partir das coordenadas
+        if (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0) {
+            try {
+                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+                List<Address> list = geocoder.getFromLocation(
+                        loc.getLatitude(), loc.getLongitude(), 1);
+                if (!list.isEmpty()) {
+                    Address DirCalle = list.get(0);
+                    localizacao.setText("Endereço localizado: \n"
+                            + DirCalle.getAddressLine(0));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
@@ -278,7 +306,7 @@ public class home extends AppCompatActivity
             String Text = "Coordenadas de localização atual: " + "\n Lat = "
                     + loc.getLatitude() + "\n Long = " + loc.getLongitude();
             status_gps.setText(Text);
-            //OK!
+            this.home.getEndereco(loc);
         }
 
         @Override
