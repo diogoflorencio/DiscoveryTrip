@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">DiscoveryTrip</string>
     <string name="facebook_app_id">218714921902397</string>
-    <string name="title_activity_home">home</string>
+    <string name="title_activity_home">HomeActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

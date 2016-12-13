@@ -24,13 +24,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.AccessToken;
-import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
-import com.facebook.login.LoginManager;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
@@ -44,10 +41,10 @@ import java.util.Locale;
 
 import static com.facebook.AccessToken.getCurrentAccessToken;
 
-public class home extends AppCompatActivity
+public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
-    // Dados Login facebook
+    // Dados LoginActivity facebook
     private ProfileTracker profileTracker;
 
     // TextView para log GPS
@@ -67,6 +64,7 @@ public class home extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("Logger", "Home onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -90,7 +88,7 @@ public class home extends AppCompatActivity
 
         //instanciando classe aux de localizacao
         Local = new Localizacao();
-        Local.setHome(this);
+        Local.setHomeActivity(this);
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED &&
@@ -181,7 +179,7 @@ public class home extends AppCompatActivity
             if(getCurrentAccessToken() != null) {
                 AccessToken.setCurrentAccessToken(null);
             }else signOutGooglePlus();
-            startActivity(new Intent(home.this, Login.class));
+            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
             finish();
             return true;
         }
@@ -207,7 +205,7 @@ public class home extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_localizacao:
-                new AlertDialog.Builder(home.this)
+                new AlertDialog.Builder(HomeActivity.this)
                         .setMessage("Localizção")
                         .show();
                 break;
@@ -218,11 +216,11 @@ public class home extends AppCompatActivity
 //                if(extras !=null) {
 //                    String googleUserName = extras.getString("googleName");
 //                    String googleUserEmail = extras.getString("googleEmail");
-//                    new AlertDialog.Builder(home.this)
+//                    new AlertDialog.Builder(HomeActivity.this)
 //                            .setMessage("Nomde: " + googleUserName + " Email: " + googleUserEmail)
 //                            .show();
 //                } else{
-//                    new AlertDialog.Builder(home.this)
+//                    new AlertDialog.Builder(HomeActivity.this)
 //                            .setMessage("Voce não logou com nenhuma rede social")
 //                            .show();
 //                }
@@ -288,14 +286,14 @@ public class home extends AppCompatActivity
 
     // Implementando classe localizacao
     public class Localizacao implements LocationListener {
-        home home;
+        HomeActivity HomeActivity;
 
-        public home getHome() {
-            return home;
+        public HomeActivity getHomeActivity() {
+            return HomeActivity;
         }
 
-        public void setHome(home home) {
-            this.home = home;
+        public void setHomeActivity(HomeActivity homeActivity) {
+            this.HomeActivity = homeActivity;
         }
 
         @Override
@@ -306,7 +304,7 @@ public class home extends AppCompatActivity
             String Text = "Coordenadas de localização atual: " + "\n Lat = "
                     + loc.getLatitude() + "\n Long = " + loc.getLongitude();
             status_gps.setText(Text);
-            this.home.getEndereco(loc);
+            this.HomeActivity.getEndereco(loc);
         }
 
         @Override

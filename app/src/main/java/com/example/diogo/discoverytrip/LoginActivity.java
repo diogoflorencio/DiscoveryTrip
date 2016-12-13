@@ -13,10 +13,6 @@ import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.Model.AccessTokenJson;
-import com.example.diogo.discoverytrip.Model.AppLoginJson;
-import com.example.diogo.discoverytrip.Model.UsuarioEnvio;
-import com.example.diogo.discoverytrip.REST.ServerResponses.AppLoginResponse;
-import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponseLogin;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ApiInterface;
@@ -48,7 +44,7 @@ import retrofit2.Response;
 
 import static com.facebook.AccessToken.getCurrentAccessToken;
 
-public class Login extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
     private static final int RC_SIGN_IN = 9001;
     private LoginButton loginButton;
@@ -62,7 +58,7 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.d("Logger", "Oncreate");
+        Log.d("Logger", "LoginActivity Oncreate");
 
         // iniciando SDK facebook
         FacebookSdk.sdkInitialize(getApplicationContext());
@@ -70,11 +66,11 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         setContentView(R.layout.activity_login);
 
         // verificando validade de token facebook
-        if(getCurrentAccessToken() != null) startActivity(new Intent(Login.this,home.class));
+        if(getCurrentAccessToken() != null) startActivity(new Intent(LoginActivity.this,HomeActivity.class));
 
         // verificando validade de token facebook
         if(AccessToken.getCurrentAccessToken() != null){
-            startActivity(new Intent(Login.this,home.class));
+            startActivity(new Intent(LoginActivity.this,HomeActivity.class));
         }
         buildGooglePlusConfigs();
 
@@ -114,10 +110,11 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
             String googleUserName = googleUser.getDisplayName();
             String googleUserEmail = googleUser.getEmail();
             //String googleUserPictureUrl = googleUser.getPhotoUrl().toString();
-            Intent intent = new Intent(Login.this,home.class);
+            Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
             intent.putExtra("googleName",googleUserName);
             intent.putExtra("googleEmail",googleUserEmail);
             startActivity(intent);
+            finish();
         }
     }
 
@@ -164,13 +161,14 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                         profileTracker.startTracking();
 
                         postFacebook(getCurrentAccessToken().getToken());
-                        startActivity(new Intent(Login.this,home.class));
+                        Log.d("Logger", "startActivity facebook");
+                        startActivity(new Intent(LoginActivity.this,HomeActivity.class));
                         finish();
                     }
 
                     @Override
                     public void onCancel() {
-                        Toast.makeText(getApplicationContext(),"Login cancelado",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),"LoginActivity cancelado",Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -180,13 +178,13 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
                 });
                 break;
             case R.id.lblCadastreSe:
-                startActivity(new Intent(Login.this,CadastroActivity.class));
+                startActivity(new Intent(LoginActivity.this,CadastroActivity.class));
                 break;
             case R.id.btnLoginApp:
                 try {
                     loginApp();
                 } catch (DataInputException e){
-                    Toast.makeText(Login.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
@@ -207,13 +205,13 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
 //        call.enqueue(new Callback<AppLoginResponse>() {
 //            @Override
 //            public void onResponse(Call<AppLoginResponse> call, Response<AppLoginResponse> response) {
-//                Toast.makeText(Login.this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(LoginActivity.this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show();
 //            }
 //
 //            @Override
 //            public void onFailure(Call<AppLoginResponse> call, Throwable t) {
 //                // Log error here since request failed
-//                Toast.makeText(Login.this, "Não foi possível realizar o cadastro!", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(LoginActivity.this, "Não foi possível realizar o cadastro!", Toast.LENGTH_SHORT).show();
 //                Log.e("App Server Error", t.toString());
 //            }
 //        });
@@ -226,14 +224,14 @@ public class Login extends AppCompatActivity implements GoogleApiClient.OnConnec
         call.enqueue(new Callback<ServerResponseLogin>() {
             @Override
             public void onResponse(Call<ServerResponseLogin> call, Response<ServerResponseLogin> response) {
-                startActivity(new Intent(Login.this,home.class));
-                finish();
+//                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+//                finish();
             }
 
             @Override
             public void onFailure(Call<ServerResponseLogin> call, Throwable t) {
                 // Log error here since request failed
-                Toast.makeText(Login.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("App Server Error", t.toString());
             }
         });
