@@ -53,7 +53,12 @@ public class CadastroActivity extends AppCompatActivity {
             call.enqueue(new Callback<ServerResponse>() {
                 @Override
                 public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-                    Toast.makeText(CadastroActivity.this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show();
+                    if(response.isSuccessful()) {
+                        Toast.makeText(CadastroActivity.this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show();
+                        Log.d("Response",response.body().getUsuario().getEmail());
+                    }else{
+                        Log.e("Server error",response.code()+"");
+                    }
                 }
 
                 @Override

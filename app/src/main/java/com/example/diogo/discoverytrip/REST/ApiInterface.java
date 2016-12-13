@@ -14,6 +14,7 @@ import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.HEAD;
 import retrofit2.http.Header;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 
@@ -32,6 +33,7 @@ public interface ApiInterface {
     @POST("api/facebook/login")
     Call<ServerResponseLogin> loginFacebook(@Body AccessTokenJson accessToken);
 
+    @Headers("Content-Type: application/json")
     @POST("api/login")
     Call<AppLoginResponse> appLogin(@Body AppLoginJson appLoginJson);
 

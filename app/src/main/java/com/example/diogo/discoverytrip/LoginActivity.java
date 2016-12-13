@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.Model.AccessTokenJson;
+import com.example.diogo.discoverytrip.Model.AppLoginJson;
+import com.example.diogo.discoverytrip.REST.ServerResponses.AppLoginResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponseLogin;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ApiInterface;
@@ -199,22 +201,27 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             throw new DataInputException("Digite email e senha");
         }
         
-//        ApiInterface apiService =
-//                ApiClient.getClient().create(ApiInterface.class);
-//        Call<AppLoginResponse> call = apiService.appLogin(new AppLoginJson(emailLogin.getText().toString(),senhaLogin.getText().toString()));
-//        call.enqueue(new Callback<AppLoginResponse>() {
-//            @Override
-//            public void onResponse(Call<AppLoginResponse> call, Response<AppLoginResponse> response) {
-//                Toast.makeText(LoginActivity.this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<AppLoginResponse> call, Throwable t) {
-//                // Log error here since request failed
-//                Toast.makeText(LoginActivity.this, "Não foi possível realizar o cadastro!", Toast.LENGTH_SHORT).show();
-//                Log.e("App Server Error", t.toString());
-//            }
-//        });
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+        Call<AppLoginResponse> call = apiService.appLogin(new AppLoginJson(emailLogin.getText().toString(),senhaLogin.getText().toString()));
+        call.enqueue(new Callback<AppLoginResponse>() {
+            @Override
+            public void onResponse(Call<AppLoginResponse> call, Response<AppLoginResponse> response) {
+                if(response.isSuccessful()) {
+                    Log.d("login","Server ok");
+                }
+                else{
+                    Log.d("Server",""+response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AppLoginResponse> call, Throwable t) {
+                // Log error here since request failed
+                Toast.makeText(LoginActivity.this, "Não foi possível realizar o login", Toast.LENGTH_SHORT).show();
+                Log.e("App Server Error", t.toString());
+            }
+        });
     }
 
     private void postFacebook(String token){
@@ -224,8 +231,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         call.enqueue(new Callback<ServerResponseLogin>() {
             @Override
             public void onResponse(Call<ServerResponseLogin> call, Response<ServerResponseLogin> response) {
-//                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
-//                finish();
+                if(response.isSuccessful()) {
+                    Log.d("Login","Server OK");
+                }
+                else{
+                    Log.e("Server",""+response.code());
+                }
             }
 
             @Override
