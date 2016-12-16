@@ -40,6 +40,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
+import java.util.Arrays;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -68,12 +70,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         setContentView(R.layout.activity_login);
 
         // verificando validade de token facebook
-        if(getCurrentAccessToken() != null) startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+        if(AccessToken.getCurrentAccessToken() != null)  startActivity(new Intent(LoginActivity.this,HomeActivity.class));
 
-        // verificando validade de token facebook
-        if(AccessToken.getCurrentAccessToken() != null){
-            startActivity(new Intent(LoginActivity.this,HomeActivity.class));
-        }
         buildGooglePlusConfigs();
 
         setContentView(R.layout.activity_login);
@@ -143,7 +141,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             case R.id.loginButton:
                 Log.d("Logger", "login facebook");
                 //permissões do facebook
-                loginButton.setReadPermissions("public_profile");
+                loginButton.setReadPermissions(Arrays.asList("public_profile","email"));
+
                 // criando request facebook
                 callbackManager = CallbackManager.Factory.create();
                 //logando ao facebook
