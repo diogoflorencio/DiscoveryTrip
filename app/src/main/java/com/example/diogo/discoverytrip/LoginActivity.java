@@ -199,6 +199,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 break;
             case R.id.lblCadastreSe:
                 startActivity(new Intent(LoginActivity.this,CadastroActivity.class));
+                finish();
                 break;
             case R.id.btnLoginApp:
                 try {

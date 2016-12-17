@@ -1,5 +1,6 @@
 package com.example.diogo.discoverytrip;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -67,10 +68,14 @@ public class CadastroActivity extends AppCompatActivity {
                     Toast.makeText(CadastroActivity.this, "Não foi possível realizar o cadastro!", Toast.LENGTH_SHORT).show();
                     Log.e("App Server Error", t.toString());
                 }
+
+
             });
         }catch (DataInputException e) {
             Toast.makeText(CadastroActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
         }
+        startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
+        finish();
     }
 
     private boolean verificarDados() throws DataInputException{
