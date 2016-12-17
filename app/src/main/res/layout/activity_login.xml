@@ -31,14 +31,14 @@
 
         <com.facebook.login.widget.LoginButton
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="42dp"
             android:id="@+id/loginButton"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="30dp" />
 
         <com.google.android.gms.common.SignInButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="195dp"
+            android:layout_height="35dp"
             android:id="@+id/login_google"
             android:layout_gravity="center_horizontal"
             tools:visivility="gone"
@@ -96,12 +96,6 @@
             android:layout_gravity="center_horizontal"
             android:drawableLeft="@android:drawable/ic_lock_idle_lock" />
 
-        <Button
-            android:text="Login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnLoginApp" />
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -115,6 +109,19 @@
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:gravity="bottom|center_horizontal" />
+
+            <Button
+                android:text="Login"
+                android:layout_gravity="center_horizontal"
+                android:id="@+id/btnLoginApp"
+                android:background="@drawable/side_nav_bar"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="45dp"
+                android:layout_width="195dp"
+                android:elevation="0dp"
+                android:layout_height="30dp"
+                />
         </RelativeLayout>
 
     </LinearLayout>
