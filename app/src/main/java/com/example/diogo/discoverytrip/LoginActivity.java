@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
 import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
@@ -58,6 +59,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private EditText emailLogin, senhaLogin;
     private Button btnAppLogin;
 
+    // vai toma
+    private Button vai_toma;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +85,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         loginButton = (LoginButton) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(this);
+
         findViewById(R.id.login_google).setOnClickListener(this);
         findViewById(R.id.lblCadastreSe).setOnClickListener(this);
         btnAppLogin = (Button) findViewById(R.id.btnLoginApp);
@@ -199,18 +204,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         Toast.makeText(getApplicationContext(),"Ocorreu um erro ao realizar login",Toast.LENGTH_SHORT).show();
                     }
                 });
-                break;
-            case R.id.lblCadastreSe:
-                startActivity(new Intent(LoginActivity.this,CadastroActivity.class));
-                finish();
-                break;
-            case R.id.btnLoginApp:
-                try {
-                    loginApp();
-                } catch (DataInputException e){
-                    Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                }
-                break;
+                break; 
         }
     }
 
