@@ -70,7 +70,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         setContentView(R.layout.activity_login);
 
         // verificando validade de token facebook
-        if(AccessToken.getCurrentAccessToken() != null)  startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+        if(AccessToken.getCurrentAccessToken() != null){
+            startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+            finish();
+        }
 
         buildGooglePlusConfigs();
 
