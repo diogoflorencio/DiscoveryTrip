@@ -122,6 +122,22 @@
                 android:elevation="0dp"
                 android:layout_height="30dp"
                 />
+
+            <Button
+                android:text="esqueceu a senha?"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/recuperarSenha"
+                android:textColor="@color/colorAccent"
+                android:gravity="bottom|center_horizontal"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:height="@dimen/cardview_default_elevation"
+                android:minHeight="15dp"
+                android:background="@color/cardview_light_background"
+                android:minWidth="6dip"
+                android:elevation="1dp" />
+
         </RelativeLayout>
 
     </LinearLayout>

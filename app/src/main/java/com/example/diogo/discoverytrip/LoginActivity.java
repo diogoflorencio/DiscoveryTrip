@@ -57,6 +57,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private GoogleApiClient mGoogleApiClient;
     private EditText emailLogin, senhaLogin;
     private Button btnAppLogin;
+    private Button recuperarSenha;
 
 
     @Override
@@ -81,10 +82,15 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         loginButton = (LoginButton) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(this);
+
         findViewById(R.id.login_google).setOnClickListener(this);
         findViewById(R.id.lblCadastreSe).setOnClickListener(this);
+
         btnAppLogin = (Button) findViewById(R.id.btnLoginApp);
         btnAppLogin.setOnClickListener(this);
+
+       recuperarSenha = (Button) findViewById(R.id.recuperarSenha);
+       recuperarSenha.setOnClickListener(this);
 
     }
 
@@ -210,6 +216,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 } catch (DataInputException e){
                     Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
+                break;
+            case R.id.recuperarSenha:
+                startActivity(new Intent(LoginActivity.this,RecuperarSenhaActivity.class));
                 break;
         }
     }
