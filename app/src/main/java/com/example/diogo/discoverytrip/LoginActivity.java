@@ -58,10 +58,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private GoogleApiClient mGoogleApiClient;
     private EditText emailLogin, senhaLogin;
     private Button btnAppLogin;
-
-    // vai toma
-    private Button vai_toma;
-
+    private Button recuperarSenha;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,9 +85,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         findViewById(R.id.login_google).setOnClickListener(this);
         findViewById(R.id.lblCadastreSe).setOnClickListener(this);
+
         btnAppLogin = (Button) findViewById(R.id.btnLoginApp);
         btnAppLogin.setOnClickListener(this);
-
+        
     }
 
     public void buildGooglePlusConfigs() {
@@ -160,6 +158,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.recuperarSenha:
+               // startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                break;
+
             case R.id.login_google:
                 Log.d("Logger", "login google");
                 signIn();
