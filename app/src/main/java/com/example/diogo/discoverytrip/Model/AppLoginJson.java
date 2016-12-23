@@ -9,7 +9,7 @@ import static android.R.attr.type;
  */
 
 public class AppLoginJson {
-    private static final String id = "discoveryTrip", clientsecret = "0ca9b9b3-1370-44e0-b42e-01cf6f6fc04c";
+    private static final String GRANT_TYPE = "client_credentials";
 
     @SerializedName("grant_type")
     private String grant_type;
@@ -20,34 +20,10 @@ public class AppLoginJson {
     @SerializedName("password")
     private String password;
 
-    @SerializedName("client_id")
-    private String client_id;
-
-    @SerializedName("client_secret")
-    private String client_secret;
-
-    public String getIdclient() {
-        return client_id;
-    }
-
-    public void setIdclient(String idclient) {
-        this.client_id = idclient;
-    }
-
-    public String getSecret() {
-        return client_secret;
-    }
-
-    public void setSecret(String secret) {
-        this.client_secret = secret;
-    }
-
     public AppLoginJson(String username, String password){
         this.username = username;
         this.password = password;
-        grant_type = "password";
-        this.client_id = id;
-        this.client_secret = clientsecret;
+        grant_type = GRANT_TYPE;
     }
 
     public String getType() {
