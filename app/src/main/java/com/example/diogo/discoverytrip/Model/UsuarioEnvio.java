@@ -2,9 +2,6 @@ package com.example.diogo.discoverytrip.Model;
 
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by Renato on 11/12/2016.
- */
 
 public class UsuarioEnvio {
 

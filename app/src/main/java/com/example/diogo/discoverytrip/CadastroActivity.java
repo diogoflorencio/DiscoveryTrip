@@ -22,7 +22,6 @@ import retrofit2.Response;
 public class CadastroActivity extends AppCompatActivity {
 
     private EditText txtnome,email,senha,confsenha;
-    private Button btnCadastrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +32,7 @@ public class CadastroActivity extends AppCompatActivity {
         email = (EditText) findViewById(R.id.txtEmail);
         senha = (EditText) findViewById(R.id.txtSenha);
         confsenha = (EditText) findViewById(R.id.txtConfSenha);
-        btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
+        Button btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
 
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override

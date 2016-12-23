@@ -1,7 +1,5 @@
 package com.example.diogo.discoverytrip;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,14 +9,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 
 public class PerfilFragment extends Fragment implements View.OnClickListener {
     public EditText nameVal_txt, emailVal_txt;
-    private Button confirmarBtn;
 
     public PerfilFragment() {
         // Required empty public constructor
@@ -30,7 +26,7 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         Log.d("Logger", "PerfilFragment onCreate");
         View rootView = inflater.inflate(R.layout.fragment_perfil, container, false);
 
-        confirmarBtn = (Button) rootView.findViewById(R.id.pfConfirm_btn);
+        Button confirmarBtn = (Button) rootView.findViewById(R.id.pfConfirm_btn);
         confirmarBtn.setOnClickListener(this);
 
         nameVal_txt = (EditText) rootView.findViewById(R.id.pfNameVal_txt);

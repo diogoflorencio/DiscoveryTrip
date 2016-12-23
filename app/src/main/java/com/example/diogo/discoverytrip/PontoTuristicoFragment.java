@@ -17,7 +17,6 @@ import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 
 public class PontoTuristicoFragment extends Fragment implements View.OnClickListener {
     public EditText nameVal_txt, catgVal_txt, descVal_txt;
-    private Button cadastrarBtn;
 
     public PontoTuristicoFragment() {
         // Required empty public constructor
@@ -29,7 +28,7 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
         Log.d("Logger", "PontoTuristicoFragment onCreate");
         View rootView = inflater.inflate(R.layout.fragment_ponto_turistico, container, false);
 
-        cadastrarBtn = (Button) rootView.findViewById(R.id.pntRegister_btn);
+        Button cadastrarBtn = (Button) rootView.findViewById(R.id.pntRegister_btn);
         cadastrarBtn.setOnClickListener(this);
 
         nameVal_txt = (EditText) rootView.findViewById(R.id.pntNameVal_txt);

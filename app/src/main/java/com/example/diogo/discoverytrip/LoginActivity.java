@@ -55,9 +55,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private CallbackManager callbackManager;
     private ProfileTracker profileTracker;
     private GoogleApiClient mGoogleApiClient;
-    private EditText emailLogin, senhaLogin;
-    private Button btnAppLogin;
-    private Button recuperarSenha;
 
 
     @Override
@@ -86,10 +83,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         findViewById(R.id.login_google).setOnClickListener(this);
         findViewById(R.id.lblCadastreSe).setOnClickListener(this);
 
-        btnAppLogin = (Button) findViewById(R.id.btnLoginApp);
+        Button btnAppLogin = (Button) findViewById(R.id.btnLoginApp);
         btnAppLogin.setOnClickListener(this);
 
-       recuperarSenha = (Button) findViewById(R.id.recuperarSenha);
+        Button recuperarSenha = (Button) findViewById(R.id.recuperarSenha);
        recuperarSenha.setOnClickListener(this);
 
     }
@@ -226,8 +223,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private void loginApp()throws DataInputException{
         Log.d("Logger", "LoginActivity loginApp");
-        emailLogin = (EditText) findViewById(R.id.txtLoginEmail);
-        senhaLogin = (EditText) findViewById(R.id.txtLoginSenha);
+        EditText emailLogin = (EditText) findViewById(R.id.txtLoginEmail);
+        EditText senhaLogin = (EditText) findViewById(R.id.txtLoginSenha);
 
         if(emailLogin.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_email));
@@ -239,7 +236,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-        Call<AppLoginResponse> call = apiService.appLogin(new AppLoginJson(emailLogin.getText().toString(),senhaLogin.getText().toString()));
+        Call<AppLoginResponse> call = apiService.appLogin(new AppLoginJson(emailLogin.getText().toString(), senhaLogin.getText().toString()));
         call.enqueue(new Callback<AppLoginResponse>() {
             @Override
             public void onResponse(Call<AppLoginResponse> call, Response<AppLoginResponse> response) {
@@ -308,7 +305,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             // single sign-on will occur in this branch.
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
-                public void onResult(GoogleSignInResult googleSignInResult) {
+                public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
                     handleSignInResult(googleSignInResult);
                 }
             });

@@ -17,7 +17,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -291,7 +290,7 @@ public class HomeActivity extends AppCompatActivity
             return HomeActivity;
         }
 
-        public void setHomeActivity(HomeActivity homeActivity) {
+        private void setHomeActivity(HomeActivity homeActivity) {
             Log.d("Logger", "Localizacao setHomeActivity");
             this.HomeActivity = homeActivity;
         }
