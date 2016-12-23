@@ -40,6 +40,7 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
     }
 
     public void onClick(View view) {
+        Log.d("Logger", "PontoTuristicoFragment onClick");
         switch (view.getId()) {
             case R.id.pfConfirm_btn:
                 Log.d("Logger", "PontoTuristicoFragment botao confirmar");
@@ -56,6 +57,7 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
     }
 
     private void backToHome() {
+        Log.d("Logger", "PontoTuristicoFragment backToHome");
         FragmentManager fragmentManager = getFragmentManager();
         HomeFragment fragment = new HomeFragment();
 
@@ -64,14 +66,12 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
     }
 
     private void validateFields() throws DataInputException {
-        Log.d("Logger", "PontoTuristicoFragment validate");
+        Log.d("Logger", "PontoTuristicoFragment validateFields");
         if(nameVal_txt.getText().toString().trim().isEmpty()){
-            Log.d("Logger", "PontoTuristicoFragment validate1");
             throw new DataInputException("Informe um nome");
         }
 
         if(emailVal_txt.getText().toString().trim().isEmpty()){
-            Log.d("Logger", "PontoTuristicoFragment validate2");
             throw new DataInputException("Informe um email");
         }
     }

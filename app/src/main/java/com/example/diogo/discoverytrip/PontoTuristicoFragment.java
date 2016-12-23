@@ -41,6 +41,7 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View view) {
+        Log.d("Logger", "PontoTuristicoFragment onClick");
         switch (view.getId()) {
             case R.id.pntRegister_btn:
                 Log.d("Logger", "PontoTuristicoFragment botao registrar");
@@ -57,6 +58,7 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
     }
 
     private void backToHome() {
+        Log.d("Logger", "PontoTuristicoFragment backToHome");
         FragmentManager fragmentManager = getFragmentManager();
         HomeFragment fragment = new HomeFragment();
 
@@ -67,17 +69,14 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
     private void validateFields() throws DataInputException {
         Log.d("Logger", "PontoTuristicoFragment validate");
         if(nameVal_txt.getText().toString().trim().isEmpty()){
-            Log.d("Logger", "PontoTuristicoFragment validate1");
             throw new DataInputException("Informe um nome");
         }
 
         if(catgVal_txt.getText().toString().trim().isEmpty()){
-            Log.d("Logger", "PontoTuristicoFragment validate2");
             throw new DataInputException("Informe uma categoria");
         }
 
         if(descVal_txt.getText().toString().trim().isEmpty()){
-            Log.d("Logger", "PontoTuristicoFragment validate3");
             throw new DataInputException("Informe uma descrição");
         }
     }

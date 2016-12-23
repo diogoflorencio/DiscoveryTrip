@@ -127,6 +127,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     public void buildGooglePlusConfigs() {
+        Log.d("Logger", "Home buildGooglePlusConfigs");
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -139,6 +140,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
+        Log.d("Logger", "Home onBackPressed");
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
@@ -149,6 +151,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d("Logger", "Home onCreateOptionsMenu");
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
@@ -159,14 +162,16 @@ public class HomeActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        Log.d("Logger", "Home onOptionsItemSelected");
         int id = item.getItemId();
-
+//TODO
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Log.d("Logger", "Home action_settings");
             return true;
         }
         if (id == R.id.logout) {
-            Log.d("Logger", "logout");
+            Log.d("Logger", "Home logout");
             if(getCurrentAccessToken() != null) {
                 AccessToken.setCurrentAccessToken(null);
             }else signOutGooglePlus();
@@ -178,6 +183,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void signOutGooglePlus() {
+        Log.d("Logger", "Home signOutGooglePlus");
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
                     @Override
@@ -191,17 +197,21 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
+        Log.d("Logger", "Home onNavigationItemSelected");
         int id = item.getItemId();
         Fragment fragment = null;
 
         switch (id) {
             case R.id.nav_localizacao:
+                Log.d("Logger", "Home localizacao");
                 fragment = new LocalizacaoFragment();
                 break;
             case R.id.nav_perfil:
+                Log.d("Logger", "Home perfil");
                 fragment = new PerfilFragment();
                 break;
             case R.id.nav_ponto_turistico:
+                Log.d("Logger", "Home ponto turistico");
                 fragment = new PontoTuristicoFragment();
                 break;
         }
@@ -222,6 +232,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     private void createHomeFragment() {
+        Log.d("Logger", "Home createHomeFragment");
         FragmentManager fragmentManager = getSupportFragmentManager();
         HomeFragment fragment = new HomeFragment();
 
@@ -230,6 +241,7 @@ public class HomeActivity extends AppCompatActivity
 
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        Log.d("Logger", "Home onRequestPermissionsResult");
         if (requestCode == REQUEST_LOCATION) {
             if (grantResults.length == 1
                     && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -249,6 +261,7 @@ public class HomeActivity extends AppCompatActivity
 
     public void getEndereco(Location loc) {
         //Rastreando endereço a partir das coordenadas
+        Log.d("Logger", "Home getEndereco");
         if (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0) {
             try {
                 Geocoder geocoder = new Geocoder(this, Locale.getDefault());
@@ -267,7 +280,7 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-
+        Log.d("Logger", "Home onConnectionFailed");
     }
 
     // Implementando classe localizacao
@@ -275,16 +288,19 @@ public class HomeActivity extends AppCompatActivity
         HomeActivity HomeActivity;
 
         public HomeActivity getHomeActivity() {
+            Log.d("Logger", "Localizacao HomeActivity");
             return HomeActivity;
         }
 
         public void setHomeActivity(HomeActivity homeActivity) {
+            Log.d("Logger", "Localizacao setHomeActivity");
             this.HomeActivity = homeActivity;
         }
 
         @Override
         public void onLocationChanged(Location loc) {
             // Obtendo coordenadas do GPS
+            Log.d("Logger", "Localizacao onLocationChanged");
             loc.getLatitude();
             loc.getLongitude();
             String Text = "Coordenadas de localização atual: " + "\n Lat = "
@@ -296,17 +312,20 @@ public class HomeActivity extends AppCompatActivity
         @Override
         public void onProviderDisabled(String provider) {
             // GPS desativado
+            Log.d("Logger", "Localizacao onProviderDisabled");
             status_gps.setText("GPS Desativado");
         }
 
         @Override
         public void onProviderEnabled(String provider) {
             // GPS ativado
+            Log.d("Logger", "Localizacao onProviderEnabled");
             status_gps.setText("GPS Ativado");
         }
 
         @Override
         public void onStatusChanged(String provider, int status, Bundle extras) {
+            Log.d("Logger", "Localizacao onStatusChanged");
             // Método de monitoranmento dos serviços do de GPS
             // Status do provedor GPS:
             // OUT_OF_SERVICE -> Servidor fora de serviço

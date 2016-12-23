@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     public void buildGooglePlusConfigs() {
-        Log.d("Logger", "buildGooglePlusConfigs");
+        Log.d("Logger", "LoginActivity buildGooglePlusConfigs");
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -107,13 +107,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void signIn() {
-        Log.d("Logger", "signIn");
+        Log.d("Logger", "LoginActivity signIn");
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
-        Log.d("Logger", "handleSignInResult");
+        Log.d("Logger", "LoginActivity handleSignInResult");
         if (result.isSuccess()) {
             GoogleSignInAccount googleUser = result.getSignInAccount();
             Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
@@ -147,7 +147,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("Logger", "onActivityResult");
+        Log.d("Logger", "LoginActivity onActivityResult");
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
@@ -158,14 +158,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onClick(View view) {
+        Log.d("Logger", "LoginActivity onClick");
         switch (view.getId()) {
             case R.id.login_google:
-                Log.d("Logger", "login google");
+                Log.d("Logger", "LoginActivity login google");
                 signIn();
                 break;
-            // Click no botão de login do facebook
             case R.id.loginButton:
-                Log.d("Logger", "login facebook");
+                Log.d("Logger", "LoginActivity login facebook");
                 //permissões do facebook
                 loginButton.setReadPermissions(Arrays.asList("public_profile","email"));
 
@@ -205,10 +205,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 });
                 break;
             case R.id.lblCadastreSe:
+                Log.d("Logger", "LoginActivity cadastrar");
                 startActivity(new Intent(LoginActivity.this,CadastroActivity.class));
                 finish();
                 break;
             case R.id.btnLoginApp:
+                Log.d("Logger", "LoginActivity login padrão");
                 try {
                     loginApp();
                 } catch (DataInputException e){
@@ -216,12 +218,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 }
                 break;
             case R.id.recuperarSenha:
+                Log.d("Logger", "LoginActivity recuperar senha");
                 startActivity(new Intent(LoginActivity.this,RecuperarSenhaActivity.class));
                 break;
         }
     }
 
     private void loginApp()throws DataInputException{
+        Log.d("Logger", "LoginActivity loginApp");
         emailLogin = (EditText) findViewById(R.id.txtLoginEmail);
         senhaLogin = (EditText) findViewById(R.id.txtLoginSenha);
 
@@ -254,6 +258,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void postFacebook(String token){
+        Log.d("Logger", "LoginActivity postFacebook");
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
         Call<ServerResponseLogin> call = apiService.loginFacebook(new AccessTokenJson(token));
@@ -279,11 +284,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+        Log.d("Logger", "LoginActivity onConnectionFailed");
         Log.d("Logger", "onConnectionFailed");
         Toast.makeText(this, "Conexao falhou", Toast.LENGTH_SHORT).show();
     }
 
     protected void onStart() {
+        Log.d("Logger", "LoginActivity onStart");
         super.onStart();
         Log.d("Logger", "onStart");
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
