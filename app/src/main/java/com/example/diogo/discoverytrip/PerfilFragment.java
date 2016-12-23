@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 
 public class PerfilFragment extends Fragment implements View.OnClickListener {
     public EditText nameVal_txt, emailVal_txt;
@@ -32,8 +35,11 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         confirmarBtn = (Button) rootView.findViewById(R.id.pfConfirm_btn);
         confirmarBtn.setOnClickListener(this);
 
-        name = getArguments().getString("googleName");
-        email = getArguments().getString("googleEmail");
+        //name = getArguments().getString("googleName");
+        //email = getArguments().getString("googleEmail");
+
+        nameVal_txt = (EditText) rootView.findViewById(R.id.pfNameVal_txt);
+        emailVal_txt = (EditText) rootView.findViewById(R.id.pfEmailVal_txt);
 
         return rootView;
     }
@@ -41,7 +47,14 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.pfConfirm_btn:
-                backToHome();
+                Log.d("Logger", "PontoTuristicoFragment botao confirmar");
+                try {
+                    validateFields();
+                    backToHome();
+                        //logica aqui
+                } catch (DataInputException exception){
+                    Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
+                }
                 break;
         }
     }
@@ -52,5 +65,18 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
 
         fragmentManager.beginTransaction().replace(R.id.content_home, fragment
         ).commit();
+    }
+
+    private void validateFields() throws DataInputException {
+        Log.d("Logger", "PontoTuristicoFragment validate");
+        if(nameVal_txt.getText().toString().trim().isEmpty()){
+            Log.d("Logger", "PontoTuristicoFragment validate1");
+            throw new DataInputException("Informe um nome");
+        }
+
+        if(emailVal_txt.getText().toString().trim().isEmpty()){
+            Log.d("Logger", "PontoTuristicoFragment validate2");
+            throw new DataInputException("Informe um email");
+        }
     }
 }
