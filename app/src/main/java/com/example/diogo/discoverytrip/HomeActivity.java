@@ -124,6 +124,7 @@ public class HomeActivity extends AppCompatActivity
         buildGooglePlusConfigs();
 
         //loadGooglePlusData();
+        createHomeFragment();
     }
 
 //    public void loadGooglePlusData() {
@@ -205,25 +206,13 @@ public class HomeActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_localizacao:
-                new AlertDialog.Builder(HomeActivity.this)
-                        .setMessage("Localizção")
-                        .show();
+                fragment = new LocalizacaoFragment();
                 break;
             case R.id.nav_perfil:
                 fragment = new PerfilFragment();
-//                Bundle extras = getIntent().getExtras();
-//
-//                if(extras !=null) {
-//                    String googleUserName = extras.getString("googleName");
-//                    String googleUserEmail = extras.getString("googleEmail");
-//                    new AlertDialog.Builder(HomeActivity.this)
-//                            .setMessage("Nomde: " + googleUserName + " Email: " + googleUserEmail)
-//                            .show();
-//                } else{
-//                    new AlertDialog.Builder(HomeActivity.this)
-//                            .setMessage("Voce não logou com nenhuma rede social")
-//                            .show();
-//                }
+                break;
+            case R.id.nav_ponto_turistico:
+                fragment = new PontoTuristicoFragment();
                 break;
         }
 
@@ -240,6 +229,14 @@ public class HomeActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void createHomeFragment() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        HomeFragment fragment = new HomeFragment();
+
+        //fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        fragmentManager.beginTransaction().replace(R.id.content_home, fragment).commit();
     }
 
 
