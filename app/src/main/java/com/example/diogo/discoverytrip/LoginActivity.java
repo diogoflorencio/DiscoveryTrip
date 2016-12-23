@@ -195,12 +195,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                     @Override
                     public void onCancel() {
-                        Toast.makeText(getApplicationContext(),"LoginActivity cancelado",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),R.string.login_cancel,Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(FacebookException error) {
-                        Toast.makeText(getApplicationContext(),"Ocorreu um erro ao realizar login",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),R.string.login_error,Toast.LENGTH_SHORT).show();
                     }
                 });
                 break;
@@ -251,7 +251,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onFailure(Call<AppLoginResponse> call, Throwable t) {
                 // Log error here since request failed
-                Toast.makeText(LoginActivity.this, "Não foi possível realizar o login", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, R.string.login_unable, Toast.LENGTH_SHORT).show();
                 Log.e("App Server Error", t.toString());
             }
         });
@@ -285,8 +285,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d("Logger", "LoginActivity onConnectionFailed");
-        Log.d("Logger", "onConnectionFailed");
-        Toast.makeText(this, "Conexao falhou", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.conection_failed, Toast.LENGTH_SHORT).show();
     }
 
     protected void onStart() {

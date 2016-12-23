@@ -104,7 +104,7 @@ public class HomeActivity extends AppCompatActivity
             mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,
                     (LocationListener) Local);
             //Set log GPS
-            status_gps.setText("Carregando Localização...");
+            status_gps.setText(R.string.gps_loading);
             localizacao.setText("");
         }
 
@@ -251,7 +251,7 @@ public class HomeActivity extends AppCompatActivity
                //Requisitando localização do provedor de GPS
                 mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (LocationListener) Local);
                 // Set log GPS
-                status_gps.setText("Carregando Localização");
+                status_gps.setText(R.string.gps_loading);
                 localizacao.setText("");
 
               } else; //Usuário rejeitou permissões
@@ -268,7 +268,7 @@ public class HomeActivity extends AppCompatActivity
                         loc.getLatitude(), loc.getLongitude(), 1);
                 if (!list.isEmpty()) {
                     Address DirCalle = list.get(0);
-                    localizacao.setText("Endereço localizado: \n"
+                    localizacao.setText(R.string.address_found + "\n"
                             + DirCalle.getAddressLine(0));
                 }
             } catch (IOException e) {
@@ -302,8 +302,8 @@ public class HomeActivity extends AppCompatActivity
             Log.d("Logger", "Localizacao onLocationChanged");
             loc.getLatitude();
             loc.getLongitude();
-            String Text = "Coordenadas de localização atual: " + "\n Lat = "
-                    + loc.getLatitude() + "\n Long = " + loc.getLongitude();
+            String Text = R.string.current_coordinates + "\n " + R.string.gps_lat
+                    + loc.getLatitude() + "\n " + R.string.gps_long + loc.getLongitude();
             status_gps.setText(Text);
             this.HomeActivity.getEndereco(loc);
         }
@@ -312,14 +312,14 @@ public class HomeActivity extends AppCompatActivity
         public void onProviderDisabled(String provider) {
             // GPS desativado
             Log.d("Logger", "Localizacao onProviderDisabled");
-            status_gps.setText("GPS Desativado");
+            status_gps.setText(R.string.gps_deactivated);
         }
 
         @Override
         public void onProviderEnabled(String provider) {
             // GPS ativado
             Log.d("Logger", "Localizacao onProviderEnabled");
-            status_gps.setText("GPS Ativado");
+            status_gps.setText(R.string.gps_activated);
         }
 
         @Override

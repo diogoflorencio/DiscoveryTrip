@@ -57,7 +57,7 @@ public class CadastroActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                     if(response.isSuccessful()) {
-                        Toast.makeText(CadastroActivity.this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CadastroActivity.this, R.string.cadastro_sucesso, Toast.LENGTH_SHORT).show();
                         Log.d("Response",response.body().getUsuario().getEmail());
                     }else{
                         Log.e("Server error",response.code()+"");
@@ -67,7 +67,7 @@ public class CadastroActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<ServerResponse> call, Throwable t) {
                     // Log error here since request failed
-                    Toast.makeText(CadastroActivity.this, "Não foi possível realizar o cadastro!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CadastroActivity.this, R.string.cadastro_falha, Toast.LENGTH_SHORT).show();
                     Log.e("App Server Error", t.toString());
                 }
 
