@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ResponseAbst;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponse;
 import com.example.diogo.discoverytrip.Model.UsuarioEnvio;
 import com.example.diogo.discoverytrip.REST.ApiClient;
@@ -51,20 +53,22 @@ public class CadastroActivity extends AppCompatActivity {
             ApiInterface apiService =
                     ApiClient.getClient().create(ApiInterface.class);
 
-            Call<ServerResponse> call = apiService.cadastrarUsuario(new UsuarioEnvio(txtnome.getText().toString(), email.getText().toString(), senha.getText().toString()));
-            call.enqueue(new Callback<ServerResponse>() {
+            Call<ResponseAbst> call = apiService.cadastrarUsuario(new UsuarioEnvio(txtnome.getText().toString(), email.getText().toString(), senha.getText().toString()));
+            call.enqueue(new Callback<ResponseAbst>() {
                 @Override
-                public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                public void onResponse(Call<ResponseAbst> call, Response<ResponseAbst> response) {
                     if(response.isSuccessful()) {
                         Toast.makeText(CadastroActivity.this, R.string.cadastro_sucesso, Toast.LENGTH_SHORT).show();
-                        Log.d("Response",response.body().getUsuario().getEmail());
+                        startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
+                        finish();
                     }else{
-                        Log.e("Server error",response.code()+"");
+                        ErrorResponse errorResponse = (ErrorResponse) response.body();
+                        Toast.makeText(CadastroActivity.this, "Erro: " + errorResponse.getErrorDescription(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
-                public void onFailure(Call<ServerResponse> call, Throwable t) {
+                public void onFailure(Call<ResponseAbst> call, Throwable t) {
                     // Log error here since request failed
                     Toast.makeText(CadastroActivity.this, R.string.cadastro_falha, Toast.LENGTH_SHORT).show();
                     Log.e("App Server Error", t.toString());
@@ -75,8 +79,6 @@ public class CadastroActivity extends AppCompatActivity {
         }catch (DataInputException e) {
             Toast.makeText(CadastroActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
         }
-        startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
-        finish();
     }
 
     private boolean verificarDados() throws DataInputException{
