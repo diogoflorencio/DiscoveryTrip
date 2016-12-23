@@ -26,6 +26,7 @@ public class CadastroActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("Logger", "CadastroActivity onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
         txtnome = (EditText) findViewById(R.id.txtNome);
@@ -44,6 +45,7 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     private void cadastrarUsuario(){
+        Log.d("Logger", "cadastrarUsuario onCreate");
         try {
             verificarDados();
 
@@ -79,6 +81,7 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     private boolean verificarDados() throws DataInputException{
+        Log.d("Logger", "verificarDados onCreate");
         if(txtnome.getText().toString().trim().isEmpty()){
             throw new DataInputException("Digite seu nome!");
         }

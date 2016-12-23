@@ -164,20 +164,19 @@ public class HomeActivity extends AppCompatActivity
         // as you specify a parent activity in AndroidManifest.xml.
         Log.d("Logger", "Home onOptionsItemSelected");
         int id = item.getItemId();
-//TODO
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            Log.d("Logger", "Home action_settings");
-            return true;
-        }
-        if (id == R.id.logout) {
-            Log.d("Logger", "Home logout");
-            if(getCurrentAccessToken() != null) {
-                AccessToken.setCurrentAccessToken(null);
-            }else signOutGooglePlus();
-            startActivity(new Intent(HomeActivity.this, LoginActivity.class));
-            finish();
-            return true;
+
+        switch (id) {
+            case R.id.action_settings:
+                Log.d("Logger", "Home action_settings");
+                return true;
+            case R.id.logout:
+                Log.d("Logger", "Home logout");
+                if (getCurrentAccessToken() != null) {
+                    AccessToken.setCurrentAccessToken(null);
+                } else signOutGooglePlus();
+                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -187,7 +186,7 @@ public class HomeActivity extends AppCompatActivity
         Auth.GoogleSignInApi.signOut(mGoogleApiClient).setResultCallback(
                 new ResultCallback<Status>() {
                     @Override
-                    public void onResult(Status status) {
+                    public void onResult(@NonNull Status status) {
                         // [START_EXCLUDE]
                         // [END_EXCLUDE]
                     }
@@ -195,7 +194,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
         Log.d("Logger", "Home onNavigationItemSelected");
         int id = item.getItemId();
@@ -240,7 +239,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
 
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         Log.d("Logger", "Home onRequestPermissionsResult");
         if (requestCode == REQUEST_LOCATION) {
             if (grantResults.length == 1
