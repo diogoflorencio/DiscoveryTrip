@@ -116,14 +116,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Log.d("Logger", "handleSignInResult");
         if (result.isSuccess()) {
             GoogleSignInAccount googleUser = result.getSignInAccount();
-            String googleUserName = googleUser.getDisplayName();
-            String googleUserEmail = googleUser.getEmail();
-            //String googleUserPictureUrl = googleUser.getPhotoUrl().toString();
             Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
-            intent.putExtra("googleName",googleUserName);
-            intent.putExtra("googleEmail",googleUserEmail);
-            Log.d("Logger", "Nome");
-            Log.d("Logger", googleUser.getDisplayName());
+
+            try {
+                Log.d("Logger", "Nome");
+                Log.d("Logger", googleUser.getDisplayName());
+            }catch (Exception e){}
             try {
                 Log.d("Logger", "Id token");
                 Log.d("Logger", googleUser.getIdToken());

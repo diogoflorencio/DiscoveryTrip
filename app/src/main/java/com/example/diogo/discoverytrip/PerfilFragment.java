@@ -18,8 +18,6 @@ import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 
 public class PerfilFragment extends Fragment implements View.OnClickListener {
     public EditText nameVal_txt, emailVal_txt;
-    private String name;
-    private String email;
     private Button confirmarBtn;
 
     public PerfilFragment() {
@@ -35,9 +33,6 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         confirmarBtn = (Button) rootView.findViewById(R.id.pfConfirm_btn);
         confirmarBtn.setOnClickListener(this);
 
-        //name = getArguments().getString("googleName");
-        //email = getArguments().getString("googleEmail");
-
         nameVal_txt = (EditText) rootView.findViewById(R.id.pfNameVal_txt);
         emailVal_txt = (EditText) rootView.findViewById(R.id.pfEmailVal_txt);
 
@@ -51,7 +46,8 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
                 try {
                     validateFields();
                     backToHome();
-                        //logica aqui
+                    //logica aqui
+                    //precisa fazer um post e mandar os dados atualizados pro servidor
                 } catch (DataInputException exception){
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
                 }

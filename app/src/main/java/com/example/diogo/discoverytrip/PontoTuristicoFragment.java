@@ -17,9 +17,6 @@ import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 
 public class PontoTuristicoFragment extends Fragment implements View.OnClickListener {
     public EditText nameVal_txt, catgVal_txt, descVal_txt;
-    private String name;
-    private String category;
-    private String description;
     private Button cadastrarBtn;
 
     public PontoTuristicoFragment() {
@@ -34,10 +31,6 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
 
         cadastrarBtn = (Button) rootView.findViewById(R.id.pntRegister_btn);
         cadastrarBtn.setOnClickListener(this);
-
-        name = "nome";
-        category = "categoria";
-        description = "descrição";
 
         nameVal_txt = (EditText) rootView.findViewById(R.id.pntNameVal_txt);
         catgVal_txt = (EditText) rootView.findViewById(R.id.pntCatgVal_txt);
@@ -55,6 +48,7 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
                     validateFields();
                     backToHome();
                     //logica aqui
+                    //precisa fazer um post e mandar o cadastro pro servidor
                 } catch (DataInputException exception){
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
                 }

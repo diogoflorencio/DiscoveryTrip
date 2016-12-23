@@ -123,18 +123,8 @@ public class HomeActivity extends AppCompatActivity
 
         buildGooglePlusConfigs();
 
-        //loadGooglePlusData();
         createHomeFragment();
     }
-
-//    public void loadGooglePlusData() {
-//        Bundle extras = getIntent().getExtras();
-//
-//        if(extras !=null) {
-//            String googleUserName = extras.getString("googleName");
-//            String googleUserEmail = extras.getString("googleEmail");
-//        }
-//    }
 
     public void buildGooglePlusConfigs() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -235,7 +225,6 @@ public class HomeActivity extends AppCompatActivity
         FragmentManager fragmentManager = getSupportFragmentManager();
         HomeFragment fragment = new HomeFragment();
 
-        //fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         fragmentManager.beginTransaction().replace(R.id.content_home, fragment).commit();
     }
 
