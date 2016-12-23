@@ -1,5 +1,6 @@
 package com.example.diogo.discoverytrip;
 
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,38 +14,41 @@ import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 
-public class PerfilFragment extends Fragment implements View.OnClickListener {
-    public EditText nameVal_txt, emailVal_txt;
 
-    public PerfilFragment() {
+public class PontoTuristicoFragment extends Fragment implements View.OnClickListener {
+    public EditText nameVal_txt, catgVal_txt, descVal_txt;
+
+    public PontoTuristicoFragment() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        Log.d("Logger", "PerfilFragment onCreate");
-        View rootView = inflater.inflate(R.layout.fragment_perfil, container, false);
+        Log.d("Logger", "PontoTuristicoFragment onCreate");
+        View rootView = inflater.inflate(R.layout.fragment_ponto_turistico, container, false);
 
-        Button confirmarBtn = (Button) rootView.findViewById(R.id.pfConfirm_btn);
-        confirmarBtn.setOnClickListener(this);
+        Button cadastrarBtn = (Button) rootView.findViewById(R.id.pntRegister_btn);
+        cadastrarBtn.setOnClickListener(this);
 
-        nameVal_txt = (EditText) rootView.findViewById(R.id.pfNameVal_txt);
-        emailVal_txt = (EditText) rootView.findViewById(R.id.pfEmailVal_txt);
+        nameVal_txt = (EditText) rootView.findViewById(R.id.pntNameVal_txt);
+        catgVal_txt = (EditText) rootView.findViewById(R.id.pntCatgVal_txt);
+        descVal_txt = (EditText) rootView.findViewById(R.id.pntDescVal_txt);
 
         return rootView;
     }
 
+    @Override
     public void onClick(View view) {
-        Log.d("Logger", "PerfilFragment onClick");
+        Log.d("Logger", "PontoTuristicoFragment onClick");
         switch (view.getId()) {
-            case R.id.pfConfirm_btn:
-                Log.d("Logger", "PerfilFragment botao confirmar");
+            case R.id.pntRegister_btn:
+                Log.d("Logger", "PontoTuristicoFragment botao registrar");
                 try {
                     validateFields();
                     backToHome();
                     //logica aqui
-                    //precisa fazer um post e mandar os dados atualizados pro servidor
+                    //precisa fazer um post e mandar o cadastro pro servidor
                 } catch (DataInputException exception){
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
                 }
@@ -53,7 +57,7 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
     }
 
     private void backToHome() {
-        Log.d("Logger", "PerfilFragment backToHome");
+        Log.d("Logger", "PontoTuristicoFragment backToHome");
         FragmentManager fragmentManager = getFragmentManager();
         HomeFragment fragment = new HomeFragment();
 
@@ -62,13 +66,17 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
     }
 
     private void validateFields() throws DataInputException {
-        Log.d("Logger", "PerfilFragment validateFields");
+        Log.d("Logger", "PontoTuristicoFragment validate");
         if(nameVal_txt.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_name));
         }
 
-        if(emailVal_txt.getText().toString().trim().isEmpty()){
-            throw new DataInputException(getString(R.string.validate_email));
+        if(catgVal_txt.getText().toString().trim().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_category));
+        }
+
+        if(descVal_txt.getText().toString().trim().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_description));
         }
     }
 }

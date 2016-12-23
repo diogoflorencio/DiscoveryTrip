@@ -55,8 +55,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private CallbackManager callbackManager;
     private ProfileTracker profileTracker;
     private GoogleApiClient mGoogleApiClient;
-    private EditText emailLogin, senhaLogin;
-    private Button btnAppLogin;
 
 
     @Override
@@ -70,7 +68,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         setContentView(R.layout.activity_login);
 
         // verificando validade de token facebook
-        if(AccessToken.getCurrentAccessToken() != null)  startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+        if(AccessToken.getCurrentAccessToken() != null){
+            startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+            finish();
+        }
 
         buildGooglePlusConfigs();
 
@@ -78,15 +79,20 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         loginButton = (LoginButton) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(this);
+
         findViewById(R.id.login_google).setOnClickListener(this);
         findViewById(R.id.lblCadastreSe).setOnClickListener(this);
-        btnAppLogin = (Button) findViewById(R.id.btnLoginApp);
+
+        Button btnAppLogin = (Button) findViewById(R.id.btnLoginApp);
         btnAppLogin.setOnClickListener(this);
+
+        Button recuperarSenha = (Button) findViewById(R.id.recuperarSenha);
+       recuperarSenha.setOnClickListener(this);
 
     }
 
     public void buildGooglePlusConfigs() {
-        Log.d("Logger", "buildGooglePlusConfigs");
+        Log.d("Logger", "LoginActivity buildGooglePlusConfigs");
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -98,21 +104,38 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void signIn() {
-        Log.d("Logger", "signIn");
+        Log.d("Logger", "LoginActivity signIn");
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
-        Log.d("Logger", "handleSignInResult");
+        Log.d("Logger", "LoginActivity handleSignInResult");
         if (result.isSuccess()) {
             GoogleSignInAccount googleUser = result.getSignInAccount();
-            String googleUserName = googleUser.getDisplayName();
-            String googleUserEmail = googleUser.getEmail();
-            //String googleUserPictureUrl = googleUser.getPhotoUrl().toString();
             Intent intent = new Intent(LoginActivity.this,HomeActivity.class);
-            intent.putExtra("googleName",googleUserName);
-            intent.putExtra("googleEmail",googleUserEmail);
+
+            try {
+                Log.d("Logger", "Nome");
+                Log.d("Logger", googleUser.getDisplayName());
+            }catch (Exception e){}
+            try {
+                Log.d("Logger", "Id token");
+                Log.d("Logger", googleUser.getIdToken());
+            }catch (Exception e){}
+            try {
+                Log.d("Logger", "Id");
+                Log.d("Logger", googleUser.getId());
+            }catch (Exception e){}
+            try {
+                Log.d("Logger", "Scopes");
+                Log.d("Logger", googleUser.getGrantedScopes().toString());
+            }catch (Exception e){}
+            try {
+                Log.d("Logger", "server authcode");
+                Log.d("Logger", googleUser.getServerAuthCode());
+            }catch (Exception e){}
+
             startActivity(intent);
             finish();
         }
@@ -121,7 +144,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("Logger", "onActivityResult");
+        Log.d("Logger", "LoginActivity onActivityResult");
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
@@ -132,14 +155,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onClick(View view) {
+        Log.d("Logger", "LoginActivity onClick");
         switch (view.getId()) {
             case R.id.login_google:
-                Log.d("Logger", "login google");
+                Log.d("Logger", "LoginActivity login google");
                 signIn();
                 break;
-            // Click no botão de login do facebook
             case R.id.loginButton:
-                Log.d("Logger", "login facebook");
+                Log.d("Logger", "LoginActivity login facebook");
                 //permissões do facebook
                 loginButton.setReadPermissions(Arrays.asList("public_profile","email"));
 
@@ -169,40 +192,51 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
                     @Override
                     public void onCancel() {
-                        Toast.makeText(getApplicationContext(),"LoginActivity cancelado",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),R.string.login_cancel,Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(FacebookException error) {
-                        Toast.makeText(getApplicationContext(),"Ocorreu um erro ao realizar login",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(),R.string.login_error,Toast.LENGTH_SHORT).show();
                     }
                 });
                 break;
             case R.id.lblCadastreSe:
+                Log.d("Logger", "LoginActivity cadastrar");
                 startActivity(new Intent(LoginActivity.this,CadastroActivity.class));
+                finish();
                 break;
             case R.id.btnLoginApp:
+                Log.d("Logger", "LoginActivity login padrão");
                 try {
                     loginApp();
                 } catch (DataInputException e){
                     Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case R.id.recuperarSenha:
+                Log.d("Logger", "LoginActivity recuperar senha");
+                startActivity(new Intent(LoginActivity.this,RecuperarSenhaActivity.class));
+                break;
         }
     }
 
     private void loginApp()throws DataInputException{
-        emailLogin = (EditText) findViewById(R.id.txtLoginEmail);
-        senhaLogin = (EditText) findViewById(R.id.txtLoginSenha);
+        Log.d("Logger", "LoginActivity loginApp");
+        EditText emailLogin = (EditText) findViewById(R.id.txtLoginEmail);
+        EditText senhaLogin = (EditText) findViewById(R.id.txtLoginSenha);
 
-        if(emailLogin.getText().toString().trim().isEmpty() ||
-                senhaLogin.getText().toString().isEmpty()){
-            throw new DataInputException("Digite email e senha");
+        if(emailLogin.getText().toString().trim().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_email));
+        }
+
+        if(senhaLogin.getText().toString().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_password_empty));
         }
         
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-        Call<AppLoginResponse> call = apiService.appLogin(new AppLoginJson(emailLogin.getText().toString(),senhaLogin.getText().toString()));
+        Call<AppLoginResponse> call = apiService.appLogin(new AppLoginJson(emailLogin.getText().toString(), senhaLogin.getText().toString()));
         call.enqueue(new Callback<AppLoginResponse>() {
             @Override
             public void onResponse(Call<AppLoginResponse> call, Response<AppLoginResponse> response) {
@@ -217,13 +251,14 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             @Override
             public void onFailure(Call<AppLoginResponse> call, Throwable t) {
                 // Log error here since request failed
-                Toast.makeText(LoginActivity.this, "Não foi possível realizar o login", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, R.string.login_unable, Toast.LENGTH_SHORT).show();
                 Log.e("App Server Error", t.toString());
             }
         });
     }
 
     private void postFacebook(String token){
+        Log.d("Logger", "LoginActivity postFacebook");
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
         Call<ServerResponseLogin> call = apiService.loginFacebook(new AccessTokenJson(token));
@@ -249,11 +284,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d("Logger", "onConnectionFailed");
-        Toast.makeText(this, "Conexao falhou", Toast.LENGTH_SHORT).show();
+        Log.d("Logger", "LoginActivity onConnectionFailed");
+        Toast.makeText(this, R.string.conection_failed, Toast.LENGTH_SHORT).show();
     }
 
     protected void onStart() {
+        Log.d("Logger", "LoginActivity onStart");
         super.onStart();
         Log.d("Logger", "onStart");
         OptionalPendingResult<GoogleSignInResult> opr = Auth.GoogleSignInApi.silentSignIn(mGoogleApiClient);
@@ -269,7 +305,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             // single sign-on will occur in this branch.
             opr.setResultCallback(new ResultCallback<GoogleSignInResult>() {
                 @Override
-                public void onResult(GoogleSignInResult googleSignInResult) {
+                public void onResult(@NonNull GoogleSignInResult googleSignInResult) {
                     handleSignInResult(googleSignInResult);
                 }
             });

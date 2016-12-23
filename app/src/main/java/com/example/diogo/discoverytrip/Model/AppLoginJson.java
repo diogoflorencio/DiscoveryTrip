@@ -4,9 +4,6 @@ import com.google.gson.annotations.SerializedName;
 
 import static android.R.attr.type;
 
-/**
- * Created by Renato on 12/12/2016.
- */
 
 public class AppLoginJson {
     private static final String GRANT_TYPE = "client_credentials";

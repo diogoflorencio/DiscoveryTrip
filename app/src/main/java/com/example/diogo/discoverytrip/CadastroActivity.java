@@ -1,5 +1,6 @@
 package com.example.diogo.discoverytrip;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,17 +22,17 @@ import retrofit2.Response;
 public class CadastroActivity extends AppCompatActivity {
 
     private EditText txtnome,email,senha,confsenha;
-    private Button btnCadastrar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("Logger", "CadastroActivity onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cadastro);
         txtnome = (EditText) findViewById(R.id.txtNome);
         email = (EditText) findViewById(R.id.txtEmail);
         senha = (EditText) findViewById(R.id.txtSenha);
         confsenha = (EditText) findViewById(R.id.txtConfSenha);
-        btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
+        Button btnCadastrar = (Button) findViewById(R.id.btnCadastrar);
 
         btnCadastrar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +44,7 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     private void cadastrarUsuario(){
+        Log.d("Logger", "cadastrarUsuario onCreate");
         try {
             verificarDados();
 
@@ -54,7 +56,7 @@ public class CadastroActivity extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                     if(response.isSuccessful()) {
-                        Toast.makeText(CadastroActivity.this, "Cadastro realizado com sucesso!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CadastroActivity.this, R.string.cadastro_sucesso, Toast.LENGTH_SHORT).show();
                         Log.d("Response",response.body().getUsuario().getEmail());
                     }else{
                         Log.e("Server error",response.code()+"");
@@ -64,16 +66,21 @@ public class CadastroActivity extends AppCompatActivity {
                 @Override
                 public void onFailure(Call<ServerResponse> call, Throwable t) {
                     // Log error here since request failed
-                    Toast.makeText(CadastroActivity.this, "Não foi possível realizar o cadastro!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CadastroActivity.this, R.string.cadastro_falha, Toast.LENGTH_SHORT).show();
                     Log.e("App Server Error", t.toString());
                 }
+
+
             });
         }catch (DataInputException e) {
             Toast.makeText(CadastroActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
         }
+        startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
+        finish();
     }
 
     private boolean verificarDados() throws DataInputException{
+        Log.d("Logger", "verificarDados onCreate");
         if(txtnome.getText().toString().trim().isEmpty()){
             throw new DataInputException("Digite seu nome!");
         }
