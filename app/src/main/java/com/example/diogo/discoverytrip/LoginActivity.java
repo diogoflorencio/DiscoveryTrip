@@ -229,9 +229,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         emailLogin = (EditText) findViewById(R.id.txtLoginEmail);
         senhaLogin = (EditText) findViewById(R.id.txtLoginSenha);
 
-        if(emailLogin.getText().toString().trim().isEmpty() ||
-                senhaLogin.getText().toString().isEmpty()){
-            throw new DataInputException("Digite email e senha");
+        if(emailLogin.getText().toString().trim().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_email));
+        }
+
+        if(senhaLogin.getText().toString().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_password_empty));
         }
         
         ApiInterface apiService =

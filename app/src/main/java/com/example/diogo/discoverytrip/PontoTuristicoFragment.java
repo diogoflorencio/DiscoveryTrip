@@ -69,15 +69,15 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
     private void validateFields() throws DataInputException {
         Log.d("Logger", "PontoTuristicoFragment validate");
         if(nameVal_txt.getText().toString().trim().isEmpty()){
-            throw new DataInputException("Informe um nome");
+            throw new DataInputException(getString(R.string.validate_name));
         }
 
         if(catgVal_txt.getText().toString().trim().isEmpty()){
-            throw new DataInputException("Informe uma categoria");
+            throw new DataInputException(getString(R.string.validate_category));
         }
 
         if(descVal_txt.getText().toString().trim().isEmpty()){
-            throw new DataInputException("Informe uma descrição");
+            throw new DataInputException(getString(R.string.validate_description));
         }
     }
 }

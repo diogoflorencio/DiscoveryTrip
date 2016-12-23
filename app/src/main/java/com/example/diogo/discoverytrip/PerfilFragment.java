@@ -68,11 +68,11 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
     private void validateFields() throws DataInputException {
         Log.d("Logger", "PerfilFragment validateFields");
         if(nameVal_txt.getText().toString().trim().isEmpty()){
-            throw new DataInputException("Informe um nome");
+            throw new DataInputException(getString(R.string.validate_name));
         }
 
         if(emailVal_txt.getText().toString().trim().isEmpty()){
-            throw new DataInputException("Informe um email");
+            throw new DataInputException(getString(R.string.validate_email));
         }
     }
 }
