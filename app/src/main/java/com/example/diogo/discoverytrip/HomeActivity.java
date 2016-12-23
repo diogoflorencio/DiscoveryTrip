@@ -87,7 +87,6 @@ public class HomeActivity extends AppCompatActivity
 
         //instanciando classe aux de localizacao
         Local = new Localizacao();
-        Local.setHomeActivity(this);
 
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED &&
@@ -257,7 +256,7 @@ public class HomeActivity extends AppCompatActivity
           }
       }
 
-    public void getEndereco(Location loc) {
+    /*public static void getEndereco(Location loc) {
         //Rastreando endereço a partir das coordenadas
         Log.d("Logger", "Home getEndereco");
         if (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0) {
@@ -267,69 +266,19 @@ public class HomeActivity extends AppCompatActivity
                         loc.getLatitude(), loc.getLongitude(), 1);
                 if (!list.isEmpty()) {
                     Address DirCalle = list.get(0);
-                    localizacao.setText(R.string.address_found + "\n"
-                            + DirCalle.getAddressLine(0));
+                  //  localizacao.setText(R.string.address_found + "\n"
+                        //    + DirCalle.getAddressLine(0));
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-    }
+    }*/
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d("Logger", "Home onConnectionFailed");
     }
 
-    // Implementando classe localizacao
-    public class Localizacao implements LocationListener {
-        HomeActivity HomeActivity;
 
-        public HomeActivity getHomeActivity() {
-            Log.d("Logger", "Localizacao HomeActivity");
-            return HomeActivity;
-        }
-
-        private void setHomeActivity(HomeActivity homeActivity) {
-            Log.d("Logger", "Localizacao setHomeActivity");
-            this.HomeActivity = homeActivity;
-        }
-
-        @Override
-        public void onLocationChanged(Location loc) {
-            // Obtendo coordenadas do GPS
-            Log.d("Logger", "Localizacao onLocationChanged");
-            loc.getLatitude();
-            loc.getLongitude();
-            String Text = R.string.current_coordinates + "\n " + R.string.gps_lat
-                    + loc.getLatitude() + "\n " + R.string.gps_long + loc.getLongitude();
-            status_gps.setText(Text);
-            this.HomeActivity.getEndereco(loc);
-        }
-
-        @Override
-        public void onProviderDisabled(String provider) {
-            // GPS desativado
-            Log.d("Logger", "Localizacao onProviderDisabled");
-            status_gps.setText(R.string.gps_deactivated);
-        }
-
-        @Override
-        public void onProviderEnabled(String provider) {
-            // GPS ativado
-            Log.d("Logger", "Localizacao onProviderEnabled");
-            status_gps.setText(R.string.gps_activated);
-        }
-
-        @Override
-        public void onStatusChanged(String provider, int status, Bundle extras) {
-            Log.d("Logger", "Localizacao onStatusChanged");
-            // Método de monitoranmento dos serviços do de GPS
-            // Status do provedor GPS:
-            // OUT_OF_SERVICE -> Servidor fora de serviço
-            // TEMPORARILY_UNAVAILABLE -> temporariamente indisponível aguardando serviço ser restabelecido
-            // AVAILABLE -> Disponível
-        }
-
-    } //Fim da classe Localização
 }
