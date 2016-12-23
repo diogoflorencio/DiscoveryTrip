@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by Renato on 12/12/2016.
  */
 
-public class AppLoginResponse {
+public class AppLoginResponse extends successResponseAbst{
 
     @SerializedName("access_token")
     private String accesstoken;
