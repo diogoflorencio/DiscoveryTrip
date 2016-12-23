@@ -2,15 +2,9 @@ package com.example.diogo.discoverytrip;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -24,8 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.diogo.discoverytrip.GPS.GPS;
 import com.facebook.AccessToken;
-import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -33,10 +27,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-
-import java.io.IOException;
-import java.util.List;
-import java.util.Locale;
 
 import static com.facebook.AccessToken.getCurrentAccessToken;
 
@@ -50,16 +40,7 @@ public class HomeActivity extends AppCompatActivity
     TextView status_gps;
     TextView localizacao;
 
-    //permissoes GPS
-    private static final int REQUEST_LOCATION = 2;
-
-    //provedor GPS
-    LocationManager mlocManager;
-
-    Localizacao Local;
-
     private GoogleApiClient mGoogleApiClient;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,42 +63,7 @@ public class HomeActivity extends AppCompatActivity
         status_gps = (TextView) findViewById(R.id.status_gps);
         localizacao = (TextView) findViewById(R.id.localizacao);
 
-        // Instanciando provedor GPS para obter coordenadas
-        mlocManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-
-        //instanciando classe aux de localizacao
-        Local = new Localizacao();
-
-        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                        PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    android.Manifest.permission.ACCESS_FINE_LOCATION));
-                // Esperando usuário autorizar permissão
-            else
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-        } else {
-            //requisição de coordenadas ao provedor GPS
-            mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,
-                    (LocationListener) Local);
-            //Set log GPS
-            status_gps.setText(R.string.gps_loading);
-            localizacao.setText("");
-        }
-
-        profileTracker = new ProfileTracker() {
-
-            @Override
-            protected void onCurrentProfileChanged(
-                    Profile oldProfile, Profile currentProfile) {
-                profileTracker.stopTracking();
-                Profile.setCurrentProfile(currentProfile);
-                Profile profile = Profile.getCurrentProfile();
-                TextView textView = (TextView) findViewById(R.id.user);
-                textView.setText(profile.getName());
-            }
-        };
+        GPS gps = new GPS(this,(LocationManager) getSystemService(Context.LOCATION_SERVICE));
 
         buildGooglePlusConfigs();
 
@@ -237,26 +183,7 @@ public class HomeActivity extends AppCompatActivity
     }
 
 
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        Log.d("Logger", "Home onRequestPermissionsResult");
-        if (requestCode == REQUEST_LOCATION) {
-            if (grantResults.length == 1
-                    && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) !=
-                        PackageManager.PERMISSION_GRANTED &&
-                        ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                                PackageManager.PERMISSION_GRANTED);
-               //Requisitando localização do provedor de GPS
-                mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (LocationListener) Local);
-                // Set log GPS
-                status_gps.setText(R.string.gps_loading);
-                localizacao.setText("");
-
-              } else; //Usuário rejeitou permissões
-          }
-      }
-
-    /*public static void getEndereco(Location loc) {
+    /*public void getEndereco(Location loc) {
         //Rastreando endereço a partir das coordenadas
         Log.d("Logger", "Home getEndereco");
         if (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0) {

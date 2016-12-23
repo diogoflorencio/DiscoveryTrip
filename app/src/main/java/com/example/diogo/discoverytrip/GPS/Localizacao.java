@@ -1,15 +1,20 @@
-package com.example.diogo.discoverytrip;
+package com.example.diogo.discoverytrip.GPS;
 
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.example.diogo.discoverytrip.R;
+
 /**
  * Created by diogo on 23/12/16.
  */
 
 public class Localizacao implements LocationListener {
+
+    private double latitude,longitude;
+    private String status_gps;
 
     public void Localizacao(){
 
@@ -20,26 +25,22 @@ public class Localizacao implements LocationListener {
     public void onLocationChanged(Location loc) {
         // Obtendo coordenadas do GPS
         Log.d("Logger", "Localizacao onLocationChanged");
-        loc.getLatitude();
-        loc.getLongitude();
-        String Text = R.string.current_coordinates + "\n " + R.string.gps_lat
-                + loc.getLatitude() + "\n " + R.string.gps_long + loc.getLongitude();
-       // status_gps.setText(Text);
-       // HomeActivity.getEndereco(loc);
+        latitude = loc.getLatitude();
+        longitude = loc.getLongitude();
     }
 
     @Override
     public void onProviderDisabled(String provider) {
         // GPS desativado
         Log.d("Logger", "Localizacao onProviderDisabled");
-        //status_gps.setText(R.string.gps_deactivated);
+        status_gps = R.string.gps_deactivated+"";
     }
 
     @Override
     public void onProviderEnabled(String provider) {
         // GPS ativado
         Log.d("Logger", "Localizacao onProviderEnabled");
-       // status_gps.setText(R.string.gps_activated);
+       status_gps =  R.string.gps_activated+"";
     }
 
     @Override
