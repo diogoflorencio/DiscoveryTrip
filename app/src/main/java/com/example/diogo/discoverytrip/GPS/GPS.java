@@ -16,16 +16,16 @@ public class GPS {
 
     private static final int REQUEST_LOCATION = 2; //permissoes GPS
 
-    LocationManager mlocManager; //provedor GPS
+    private LocationManager mlocManager; //provedor GPS
 
-    Localizacao Local; // Classe auxiliar para localização
+    private Localizacao local; // Classe auxiliar para localização
 
-    Activity activity; // Contexto da permissão
+    private Activity activity; // Contexto da permissão
 
     public GPS(Activity homeActivity, LocationManager locationManager) {
         mlocManager = locationManager;
         activity = homeActivity;
-        Local = new Localizacao(); //instanciando classe aux de localizacao
+        local = new Localizacao(); //instanciando classe aux para localizacao
         pedirPermissão();
     }
 
@@ -43,7 +43,7 @@ public class GPS {
         } else {
             //requisição de coordenadas ao provedor GPS
             mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,
-                    (LocationListener) Local);
+                    (LocationListener) local);
         }
     }
 
@@ -57,8 +57,18 @@ public class GPS {
                         ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
                                 PackageManager.PERMISSION_GRANTED);
                 //Requisitando localização do provedor de GPS
-                mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (LocationListener) Local);
+                mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (LocationListener) local);
             } else; //Usuário rejeitou permissões
         }
     }
+
+    public double getLatitude(){
+        Log.d("Logger", "Localizacao AQUI" + local.getLatitude());
+        return local.getLatitude();
+    }
+
+    public double getLongitude(){
+        return local.getLongitude();
+    }
+
 }

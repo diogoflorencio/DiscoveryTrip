@@ -32,10 +32,6 @@ import static com.facebook.AccessToken.getCurrentAccessToken;
 
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
-
-    // Dados LoginActivity facebook
-    private ProfileTracker profileTracker;
-
     // TextView para log GPS
     TextView status_gps;
     TextView localizacao;
@@ -64,6 +60,7 @@ public class HomeActivity extends AppCompatActivity
         localizacao = (TextView) findViewById(R.id.localizacao);
 
         GPS gps = new GPS(this,(LocationManager) getSystemService(Context.LOCATION_SERVICE));
+       // status_gps.setText(gps.getLatitude() + " deu certo");
 
         buildGooglePlusConfigs();
 
@@ -182,30 +179,8 @@ public class HomeActivity extends AppCompatActivity
         fragmentManager.beginTransaction().replace(R.id.content_home, fragment).commit();
     }
 
-
-    /*public void getEndereco(Location loc) {
-        //Rastreando endereço a partir das coordenadas
-        Log.d("Logger", "Home getEndereco");
-        if (loc.getLatitude() != 0.0 && loc.getLongitude() != 0.0) {
-            try {
-                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-                List<Address> list = geocoder.getFromLocation(
-                        loc.getLatitude(), loc.getLongitude(), 1);
-                if (!list.isEmpty()) {
-                    Address DirCalle = list.get(0);
-                  //  localizacao.setText(R.string.address_found + "\n"
-                        //    + DirCalle.getAddressLine(0));
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }*/
-
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d("Logger", "Home onConnectionFailed");
     }
-
-
 }
