@@ -6,6 +6,4 @@ package com.example.diogo.discoverytrip.GPS;
 public interface GPSUpdateInterface {
 
     public void updateLocation(double latitude, double longitude, String endereco);
-    public void onProviderDisabled();
-    public void onProviderEnabled();
 }

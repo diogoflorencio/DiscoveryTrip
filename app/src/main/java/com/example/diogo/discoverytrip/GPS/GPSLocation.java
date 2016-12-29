@@ -22,7 +22,7 @@ import java.util.Locale;
  */
 
 public class GPSLocation implements LocationListener {
-
+    private String status;
     private List<GPSUpdateInterface> client;
     private Activity activity;
 
@@ -36,24 +36,21 @@ public class GPSLocation implements LocationListener {
         // Obtendo coordenadas do GPS
         Log.d("Logger", "GPSLocation onLocationChanged");
         responseOnLocationChanged(loc.getLatitude(), loc.getLongitude(), getEndereco(loc));
-
     }
 
     @Override
     public void onProviderDisabled(String provider) {
         // GPS desativado
         Log.d("Logger", "GPSLocation onProviderDisabled");
-        responseOnProviderDisabled();
+        status = "GPS Desativado";
     }
 
     @Override
     public void onProviderEnabled(String provider) {
         // GPS ativado
         Log.d("Logger", "GPSLocation onProviderEnabled");
-        responseOnProviderEnabled();
+        status = "GPS Ativado";
     }
-
-
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -95,16 +92,7 @@ public class GPSLocation implements LocationListener {
         while (it.hasNext()) it.next().updateLocation(latitude,longitude,endereco);
     }
 
-    private void responseOnProviderEnabled() {
-        if(client.isEmpty()) return;
-        Iterator<GPSUpdateInterface> it = client.iterator();
-        while (it.hasNext()) it.next().onProviderEnabled();
+    protected String getStatus(){
+        return status;
     }
-
-    private void responseOnProviderDisabled() {
-        if(client.isEmpty()) return;
-        Iterator<GPSUpdateInterface> it = client.iterator();
-        while (it.hasNext()) it.next().onProviderDisabled();
-    }
-
 }

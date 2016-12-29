@@ -47,7 +47,7 @@ public class GPS {
         }
     }
 
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    private void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         Log.d("Logger", "Home onRequestPermissionsResult");
         if (requestCode == REQUEST_LOCATION) {
             if (grantResults.length == 1
@@ -62,7 +62,13 @@ public class GPS {
         }
     }
 
+    //adiciona cliente no provedor de GPS
     public static void addClient(GPSUpdateInterface gpsUpdateInterface){
         gpsLocation.addClient(gpsUpdateInterface);
+    }
+
+    // status do GPS
+    public static String status(){
+        return gpsLocation.getStatus();
     }
 }

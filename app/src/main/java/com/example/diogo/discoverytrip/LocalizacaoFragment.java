@@ -29,6 +29,7 @@ public class LocalizacaoFragment extends Fragment implements GPSUpdateInterface 
         View rootView = inflater.inflate(R.layout.fragment_localizacao, container, false);
         coodenadas = (TextView) rootView.findViewById(R.id.coordenadas);
         endereco = (TextView) rootView.findViewById(R.id.endereco);
+        if(GPS.status().equals("GPS Desativado")) coodenadas.setText("GPS Desativado");
         GPS.addClient(this);
         return rootView;
     }
@@ -37,16 +38,5 @@ public class LocalizacaoFragment extends Fragment implements GPSUpdateInterface 
     public void updateLocation(double latitude, double longitude, String endereco) {
         coodenadas.setText("Latitude: "+latitude+"\n"+"Longitude: "+longitude);
         this.endereco.setText(endereco);
-    }
-
-    @Override
-    public void onProviderDisabled() {
-        coodenadas.setText("GPS Desativado");
-        endereco.setText("");
-    }
-
-    @Override
-    public void onProviderEnabled() {
-        coodenadas.setText("GPS Ativado");
     }
 }
