@@ -20,9 +20,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.GPS.GPS;
-import com.example.diogo.discoverytrip.GPS.gpsUpdateInterface;
+import com.example.diogo.discoverytrip.GPS.GPSUpdateInterface;
 import com.facebook.AccessToken;
-import com.facebook.ProfileTracker;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
@@ -33,10 +32,7 @@ import com.google.android.gms.common.api.Status;
 import static com.facebook.AccessToken.getCurrentAccessToken;
 
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener, gpsUpdateInterface {
-    // TextView para log GPS
-    TextView status_gps;
-    TextView localizacao;
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -53,21 +49,10 @@ public class HomeActivity extends AppCompatActivity
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        // instanciando TextViews de log gps
-        status_gps = (TextView) findViewById(R.id.status_gps);
-        localizacao = (TextView) findViewById(R.id.localizacao);
-
         GPS gps = new GPS(this,(LocationManager) getSystemService(Context.LOCATION_SERVICE));
-       // status_gps.setText(gps.getLatitude() + " deu certo");
-
-
-
         buildGooglePlusConfigs();
-
         createHomeFragment();
     }
 
@@ -159,7 +144,6 @@ public class HomeActivity extends AppCompatActivity
                 fragment = new PontoTuristicoFragment();
                 break;
         }
-
         if (fragment != null) {
             FragmentManager fragmentManager = getSupportFragmentManager();
             Bundle extras = getIntent().getExtras();
@@ -169,7 +153,6 @@ public class HomeActivity extends AppCompatActivity
             }
             fragmentManager.beginTransaction().replace(R.id.content_home, fragment).commit();
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -179,17 +162,11 @@ public class HomeActivity extends AppCompatActivity
         Log.d("Logger", "Home createHomeFragment");
         FragmentManager fragmentManager = getSupportFragmentManager();
         HomeFragment fragment = new HomeFragment();
-
         fragmentManager.beginTransaction().replace(R.id.content_home, fragment).commit();
     }
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d("Logger", "Home onConnectionFailed");
-    }
-
-    @Override
-    public void updateLocation(double latitude, double longitude) {
-        Toast.makeText(this,"Localização mudou",Toast.LENGTH_SHORT).show();
     }
 }

@@ -18,19 +18,18 @@ public class GPS {
 
     private LocationManager mlocManager; //provedor GPS
 
-    private Localizacao local; // Classe auxiliar para localização
+    private static GPSLocation gpsLocation; // Classe auxiliar para localização
 
     private Activity activity; // Contexto da permissão
 
-    public GPS(Activity homeActivity, LocationManager locationManager) {
+    public GPS(Activity activity, LocationManager locationManager) {
         mlocManager = locationManager;
-        activity = homeActivity;
-        local = new Localizacao((gpsUpdateInterface) homeActivity); //instanciando classe aux para localizacao
-        pedirPermissão();
+        this.activity = activity;
+        gpsLocation = new GPSLocation(activity); //instanciando classe aux para localizacao
+        pedirPermissao();
     }
 
-    private void pedirPermissão(){
-
+    private void pedirPermissao(){
         if (ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
@@ -44,7 +43,7 @@ public class GPS {
         } else {
             //requisição de coordenadas ao provedor GPS
             mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0,
-                    (LocationListener) local);
+                    (LocationListener) gpsLocation);
         }
     }
 
@@ -58,18 +57,12 @@ public class GPS {
                         ActivityCompat.checkSelfPermission(activity, android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
                                 PackageManager.PERMISSION_GRANTED);
                 //Requisitando localização do provedor de GPS
-                mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (LocationListener) local);
+                mlocManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (LocationListener) gpsLocation);
             } else; //Usuário rejeitou permissões
         }
     }
 
-    public double getLatitude(){
-        Log.d("Logger", "Localizacao AQUI" + local.getLatitude());
-        return local.getLatitude();
+    public static void addClient(GPSUpdateInterface gpsUpdateInterface){
+        gpsLocation.addClient(gpsUpdateInterface);
     }
-
-    public double getLongitude(){
-        return local.getLongitude();
-    }
-
 }
