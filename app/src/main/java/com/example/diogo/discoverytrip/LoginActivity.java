@@ -48,6 +48,9 @@ import retrofit2.Response;
 
 import static com.facebook.AccessToken.getCurrentAccessToken;
 
+/**
+ * Classe activity responsavel pelo login na aplicação
+ */
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
 
     private static final int RC_SIGN_IN = 9001;
@@ -57,6 +60,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     private GoogleApiClient mGoogleApiClient;
 
 
+    /**
+     * Metodo responsavel por gerenciar a criacao de um objeto 'LoginActivity'
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
