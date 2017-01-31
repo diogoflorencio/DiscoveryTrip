@@ -2,11 +2,7 @@ package com.example.diogo.discoverytrip.REST;
 
 import com.example.diogo.discoverytrip.Model.AccessTokenJson;
 import com.example.diogo.discoverytrip.Model.AppLoginJson;
-import com.example.diogo.discoverytrip.REST.ServerResponses.AppLoginResponse;
-import com.example.diogo.discoverytrip.REST.ServerResponses.LogoutResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ResponseAbst;
-import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponse;
-import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponseLogin;
 import com.example.diogo.discoverytrip.Model.UsuarioEnvio;
 
 import retrofit2.Call;
@@ -25,19 +21,23 @@ import retrofit2.http.Path;
 
 public interface ApiInterface {
 
+    @Headers("Content-Type: application/json")
     @POST("api/users")
     Call<ResponseAbst> cadastrarUsuario(@Body UsuarioEnvio usuarioEnvio);
 
+    @Headers("Content-Type: application/json")
     @GET("api/users/{id}")
-    Call<ServerResponse> getUsuario(@Path("id")String id);
+    Call<ResponseAbst> getUsuario(@Path("id")String id);
 
+    @Headers("Content-Type: application/json")
     @POST("api/facebook/login")
-    Call<ServerResponseLogin> loginFacebook(@Body AccessTokenJson accessToken);
+    Call<ResponseAbst> loginFacebook(@Body AccessTokenJson accessToken);
 
     @Headers("Content-Type: application/json")
     @POST("api/login")
-    Call<AppLoginResponse> appLogin(@Body AppLoginJson appLoginJson);
+    Call<ResponseAbst> appLogin(@Body AppLoginJson appLoginJson);
 
+    @Headers("Content-Type: application/json")
     @DELETE("api/login")
-    Call<LogoutResponse> logout(@Header("Authorization") String authorization);
+    Call<ResponseAbst> logout(@Header("Authorization") String authorization);
 }

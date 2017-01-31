@@ -17,9 +17,13 @@ import com.example.diogo.discoverytrip.Model.UsuarioEnvio;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ApiInterface;
 
+import java.text.Annotation;
+
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Converter;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -46,7 +50,6 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     private void cadastrarUsuario(){
-        Log.d("Logger", "cadastrarUsuario onCreate");
         try {
             verificarDados();
 
@@ -55,9 +58,14 @@ public class CadastroActivity extends AppCompatActivity {
 
             Call<ResponseAbst> call = apiService.cadastrarUsuario(new UsuarioEnvio(txtnome.getText().toString(), email.getText().toString(), senha.getText().toString()));
             call.enqueue(new Callback<ResponseAbst>() {
+
                 @Override
                 public void onResponse(Call<ResponseAbst> call, Response<ResponseAbst> response) {
+
                     if(response.isSuccessful()) {
+                        Converter<ResponseAbst, ServerResponse> errorConverter = call.responseConverter(ServerResponse.class, new Annotation[0]);
+                        ServerResponse serverResponse = (ServerResponse) response.body();
+                        Log.d("Server Response",serverResponse.getMessage());
                         Toast.makeText(CadastroActivity.this, R.string.cadastro_sucesso, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
                         finish();

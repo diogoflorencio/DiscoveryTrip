@@ -14,8 +14,9 @@ import android.widget.Toast;
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.Model.AccessTokenJson;
 import com.example.diogo.discoverytrip.Model.AppLoginJson;
-import com.example.diogo.discoverytrip.REST.ServerResponses.AppLoginResponse;
-import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponseLogin;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
+import com.example.diogo.discoverytrip.REST.ServerResponses.LoginResponse;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ResponseAbst;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ApiInterface;
 import com.facebook.AccessToken;
@@ -87,7 +88,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         btnAppLogin.setOnClickListener(this);
 
         Button recuperarSenha = (Button) findViewById(R.id.recuperarSenha);
-       recuperarSenha.setOnClickListener(this);
+        recuperarSenha.setOnClickListener(this);
 
     }
 
@@ -233,23 +234,25 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         if(senhaLogin.getText().toString().isEmpty()){
             throw new DataInputException(getString(R.string.validate_password_empty));
         }
-        
+
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-        Call<AppLoginResponse> call = apiService.appLogin(new AppLoginJson(emailLogin.getText().toString(), senhaLogin.getText().toString()));
-        call.enqueue(new Callback<AppLoginResponse>() {
+        Call<ResponseAbst> call = apiService.appLogin(new AppLoginJson(emailLogin.getText().toString(), senhaLogin.getText().toString()));
+        call.enqueue(new Callback<ResponseAbst>() {
             @Override
-            public void onResponse(Call<AppLoginResponse> call, Response<AppLoginResponse> response) {
+            public void onResponse(Call<ResponseAbst> call, Response<ResponseAbst> response) {
                 if(response.isSuccessful()) {
-                    Log.d("login","Server ok");
+                    LoginResponse loginResponse = (LoginResponse) response.body();
+                    Log.d("Server OK",loginResponse.getAccesstoken());
                 }
                 else{
-                    Log.d("Server",""+response.code());
+                    ErrorResponse errorResponse = (ErrorResponse) response.body();
+                    Log.e("Server Error",errorResponse.getErrorDescription());
                 }
             }
 
             @Override
-            public void onFailure(Call<AppLoginResponse> call, Throwable t) {
+            public void onFailure(Call<ResponseAbst> call, Throwable t) {
                 // Log error here since request failed
                 Toast.makeText(LoginActivity.this, R.string.login_unable, Toast.LENGTH_SHORT).show();
                 Log.e("App Server Error", t.toString());
@@ -261,10 +264,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Log.d("Logger", "LoginActivity postFacebook");
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-        Call<ServerResponseLogin> call = apiService.loginFacebook(new AccessTokenJson(token));
-        call.enqueue(new Callback<ServerResponseLogin>() {
+        Call<ResponseAbst> call = apiService.loginFacebook(new AccessTokenJson(token));
+        call.enqueue(new Callback<ResponseAbst>() {
             @Override
-            public void onResponse(Call<ServerResponseLogin> call, Response<ServerResponseLogin> response) {
+            public void onResponse(Call<ResponseAbst> call, Response<ResponseAbst> response) {
                 if(response.isSuccessful()) {
                     Log.d("Login","Server OK");
                 }
@@ -274,7 +277,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
 
             @Override
-            public void onFailure(Call<ServerResponseLogin> call, Throwable t) {
+            public void onFailure(Call<ResponseAbst> call, Throwable t) {
                 // Log error here since request failed
                 Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("App Server Error", t.toString());

@@ -4,8 +4,9 @@ import com.google.gson.annotations.SerializedName;
 
 /**
  * Created by Renato on 16/12/2016.
+ *
+ * Classe que representa as resposta de erro do servidor. Todas as respostas de erro seguem este formato
  */
-
 public class ErrorResponse extends ResponseAbst{
 
     @SerializedName("error")
@@ -14,19 +15,27 @@ public class ErrorResponse extends ResponseAbst{
     @SerializedName("error_description")
     private String errorDescription;
 
+    /**
+     * Retorna qual o tipo do erro que ocorreu na requisição.
+     * @return tipo de erro
+     */
     public String getErrorType() {
         return errorType;
     }
 
-    public void setErrorType(String errorType) {
+    private void setErrorType(String errorType) {
         this.errorType = errorType;
     }
 
+    /**
+     * Retorna uma descrição sobre o erro que ocorreu na requisição
+     * @return descrição do erro
+     */
     public String getErrorDescription() {
         return errorDescription;
     }
 
-    public void setErrorDescription(String errorDescription) {
+    private void setErrorDescription(String errorDescription) {
         this.errorDescription = errorDescription;
     }
 }

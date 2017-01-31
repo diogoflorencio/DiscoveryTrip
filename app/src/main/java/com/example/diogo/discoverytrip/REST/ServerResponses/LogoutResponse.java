@@ -1,32 +1,9 @@
 package com.example.diogo.discoverytrip.REST.ServerResponses;
 
-import com.google.gson.annotations.SerializedName;
-
 /**
  * Created by Renato on 12/12/2016.
+ *
+ * Classe que representa a resposta de sucesso do servidor após feita uma requisição de logout
  */
-
-public class LogoutResponse {
-
-    @SerializedName("status")
-    private String status;
-
-    @SerializedName("message")
-    private String message;
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
+public class LogoutResponse extends successResponseAbst {
 }
