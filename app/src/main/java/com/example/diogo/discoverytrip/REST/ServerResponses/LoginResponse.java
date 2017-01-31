@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  *
  * Classe que representa a resposta de sucesso do servidor após feita uma requisição de login ou atualização da seção
  */
-public class LoginResponse extends successResponseAbst {
+public class LoginResponse extends ResponseAbst {
 
     @SerializedName("access_token")
     private String accesstoken;

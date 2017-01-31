@@ -10,7 +10,7 @@ import com.google.gson.annotations.SerializedName;
  * Essas chamadas são: Create User,Read a User, Update a User, Delete a User
  */
 
-public class ServerResponse extends successResponseAbst {
+public class ServerResponse extends ResponseAbst {
 
     @SerializedName("user")
     private User usuario;

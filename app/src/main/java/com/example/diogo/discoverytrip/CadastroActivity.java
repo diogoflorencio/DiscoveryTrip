@@ -17,6 +17,8 @@ import com.example.diogo.discoverytrip.Model.UsuarioEnvio;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ApiInterface;
 
+import java.io.IOException;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -63,16 +65,19 @@ public class CadastroActivity extends AppCompatActivity {
 
                 @Override
                 public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-
                     if(response.isSuccessful()) {
-                        ServerResponse serverResponse = (ServerResponse) response.body();
+                        ServerResponse serverResponse = response.body();
                         Log.d("Server Response",serverResponse.getMessage());
                         Toast.makeText(CadastroActivity.this, R.string.cadastro_sucesso, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
                         finish();
                     }else{
-
-                        Toast.makeText(CadastroActivity.this, "Erro: " + response.errorBody().toString(), Toast.LENGTH_SHORT).show();
+                        try {
+                            ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                            Toast.makeText(CadastroActivity.this,error.getErrorDescription(),Toast.LENGTH_SHORT).show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
 

@@ -5,5 +5,5 @@ package com.example.diogo.discoverytrip.REST.ServerResponses;
  *
  * Classe que representa a resposta de sucesso do servidor após feita uma requisição de logout
  */
-public class LogoutResponse extends successResponseAbst {
+public class LogoutResponse extends ResponseAbst {
 }

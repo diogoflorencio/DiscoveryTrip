@@ -41,11 +41,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 
+import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.util.Arrays;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.Converter;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 import static com.facebook.AccessToken.getCurrentAccessToken;
 
@@ -243,22 +248,27 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseAbst> call = apiService.appLogin(new AppLoginJson(emailLogin.getText().toString(), senhaLogin.getText().toString()));
-        call.enqueue(new Callback<ResponseAbst>() {
+        Call<LoginResponse> call = apiService.appLogin(new AppLoginJson(emailLogin.getText().toString(), senhaLogin.getText().toString()));
+        call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<ResponseAbst> call, Response<ResponseAbst> response) {
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful()) {
-                    LoginResponse loginResponse = (LoginResponse) response.body();
+                    LoginResponse loginResponse = response.body();
                     Log.d("Server OK",loginResponse.getAccesstoken());
                 }
                 else{
-                    ErrorResponse errorResponse = (ErrorResponse) response.body();
-                    Log.e("Server Error",errorResponse.getErrorDescription());
+                    try {
+                        ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                        Toast.makeText(LoginActivity.this,error.getErrorDescription(),Toast.LENGTH_SHORT).show();
+                        Log.e("Server Error",error.getErrorDescription());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseAbst> call, Throwable t) {
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
                 // Log error here since request failed
                 Toast.makeText(LoginActivity.this, R.string.login_unable, Toast.LENGTH_SHORT).show();
                 Log.e("App Server Error", t.toString());
@@ -270,10 +280,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Log.d("Logger", "LoginActivity postFacebook");
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
-        Call<ResponseAbst> call = apiService.loginFacebook(new AccessTokenJson(token));
-        call.enqueue(new Callback<ResponseAbst>() {
+        Call<LoginResponse> call = apiService.loginFacebook(new AccessTokenJson(token));
+        call.enqueue(new Callback<LoginResponse>() {
             @Override
-            public void onResponse(Call<ResponseAbst> call, Response<ResponseAbst> response) {
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful()) {
                     Log.d("Login","Server OK");
                 }
@@ -283,7 +293,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             }
 
             @Override
-            public void onFailure(Call<ResponseAbst> call, Throwable t) {
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
                 // Log error here since request failed
                 Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.e("App Server Error", t.toString());

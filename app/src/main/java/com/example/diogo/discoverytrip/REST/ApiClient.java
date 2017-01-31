@@ -1,5 +1,11 @@
 package com.example.diogo.discoverytrip.REST;
 
+import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
+
+import java.lang.annotation.Annotation;
+
+import okhttp3.ResponseBody;
+import retrofit2.Converter;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -11,6 +17,7 @@ public class ApiClient {
     public static final String BASE_URL = "https://discovery-trip-api.herokuapp.com/";
     private static Retrofit retrofit = null;
 
+    public static final Converter<ResponseBody, ErrorResponse> errorBodyConverter = getClient().responseBodyConverter(ErrorResponse.class, new Annotation[0]);
 
     public static Retrofit getClient() {
         if (retrofit==null) {

@@ -23,14 +23,14 @@
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress"
             android:ems="10"
-            android:id="@+id/txtEmail"
+            android:id="@+id/recuperar_senha_txtEmail"
             android:hint="Email" />
 
         <Button
-            android:text="Cadastrar"
+            android:text="Recuperar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btnCadastrar" />
+            android:id="@+id/recuperar_senha_btnRecuperar" />
     </LinearLayout>
 
 </RelativeLayout>

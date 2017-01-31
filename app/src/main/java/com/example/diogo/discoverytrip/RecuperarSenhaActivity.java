@@ -1,8 +1,29 @@
 package com.example.diogo.discoverytrip;
 
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import com.example.diogo.discoverytrip.Model.ReminderJson;
+import com.example.diogo.discoverytrip.Model.UsuarioEnvio;
+import com.example.diogo.discoverytrip.REST.ApiClient;
+import com.example.diogo.discoverytrip.REST.ApiInterface;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ReminderResponse;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponse;
+
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Classe activity responsavel pela activity de recuperacao de senha na aplicação
@@ -17,5 +38,59 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
         Log.d("Logger", "RecuperarSenhaActivity onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recuperar_senha);
+
+        Button btnRecuperarSenha = (Button) findViewById(R.id.recuperar_senha_btnRecuperar);
+        btnRecuperarSenha.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText email = (EditText) findViewById(R.id.recuperar_senha_txtEmail);
+                if(email.getText().toString().trim().equals("")){
+                    Toast.makeText(RecuperarSenhaActivity.this,"Digite o seu email ou user name",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    ReminderJson reminderJson = new ReminderJson(email.getText().toString());
+                    ApiInterface apiService =
+                            ApiClient.getClient().create(ApiInterface.class);
+
+                    Call<ReminderResponse> call = apiService.passwordReminder(reminderJson);
+                    call.enqueue(new Callback<ReminderResponse>(){
+
+                        @Override
+                        public void onResponse(Call<ReminderResponse> call, Response<ReminderResponse> response) {
+                            if(response.isSuccessful()){
+                                final AlertDialog alertDialog = new AlertDialog.Builder(RecuperarSenhaActivity.this).create();
+                                alertDialog.setTitle("Sucesso");
+                                alertDialog.setMessage("Uma mensagem foi enviada para o seu email.");
+                                alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        startActivity(new Intent(RecuperarSenhaActivity.this,LoginActivity.class));
+                                        alertDialog.dismiss();
+                                        finish();
+                                    }
+                                });
+
+                            }
+                            else{
+                                try {
+                                    ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                                    Toast.makeText(RecuperarSenhaActivity.this,error.getErrorDescription(),Toast.LENGTH_SHORT).show();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ReminderResponse> call, Throwable t) {
+                            Toast.makeText(RecuperarSenhaActivity.this,"Ocorreu um erro durante a comunicaxão com o servidor." +
+                                    "\n Tente novamente mais tarde",Toast.LENGTH_SHORT).show();
+                            Log.e("Comunication Error",t.toString());
+                        }
+                    });
+                }
+
+            }
+        });
     }
 }

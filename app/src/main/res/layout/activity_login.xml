@@ -11,6 +11,9 @@
     tools:context="com.example.diogo.discoverytrip.LoginActivity"
     android:background="@drawable/background">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,7 +37,7 @@
             android:layout_height="42dp"
             android:id="@+id/loginButton"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="30dp" />
+            android:layout_marginTop="20dp" />
 
         <com.google.android.gms.common.SignInButton
             android:layout_width="195dp"
@@ -83,7 +86,7 @@
             android:inputType="textPersonName"
             android:ems="10"
             android:id="@+id/txtLoginEmail"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_gravity="center_horizontal"
             android:drawableLeft="@android:drawable/sym_action_email" />
 
@@ -96,50 +99,48 @@
             android:layout_gravity="center_horizontal"
             android:drawableLeft="@android:drawable/ic_lock_idle_lock" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <Button
+            android:text="Login"
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/btnLoginApp"
+            android:background="@drawable/side_nav_bar"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_width="195dp"
+            android:elevation="0dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp" />
 
-            <TextView
-                android:text="Cadastre-se"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/lblCadastreSe"
-                android:textColor="@color/com_facebook_button_send_background_color_pressed"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:gravity="bottom|center_horizontal" />
+        <Button
+            android:text="esqueceu a senha?"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/recuperarSenha"
+            android:textColor="@color/colorAccent"
+            android:gravity="bottom|center_horizontal"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:height="@dimen/cardview_default_elevation"
+            android:minHeight="15dp"
+            android:background="@color/cardview_light_background"
+            android:minWidth="6dip"
+            android:elevation="1dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="15dp" />
 
-            <Button
-                android:text="Login"
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/btnLoginApp"
-                android:background="@drawable/side_nav_bar"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="45dp"
-                android:layout_width="195dp"
-                android:elevation="0dp"
-                android:layout_height="30dp"
-                />
-
-            <Button
-                android:text="esqueceu a senha?"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/recuperarSenha"
-                android:textColor="@color/colorAccent"
-                android:gravity="bottom|center_horizontal"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
-                android:height="@dimen/cardview_default_elevation"
-                android:minHeight="15dp"
-                android:background="@color/cardview_light_background"
-                android:minWidth="6dip"
-                android:elevation="1dp" />
-
-        </RelativeLayout>
+        <TextView
+            android:text="Cadastre-se"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/lblCadastreSe"
+            android:textColor="@color/com_facebook_button_send_background_color_pressed"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="bottom|center_horizontal"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginTop="15dp" />
 
     </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>
