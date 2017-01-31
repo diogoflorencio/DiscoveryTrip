@@ -4,6 +4,7 @@ import com.example.diogo.discoverytrip.Model.AccessTokenJson;
 import com.example.diogo.discoverytrip.Model.AppLoginJson;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ResponseAbst;
 import com.example.diogo.discoverytrip.Model.UsuarioEnvio;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -23,7 +24,7 @@ public interface ApiInterface {
 
     @Headers("Content-Type: application/json")
     @POST("api/users")
-    Call<ResponseAbst> cadastrarUsuario(@Body UsuarioEnvio usuarioEnvio);
+    Call<ServerResponse> cadastrarUsuario(@Body UsuarioEnvio usuarioEnvio);
 
     @Headers("Content-Type: application/json")
     @GET("api/users/{id}")

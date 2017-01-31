@@ -17,13 +17,9 @@ import com.example.diogo.discoverytrip.Model.UsuarioEnvio;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ApiInterface;
 
-import java.text.Annotation;
-
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Converter;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 /**
  * Classe activity responsavel pela activity de cadastro de usuario na aplicação
@@ -62,27 +58,26 @@ public class CadastroActivity extends AppCompatActivity {
             ApiInterface apiService =
                     ApiClient.getClient().create(ApiInterface.class);
 
-            Call<ResponseAbst> call = apiService.cadastrarUsuario(new UsuarioEnvio(txtnome.getText().toString(), email.getText().toString(), senha.getText().toString()));
-            call.enqueue(new Callback<ResponseAbst>() {
+            Call<ServerResponse> call = apiService.cadastrarUsuario(new UsuarioEnvio(txtnome.getText().toString(), email.getText().toString(), senha.getText().toString()));
+            call.enqueue(new Callback<ServerResponse>() {
 
                 @Override
-                public void onResponse(Call<ResponseAbst> call, Response<ResponseAbst> response) {
+                public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
 
                     if(response.isSuccessful()) {
-                        Converter<ResponseAbst, ServerResponse> errorConverter = call.responseConverter(ServerResponse.class, new Annotation[0]);
                         ServerResponse serverResponse = (ServerResponse) response.body();
                         Log.d("Server Response",serverResponse.getMessage());
                         Toast.makeText(CadastroActivity.this, R.string.cadastro_sucesso, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
                         finish();
                     }else{
-                        ErrorResponse errorResponse = (ErrorResponse) response.body();
-                        Toast.makeText(CadastroActivity.this, "Erro: " + errorResponse.getErrorDescription(), Toast.LENGTH_SHORT).show();
+
+                        Toast.makeText(CadastroActivity.this, "Erro: " + response.errorBody().toString(), Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
-                public void onFailure(Call<ResponseAbst> call, Throwable t) {
+                public void onFailure(Call<ServerResponse> call, Throwable t) {
                     // Log error here since request failed
                     Toast.makeText(CadastroActivity.this, R.string.cadastro_falha, Toast.LENGTH_SHORT).show();
                     Log.e("App Server Error", t.toString());
