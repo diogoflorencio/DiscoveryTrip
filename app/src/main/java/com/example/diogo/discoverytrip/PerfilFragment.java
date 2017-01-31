@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 
+/**
+ * Classe fragment responsavel pelo fragmento perfil na aplicação
+ */
 public class PerfilFragment extends Fragment implements View.OnClickListener {
     public EditText nameVal_txt, emailVal_txt;
 
@@ -20,6 +23,9 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         // Required empty public constructor
     }
 
+    /**
+     * Metodo responsavel por gerenciar a criacao de um objeto 'PerfilFragment'
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -29,10 +35,23 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         Button confirmarBtn = (Button) rootView.findViewById(R.id.pfConfirm_btn);
         confirmarBtn.setOnClickListener(this);
 
+        getUserData();
+
         nameVal_txt = (EditText) rootView.findViewById(R.id.pfNameVal_txt);
         emailVal_txt = (EditText) rootView.findViewById(R.id.pfEmailVal_txt);
 
         return rootView;
+    }
+
+    public void getUserData(){
+        //funcao pra pegar os dados do perfil do usuário e colocar nos campos
+        //TODO
+    }
+
+    public void updateUserData(){
+        //precisa fazer um post e mandar os dados atualizados pro servidor
+        //funcao pra pegar os dados do perfil do usuário e colocar nos campos
+        //TODO
     }
 
     public void onClick(View view) {
@@ -42,9 +61,8 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
                 Log.d("Logger", "PerfilFragment botao confirmar");
                 try {
                     validateFields();
+                    updateUserData();
                     backToHome();
-                    //logica aqui
-                    //precisa fazer um post e mandar os dados atualizados pro servidor
                 } catch (DataInputException exception){
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
                 }

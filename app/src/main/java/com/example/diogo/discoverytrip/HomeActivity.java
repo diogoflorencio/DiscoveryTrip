@@ -32,6 +32,9 @@ import com.google.android.gms.common.api.Status;
 
 import static com.facebook.AccessToken.getCurrentAccessToken;
 
+/**
+ * Classe activity responsavel pela activity home (principal) na aplicação
+ */
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener, gpsUpdateInterface {
     // TextView para log GPS
@@ -40,6 +43,9 @@ public class HomeActivity extends AppCompatActivity
 
     private GoogleApiClient mGoogleApiClient;
 
+    /**
+     * Metodo responsavel por gerenciar a criacao de um objeto 'HomeActivity'
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("Logger", "Home onCreate");

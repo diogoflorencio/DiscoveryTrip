@@ -25,10 +25,16 @@ import retrofit2.Converter;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
+/**
+ * Classe activity responsavel pela activity de cadastro de usuario na aplicação
+ */
 public class CadastroActivity extends AppCompatActivity {
 
     private EditText txtnome,email,senha,confsenha;
 
+    /**
+     * Metodo responsavel por gerenciar a criacao de um objeto 'CadastroActivity'
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d("Logger", "CadastroActivity onCreate");

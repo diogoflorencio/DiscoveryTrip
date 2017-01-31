@@ -14,7 +14,9 @@ import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 
-
+/**
+ * Classe fragment responsavel pelo fragmento ponto turistico na aplicação
+ */
 public class PontoTuristicoFragment extends Fragment implements View.OnClickListener {
     public EditText nameVal_txt, catgVal_txt, descVal_txt;
 
@@ -22,6 +24,9 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
         // Required empty public constructor
     }
 
+    /**
+     * Metodo responsavel por gerenciar a criacao de um objeto 'PontoTuristicoFragment'
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -46,14 +51,19 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
                 Log.d("Logger", "PontoTuristicoFragment botao registrar");
                 try {
                     validateFields();
+                    postData();
                     backToHome();
-                    //logica aqui
-                    //precisa fazer um post e mandar o cadastro pro servidor
                 } catch (DataInputException exception){
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
                 }
                 break;
         }
+    }
+
+    public void postData(){
+        //logica aqui
+        //precisa fazer um post e mandar o cadastro pro servidor
+        //TODO
     }
 
     private void backToHome() {

@@ -8,9 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
 /**
- * A simple {@link Fragment} subclass.
+ * Classe fragment responsavel pelo fragmento localização na aplicação
  */
 public class LocalizacaoFragment extends Fragment {
 
@@ -19,7 +18,9 @@ public class LocalizacaoFragment extends Fragment {
         // Required empty public constructor
     }
 
-
+    /**
+     * Metodo responsavel por gerenciar a criacao de um objeto 'LocalizacaoFragment'
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
