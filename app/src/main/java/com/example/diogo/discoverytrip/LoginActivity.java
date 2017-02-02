@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
@@ -98,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Button btnAppLogin = (Button) findViewById(R.id.btnLoginApp);
         btnAppLogin.setOnClickListener(this);
 
-        Button recuperarSenha = (Button) findViewById(R.id.recuperarSenha);
+        TextView recuperarSenha = (TextView) findViewById(R.id.recuperarSenha);
         recuperarSenha.setOnClickListener(this);
 
     }

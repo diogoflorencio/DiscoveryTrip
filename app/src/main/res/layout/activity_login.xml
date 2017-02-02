@@ -21,7 +21,8 @@
         android:background="@drawable/round_border"
         android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:weightSum="1">
 
         <ImageView
             android:layout_width="200dp"
@@ -45,7 +46,9 @@
             android:id="@+id/login_google"
             android:layout_gravity="center_horizontal"
             tools:visivility="gone"
-            android:layout_marginTop="20dp" /> />
+            android:layout_marginTop="20dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@android:drawable/screen_background_light_transparent" /> />
 
         <LinearLayout
             android:orientation="horizontal"
@@ -111,22 +114,14 @@
             android:layout_height="30dp"
             android:layout_marginTop="10dp" />
 
-        <Button
-            android:text="esqueceu a senha?"
+        <TextView
+            android:text="Esqueceu a senha?"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:id="@+id/recuperarSenha"
             android:textColor="@color/colorAccent"
-            android:gravity="bottom|center_horizontal"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:height="@dimen/cardview_default_elevation"
-            android:minHeight="15dp"
-            android:background="@color/cardview_light_background"
-            android:minWidth="6dip"
-            android:elevation="1dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="15dp" />
+            android:layout_weight="0.18" />
 
         <TextView
             android:text="Cadastre-se"
