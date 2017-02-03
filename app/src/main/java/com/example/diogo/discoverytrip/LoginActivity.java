@@ -195,7 +195,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful()) {
                     LoginResponse loginResponse = response.body();
-                    Log.d("Server OK",loginResponse.getAccesstoken());
+                    startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                    finish();
                 }
                 else{
                     try {

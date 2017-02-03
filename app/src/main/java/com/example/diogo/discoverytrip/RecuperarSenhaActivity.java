@@ -48,6 +48,12 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
                     Toast.makeText(RecuperarSenhaActivity.this,"Digite o seu email ou user name",Toast.LENGTH_SHORT).show();
                 }
                 else {
+
+                    final AlertDialog waitDialog = new AlertDialog.Builder(RecuperarSenhaActivity.this).create();
+                    waitDialog.setCancelable(false);
+                    waitDialog.setView(getLayoutInflater().inflate(R.layout.dialog_recuperar_senha,null));
+                    waitDialog.show();
+
                     ReminderJson reminderJson = new ReminderJson(email.getText().toString());
                     ApiInterface apiService =
                             ApiClient.getClient().create(ApiInterface.class);
@@ -57,8 +63,10 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
 
                         @Override
                         public void onResponse(Call<ReminderResponse> call, Response<ReminderResponse> response) {
+                            waitDialog.dismiss();
                             if(response.isSuccessful()){
                                 final AlertDialog alertDialog = new AlertDialog.Builder(RecuperarSenhaActivity.this).create();
+                                alertDialog.setCancelable(false);
                                 alertDialog.setTitle("Sucesso");
                                 alertDialog.setMessage("Uma mensagem foi enviada para o seu email.");
                                 alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
@@ -69,12 +77,21 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
                                         finish();
                                     }
                                 });
-
+                                alertDialog.show();
                             }
                             else{
                                 try {
                                     ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                                    Toast.makeText(RecuperarSenhaActivity.this,error.getErrorDescription(),Toast.LENGTH_SHORT).show();
+                                    final AlertDialog alertDialog = new AlertDialog.Builder(RecuperarSenhaActivity.this).create();
+                                    alertDialog.setTitle("Erro");
+                                    alertDialog.setMessage(error.getErrorDescription());
+                                    alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            alertDialog.dismiss();
+                                        }
+                                    });
+                                    alertDialog.show();
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -83,7 +100,7 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<ReminderResponse> call, Throwable t) {
-                            Toast.makeText(RecuperarSenhaActivity.this,"Ocorreu um erro durante a comunicaxão com o servidor." +
+                            Toast.makeText(RecuperarSenhaActivity.this,"Ocorreu um erro durante a comunicação com o servidor." +
                                     "\n Tente novamente mais tarde",Toast.LENGTH_SHORT).show();
                             Log.e("Comunication Error",t.toString());
                         }
