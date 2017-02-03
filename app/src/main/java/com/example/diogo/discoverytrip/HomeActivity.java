@@ -16,8 +16,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ViewFlipper;
 
 import com.example.diogo.discoverytrip.GPS.GPS;
 import com.example.diogo.discoverytrip.GPS.gpsUpdateInterface;
@@ -40,6 +42,7 @@ public class HomeActivity extends AppCompatActivity
     // TextView para log GPS
     TextView status_gps;
     TextView localizacao;
+    ViewFlipper flipper;
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -66,11 +69,12 @@ public class HomeActivity extends AppCompatActivity
         // instanciando TextViews de log gps
         status_gps = (TextView) findViewById(R.id.status_gps);
         localizacao = (TextView) findViewById(R.id.localizacao);
+        flipper = (ViewFlipper) findViewById(R.id.home_flipper);
+        flipper.setInAnimation(AnimationUtils.loadAnimation(HomeActivity.this,R.anim.right_in));
+        flipper.setOutAnimation(AnimationUtils.loadAnimation(HomeActivity.this,R.anim.left_out));
 
         GPS gps = new GPS(this,(LocationManager) getSystemService(Context.LOCATION_SERVICE));
        // status_gps.setText(gps.getLatitude() + " deu certo");
-
-
 
         buildGooglePlusConfigs();
 
@@ -152,28 +156,18 @@ public class HomeActivity extends AppCompatActivity
         Fragment fragment = null;
 
         switch (id) {
+            case R.id.nav_home:
+                flipper.setDisplayedChild(0);
+                break;
             case R.id.nav_localizacao:
-                Log.d("Logger", "Home localizacao");
-                fragment = new LocalizacaoFragment();
+                flipper.setDisplayedChild(1);
                 break;
             case R.id.nav_perfil:
-                Log.d("Logger", "Home perfil");
-                fragment = new PerfilFragment();
+                flipper.setDisplayedChild(2);
                 break;
             case R.id.nav_ponto_turistico:
-                Log.d("Logger", "Home ponto turistico");
-                fragment = new PontoTuristicoFragment();
+                flipper.setDisplayedChild(3);
                 break;
-        }
-
-        if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            Bundle extras = getIntent().getExtras();
-
-            if(extras !=null) {
-                fragment.setArguments(extras);
-            }
-            fragmentManager.beginTransaction().replace(R.id.content_home, fragment).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
