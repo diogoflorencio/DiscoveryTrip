@@ -1,22 +1,18 @@
 package com.example.diogo.discoverytrip;
 
 import android.content.Intent;
-
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.view.View;;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.Model.AccessTokenJson;
 import com.example.diogo.discoverytrip.Model.AppLoginJson;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.LoginResponse;
-import com.example.diogo.discoverytrip.REST.ServerResponses.ResponseAbst;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ApiInterface;
 import com.facebook.AccessToken;
@@ -26,31 +22,21 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
-
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
-
 import com.google.android.gms.common.ConnectionResult;
-
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
-
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
-
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.util.Arrays;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Converter;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 import static com.facebook.AccessToken.getCurrentAccessToken;
 
@@ -58,14 +44,11 @@ import static com.facebook.AccessToken.getCurrentAccessToken;
  * Classe activity responsavel pelo login na aplicação
  */
 public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
-
     private static final int RC_SIGN_IN = 9001;
     private LoginButton loginButton;
     private CallbackManager callbackManager;
     private ProfileTracker profileTracker;
     private GoogleApiClient mGoogleApiClient;
-
-
     /**
      * Metodo responsavel por gerenciar a criacao de um objeto 'LoginActivity'
      */
@@ -73,34 +56,165 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("Logger", "LoginActivity Oncreate");
-
         // iniciando SDK facebook
         FacebookSdk.sdkInitialize(getApplicationContext());
-
+        loggedInFacebook();
+        // iniciando SDK google
+        buildGooglePlusConfigs();
+        //instanciando objetos da activity
         setContentView(R.layout.activity_login);
+        loginButton = (LoginButton) findViewById(R.id.loginButton);
+        loginButton.setOnClickListener(this);
+        findViewById(R.id.login_google).setOnClickListener(this);
+        findViewById(R.id.lblCadastreSe).setOnClickListener(this);
+        findViewById(R.id.btnLoginApp).setOnClickListener(this);
+        findViewById(R.id.recuperarSenha).setOnClickListener(this);
+    }
 
+    @Override
+    public void onClick(View view) {
+        Log.d("Logger", "LoginActivity onClick");
+        switch (view.getId()) {
+            case R.id.login_google:
+                Log.d("Logger", "LoginActivity login google");
+                signIn();
+                break;
+            case R.id.loginButton:
+                Log.d("Logger", "LoginActivity login facebook");
+                loginFacebook();
+                break;
+            case R.id.lblCadastreSe:
+                Log.d("Logger", "LoginActivity cadastrar");
+                startActivity(new Intent(LoginActivity.this,CadastroActivity.class));
+                finish();
+                break;
+            case R.id.btnLoginApp:
+                Log.d("Logger", "LoginActivity login padrão");
+                try {
+                    loginApp();
+                } catch (DataInputException e){
+                    Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+                break;
+            case R.id.recuperarSenha:
+                Log.d("Logger", "LoginActivity recuperar senha");
+                startActivity(new Intent(LoginActivity.this,RecuperarSenhaActivity.class));
+                break;
+        }
+    }
+    private void loginFacebook(){
+        //permissões do facebook
+        loginButton.setReadPermissions(Arrays.asList("public_profile","email"));
+        // criando request facebook
+        callbackManager = CallbackManager.Factory.create();
+        //logando ao facebook
+        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                profileTracker = new ProfileTracker() {
+
+                    @Override
+                    protected void onCurrentProfileChanged(
+                            Profile oldProfile, Profile currentProfile) {
+                        profileTracker.stopTracking();
+                        Profile.setCurrentProfile(currentProfile);
+                        Profile profile = Profile.getCurrentProfile();
+                    }
+                };
+                profileTracker.startTracking();
+
+                postTokenFacebook(getCurrentAccessToken().getToken());
+                Log.d("Logger", "startActivity facebook");
+                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                finish();
+            }
+
+            @Override
+            public void onCancel() {
+                Toast.makeText(getApplicationContext(),R.string.login_cancel,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+                Toast.makeText(getApplicationContext(),R.string.login_error,Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void postTokenFacebook(String token){
+        Log.d("Logger", "LoginActivity postFacebook");
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+        Call<LoginResponse> call = apiService.loginFacebook(new AccessTokenJson(token));
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if(response.isSuccessful()) {
+                    Log.d("Login","Server OK");
+                }
+                else{
+                    Log.e("Server",""+response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                // Log error here since request failed
+                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("App Server Error", t.toString());
+            }
+        });
+    }
+
+    private void loggedInFacebook(){
         // verificando validade de token facebook
         if(AccessToken.getCurrentAccessToken() != null){
             startActivity(new Intent(LoginActivity.this,HomeActivity.class));
             finish();
         }
+    }
 
-        buildGooglePlusConfigs();
+    private void loginApp()throws DataInputException{
+        Log.d("Logger", "LoginActivity loginApp");
+        EditText emailLogin = (EditText) findViewById(R.id.txtLoginEmail);
+        EditText senhaLogin = (EditText) findViewById(R.id.txtLoginSenha);
 
-        setContentView(R.layout.activity_login);
+        if(emailLogin.getText().toString().trim().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_email));
+        }
 
-        loginButton = (LoginButton) findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(this);
+        if(senhaLogin.getText().toString().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_password_empty));
+        }
 
-        findViewById(R.id.login_google).setOnClickListener(this);
-        findViewById(R.id.lblCadastreSe).setOnClickListener(this);
+        ApiInterface apiService =
+                ApiClient.getClient().create(ApiInterface.class);
+        Call<LoginResponse> call = apiService.appLogin(new AppLoginJson(emailLogin.getText().toString(), senhaLogin.getText().toString()));
+        call.enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                if(response.isSuccessful()) {
+                    LoginResponse loginResponse = response.body();
+                    Log.d("Server OK",loginResponse.getAccesstoken());
+                }
+                else{
+                    try {
+                        ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                        Toast.makeText(LoginActivity.this,error.getErrorDescription(),Toast.LENGTH_SHORT).show();
+                        Log.e("Server Error",error.getErrorDescription());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
-        Button btnAppLogin = (Button) findViewById(R.id.btnLoginApp);
-        btnAppLogin.setOnClickListener(this);
-
-        Button recuperarSenha = (Button) findViewById(R.id.recuperarSenha);
-        recuperarSenha.setOnClickListener(this);
-
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                // Log error here since request failed
+                Toast.makeText(LoginActivity.this, R.string.login_unable, Toast.LENGTH_SHORT).show();
+                Log.e("App Server Error", t.toString());
+            }
+        });
     }
 
     public void buildGooglePlusConfigs() {
@@ -163,142 +277,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         } else{
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
-    }
-
-    @Override
-    public void onClick(View view) {
-        Log.d("Logger", "LoginActivity onClick");
-        switch (view.getId()) {
-            case R.id.login_google:
-                Log.d("Logger", "LoginActivity login google");
-                signIn();
-                break;
-            case R.id.loginButton:
-                Log.d("Logger", "LoginActivity login facebook");
-                //permissões do facebook
-                loginButton.setReadPermissions(Arrays.asList("public_profile","email"));
-
-                // criando request facebook
-                callbackManager = CallbackManager.Factory.create();
-                //logando ao facebook
-                loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        profileTracker = new ProfileTracker() {
-
-                            @Override
-                            protected void onCurrentProfileChanged(
-                                    Profile oldProfile, Profile currentProfile) {
-                                profileTracker.stopTracking();
-                                Profile.setCurrentProfile(currentProfile);
-                                Profile profile = Profile.getCurrentProfile();
-                            }
-                        };
-                        profileTracker.startTracking();
-
-                        postFacebook(getCurrentAccessToken().getToken());
-                        Log.d("Logger", "startActivity facebook");
-                        startActivity(new Intent(LoginActivity.this,HomeActivity.class));
-                        finish();
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        Toast.makeText(getApplicationContext(),R.string.login_cancel,Toast.LENGTH_SHORT).show();
-                    }
-
-                    @Override
-                    public void onError(FacebookException error) {
-                        Toast.makeText(getApplicationContext(),R.string.login_error,Toast.LENGTH_SHORT).show();
-                    }
-                });
-                break;
-            case R.id.lblCadastreSe:
-                Log.d("Logger", "LoginActivity cadastrar");
-                startActivity(new Intent(LoginActivity.this,CadastroActivity.class));
-                finish();
-                break;
-            case R.id.btnLoginApp:
-                Log.d("Logger", "LoginActivity login padrão");
-                try {
-                    loginApp();
-                } catch (DataInputException e){
-                    Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
-                }
-                break;
-            case R.id.recuperarSenha:
-                Log.d("Logger", "LoginActivity recuperar senha");
-                startActivity(new Intent(LoginActivity.this,RecuperarSenhaActivity.class));
-                break;
-        }
-    }
-
-    private void loginApp()throws DataInputException{
-        Log.d("Logger", "LoginActivity loginApp");
-        EditText emailLogin = (EditText) findViewById(R.id.txtLoginEmail);
-        EditText senhaLogin = (EditText) findViewById(R.id.txtLoginSenha);
-
-        if(emailLogin.getText().toString().trim().isEmpty()){
-            throw new DataInputException(getString(R.string.validate_email));
-        }
-
-        if(senhaLogin.getText().toString().isEmpty()){
-            throw new DataInputException(getString(R.string.validate_password_empty));
-        }
-
-        ApiInterface apiService =
-                ApiClient.getClient().create(ApiInterface.class);
-        Call<LoginResponse> call = apiService.appLogin(new AppLoginJson(emailLogin.getText().toString(), senhaLogin.getText().toString()));
-        call.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if(response.isSuccessful()) {
-                    LoginResponse loginResponse = response.body();
-                    Log.d("Server OK",loginResponse.getAccesstoken());
-                }
-                else{
-                    try {
-                        ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                        Toast.makeText(LoginActivity.this,error.getErrorDescription(),Toast.LENGTH_SHORT).show();
-                        Log.e("Server Error",error.getErrorDescription());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                // Log error here since request failed
-                Toast.makeText(LoginActivity.this, R.string.login_unable, Toast.LENGTH_SHORT).show();
-                Log.e("App Server Error", t.toString());
-            }
-        });
-    }
-
-    private void postFacebook(String token){
-        Log.d("Logger", "LoginActivity postFacebook");
-        ApiInterface apiService =
-                ApiClient.getClient().create(ApiInterface.class);
-        Call<LoginResponse> call = apiService.loginFacebook(new AccessTokenJson(token));
-        call.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if(response.isSuccessful()) {
-                    Log.d("Login","Server OK");
-                }
-                else{
-                    Log.e("Server",""+response.code());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                // Log error here since request failed
-                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("App Server Error", t.toString());
-            }
-        });
     }
 
     @Override
