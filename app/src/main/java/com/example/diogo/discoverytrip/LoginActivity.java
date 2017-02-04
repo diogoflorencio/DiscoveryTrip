@@ -1,5 +1,6 @@
 package com.example.diogo.discoverytrip;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -8,9 +9,12 @@ import android.util.Log;
 import android.view.View;;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.diogo.discoverytrip.BD.BDRefreshTokenApp;
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.Model.AccessTokenJson;
 import com.example.diogo.discoverytrip.Model.AppLoginJson;
+import com.example.diogo.discoverytrip.Model.RefreshTokenManeger;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.LoginResponse;
 import com.example.diogo.discoverytrip.REST.ApiClient;
@@ -195,6 +199,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful()) {
                     LoginResponse loginResponse = response.body();
+                    BDRefreshTokenApp.armezenaRefreshTokenApp(loginResponse.getRefreshtoken(),
+                            getSharedPreferences("tokenApp", Context.MODE_PRIVATE));
+                    RefreshTokenManeger.refreshToken(getSharedPreferences("tokenApp", Context.MODE_PRIVATE));
                     startActivity(new Intent(LoginActivity.this,HomeActivity.class));
                     finish();
                 }

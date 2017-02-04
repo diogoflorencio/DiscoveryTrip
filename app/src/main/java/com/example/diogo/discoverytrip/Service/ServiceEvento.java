@@ -1,6 +1,5 @@
 package com.example.diogo.discoverytrip.Service;
 
-
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -26,7 +25,7 @@ public class ServiceEvento extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        return START_NOT_STICKY;
+        return START_STICKY;
     }
 
     @Override
