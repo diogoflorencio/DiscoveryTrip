@@ -37,5 +37,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:layout="@layout/fragment_ponto_turistico" />
+
+        <fragment class="com.example.diogo.discoverytrip.EventoFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_evento" />
     </ViewFlipper>
 </RelativeLayout>
