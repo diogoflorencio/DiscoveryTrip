@@ -15,6 +15,9 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
 
+    <!-- permissão para inicio de service junto ao sistema -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/discoverytrip"
@@ -54,6 +57,14 @@
             android:name=".RecuperarSenhaActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
+
+        <receiver android:name=".Service.ServiceBroadcast">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".Service.ServiceEvento" />
 
     </application>
 </manifest>

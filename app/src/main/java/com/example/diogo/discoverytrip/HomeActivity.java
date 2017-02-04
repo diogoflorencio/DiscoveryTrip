@@ -18,6 +18,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.ViewFlipper;
 
 
+import com.example.diogo.discoverytrip.Service.ServiceEvento;
 import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -65,6 +66,8 @@ public class HomeActivity extends AppCompatActivity
         buildGooglePlusConfigs();
 
         createHomeFragment();
+
+        startService(new Intent(HomeActivity.this, ServiceEvento.class));//start ServiceEvento
     }
 
     public void buildGooglePlusConfigs() {
@@ -109,6 +112,7 @@ public class HomeActivity extends AppCompatActivity
         switch (id) {
             case R.id.action_settings:
                 Log.d("Logger", "Home action_settings");
+                stopService(new Intent(HomeActivity.this, ServiceEvento.class));//stop ServiceEvento
                 return true;
             case R.id.logout:
                 Log.d("Logger", "Home logout");
