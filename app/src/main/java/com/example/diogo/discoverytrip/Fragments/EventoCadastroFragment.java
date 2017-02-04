@@ -7,12 +7,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.R;
 
 public class EventoCadastroFragment extends Fragment implements View.OnClickListener {
+    public EditText nameVal_txt, descVal_txt, dateVal_txt;
 
     public EventoCadastroFragment() {
         // Required empty public constructor
@@ -26,6 +29,13 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
 
         rootView.findViewById(R.id.evConfirm_btn).setOnClickListener(this);
 
+        Button confirmarBtn = (Button) rootView.findViewById(R.id.pfConfirm_btn);
+        confirmarBtn.setOnClickListener(this);
+
+        nameVal_txt = (EditText) rootView.findViewById(R.id.evName_edt);
+        descVal_txt = (EditText) rootView.findViewById(R.id.evDesc_edt);
+        dateVal_txt = (EditText) rootView.findViewById(R.id.evDate_edt);
+
         return rootView;
     }
 
@@ -33,10 +43,11 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
     public void onClick(View view) {
         Log.d("Logger", "EventoCadastroFragment onClick");
         switch (view.getId()) {
-            case R.id.pfConfirm_btn:
+            case R.id.evConfirm_btn:
                 Log.d("Logger", "EventoCadastroFragment botao confirmar");
                 try {
                     validateFields();
+                    sendEventData();
                     backToHome();
                 } catch (DataInputException exception){
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
@@ -56,5 +67,21 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
 
     private void validateFields() throws DataInputException {
         Log.d("Logger", "EventoCadastroFragment validateFields");
+        if(nameVal_txt.getText().toString().trim().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_name));
+        }
+
+        if(descVal_txt.getText().toString().trim().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_description));
+        }
+
+        if(dateVal_txt.getText().toString().trim().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_date));
+        }
+    }
+
+    public void sendEventData(){
+        //precisa fazer um post e mandar os dados atualizados pro servidor
+        //TODO
     }
 }
