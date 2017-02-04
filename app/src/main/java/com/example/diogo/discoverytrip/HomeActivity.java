@@ -1,8 +1,6 @@
 package com.example.diogo.discoverytrip;
 
-import android.content.Context;
 import android.content.Intent;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -17,14 +15,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.AnimationUtils;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ViewFlipper;
 
-import com.example.diogo.discoverytrip.GPS.GPS;
-import com.example.diogo.discoverytrip.GPS.gpsUpdateInterface;
+
 import com.facebook.AccessToken;
-import com.facebook.ProfileTracker;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.ConnectionResult;
@@ -38,10 +32,8 @@ import static com.facebook.AccessToken.getCurrentAccessToken;
  * Classe activity responsavel pela activity home (principal) na aplicação
  */
 public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener, gpsUpdateInterface {
-    // TextView para log GPS
-    TextView status_gps;
-    TextView localizacao;
+        implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
+
     ViewFlipper flipper;
 
     private GoogleApiClient mGoogleApiClient;
@@ -66,15 +58,9 @@ public class HomeActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        // instanciando TextViews de log gps
-        status_gps = (TextView) findViewById(R.id.status_gps);
-        localizacao = (TextView) findViewById(R.id.localizacao);
         flipper = (ViewFlipper) findViewById(R.id.home_flipper);
         flipper.setInAnimation(AnimationUtils.loadAnimation(HomeActivity.this,R.anim.right_in));
         flipper.setOutAnimation(AnimationUtils.loadAnimation(HomeActivity.this,R.anim.left_out));
-
-        GPS gps = new GPS(this,(LocationManager) getSystemService(Context.LOCATION_SERVICE));
-       // status_gps.setText(gps.getLatitude() + " deu certo");
 
         buildGooglePlusConfigs();
 
@@ -186,10 +172,5 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d("Logger", "Home onConnectionFailed");
-    }
-
-    @Override
-    public void updateLocation(double latitude, double longitude) {
-        Toast.makeText(this,"Localização mudou",Toast.LENGTH_SHORT).show();
     }
 }
