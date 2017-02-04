@@ -30,6 +30,7 @@ public class EventoFragment extends Fragment implements View.OnClickListener {
         return rootView;
     }
 
+    @Override
     public void onClick(View view) {
         Log.d("Logger", "EventoFragment onClick");
         switch (view.getId()) {

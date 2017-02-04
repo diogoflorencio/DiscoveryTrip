@@ -54,6 +54,7 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         //TODO
     }
 
+    @Override
     public void onClick(View view) {
         Log.d("Logger", "PerfilFragment onClick");
         switch (view.getId()) {
