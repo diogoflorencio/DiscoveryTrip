@@ -143,7 +143,6 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         Log.d("Logger", "Home onNavigationItemSelected");
         int id = item.getItemId();
-        Fragment fragment = null;
 
         switch (id) {
             case R.id.nav_home:
@@ -157,6 +156,9 @@ public class HomeActivity extends AppCompatActivity
                 break;
             case R.id.nav_ponto_turistico:
                 flipper.setDisplayedChild(3);
+                break;
+            case R.id.nav_evento:
+                flipper.setDisplayedChild(4);
                 break;
         }
 
