@@ -154,6 +154,10 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_ponto_turistico:
                 flipper.setDisplayedChild(3);
                 break;
+            case R.id.nav_evento:
+                Log.d("Logger", "Home evento");
+                fragment = new EventoFragment();
+                break;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
