@@ -1,4 +1,4 @@
-package com.example.diogo.discoverytrip;
+package com.example.diogo.discoverytrip.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.Model.AccessTokenJson;
 import com.example.diogo.discoverytrip.Model.AppLoginJson;
 import com.example.diogo.discoverytrip.Model.RefreshTokenManeger;
+import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.LoginResponse;
 import com.example.diogo.discoverytrip.REST.ApiClient;

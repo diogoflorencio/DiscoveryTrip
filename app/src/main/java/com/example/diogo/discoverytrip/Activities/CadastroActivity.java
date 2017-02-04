@@ -1,4 +1,4 @@
-package com.example.diogo.discoverytrip;
+package com.example.diogo.discoverytrip.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,8 +10,8 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
+import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
-import com.example.diogo.discoverytrip.REST.ServerResponses.ResponseAbst;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponse;
 import com.example.diogo.discoverytrip.Model.UsuarioEnvio;
 import com.example.diogo.discoverytrip.REST.ApiClient;

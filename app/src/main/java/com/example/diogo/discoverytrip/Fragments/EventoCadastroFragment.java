@@ -1,4 +1,4 @@
-package com.example.diogo.discoverytrip;
+package com.example.diogo.discoverytrip.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
+import com.example.diogo.discoverytrip.R;
 
 public class EventoCadastroFragment extends Fragment implements View.OnClickListener {
 

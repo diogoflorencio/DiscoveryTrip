@@ -1,10 +1,9 @@
-package com.example.diogo.discoverytrip;
+package com.example.diogo.discoverytrip.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +17,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ViewFlipper;
 
 
+import com.example.diogo.discoverytrip.Fragments.HomeFragment;
+import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.Service.ServiceEvento;
 import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.Auth;

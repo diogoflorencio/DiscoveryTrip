@@ -35,7 +35,7 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -45,16 +45,16 @@
         </activity>
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".Activities.HomeActivity"
             android:label="@string/title_activity_home"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".CadastroActivity"
+            android:name=".Activities.CadastroActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
 
         <activity
-            android:name=".RecuperarSenhaActivity"
+            android:name=".Activities.RecuperarSenhaActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         </activity>
 
