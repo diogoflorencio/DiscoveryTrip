@@ -44,7 +44,7 @@ public class RefreshTokenManeger {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
         Call<LoginResponse> call =
-                apiService.refreshToken(new RefreshTokenJson(BDRefreshTokenApp.recuperaRefreshTokenApp(prefs),"clientID","clientSecret"));
+                apiService.refreshToken(new RefreshTokenJson(BDRefreshTokenApp.recuperaRefreshTokenApp(prefs)));
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
