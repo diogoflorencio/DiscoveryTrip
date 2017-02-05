@@ -29,9 +29,6 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
 
         rootView.findViewById(R.id.evConfirm_btn).setOnClickListener(this);
 
-        Button confirmarBtn = (Button) rootView.findViewById(R.id.pfConfirm_btn);
-        confirmarBtn.setOnClickListener(this);
-
         nameVal_txt = (EditText) rootView.findViewById(R.id.evName_edt);
         descVal_txt = (EditText) rootView.findViewById(R.id.evDesc_edt);
         dateVal_txt = (EditText) rootView.findViewById(R.id.evDate_edt);
