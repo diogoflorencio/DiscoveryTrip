@@ -1,4 +1,4 @@
-package com.example.diogo.discoverytrip;
+package com.example.diogo.discoverytrip.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
+import com.example.diogo.discoverytrip.R;
 
 /**
  * Classe fragment responsavel pelo fragmento perfil na aplicação

@@ -1,10 +1,9 @@
-package com.example.diogo.discoverytrip;
+package com.example.diogo.discoverytrip.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +17,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.ViewFlipper;
 
 
+import com.example.diogo.discoverytrip.Fragments.HomeFragment;
+import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.Service.ServiceEvento;
 import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.Auth;
@@ -67,7 +68,8 @@ public class HomeActivity extends AppCompatActivity
 
         createHomeFragment();
 
-        startService(new Intent(HomeActivity.this, ServiceEvento.class));//start ServiceEvento
+        if(!ServiceEvento.isRun())
+            startService(new Intent(HomeActivity.this, ServiceEvento.class));//start ServiceEvento
     }
 
     public void buildGooglePlusConfigs() {
@@ -112,13 +114,14 @@ public class HomeActivity extends AppCompatActivity
         switch (id) {
             case R.id.action_settings:
                 Log.d("Logger", "Home action_settings");
-                stopService(new Intent(HomeActivity.this, ServiceEvento.class));//stop ServiceEvento
                 return true;
             case R.id.logout:
                 Log.d("Logger", "Home logout");
                 if (getCurrentAccessToken() != null) {
                     AccessToken.setCurrentAccessToken(null);
                 } else signOutGooglePlus();
+                if(ServiceEvento.isRun())
+                    stopService(new Intent(HomeActivity.this, ServiceEvento.class));//stop ServiceEvento
                 startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                 finish();
                 return true;

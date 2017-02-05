@@ -1,4 +1,4 @@
-package com.example.diogo.discoverytrip;
+package com.example.diogo.discoverytrip.Fragments;
 
 
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.diogo.discoverytrip.R;
 
 /**
  * Classe fragment responsavel pelo fragmento inicial (home) na aplicação

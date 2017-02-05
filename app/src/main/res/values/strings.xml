@@ -37,6 +37,7 @@
     <string name="validate_password_empty">Senha não pode ser vazia!</string>
     <string name="validate_category">Informe uma categoria</string>
     <string name="validate_description">Informe uma descrição</string>
+    <string name="validate_date">Informe uma data</string>
 
     //AppLoginJson strings
     <string name="login_id">discoveryTrip</string>
