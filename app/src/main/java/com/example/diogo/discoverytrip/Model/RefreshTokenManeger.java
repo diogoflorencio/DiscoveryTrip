@@ -3,7 +3,7 @@ package com.example.diogo.discoverytrip.Model;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.example.diogo.discoverytrip.BD.BDRefreshTokenApp;
+import com.example.diogo.discoverytrip.DiscoveryTripBD.BDRefreshTokenApp;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ApiInterface;
 import com.example.diogo.discoverytrip.REST.ServerResponses.LoginResponse;

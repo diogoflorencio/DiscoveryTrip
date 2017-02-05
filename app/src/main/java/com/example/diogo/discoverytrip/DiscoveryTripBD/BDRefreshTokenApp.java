@@ -1,4 +1,4 @@
-package com.example.diogo.discoverytrip.BD;
+package com.example.diogo.discoverytrip.DiscoveryTripBD;
 
 import android.content.SharedPreferences;
 
