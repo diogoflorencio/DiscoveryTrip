@@ -10,7 +10,7 @@ import android.view.View;;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.diogo.discoverytrip.DiscoveryTripBD.BDRefreshTokenApp;
+import com.example.diogo.discoverytrip.DataBase.BDRefreshTokenApp;
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.Model.AccessTokenJson;
 import com.example.diogo.discoverytrip.Model.AppLoginJson;

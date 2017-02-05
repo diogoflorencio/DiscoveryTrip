@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.diogo.discoverytrip.DiscoveryTripBD.DiscoveryTripBD;
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
