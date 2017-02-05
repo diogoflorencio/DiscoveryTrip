@@ -18,8 +18,9 @@ import android.widget.ViewFlipper;
 
 
 import com.example.diogo.discoverytrip.Fragments.HomeFragment;
+import com.example.diogo.discoverytrip.Model.RefreshTokenManeger;
 import com.example.diogo.discoverytrip.R;
-import com.example.diogo.discoverytrip.Service.ServiceEvento;
+import com.example.diogo.discoverytrip.Service.ServiceLembrete;
 import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -68,8 +69,8 @@ public class HomeActivity extends AppCompatActivity
 
         createHomeFragment();
 
-        if(!ServiceEvento.isRun())
-            startService(new Intent(HomeActivity.this, ServiceEvento.class));//start ServiceEvento
+        if(!ServiceLembrete.isRun())
+            startService(new Intent(HomeActivity.this, ServiceLembrete.class));//start ServiceLembrete
     }
 
     public void buildGooglePlusConfigs() {
@@ -120,8 +121,9 @@ public class HomeActivity extends AppCompatActivity
                 if (getCurrentAccessToken() != null) {
                     AccessToken.setCurrentAccessToken(null);
                 } else signOutGooglePlus();
-                if(ServiceEvento.isRun())
-                    stopService(new Intent(HomeActivity.this, ServiceEvento.class));//stop ServiceEvento
+                if(ServiceLembrete.isRun())
+                    stopService(new Intent(HomeActivity.this, ServiceLembrete.class));//stop ServiceLembrete
+                RefreshTokenManeger.logout();
                 startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                 finish();
                 return true;
