@@ -68,7 +68,8 @@ public class HomeActivity extends AppCompatActivity
 
         createHomeFragment();
 
-        startService(new Intent(HomeActivity.this, ServiceEvento.class));//start ServiceEvento
+        if(!ServiceEvento.isRun())
+            startService(new Intent(HomeActivity.this, ServiceEvento.class));//start ServiceEvento
     }
 
     public void buildGooglePlusConfigs() {
@@ -113,13 +114,14 @@ public class HomeActivity extends AppCompatActivity
         switch (id) {
             case R.id.action_settings:
                 Log.d("Logger", "Home action_settings");
-                stopService(new Intent(HomeActivity.this, ServiceEvento.class));//stop ServiceEvento
                 return true;
             case R.id.logout:
                 Log.d("Logger", "Home logout");
                 if (getCurrentAccessToken() != null) {
                     AccessToken.setCurrentAccessToken(null);
                 } else signOutGooglePlus();
+                if(ServiceEvento.isRun())
+                    stopService(new Intent(HomeActivity.this, ServiceEvento.class));//stop ServiceEvento
                 startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                 finish();
                 return true;
