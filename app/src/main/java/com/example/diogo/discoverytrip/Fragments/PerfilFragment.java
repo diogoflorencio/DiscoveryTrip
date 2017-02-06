@@ -20,8 +20,11 @@ import com.example.diogo.discoverytrip.Model.User;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ApiInterface;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.LoginResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponse;
+
+import java.io.IOException;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -72,12 +75,17 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
                     userName.setText(user.getNome());
                     userEmail.setText(user.getEmail());
                 } else {
-                    Log.e("Server Perfil", "" + response.code());
+                    try {
+                        ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                        Log.e("Server Perfil", "" + error.getErrorDescription());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
-                Log.e("Server", "" + t.getMessage());
+                Log.e("Server", "" + t.toString());
             }
 
         });

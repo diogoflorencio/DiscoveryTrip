@@ -146,7 +146,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         });
     }
 
-    private void postTokenFacebook(String token){
+    private void postTokenFacebook(final String token){
         Log.d("Logger", "LoginActivity postFacebook");
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
@@ -157,13 +157,18 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 if(response.isSuccessful()) {
                     Log.d("Login","Server OK");
                     LoginResponse loginResponse = response.body();
-                    AcessToken.salvar(loginResponse.getAccesstoken(),
+                    AcessToken.salvar(token,
                             getSharedPreferences("acessToken", Context.MODE_PRIVATE));
                     /************************** ACESS TOKEN FACEBOOK NULL *********************************/
                     Log.d("Logger", "LoginResponse AcessToken Facebook: " + loginResponse.getAccesstoken());
                 }
                 else{
-                    Log.e("Server",""+response.code());
+                    try {
+                        ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                        Log.e("Server", error.getErrorDescription());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
 
