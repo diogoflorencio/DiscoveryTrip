@@ -69,28 +69,32 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                 if (response.isSuccessful()) {
-                    Log.d("Server Perfil", "Server OK");
+                    Log.d("Perfil", "Server OK");
                     ServerResponse serverResponse = response.body();
                     User user = serverResponse.getUsuario();
                     userName.setText(user.getNome());
                     userEmail.setText(user.getEmail());
                 } else {
+                   // try {
+                       // ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
                     try {
-                        ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                        Log.e("Server Perfil", "" + error.getErrorDescription());
+                        Log.e("Perfil", "" + response.errorBody().string());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    // } catch (IOException e) {
+                      //  e.printStackTrace();
+                   // }
                 }
             }
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
-                Log.e("Server", "" + t.toString());
+                Log.e("Perfil", "Server" + t.toString());
             }
 
         });
 
-        Log.d("Server Perfil", "AcessToken " + AcessToken.recuperar(
+        Log.d("Perfil", "AcessToken " + AcessToken.recuperar(
                 this.getActivity().getSharedPreferences("acessToken", Context.MODE_PRIVATE)));
     }
 
