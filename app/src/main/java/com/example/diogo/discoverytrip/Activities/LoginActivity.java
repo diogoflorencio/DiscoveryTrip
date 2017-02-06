@@ -10,11 +10,11 @@ import android.view.View;;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.diogo.discoverytrip.DataBase.BDRefreshTokenApp;
+import com.example.diogo.discoverytrip.DataBase.AcessToken;
+import com.example.diogo.discoverytrip.DataBase.RefreshToken;
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.Model.AccessTokenJson;
 import com.example.diogo.discoverytrip.Model.AppLoginJson;
-import com.example.diogo.discoverytrip.Model.RefreshTokenManeger;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.LoginResponse;
@@ -156,6 +156,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful()) {
                     Log.d("Login","Server OK");
+                    LoginResponse loginResponse = response.body();
+                    AcessToken.salvar(loginResponse.getAccesstoken(),
+                            getSharedPreferences("acessToken", Context.MODE_PRIVATE));
                 }
                 else{
                     Log.e("Server",""+response.code());
@@ -200,9 +203,10 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful()) {
                     LoginResponse loginResponse = response.body();
-                    BDRefreshTokenApp.armezenaRefreshTokenApp(loginResponse.getRefreshtoken(),
-                            getSharedPreferences("tokenApp", Context.MODE_PRIVATE));
-                    RefreshTokenManeger.refreshToken(getSharedPreferences("tokenApp", Context.MODE_PRIVATE));
+                    RefreshToken.salvar(loginResponse.getRefreshtoken(),
+                            getSharedPreferences("refreshToken", Context.MODE_PRIVATE));
+                    AcessToken.salvar(loginResponse.getAccesstoken(),
+                            getSharedPreferences("acessToken", Context.MODE_PRIVATE));
                     startActivity(new Intent(LoginActivity.this,HomeActivity.class));
                     finish();
                 }

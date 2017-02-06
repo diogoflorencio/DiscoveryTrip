@@ -1,5 +1,6 @@
 package com.example.diogo.discoverytrip.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -64,6 +65,9 @@ public class HomeActivity extends AppCompatActivity
         flipper = (ViewFlipper) findViewById(R.id.home_flipper);
         flipper.setInAnimation(AnimationUtils.loadAnimation(HomeActivity.this,R.anim.right_in));
         flipper.setOutAnimation(AnimationUtils.loadAnimation(HomeActivity.this,R.anim.left_out));
+
+        /* start Thread refreshToken */
+        RefreshTokenManeger.refreshToken(getSharedPreferences("refreshToken", Context.MODE_PRIVATE));
 
         buildGooglePlusConfigs();
 

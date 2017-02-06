@@ -3,7 +3,7 @@ package com.example.diogo.discoverytrip.Model;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.example.diogo.discoverytrip.DataBase.BDRefreshTokenApp;
+import com.example.diogo.discoverytrip.DataBase.RefreshToken;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ApiInterface;
 import com.example.diogo.discoverytrip.REST.ServerResponses.LoginResponse;
@@ -50,12 +50,12 @@ public class RefreshTokenManeger {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
         Call<LoginResponse> call =
-                apiService.refreshToken(new RefreshTokenJson(BDRefreshTokenApp.recuperaRefreshTokenApp(prefs)));
+                apiService.refreshToken(new RefreshTokenJson(RefreshToken.recuperar(prefs)));
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful()) {
-                    BDRefreshTokenApp.armezenaRefreshTokenApp(response.body().getRefreshtoken(), prefs);
+                    RefreshToken.salvar(response.body().getRefreshtoken(), prefs);
                     Log.d("Logger","Server OK");
                 }
                 else{

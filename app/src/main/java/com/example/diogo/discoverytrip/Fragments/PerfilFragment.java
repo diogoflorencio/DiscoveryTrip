@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
@@ -18,7 +19,7 @@ import com.example.diogo.discoverytrip.R;
  * Classe fragment responsavel pelo fragmento perfil na aplicação
  */
 public class PerfilFragment extends Fragment implements View.OnClickListener {
-    public EditText nameVal_txt, emailVal_txt;
+    public TextView userName, userEmail;
 
     public PerfilFragment() {
         // Required empty public constructor
@@ -35,11 +36,10 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
 
         Button confirmarBtn = (Button) rootView.findViewById(R.id.pfConfirm_btn);
         confirmarBtn.setOnClickListener(this);
+        userName = (TextView) rootView.findViewById(R.id.userName);
+        userEmail = (TextView) rootView.findViewById(R.id.userEmail);
 
         getUserData();
-
-        nameVal_txt = (EditText) rootView.findViewById(R.id.pfNameVal_txt);
-        emailVal_txt = (EditText) rootView.findViewById(R.id.pfEmailVal_txt);
 
         return rootView;
     }
@@ -61,13 +61,13 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.pfConfirm_btn:
                 Log.d("Logger", "PerfilFragment botao confirmar");
-                try {
+               /* try {
                     validateFields();
                     updateUserData();
                     backToHome();
                 } catch (DataInputException exception){
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
-                }
+                }*/
                 break;
         }
     }
@@ -81,7 +81,7 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         ).commit();
     }
 
-    private void validateFields() throws DataInputException {
+    /*private void validateFields() throws DataInputException {
         Log.d("Logger", "PerfilFragment validateFields");
         if(nameVal_txt.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_name));
@@ -90,5 +90,5 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         if(emailVal_txt.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_email));
         }
-    }
+    }*/
 }

@@ -5,7 +5,7 @@
     tools:context="com.example.diogo.discoverytrip.Fragments.PerfilFragment">
 
     <TextView
-        android:text="Perfil:"
+        android:text="Perfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/pfPerfil_txt"
@@ -16,7 +16,7 @@
         android:layout_centerHorizontal="true" />
 
     <TextView
-        android:text="Email"
+        android:text="Email:"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/pfEmail_txt"
@@ -39,36 +39,49 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="44dp" />
 
-    <EditText
+    <TextView
+        android:text="userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/pfNameVal_txt"
-        android:layout_alignTop="@+id/pfName_txt"
+        android:layout_alignBottom="@+id/pfName_txt"
+        android:layout_alignLeft="@+id/pfPerfil_txt"
+        android:layout_alignStart="@+id/pfPerfil_txt"
+        android:id="@+id/userName"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <EditText
+    <TextView
+        android:text="userEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/pfEmailVal_txt"
-        android:layout_alignTop="@+id/pfEmail_txt"
+        android:layout_alignBottom="@+id/pfEmail_txt"
+        android:layout_alignLeft="@+id/userName"
+        android:layout_alignStart="@+id/userName"
+        android:id="@+id/userEmail"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
     <Button
-        android:text="Confirmar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/pfConfirm_btn"
+        android:background="@drawable/ic_menu_manage"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/pfPerfil_txt"
-        android:layout_toStartOf="@+id/pfPerfil_txt" />
+        android:layout_alignRight="@+id/pfEmail_txt"
+        android:layout_alignEnd="@+id/pfEmail_txt" />
+
+    <TextView
+        android:text="editar perfil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/pfConfirm_btn"
+        android:layout_marginTop="14dp"
+        android:id="@+id/textView"
+        android:layout_toLeftOf="@+id/userEmail"
+        android:layout_toRightOf="@+id/pfConfirm_btn"
+        android:layout_toEndOf="@+id/pfConfirm_btn" />
 
 
 </RelativeLayout>
