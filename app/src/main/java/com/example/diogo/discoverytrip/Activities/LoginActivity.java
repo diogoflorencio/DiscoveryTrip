@@ -159,6 +159,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     LoginResponse loginResponse = response.body();
                     AcessToken.salvar(loginResponse.getAccesstoken(),
                             getSharedPreferences("acessToken", Context.MODE_PRIVATE));
+                    /************************** ACESS TOKEN FACEBOOK NULL *********************************/
+                    Log.d("Logger", "LoginResponse AcessToken Facebook: " + loginResponse.getAccesstoken());
                 }
                 else{
                     Log.e("Server",""+response.code());
