@@ -128,6 +128,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 };
                 profileTracker.startTracking();
 
+                AcessToken.salvar(getCurrentAccessToken().getToken(),
+                        getSharedPreferences("acessToken", Context.MODE_PRIVATE));
+
                 postTokenFacebook(getCurrentAccessToken().getToken());
                 Log.d("Logger", "startActivity facebook");
                 startActivity(new Intent(LoginActivity.this,HomeActivity.class));
@@ -156,11 +159,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful()) {
                     Log.d("Login","Server OK");
-                    LoginResponse loginResponse = response.body();
-                    AcessToken.salvar(token,
-                            getSharedPreferences("acessToken", Context.MODE_PRIVATE));
-                    /************************** ACESS TOKEN FACEBOOK NULL *********************************/
-                    Log.d("Logger", "LoginResponse AcessToken Facebook: " + loginResponse.getAccesstoken());
                 }
                 else{
                     try {

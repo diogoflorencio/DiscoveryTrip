@@ -54,7 +54,7 @@ public class EventoFragment extends Fragment implements View.OnClickListener {
     }
 
     private void goToEventCreation() {
-        Log.d("Logger", "EventoFragment backToHome");
+        Log.d("Logger", "EventoFragment goToEventCreation");
         FragmentManager fragmentManager = getFragmentManager();
         EventoCadastroFragment fragment = new EventoCadastroFragment();
 

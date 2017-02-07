@@ -9,19 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
-import com.example.diogo.discoverytrip.Exceptions.DataInputException;
-import com.example.diogo.discoverytrip.Model.AccessTokenJson;
 import com.example.diogo.discoverytrip.Model.User;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ApiInterface;
-import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
-import com.example.diogo.discoverytrip.REST.ServerResponses.LoginResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponse;
 
 import java.io.IOException;
@@ -69,37 +63,33 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
                 if (response.isSuccessful()) {
-                    Log.d("Server Perfil", "Server OK");
+                    Log.d("Perfil", "Server OK");
                     ServerResponse serverResponse = response.body();
                     User user = serverResponse.getUsuario();
                     userName.setText(user.getNome());
                     userEmail.setText(user.getEmail());
                 } else {
+                   // try {
+                       // ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
                     try {
-                        ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                        Log.e("Server Perfil", "" + error.getErrorDescription());
+                        Log.e("Perfil", "" + response.errorBody().string());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                    // } catch (IOException e) {
+                      //  e.printStackTrace();
+                   // }
                 }
             }
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
-                Log.e("Server", "" + t.toString());
+                Log.e("Perfil", "Server" + t.toString());
             }
 
         });
 
-        Log.d("Server Perfil", "AcessToken " + AcessToken.recuperar(
+        Log.d("Perfil", "AcessToken " + AcessToken.recuperar(
                 this.getActivity().getSharedPreferences("acessToken", Context.MODE_PRIVATE)));
-    }
-
-
-
-    public void updateUserData(){
-        //precisa fazer um post e mandar os dados atualizados pro servidor
-        //funcao pra pegar os dados do perfil do usuário e colocar nos campos
-        //TODO
     }
 
     @Override
@@ -108,34 +98,17 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         switch (view.getId()) {
             case R.id.pfConfirm_btn:
                 Log.d("Logger", "PerfilFragment botao confirmar");
-               /* try {
-                    validateFields();
-                    updateUserData();
-                    backToHome();
-                } catch (DataInputException exception){
-                    Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
-                }*/
+                goToPerfilCreation();
                 break;
         }
     }
 
-    private void backToHome() {
-        Log.d("Logger", "PerfilFragment backToHome");
+    private void goToPerfilCreation() {
+        Log.d("Logger", "PerfilEditFragment goToPerfilCreation");
         FragmentManager fragmentManager = getFragmentManager();
-        HomeFragment fragment = new HomeFragment();
+        PerfilEditFragment fragment = new PerfilEditFragment();
 
         fragmentManager.beginTransaction().replace(R.id.content_home, fragment
         ).commit();
     }
-
-    /*private void validateFields() throws DataInputException {
-        Log.d("Logger", "PerfilFragment validateFields");
-        if(nameVal_txt.getText().toString().trim().isEmpty()){
-            throw new DataInputException(getString(R.string.validate_name));
-        }
-
-        if(emailVal_txt.getText().toString().trim().isEmpty()){
-            throw new DataInputException(getString(R.string.validate_email));
-        }
-    }*/
 }

@@ -7,7 +7,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -28,9 +27,7 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
         View rootView = inflater.inflate(R.layout.fragment_evento_cadastro, container, false);
 
         rootView.findViewById(R.id.evConfirm_btn).setOnClickListener(this);
-
-        Button confirmarBtn = (Button) rootView.findViewById(R.id.pfConfirm_btn);
-        confirmarBtn.setOnClickListener(this);
+        rootView.findViewById(R.id.evCancel_btn).setOnClickListener(this);
 
         nameVal_txt = (EditText) rootView.findViewById(R.id.evName_edt);
         descVal_txt = (EditText) rootView.findViewById(R.id.evDesc_edt);
@@ -53,6 +50,9 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case R.id.evCancel_btn:
+                Log.d("Logger", "EventoCadastroFragment botao cancelar");
+                backToHome();
         }
     }
 
@@ -83,5 +83,8 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
     public void sendEventData(){
         //precisa fazer um post e mandar os dados atualizados pro servidor
         //TODO
+        String eventName_value = nameVal_txt.getText().toString();
+        String eventDesc_value = descVal_txt.getText().toString();
+        String eventDate_value = dateVal_txt.getText().toString();
     }
 }
