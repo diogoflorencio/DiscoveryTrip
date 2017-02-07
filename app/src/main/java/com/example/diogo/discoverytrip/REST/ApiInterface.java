@@ -4,6 +4,8 @@ import com.example.diogo.discoverytrip.Model.AccessTokenJson;
 import com.example.diogo.discoverytrip.Model.AppLoginJson;
 import com.example.diogo.discoverytrip.Model.RefreshTokenJson;
 import com.example.diogo.discoverytrip.Model.ReminderJson;
+import com.example.diogo.discoverytrip.REST.ServerResponses.AddEventoResponse;
+import com.example.diogo.discoverytrip.REST.ServerResponses.AttractionResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.LoginResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.LogoutResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ReminderResponse;
@@ -20,6 +22,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * Created by Renato on 11/12/2016.
@@ -53,4 +56,16 @@ public interface ApiInterface {
     @Headers("Content-Type: application/json")
     @DELETE("api/login")
     Call<LogoutResponse> logout(@Header("Authorization") String authorization);
+
+    @Headers("Content-Type: application/json")
+    @POST("api/attraction")
+    Call<AttractionResponse> cadastrarPontoTuristico(@Query("name") String nome,@Query("description") String descricao,
+                                                     @Query("latitude") String latitude, @Query("longitude") String longitude,
+                                                     @Query("photos") String foto);
+
+    @Headers("Content-Type: application/json")
+    @POST("api/attraction/events")
+    Call<AddEventoResponse> cadastrarEvento(@Query("name") String name, @Query("description") String descricao,
+                                            @Query("keywords") String keyword, @Query("startDate") String startDate,
+                                            @Query("endDate") String endDate, @Query("photo") String foto);
 }

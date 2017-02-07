@@ -7,8 +7,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.example.diogo.discoverytrip.R;
+import com.example.diogo.discoverytrip.Util.ListAdapterEventos;
 
 /**
  * Classe fragment responsavel pelo fragmento evento na aplicação
@@ -27,6 +29,10 @@ public class EventoFragment extends Fragment implements View.OnClickListener {
 
         rootView.findViewById(R.id.createEvent_btn).setOnClickListener(this);
 
+        ListView viewEventos = (ListView) rootView.findViewById(R.id.fragment_evento_listEvento);
+        //TODO fazer a chamada ao servidor para pegar os eventos e setar o adapter da list view
+        //ListAdapterEventos adapter = new ListAdapterEventos(inflater, 'lista de eventos');
+        //viewEventos.setAdapter(adapter);
         return rootView;
     }
 
@@ -37,6 +43,12 @@ public class EventoFragment extends Fragment implements View.OnClickListener {
             case R.id.createEvent_btn:
                 Log.d("Logger", "EventoFragment botao confirmar");
                 goToEventCreation();
+                break;
+            case R.id.pesquisa_evento_btnOK:
+
+                break;
+            case R.id.pesquisa_evento_btnLocalizacao:
+
                 break;
         }
     }
