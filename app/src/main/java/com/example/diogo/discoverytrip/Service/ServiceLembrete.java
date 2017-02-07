@@ -1,15 +1,21 @@
 package com.example.diogo.discoverytrip.Service;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import com.example.diogo.discoverytrip.Activities.HomeActivity;
 import com.example.diogo.discoverytrip.DataBase.DiscoveryTripBD;
-import com.example.diogo.discoverytrip.DataBase.TableLembretes;
 import com.example.diogo.discoverytrip.DataHora.DataHoraSystem;
+import com.example.diogo.discoverytrip.R;
 
 /**
  * Created by diogo on 04/02/17.
@@ -19,7 +25,7 @@ import com.example.diogo.discoverytrip.DataHora.DataHoraSystem;
 public class ServiceLembrete extends Service {
     private static boolean run = false;
     private DiscoveryTripBD discoveryTripBD;
-    private String horaLembrete = "13:40:00";
+    private String horaLembrete = "09:00:00";
 
     @Nullable
     @Override
@@ -43,7 +49,7 @@ public class ServiceLembrete extends Service {
                     while (isRun()) {
                         try {
                             Thread.sleep(timeSleep());
-                            notificacao();
+                            verificaNotificacao();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -74,18 +80,34 @@ public class ServiceLembrete extends Service {
         super.onDestroy();
     }
 
-    private void notificacao(){
+    private void verificaNotificacao(){
         Cursor cursor = discoveryTripBD.selectTableLembrete();
-        if(cursor.getCount() == 0 || !isRun())
-            return;//não notifica em caso de usuário deslogado ou não haver lembretes para o dia
-        cursor.moveToFirst();
-        while(!cursor.isAfterLast()){
-            String nome = cursor.getString(cursor.getColumnIndexOrThrow(TableLembretes.Column.COLUMN_Nome));
-            String descricao = cursor.getString(cursor.getColumnIndexOrThrow(TableLembretes.Column.COLUMN_Descricao));
-            //envia notificação
-            cursor.moveToNext();
-        }
-        discoveryTripBD.deleteTableLembrete();
+        //não notifica em caso de usuário deslogado ou não haver lembretes para o dia
+        if(cursor.getCount() == 0 || !isRun()) return;
+        enviaNotificacao();
+    }
+
+    private void enviaNotificacao() {
+        int idNotification = 20162;
+        /*Obs. falta inserir activity que trata dos lembretes no notificationIntent
+        * falta redenrizar icon para notificação.
+        * */
+        Intent notificationIntent = new Intent(this, HomeActivity.class);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
+                notificationIntent, 0);
+
+        Notification notification = new NotificationCompat.Builder(this)
+                .setSmallIcon(R.mipmap.discoverytrip)
+                .setContentTitle("Eventos de hoje")
+                .setContentText("discovery trip")
+                .setContentIntent(pendingIntent).build();
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(idNotification, notification);
+
+        Log.d("Logger", "ServiceLembrete notificação");
     }
 
     public static boolean isRun(){
