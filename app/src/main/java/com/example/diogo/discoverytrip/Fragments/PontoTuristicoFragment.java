@@ -65,6 +65,9 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
         //logica aqui
         //precisa fazer um post e mandar o cadastro pro servidor
         //TODO
+        String ptName_value = nameVal_txt.getText().toString();
+        String ptCatg_value = catgVal_txt.getText().toString();
+        String ptDesc_value = descVal_txt.getText().toString();
     }
 
     private void backToHome() {

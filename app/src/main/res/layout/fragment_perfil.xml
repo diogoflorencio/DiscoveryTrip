@@ -2,6 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/background_light"
+    android:clickable="true"
     tools:context="com.example.diogo.discoverytrip.Fragments.PerfilFragment">
 
     <TextView
@@ -40,18 +42,6 @@
         android:layout_marginTop="44dp" />
 
     <TextView
-        android:text="userName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/pfName_txt"
-        android:layout_alignLeft="@+id/pfPerfil_txt"
-        android:layout_alignStart="@+id/pfPerfil_txt"
-        android:id="@+id/userName"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:text="userEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/pfEmail_txt"
@@ -82,6 +72,14 @@
         android:layout_toLeftOf="@+id/userEmail"
         android:layout_toRightOf="@+id/pfConfirm_btn"
         android:layout_toEndOf="@+id/pfConfirm_btn" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/userName"
+        android:layout_alignBottom="@+id/pfName_txt"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>

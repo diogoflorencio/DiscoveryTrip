@@ -79,5 +79,8 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
     public void sendEventData(){
         //precisa fazer um post e mandar os dados atualizados pro servidor
         //TODO
+        String eventName_value = nameVal_txt.getText().toString();
+        String eventDesc_value = descVal_txt.getText().toString();
+        String eventDate_value = dateVal_txt.getText().toString();
     }
 }
