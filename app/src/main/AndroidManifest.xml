@@ -64,7 +64,7 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".Service.ServiceEvento" />
+        <service android:name=".Service.ServiceLembrete" />
 
     </application>
 </manifest>

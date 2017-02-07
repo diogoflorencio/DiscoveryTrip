@@ -31,8 +31,8 @@ public interface ApiInterface {
     Call<ServerResponse> cadastrarUsuario(@Body UsuarioEnvio usuarioEnvio);
 
     @Headers("Content-Type: application/json")
-    @GET("api/users/{id}")
-    Call<ServerResponse> getUsuario(@Path("id")String id);
+    @GET("api/users/")
+    Call<ServerResponse> getUsuario(@Header("Authorization") String accessToken);
 
     @Headers("Content-Type: application/json")
     @POST("api/facebook/login")

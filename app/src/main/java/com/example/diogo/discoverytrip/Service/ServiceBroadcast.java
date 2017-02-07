@@ -12,7 +12,7 @@ public class ServiceBroadcast extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if ("android.intent.action.BOOT_COMPLETED".equals(intent.getAction())) {
-            Intent intentLembrete = new Intent(context, ServiceEvento.class);
+            Intent intentLembrete = new Intent(context, ServiceLembrete.class);
             context.startService(intentLembrete);
         }
     }

@@ -99,6 +99,7 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Call<ReminderResponse> call, Throwable t) {
+                            waitDialog.dismiss();
                             Toast.makeText(RecuperarSenhaActivity.this,"Ocorreu um erro durante a comunicação com o servidor." +
                                     "\n Tente novamente mais tarde",Toast.LENGTH_SHORT).show();
                             Log.e("Comunication Error",t.toString());

@@ -3,7 +3,7 @@ package com.example.diogo.discoverytrip.Model;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import com.example.diogo.discoverytrip.DataBase.BDRefreshTokenApp;
+import com.example.diogo.discoverytrip.DataBase.RefreshToken;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ApiInterface;
 import com.example.diogo.discoverytrip.REST.ServerResponses.LoginResponse;
@@ -20,9 +20,12 @@ import retrofit2.Response;
 
 public class RefreshTokenManeger {
     private static final int timeSleep = 3300000; //55 min
-    private static boolean loggedIn = true;
+    private static boolean loggedIn = true , running = false;
+    private static Thread thread;
 
     public static void refreshToken(final SharedPreferences prefs){
+        if(!running) return;
+        running = true;
         final Runnable runnable = new Runnable() {
             @Override
             public void run() {
@@ -32,11 +35,14 @@ public class RefreshTokenManeger {
                         refresh(prefs);
                     } catch (Exception e){
                         e.printStackTrace();
+                        Log.d("Logger", "refreshToken break");
+                        return;
                     }
                 }
             }
         };
-        new Thread(runnable).start();
+        thread = new Thread(runnable);
+        thread.start();
     }
 
     private static void refresh(final SharedPreferences prefs){
@@ -44,12 +50,12 @@ public class RefreshTokenManeger {
         ApiInterface apiService =
                 ApiClient.getClient().create(ApiInterface.class);
         Call<LoginResponse> call =
-                apiService.refreshToken(new RefreshTokenJson(BDRefreshTokenApp.recuperaRefreshTokenApp(prefs),"clientID","clientSecret"));
+                apiService.refreshToken(new RefreshTokenJson(RefreshToken.recuperar(prefs)));
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful()) {
-                    BDRefreshTokenApp.armezenaRefreshTokenApp(response.body().getRefreshtoken(), prefs);
+                    RefreshToken.salvar(response.body().getRefreshtoken(), prefs);
                     Log.d("Logger","Server OK");
                 }
                 else{
@@ -74,5 +80,6 @@ public class RefreshTokenManeger {
 
     public static void logout(){
         loggedIn = false;
+        thread.interrupt();
     }
 }

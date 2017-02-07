@@ -1,5 +1,6 @@
 package com.example.diogo.discoverytrip.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,8 +19,9 @@ import android.widget.ViewFlipper;
 
 
 import com.example.diogo.discoverytrip.Fragments.HomeFragment;
+import com.example.diogo.discoverytrip.Model.RefreshTokenManeger;
 import com.example.diogo.discoverytrip.R;
-import com.example.diogo.discoverytrip.Service.ServiceEvento;
+import com.example.diogo.discoverytrip.Service.ServiceLembrete;
 import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -64,12 +66,15 @@ public class HomeActivity extends AppCompatActivity
         flipper.setInAnimation(AnimationUtils.loadAnimation(HomeActivity.this,R.anim.right_in));
         flipper.setOutAnimation(AnimationUtils.loadAnimation(HomeActivity.this,R.anim.left_out));
 
+        /* start Thread refreshToken */
+        RefreshTokenManeger.refreshToken(getSharedPreferences("refreshToken", Context.MODE_PRIVATE));
+
         buildGooglePlusConfigs();
 
         createHomeFragment();
 
-        if(!ServiceEvento.isRun())
-            startService(new Intent(HomeActivity.this, ServiceEvento.class));//start ServiceEvento
+        if(!ServiceLembrete.isRun())
+            startService(new Intent(HomeActivity.this, ServiceLembrete.class));//start ServiceLembrete
     }
 
     public void buildGooglePlusConfigs() {
@@ -120,8 +125,9 @@ public class HomeActivity extends AppCompatActivity
                 if (getCurrentAccessToken() != null) {
                     AccessToken.setCurrentAccessToken(null);
                 } else signOutGooglePlus();
-                if(ServiceEvento.isRun())
-                    stopService(new Intent(HomeActivity.this, ServiceEvento.class));//stop ServiceEvento
+                if(ServiceLembrete.isRun())
+                    stopService(new Intent(HomeActivity.this, ServiceLembrete.class));//stop ServiceLembrete
+                RefreshTokenManeger.logout();
                 startActivity(new Intent(HomeActivity.this, LoginActivity.class));
                 finish();
                 return true;

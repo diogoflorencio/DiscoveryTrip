@@ -19,12 +19,10 @@ public class RefreshTokenJson {
     @SerializedName("client_secret")
     private String clientSecret;
 
-    public RefreshTokenJson(String refreshToken, String clientId, String clientSecret){
+    public RefreshTokenJson(String refreshToken){
         this.grant_type = "refresh_token";
         this.refreshToken = refreshToken;
-        this.clientId = clientId;
-        this.clientSecret = clientSecret;
+        this.clientId = "discoveryTrip";
+        this.clientSecret = "0ca9b9b3-1370-44e0-b42e-01cf6f6fc04c";
     }
-
-
 }

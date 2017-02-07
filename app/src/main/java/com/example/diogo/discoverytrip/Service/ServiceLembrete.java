@@ -16,10 +16,10 @@ import com.example.diogo.discoverytrip.DataHora.DataHoraSystem;
  * Service para disparar notificações sobre eventos a serem lembrados
  */
 
-public class ServiceEvento extends Service {
+public class ServiceLembrete extends Service {
     private static boolean run = false;
     private DiscoveryTripBD discoveryTripBD;
-    private String horaLembrete = "09:00:00";
+    private String horaLembrete = "13:40:00";
 
     @Nullable
     @Override
@@ -29,7 +29,7 @@ public class ServiceEvento extends Service {
 
     @Override
     public void onCreate() {
-        Log.d("Logger", "onCreate ServiceEvento");
+        Log.d("Logger", "onCreate ServiceLembrete");
         discoveryTripBD = new DiscoveryTripBD(getApplicationContext());
     }
 
@@ -58,7 +58,7 @@ public class ServiceEvento extends Service {
     private int timeSleep(){
         int timeSleep = calcMiliSeconds(horaLembrete) - calcMiliSeconds(DataHoraSystem.hora()) ;
         if(timeSleep <= 0) timeSleep = 24 * 3600000 + timeSleep;
-        Log.d("Logger", "ServiceEvento timeSleep: " + timeSleep);
+        Log.d("Logger", "ServiceLembrete timeSleep: " + timeSleep);
         return timeSleep;
     }
 
