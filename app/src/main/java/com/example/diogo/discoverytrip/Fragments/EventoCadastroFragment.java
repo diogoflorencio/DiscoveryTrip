@@ -27,6 +27,7 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
         View rootView = inflater.inflate(R.layout.fragment_evento_cadastro, container, false);
 
         rootView.findViewById(R.id.evConfirm_btn).setOnClickListener(this);
+        rootView.findViewById(R.id.evCancel_btn).setOnClickListener(this);
 
         nameVal_txt = (EditText) rootView.findViewById(R.id.evName_edt);
         descVal_txt = (EditText) rootView.findViewById(R.id.evDesc_edt);
@@ -49,6 +50,9 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case R.id.evCancel_btn:
+                Log.d("Logger", "EventoCadastroFragment botao cancelar");
+                backToHome();
         }
     }
 

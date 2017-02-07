@@ -30,12 +30,10 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
         View rootView = inflater.inflate(R.layout.fragment_perfil_edit, container, false);
 
         rootView.findViewById(R.id.pfeConfirm_btn).setOnClickListener(this);
-        Log.d("Logger", "PerfilEditFragment onCreate2");
+        rootView.findViewById(R.id.pfeCancel_btn).setOnClickListener(this);
 
-        userEmail_edt = (EditText) rootView.findViewById(R.id.pfeEmail_edt);
-        Log.d("Logger", "PerfilEditFragment onCreate4");
         userName_edt = (EditText) rootView.findViewById(R.id.pfeName_edt);
-        Log.d("Logger", "PerfilEditFragment onCreate3");
+        userEmail_edt = (EditText) rootView.findViewById(R.id.pfeEmail_edt);
 
         return rootView;
     }
@@ -62,6 +60,9 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
                 }
                 break;
+            case R.id.pfeCancel_btn:
+                Log.d("Logger", "PerfilEditFragment botao cancelar");
+                backToHome();
         }
     }
 
