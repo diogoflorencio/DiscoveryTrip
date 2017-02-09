@@ -57,12 +57,13 @@ public interface ApiInterface {
     @DELETE("api/login")
     Call<LogoutResponse> logout(@Header("Authorization") String authorization);
 
+    //TODO corrigir esse metodo
     @Headers("Content-Type: application/json")
     @POST("api/attraction")
     Call<AttractionResponse> cadastrarPontoTuristico(@Query("name") String nome,@Query("description") String descricao,
                                                      @Query("latitude") String latitude, @Query("longitude") String longitude,
                                                      @Query("photos") String foto);
-
+    //TODO corrigir esse metodo
     @Headers("Content-Type: application/json")
     @POST("api/attraction/events")
     Call<AddEventoResponse> cadastrarEvento(@Query("name") String name, @Query("description") String descricao,

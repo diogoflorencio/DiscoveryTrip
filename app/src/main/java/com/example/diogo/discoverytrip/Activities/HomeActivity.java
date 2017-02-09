@@ -73,8 +73,8 @@ public class HomeActivity extends AppCompatActivity
 
         createHomeFragment();
 
-        if(!ServiceLembrete.isRun())
-            startService(new Intent(HomeActivity.this, ServiceLembrete.class));//start ServiceLembrete
+//        if(!ServiceLembrete.isRun())
+//            startService(new Intent(HomeActivity.this, ServiceLembrete.class));//start ServiceLembrete
     }
 
     public void buildGooglePlusConfigs() {
