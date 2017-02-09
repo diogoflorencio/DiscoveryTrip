@@ -81,8 +81,7 @@ public class ServiceLembrete extends Service {
     }
 
     private void verificaNotificacao(){
-        Cursor cursor = discoveryTripBD.selectTableLembrete();
-        //não notifica em caso de usuário deslogado ou não haver lembretes para o dia
+        Cursor cursor = discoveryTripBD.selectLembretesTable();
         if(cursor.getCount() == 0 || !isRun()) return;
         enviaNotificacao();
     }

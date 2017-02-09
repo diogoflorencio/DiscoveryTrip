@@ -18,7 +18,7 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
 
     /* Constantes  do DiscoveryTrip.bd */
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "DiscoveryTrip.db";
+    public static final String DATABASE_NAME = "DiscoveryTrip.bd";
 
 
     public DiscoveryTripBD(Context context) {
@@ -27,7 +27,7 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(TableLembretes.SQL_CREATE_ENTRIES);
+        sqLiteDatabase.execSQL(LembretesTable.SQL_CREATE_ENTRIES);
     }
 
     @Override
@@ -36,35 +36,35 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
         * onCreate(sqLiteDatabase);*/
     }
 
-    public void insertTableLembrete(String nome, String descricao, String data){
+    public void insertLembretesTable(String nome, String descricao, String data){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(TableLembretes.Column.COLUMN_Nome, nome);
-        values.put(TableLembretes.Column.COLUMN_Descricao, descricao);
-        values.put(TableLembretes.Column.COLUMN_Data, data);
+        values.put(LembretesTable.Column.COLUMN_Nome, nome);
+        values.put(LembretesTable.Column.COLUMN_Descricao, descricao);
+        values.put(LembretesTable.Column.COLUMN_Data, data);
 
         // Insert the new row, returning the primary key value of the new row
-        long newRowId = db.insert(TableLembretes.TABLE_NAME, null, values);
+        long newRowId = db.insert(LembretesTable.TABLE_NAME, null, values);
     }
 
-    public Cursor selectTableLembrete(){
+    public Cursor selectLembretesTable(){
         SQLiteDatabase db = this.getReadableDatabase();
 
         String[] projection = {
-                TableLembretes.Column.COLUMN_Nome,
-                TableLembretes.Column.COLUMN_Descricao
+                LembretesTable.Column.COLUMN_Nome,
+                LembretesTable.Column.COLUMN_Descricao
         };
 
 
-        String selection = TableLembretes.Column.COLUMN_Data + " = ?";
+        String selection = LembretesTable.Column.COLUMN_Data + " = ?";
         String[] selectionArgs = {DataHoraSystem.data()};
 
         String sortOrder =
-                TableLembretes.Column.COLUMN_Nome + " DESC";
+                LembretesTable.Column.COLUMN_Nome + " DESC";
 
         Cursor cursor = db.query(
-                TableLembretes.TABLE_NAME,
+                LembretesTable.TABLE_NAME,
                 projection,
                 selection,
                 selectionArgs,
@@ -75,10 +75,10 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
         return cursor;
     }
 
-    public void deleteTableLembrete(){
+    public void deleteLembretesTable(){
         SQLiteDatabase db = this.getWritableDatabase();
-        String selection = TableLembretes.Column.COLUMN_Data + " LIKE ?";
+        String selection = LembretesTable.Column.COLUMN_Data + " LIKE ?";
         String[] selectionArgs = { DataHoraSystem.data() };
-        db.delete(TableLembretes.TABLE_NAME, selection, selectionArgs);
+        db.delete(LembretesTable.TABLE_NAME, selection, selectionArgs);
     }
 }
