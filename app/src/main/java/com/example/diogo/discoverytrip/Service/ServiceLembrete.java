@@ -80,6 +80,7 @@ public class ServiceLembrete extends Service {
 
     @Override
     public void onDestroy() {
+        Log.d("Logger", "onDestroy ServiceLembrete");
         super.onDestroy();
     }
 

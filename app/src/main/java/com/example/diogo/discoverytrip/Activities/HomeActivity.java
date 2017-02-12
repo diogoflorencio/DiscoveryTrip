@@ -123,13 +123,15 @@ public class HomeActivity extends AppCompatActivity
                 return true;
             case R.id.logout:
                 Log.d("Logger", "Home logout");
-                if (getCurrentAccessToken() != null) {
-                    AccessToken.setCurrentAccessToken(null);
-                } else signOutGooglePlus();
-                if(ServiceLembrete.isRun())
-                    stopService(new Intent(HomeActivity.this, ServiceLembrete.class));//stop ServiceLembrete
-                RefreshTokenManeger.logout();
-                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+
+                if (getCurrentAccessToken() != null)
+                    AccessToken.setCurrentAccessToken(null);/*logout facebook*/
+                else if(RefreshTokenManeger.isRunning()) RefreshTokenManeger.stop(); /*stop thread RefreshTokenManeger*/
+                else signOutGooglePlus();/*logout google plus*/
+
+                stopService(new Intent(HomeActivity.this, ServiceLembrete.class));/*stop ServiceLembrete*/
+
+                startActivity(new Intent(HomeActivity.this,LoginActivity.class));
                 finish();
                 return true;
         }

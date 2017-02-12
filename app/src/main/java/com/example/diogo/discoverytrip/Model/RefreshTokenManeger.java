@@ -76,8 +76,12 @@ public class RefreshTokenManeger {
         });
     }
 
-    public static void logout(){
+    public static void stop(){
         loggedIn = false;
         thread.interrupt();
+    }
+
+    public static boolean isRunning(){
+        return running;
     }
 }
