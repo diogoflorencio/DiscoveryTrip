@@ -49,47 +49,23 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         userName = (TextView) rootView.findViewById(R.id.userName);
         userEmail = (TextView) rootView.findViewById(R.id.userEmail);
 
-        getUserData();
+        receiveDataFromHome();
 
         return rootView;
     }
 
-    public void getUserData(){
-        Log.d("Perfil","Teste");
-        //funcao pra pegar os dados do perfil do usuário e colocar nos campos
-        Call<ServerResponse> call = ApiClient.API_SERVICE.getUsuario("bearer "+
-                AcessToken.recuperar(this.getActivity().getSharedPreferences("acessToken", Context.MODE_PRIVATE)));
-        call.enqueue(new Callback<ServerResponse>() {
-            @Override
-            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
-                if (response.isSuccessful()) {
-                    Log.d("Perfil", "Server OK");
-                    ServerResponse serverResponse = response.body();
-                    User user = serverResponse.getUsuario();
-                    userName.setText(user.getNome());
-                    userEmail.setText(user.getEmail());
-                } else {
-                   // try {
-                       // ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                    try {
-                        Log.e("Perfil", "" + response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    // } catch (IOException e) {
-                      //  e.printStackTrace();
-                   // }
-                }
-            }
-            @Override
-            public void onFailure(Call<ServerResponse> call, Throwable t) {
-                Log.e("Perfil", "Server" + t.toString());
-            }
+    public void receiveDataFromHome(){
+        Log.d("Logger", "PerfilFragment receiveDataFromHome");
+        String name = null;
+        String email = null;
 
-        });
+        if (getArguments() != null) {
+            name = getArguments().getString("name");
+            email = getArguments().getString("email");
+        }
 
-        Log.d("Perfil", "AcessToken " + AcessToken.recuperar(
-                this.getActivity().getSharedPreferences("acessToken", Context.MODE_PRIVATE)));
+        userName.setText(name);
+        userEmail.setText(email);
     }
 
     @Override

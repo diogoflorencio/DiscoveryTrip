@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -15,12 +16,22 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.ViewFlipper;
 
 
+import com.example.diogo.discoverytrip.DataBase.AcessToken;
+import com.example.diogo.discoverytrip.Fragments.EventoFragment;
 import com.example.diogo.discoverytrip.Fragments.HomeFragment;
+import com.example.diogo.discoverytrip.Fragments.LocalizacaoFragment;
+import com.example.diogo.discoverytrip.Fragments.PerfilFragment;
+import com.example.diogo.discoverytrip.Fragments.PontoTuristicoFragment;
 import com.example.diogo.discoverytrip.Model.RefreshTokenManeger;
+import com.example.diogo.discoverytrip.Model.User;
 import com.example.diogo.discoverytrip.R;
+import com.example.diogo.discoverytrip.REST.ApiClient;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponse;
 import com.example.diogo.discoverytrip.Service.ServiceLembrete;
 import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.Auth;
@@ -29,6 +40,12 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
+
+import java.io.IOException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import static com.facebook.AccessToken.getCurrentAccessToken;
 
@@ -39,6 +56,7 @@ public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
     ViewFlipper flipper;
+    User user;
 
     private GoogleApiClient mGoogleApiClient;
 
@@ -71,11 +89,59 @@ public class HomeActivity extends AppCompatActivity
 
         buildGooglePlusConfigs();
 
+        getUserData();
+
         createHomeFragment();
 
         /*start ServiceLembrete*/
         if(!ServiceLembrete.isRun())
             startService(new Intent(HomeActivity.this, ServiceLembrete.class));
+    }
+
+    public void sendDatatoPerfil(String name, String email, Fragment fragment){
+        Log.d("Logger", "Home sendDatatoPerfil");
+
+        Bundle bundle = new Bundle();
+        bundle.putString("name", name);
+        bundle.putString("email", email);
+        fragment.setArguments(bundle);
+    }
+
+    public void getUserData(){
+        Log.d("Logger", "Home getUserData");
+        //funcao pra pegar os dados do perfil do usuário e colocar nos campos
+        user = null;
+        Call<ServerResponse> call = ApiClient.API_SERVICE.getUsuario("bearer "+
+                AcessToken.recuperar(this.getSharedPreferences("acessToken", Context.MODE_PRIVATE)));
+        call.enqueue(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.d("Perfil", "Server OK");
+                    ServerResponse serverResponse = response.body();
+                    user = serverResponse.getUsuario();
+                } else {
+                    // try {
+                    // ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                    try {
+                        Log.e("Perfil", "" + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    // } catch (IOException e) {
+                    //  e.printStackTrace();
+                    // }
+                }
+            }
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+                Log.e("Perfil", "Server" + t.toString());
+            }
+
+        });
+
+        Log.d("Perfil", "AcessToken " + AcessToken.recuperar(
+                this.getSharedPreferences("acessToken", Context.MODE_PRIVATE)));
     }
 
     public void buildGooglePlusConfigs() {
@@ -109,7 +175,7 @@ public class HomeActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
+        @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -136,6 +202,8 @@ public class HomeActivity extends AppCompatActivity
                 return true;
         }
         return super.onOptionsItemSelected(item);
+
+
     }
 
     private void signOutGooglePlus() {
@@ -155,23 +223,47 @@ public class HomeActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         Log.d("Logger", "Home onNavigationItemSelected");
         int id = item.getItemId();
+        Fragment fragment = null;
 
         switch (id) {
             case R.id.nav_home:
-                flipper.setDisplayedChild(0);
+                Log.d("Logger", "Home localizacao");
+                fragment = new HomeFragment();
                 break;
             case R.id.nav_localizacao:
-                flipper.setDisplayedChild(1);
+                Log.d("Logger", "Home localizacao");
+                fragment = new LocalizacaoFragment();
                 break;
             case R.id.nav_perfil:
-                flipper.setDisplayedChild(2);
+                Log.d("Logger", "Home localizacao");
+                String name = null;
+                String email = null;
+                try{
+                    name = user.getNome();
+                    email = user.getEmail();
+                } catch (Exception e) {
+                    //o usuário nao foi recuperado no servidor
+                }
+                fragment = new PerfilFragment();
+                sendDatatoPerfil(name, email, fragment);
                 break;
             case R.id.nav_ponto_turistico:
-                flipper.setDisplayedChild(3);
+                Log.d("Logger", "Home localizacao");
+                fragment = new PontoTuristicoFragment();
                 break;
             case R.id.nav_evento:
-                flipper.setDisplayedChild(4);
+                Log.d("Logger", "Home localizacao");
+                fragment = new EventoFragment();
                 break;
+        }
+
+        if (fragment != null) {
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            Bundle extras = getIntent().getExtras();
+            if(extras !=null) {
+                fragment.setArguments(extras);
+            }
+            fragmentManager.beginTransaction().replace(R.id.content_home, fragment).commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
