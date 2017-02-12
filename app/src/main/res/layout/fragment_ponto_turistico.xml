@@ -64,19 +64,6 @@
         android:layout_alignStart="@+id/pntCatVal_txt"
         android:layout_above="@+id/editText2" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:layout_alignTop="@+id/pntCat_txt"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/pntCatgVal_txt"
-        android:layout_alignLeft="@+id/pntNameVal_txt"
-        android:layout_alignStart="@+id/pntNameVal_txt"
-        android:layout_above="@+id/pntDescVal_txt" />
-
     <Button
         android:text="Cadastrar"
         android:layout_width="wrap_content"
@@ -103,5 +90,15 @@
         android:layout_below="@+id/pntDescVal_txt"
         android:layout_centerHorizontal="true"
         android:id="@+id/ponto_turistico_btnFoto" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/ptCategory_spn"
+        android:layout_alignTop="@+id/pntCat_txt"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/pntNameVal_txt"
+        android:layout_alignStart="@+id/pntNameVal_txt" />
 
 </RelativeLayout>

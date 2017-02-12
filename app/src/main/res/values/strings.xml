@@ -57,4 +57,25 @@
         <item>Publico</item>
     </string-array>
 
+    //Attractions cetegory strings
+    <string-array name="attraction_category">
+        <item>Praia</item>
+        <item>Ilha resort</item>
+        <item>Parque</item>
+        <item>Floresta</item>
+        <item>Monumento</item>
+        <item>Templo</item>
+        <item>Zoológico</item>
+        <item>Aquário</item>
+        <item>Museu</item>
+        <item>Galeria de arte</item>
+        <item>Botânico</item>
+        <item>Jardim</item>
+        <item>Castelo</item>
+        <item>Biblioteca</item>
+        <item>Prisão</item>
+        <item>Arranha-céu</item>
+        <item>Ponte</item>
+    </string-array>
+
 </resources>

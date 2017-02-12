@@ -15,8 +15,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Activities.LoginActivity;
@@ -51,9 +54,10 @@ import static android.app.Activity.RESULT_OK;
 /**
  * Classe fragment responsavel pelo fragmento ponto turistico na aplicação
  */
-public class PontoTuristicoFragment extends Fragment implements View.OnClickListener {
+public class PontoTuristicoFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     public EditText nameVal_txt, catgVal_txt, descVal_txt;
     private Uri foto;
+    Spinner ptCategory_spn;
 
     public PontoTuristicoFragment() {
         // Required empty public constructor
@@ -75,8 +79,14 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
         selecionarFoto.setOnClickListener(this);
 
         nameVal_txt = (EditText) rootView.findViewById(R.id.pntNameVal_txt);
-        catgVal_txt = (EditText) rootView.findViewById(R.id.pntCatgVal_txt);
         descVal_txt = (EditText) rootView.findViewById(R.id.pntDescVal_txt);
+
+        ptCategory_spn = (Spinner) rootView.findViewById(R.id.ptCategory_spn);
+        ptCategory_spn.setOnItemSelectedListener(this);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.attraction_category, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ptCategory_spn.setAdapter(adapter);
 
         return rootView;
     }
@@ -88,9 +98,6 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
             case R.id.pntRegister_btn:
                 Log.d("Logger", "PontoTuristicoFragment botao registrar");
                 try {
-                    backToHome();
-
-
                     validateFields();
                     postData();
                     Toast.makeText(this.getActivity(), R.string.pt_cadastro_sucesso,Toast.LENGTH_SHORT).show();
@@ -122,8 +129,45 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
         //precisa fazer um post e mandar o cadastro pro servidor
         //TODO
         String ptName_value = nameVal_txt.getText().toString();
-        String ptCatg_value = catgVal_txt.getText().toString();
         String ptDesc_value = descVal_txt.getText().toString();
+
+        String ptCatg_value;
+        switch (ptCategory_spn.getSelectedItemPosition()) {
+            case 0: ptCatg_value = "beaches";
+                break;
+            case 1: ptCatg_value = "island resorts";
+                break;
+            case 2: ptCatg_value = "parks";
+                break;
+            case 3: ptCatg_value = "forests";
+                break;
+            case 4: ptCatg_value = "monuments";
+                break;
+            case 5: ptCatg_value = "temples";
+                break;
+            case 6: ptCatg_value = "zoos";
+                break;
+            case 7: ptCatg_value = "aquariums";
+                break;
+            case 8: ptCatg_value = "museums";
+                break;
+            case 9: ptCatg_value = "art galleries";
+                break;
+            case 10: ptCatg_value = "botanical";
+                break;
+            case 11: ptCatg_value = "gardens";
+                break;
+            case 12: ptCatg_value = "castles";
+                break;
+            case 13: ptCatg_value = "libraries";
+                break;
+            case 14: ptCatg_value = "prisons";
+                break;
+            case 15: ptCatg_value = "skyscrapers";
+                break;
+            case 16: ptCatg_value = "bridges";
+                break;
+        }
 
         Map<String, RequestBody> parametersMap = new HashMap<>();
         MultiRequestHelper helper = new MultiRequestHelper(getContext());
@@ -188,5 +232,16 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
         if(descVal_txt.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_description));
         }
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        Log.d("Logger", "PontoTuristicoFragment onItemSelected");
+        // An item was selected. You can retrieve the selected item using
+        // parent.getItemAtPosition(pos)
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
     }
 }
