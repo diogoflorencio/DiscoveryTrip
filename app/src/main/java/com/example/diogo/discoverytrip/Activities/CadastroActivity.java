@@ -57,10 +57,7 @@ public class CadastroActivity extends AppCompatActivity {
         try {
             verificarDados();
 
-            ApiInterface apiService =
-                    ApiClient.getClient().create(ApiInterface.class);
-
-            Call<ServerResponse> call = apiService.cadastrarUsuario(new UsuarioEnvio(txtnome.getText().toString(), email.getText().toString(), senha.getText().toString()));
+            Call<ServerResponse> call = ApiClient.API_SERVICE.cadastrarUsuario(new UsuarioEnvio(txtnome.getText().toString(), email.getText().toString(), senha.getText().toString()));
             call.enqueue(new Callback<ServerResponse>() {
 
                 @Override

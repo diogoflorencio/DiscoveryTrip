@@ -66,6 +66,7 @@ public class LocalizacaoFragment extends Fragment implements LocationListener {
                         REQUEST_LOCATION);
         } else
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
+
     }
 
     @Override

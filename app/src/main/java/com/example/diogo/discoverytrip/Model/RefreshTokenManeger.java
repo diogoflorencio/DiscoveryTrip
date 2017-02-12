@@ -47,10 +47,8 @@ public class RefreshTokenManeger {
 
     private static void refresh(final SharedPreferences prefs){
         Log.d("Logger", "RefreshTokenManeger postFacebook");
-        ApiInterface apiService =
-                ApiClient.getClient().create(ApiInterface.class);
         Call<LoginResponse> call =
-                apiService.refreshToken(new RefreshTokenJson(RefreshToken.recuperar(prefs)));
+                ApiClient.API_SERVICE.refreshToken(new RefreshTokenJson(RefreshToken.recuperar(prefs)));
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {

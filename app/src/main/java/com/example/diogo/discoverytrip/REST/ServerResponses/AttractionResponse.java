@@ -14,7 +14,7 @@ public class AttractionResponse {
     private Atracao atracao;
 
     @SerializedName("photos")
-    private List<Byte> fotos;
+    private List<String> fotos;
 
     @SerializedName("state")
     private String estado;
@@ -26,7 +26,7 @@ public class AttractionResponse {
         return atracao;
     }
 
-    public List<Byte> getFotos() {
+    public List<String> getFotos() {
         return fotos;
     }
 

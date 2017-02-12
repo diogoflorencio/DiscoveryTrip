@@ -121,7 +121,8 @@
             android:layout_gravity="center_horizontal"
             android:id="@+id/recuperarSenha"
             android:textColor="@color/colorAccent"
-            android:layout_weight="0.18" />
+            android:layout_weight="0.18"
+            android:layout_marginTop="15dp" />
 
         <TextView
             android:text="Cadastre-se"

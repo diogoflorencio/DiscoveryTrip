@@ -20,6 +20,7 @@ import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponse;
 
 import java.io.IOException;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,10 +55,9 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
     }
 
     public void getUserData(){
+        Log.d("Perfil","Teste");
         //funcao pra pegar os dados do perfil do usuário e colocar nos campos
-        ApiInterface apiService =
-                ApiClient.getClient().create(ApiInterface.class);
-        Call<ServerResponse> call = apiService.getUsuario(
+        Call<ServerResponse> call = ApiClient.API_SERVICE.getUsuario("bearer "+
                 AcessToken.recuperar(this.getActivity().getSharedPreferences("acessToken", Context.MODE_PRIVATE)));
         call.enqueue(new Callback<ServerResponse>() {
             @Override

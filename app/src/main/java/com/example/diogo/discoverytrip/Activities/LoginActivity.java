@@ -151,9 +151,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
     private void postTokenFacebook(final String token){
         Log.d("Logger", "LoginActivity postFacebook");
-        ApiInterface apiService =
-                ApiClient.getClient().create(ApiInterface.class);
-        Call<LoginResponse> call = apiService.loginFacebook(new AccessTokenJson(token));
+        Call<LoginResponse> call = ApiClient.API_SERVICE.loginFacebook(new AccessTokenJson(token));
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
@@ -200,18 +198,18 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
             throw new DataInputException(getString(R.string.validate_password_empty));
         }
 
-        ApiInterface apiService =
-                ApiClient.getClient().create(ApiInterface.class);
-        Call<LoginResponse> call = apiService.appLogin(new AppLoginJson(emailLogin.getText().toString(), senhaLogin.getText().toString()));
+        Call<LoginResponse> call = ApiClient.API_SERVICE.appLogin(new AppLoginJson(emailLogin.getText().toString(), senhaLogin.getText().toString()));
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 if(response.isSuccessful()) {
+                    Log.d("Logger","Sucess login");
                     LoginResponse loginResponse = response.body();
                     RefreshToken.salvar(loginResponse.getRefreshtoken(),
                             getSharedPreferences("refreshToken", Context.MODE_PRIVATE));
                     AcessToken.salvar(loginResponse.getAccesstoken(),
                             getSharedPreferences("acessToken", Context.MODE_PRIVATE));
+                    Log.d("Token",loginResponse.getAccesstoken());
                     startActivity(new Intent(LoginActivity.this,HomeActivity.class));
                     finish();
                 }

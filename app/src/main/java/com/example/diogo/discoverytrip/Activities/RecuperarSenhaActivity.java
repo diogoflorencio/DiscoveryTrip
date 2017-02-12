@@ -54,10 +54,8 @@ public class RecuperarSenhaActivity extends AppCompatActivity {
                     waitDialog.show();
 
                     ReminderJson reminderJson = new ReminderJson(email.getText().toString());
-                    ApiInterface apiService =
-                            ApiClient.getClient().create(ApiInterface.class);
 
-                    Call<ReminderResponse> call = apiService.passwordReminder(reminderJson);
+                    Call<ReminderResponse> call = ApiClient.API_SERVICE.passwordReminder(reminderJson);
                     call.enqueue(new Callback<ReminderResponse>(){
 
                         @Override
