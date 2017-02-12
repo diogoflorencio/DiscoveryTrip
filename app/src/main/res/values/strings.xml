@@ -14,6 +14,12 @@
     <string name="cadastro_sucesso">Cadastro realizado com sucesso!</string>
     <string name="cadastro_falha">Não foi possível realizar o cadastro!</string>
 
+    //EventoCadastroFragment strings
+    <string name="ev_cadastro_sucesso">Evento cadastrado com sucesso!</string>
+
+    //PontoTuristicoFragment strings
+    <string name="pt_cadastro_sucesso">Ponto turístico cadastrado com sucesso!</string>
+
     //HomeActivity strings
     <string name="gps_loading">Carregando Localização...</string>
     <string name="address_found">Endereço localizado: </string>
@@ -38,9 +44,17 @@
     <string name="validate_category">Informe uma categoria</string>
     <string name="validate_description">Informe uma descrição</string>
     <string name="validate_date">Informe uma data</string>
+    <string name="validate_kind">Informe um tipo</string>
+    <string name="validate_price">Informe um preço</string>
 
     //AppLoginJson strings
     <string name="login_id">discoveryTrip</string>
     <string name="login_clientsecret">0ca9b9b3-1370-44e0-b42e-01cf6f6fc04c</string>
+
+    //Event kind strings
+    <string-array name="event_kind">
+        <item>Privado</item>
+        <item>Publico</item>
+    </string-array>
 
 </resources>

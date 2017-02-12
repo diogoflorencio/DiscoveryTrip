@@ -7,14 +7,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.R;
 
-public class EventoCadastroFragment extends Fragment implements View.OnClickListener {
-    public EditText nameVal_txt, descVal_txt, dateVal_txt;
+public class EventoCadastroFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+    public EditText nameVal_txt, descVal_txt, dateVal_txt, priceVal_txt;
+    Spinner evKind_spn;
 
     public EventoCadastroFragment() {
         // Required empty public constructor
@@ -32,6 +36,14 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
         nameVal_txt = (EditText) rootView.findViewById(R.id.evName_edt);
         descVal_txt = (EditText) rootView.findViewById(R.id.evDesc_edt);
         dateVal_txt = (EditText) rootView.findViewById(R.id.evDate_edt);
+        priceVal_txt = (EditText) rootView.findViewById(R.id.evPrice_edt);
+
+        evKind_spn = (Spinner) rootView.findViewById(R.id.evKind_spn);
+        evKind_spn.setOnItemSelectedListener(this);
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.event_kind, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        evKind_spn.setAdapter(adapter);
 
         return rootView;
     }
@@ -45,6 +57,7 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
                 try {
                     validateFields();
                     sendEventData();
+                    Toast.makeText(this.getActivity(), R.string.ev_cadastro_sucesso,Toast.LENGTH_SHORT).show();
                     backToHome();
                 } catch (DataInputException exception){
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
@@ -78,13 +91,38 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
         if(dateVal_txt.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_date));
         }
+
+        if(priceVal_txt.getText().toString().trim().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_price));
+        }
+    }
+
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        Log.d("Logger", "EventoCadastroFragment onItemSelected");
+        // An item was selected. You can retrieve the selected item using
+        // parent.getItemAtPosition(pos)
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // Another interface callback
     }
 
     public void sendEventData(){
+        Log.d("Logger", "EventoCadastroFragment sendEventData");
         //precisa fazer um post e mandar os dados atualizados pro servidor
         //TODO
         String eventName_value = nameVal_txt.getText().toString();
         String eventDesc_value = descVal_txt.getText().toString();
         String eventDate_value = dateVal_txt.getText().toString();
+        String eventPrice_value = priceVal_txt.getText().toString();
+        String eventKind_value;
+        switch (evKind_spn.getSelectedItemPosition()) {
+            case 0: eventKind_value = "private";
+                break;
+            case 1: eventKind_value = "public";
+                break;
+        }
+
     }
 }

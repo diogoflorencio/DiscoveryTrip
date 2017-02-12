@@ -43,17 +43,6 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
-        <TextView
-            android:text="Descrição"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/evDesc_txt"
-            android:textSize="18sp"
-            android:layout_below="@+id/evDate_txt"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="36dp" />
-
         <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -74,16 +63,6 @@
             android:layout_alignParentEnd="true"
             android:id="@+id/evDate_edt" />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/evDesc_edt" />
-
         <Button
             android:text="Confirmar"
             android:layout_width="wrap_content"
@@ -101,6 +80,66 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:id="@+id/evCancel_btn" />
+
+        <TextView
+            android:text="Descrição"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/evDesc_txt"
+            android:textSize="18sp"
+            android:layout_above="@+id/evConfirm_btn"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="69dp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/evDesc_edt"
+            android:layout_alignTop="@+id/evDesc_txt"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <TextView
+            android:text="Tipo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/evKind_txt"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textSize="18sp" />
+
+        <TextView
+            android:text="Preço"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/evKind_txt"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="44dp"
+            android:id="@+id/evPrice_txt"
+            android:textSize="18sp" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/evPrice_edt"
+            android:layout_alignTop="@+id/evPrice_txt"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/evKind_txt"
+            android:id="@+id/evKind_spn"
+            android:layout_alignLeft="@+id/evDate_edt"
+            android:layout_alignStart="@+id/evDate_edt" />
 
     </RelativeLayout>
 </FrameLayout>

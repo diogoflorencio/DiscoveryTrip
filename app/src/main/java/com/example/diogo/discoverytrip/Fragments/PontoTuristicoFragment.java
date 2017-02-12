@@ -88,8 +88,12 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
             case R.id.pntRegister_btn:
                 Log.d("Logger", "PontoTuristicoFragment botao registrar");
                 try {
+                    backToHome();
+
+
                     validateFields();
                     postData();
+                    Toast.makeText(this.getActivity(), R.string.pt_cadastro_sucesso,Toast.LENGTH_SHORT).show();
                     backToHome();
                 } catch (DataInputException exception){
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
@@ -164,6 +168,8 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
         Log.d("Logger", "PontoTuristicoFragment backToHome");
         FragmentManager fragmentManager = getFragmentManager();
         HomeFragment fragment = new HomeFragment();
+
+//        getActivity().getSupportFragmentManager().popBackStack();
 
         fragmentManager.beginTransaction().replace(R.id.content_home, fragment
         ).commit();
