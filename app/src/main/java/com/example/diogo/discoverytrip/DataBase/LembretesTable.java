@@ -6,7 +6,7 @@ import android.provider.BaseColumns;
  * Created by diogo on 04/02/17.
  */
 
-public abstract class TableLembretes {
+public abstract class LembretesTable {
 
     public static class Column implements BaseColumns {
         public static final String COLUMN_Nome = "nome";

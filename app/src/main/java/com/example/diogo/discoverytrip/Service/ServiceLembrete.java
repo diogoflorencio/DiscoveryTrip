@@ -7,6 +7,9 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
@@ -81,14 +84,12 @@ public class ServiceLembrete extends Service {
     }
 
     private void verificaNotificacao(){
-        Cursor cursor = discoveryTripBD.selectTableLembrete();
-        //não notifica em caso de usuário deslogado ou não haver lembretes para o dia
+        Cursor cursor = discoveryTripBD.selectLembretesTable();
         if(cursor.getCount() == 0 || !isRun()) return;
         enviaNotificacao();
     }
 
     private void enviaNotificacao() {
-        int idNotification = 20162;
         /*Obs. falta inserir activity que trata dos lembretes no notificationIntent
         * falta redenrizar icon para notificação.
         * */
@@ -98,14 +99,27 @@ public class ServiceLembrete extends Service {
                 notificationIntent, 0);
 
         Notification notification = new NotificationCompat.Builder(this)
-                .setSmallIcon(R.mipmap.discoverytrip)
-                .setContentTitle("Eventos de hoje")
-                .setContentText("discovery trip")
+                .setSmallIcon(R.mipmap.icon)
+                .setContentTitle("Discovery Trip")
+                .setContentText("Today's Events")
                 .setContentIntent(pendingIntent).build();
+
+        /*vibração da notificação*/
+        notification.vibrate = new long[] { 100, 250, 100, 500 };
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(idNotification, notification);
+        notificationManager.notify(R.mipmap.icon, notification);
+
+        /*som da notificação
+        * Obs. definir toque da notificação*/
+        try{
+            Uri som = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            Ringtone toque = RingtoneManager.getRingtone(this,som);
+            toque.play();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
         Log.d("Logger", "ServiceLembrete notificação");
     }

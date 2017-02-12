@@ -18,9 +18,12 @@
     <!-- permissão para inicio de service junto ao sistema -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
+    <!--permissão vibração da notificação-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/discoverytrip"
+        android:icon="@mipmap/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat">

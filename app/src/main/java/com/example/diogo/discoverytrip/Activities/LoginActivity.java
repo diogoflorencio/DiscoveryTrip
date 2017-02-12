@@ -61,12 +61,12 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d("Logger", "LoginActivity Oncreate");
-        // iniciando SDK facebook
+        /* iniciando SDK facebook*/
         FacebookSdk.sdkInitialize(getApplicationContext());
         loggedInFacebook();
-        // iniciando SDK google
+        /*iniciando SDK google*/
         buildGooglePlusConfigs();
-        //instanciando objetos da activity
+        /*instanciando objetos da activity*/
         setContentView(R.layout.activity_login);
         loginButton = (LoginButton) findViewById(R.id.loginButton);
         loginButton.setOnClickListener(this);
@@ -108,11 +108,11 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         }
     }
     private void loginFacebook(){
-        //permissões do facebook
+        /*permissões do facebook*/
         loginButton.setReadPermissions(Arrays.asList("public_profile","email"));
-        // criando request facebook
+        /*criando request facebook*/
         callbackManager = CallbackManager.Factory.create();
-        //logando ao facebook
+        /*logando ao facebook*/
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -132,6 +132,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                         getSharedPreferences("acessToken", Context.MODE_PRIVATE));
 
                 postTokenFacebook(getCurrentAccessToken().getToken());
+
                 Log.d("Logger", "startActivity facebook");
                 startActivity(new Intent(LoginActivity.this,HomeActivity.class));
                 finish();
@@ -155,9 +156,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if(response.isSuccessful()) {
-                    Log.d("Login","Server OK");
-                }
+                if(response.isSuccessful()) Log.d("Login","Server OK");
                 else{
                     try {
                         ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
@@ -178,7 +177,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
     }
 
     private void loggedInFacebook(){
-        // verificando validade de token facebook
+        /* verificando validade de token facebook */
         if(AccessToken.getCurrentAccessToken() != null){
             startActivity(new Intent(LoginActivity.this,HomeActivity.class));
             finish();

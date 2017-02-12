@@ -61,7 +61,7 @@ public interface ApiInterface {
 
     @DELETE("api/login")
     Call<LogoutResponse> logout(@Header("Authorization") String authorization);
-
+    
     /**
      * Cadastra um ponto turístico no servidor
      * @param token access token
