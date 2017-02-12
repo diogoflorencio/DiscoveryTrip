@@ -10,9 +10,18 @@
         <item name="android:colorForeground">@color/foreground_material_dark</item>
     </style>
 
-    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:colorBackground">@color/background_material_dark</item>
+        <item name="android:colorForeground">@color/discoverytripforeground</item>
+        <item name="android:textColorPrimary">@color/common_google_signin_btn_text_light_default</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimaryInverse">@color/cardview_dark_background</item>
+        <item name="android:textColorSecondary">@color/cardview_dark_background</item>
+        <item name="android:windowBackground">@color/com_facebook_button_border_color_focused</item>
+        <item name="android:textColorSecondaryInverse">@color/cardview_shadow_start_color</item>
+        <item name="colorPrimary">@color/discoverytripforeground</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

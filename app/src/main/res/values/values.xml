@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="background_material_dark">#ffffff</color>
-    <color name="foreground_material_dark">#ff0000</color>
+    <color name="foreground_material_dark">#000000</color>
+    <color name="primary_text_default_material_dark">#ffffff</color>
+    <color name="primary_material_dark">#e9d65d</color>
+    <color name="primary_dark_material_dark">#000000</color>
 </resources>
