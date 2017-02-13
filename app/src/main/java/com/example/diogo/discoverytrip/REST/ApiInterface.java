@@ -47,6 +47,9 @@ public interface ApiInterface {
     @GET("api/users/")
     Call<ServerResponse> getUsuario(@Header("Authorization") String accessToken);
 
+    @GET("api/users/")
+    Call<ServerResponse> setUsuario(@Body UsuarioEnvio usuarioEnvio);
+
     @POST("api/facebook/login")
     Call<LoginResponse> loginFacebook(@Body AccessTokenJson accessToken);
 

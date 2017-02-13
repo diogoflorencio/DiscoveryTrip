@@ -20,6 +20,10 @@
     //PontoTuristicoFragment strings
     <string name="pt_cadastro_sucesso">Ponto turístico cadastrado com sucesso!</string>
 
+    //EventoCadastroFragment strings
+    <string name="pf_edicao_sucesso">Dados alterados com sucesso!</string>
+    <string name="pf_edicao_falha">Não foi possível realizar a edição</string>
+
     //HomeActivity strings
     <string name="gps_loading">Carregando Localização...</string>
     <string name="address_found">Endereço localizado: </string>

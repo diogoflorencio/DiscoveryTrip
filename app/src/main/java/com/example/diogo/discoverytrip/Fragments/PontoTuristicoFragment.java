@@ -174,7 +174,7 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
         parametersMap.put("description",helper.createPartFrom(ptDesc_value));
         parametersMap.put("latitude",helper.createPartFrom("-7.2335"));
         parametersMap.put("longitude",helper.createPartFrom("-35.8727"));
-//        parametersMap.put("category ",helper.createPartFrom(ptCatg_value));
+        parametersMap.put("category ",helper.createPartFrom(ptCatg_value));
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Log.d("Token",token);
