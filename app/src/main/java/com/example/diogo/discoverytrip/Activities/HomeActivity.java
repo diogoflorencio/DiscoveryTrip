@@ -15,10 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.ViewFlipper;
 
 
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
@@ -55,7 +51,6 @@ import static com.facebook.AccessToken.getCurrentAccessToken;
 public class HomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, GoogleApiClient.OnConnectionFailedListener {
 
-    ViewFlipper flipper;
     User user;
 
     private GoogleApiClient mGoogleApiClient;
@@ -79,10 +74,6 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        flipper = (ViewFlipper) findViewById(R.id.home_flipper);
-        flipper.setInAnimation(AnimationUtils.loadAnimation(HomeActivity.this,R.anim.right_in));
-        flipper.setOutAnimation(AnimationUtils.loadAnimation(HomeActivity.this,R.anim.left_out));
 
         /* start Thread refreshToken */
         RefreshTokenManeger.refreshToken(getSharedPreferences("refreshToken", Context.MODE_PRIVATE));
@@ -120,6 +111,7 @@ public class HomeActivity extends AppCompatActivity
                     Log.d("Perfil", "Server OK");
                     ServerResponse serverResponse = response.body();
                     user = serverResponse.getUsuario();
+                    Log.d("Perfil", user.getId());
                 } else {
                     // try {
                     // ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());

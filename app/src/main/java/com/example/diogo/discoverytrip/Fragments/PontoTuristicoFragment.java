@@ -118,6 +118,7 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("Looger","PontoTuristicoFragment onActivityResult");
         if(requestCode == 1234 && resultCode == RESULT_OK) {
             foto = data.getData();
             Log.d("Logger","Seleciona imagem"+foto.getPath());
@@ -125,13 +126,10 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
     }
 
     public void postData(){
-        //logica aqui
-        //precisa fazer um post e mandar o cadastro pro servidor
-        //TODO
+        Log.d("Looger","PontoTuristicoFragment postData");
         String ptName_value = nameVal_txt.getText().toString();
         String ptDesc_value = descVal_txt.getText().toString();
-
-        String ptCatg_value;
+        String ptCatg_value = null;
         switch (ptCategory_spn.getSelectedItemPosition()) {
             case 0: ptCatg_value = "beaches";
                 break;
@@ -176,6 +174,7 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
         parametersMap.put("description",helper.createPartFrom(ptDesc_value));
         parametersMap.put("latitude",helper.createPartFrom("-7.2335"));
         parametersMap.put("longitude",helper.createPartFrom("-35.8727"));
+//        parametersMap.put("category ",helper.createPartFrom(ptCatg_value));
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Log.d("Token",token);

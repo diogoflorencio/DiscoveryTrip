@@ -116,6 +116,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
+                Log.d("Logger", "LoginActivity loginFacebook success");
                 profileTracker = new ProfileTracker() {
 
                     @Override
@@ -140,11 +141,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
 
             @Override
             public void onCancel() {
+                Log.d("Logger", "LoginActivity loginFacebook cancel");
                 Toast.makeText(getApplicationContext(),R.string.login_cancel,Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError(FacebookException error) {
+                Log.d("Logger", "LoginActivity loginFacebook error");
                 Toast.makeText(getApplicationContext(),R.string.login_error,Toast.LENGTH_SHORT).show();
             }
         });

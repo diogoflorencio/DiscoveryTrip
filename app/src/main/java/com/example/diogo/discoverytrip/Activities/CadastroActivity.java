@@ -93,7 +93,7 @@ public class CadastroActivity extends AppCompatActivity {
     }
 
     private boolean verificarDados() throws DataInputException{
-        Log.d("Logger", "verificarDados onCreate");
+        Log.d("Logger", "CadastroActivity verificarDados");
         if(txtnome.getText().toString().trim().isEmpty()){
             throw new DataInputException("Digite seu nome!");
         }
