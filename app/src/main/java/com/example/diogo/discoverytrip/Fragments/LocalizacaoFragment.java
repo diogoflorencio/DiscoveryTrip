@@ -71,8 +71,8 @@ public class LocalizacaoFragment extends Fragment implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        coordenadas.setText("Latitude: " + location.getLatitude() + " Longitude: " + location.getLongitude()
-                            +"\n"+getEndereco(location));
+        Log.d("Logger", "LocalizacaoFragment onLocationChanged");
+        coordenadas.setText("Latitude: " + location.getLatitude() + " Longitude: " + location.getLongitude());
     }
 
     @Override
