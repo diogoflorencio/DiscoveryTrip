@@ -2,87 +2,120 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light"
     android:clickable="true"
     tools:context="com.example.diogo.discoverytrip.Fragments.PerfilEditFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:text="Edição de perfil"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/pfeTitle_txt"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:text="Nome:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            android:layout_row="1"
-            android:layout_column="0"
-            android:id="@+id/pfeName_txt"
-            android:layout_marginTop="91dp"
-            android:layout_below="@+id/pfeTitle_txt"
-            android:layout_toLeftOf="@+id/pfeTitle_txt"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            <TextView
+                android:text="Email:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView2"
+                android:textSize="18sp"
+                android:layout_marginTop="70dp"
+                android:layout_below="@+id/pfeName_txt"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
-        <TextView
-            android:text="Email:"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/pfeEmail_txt"
-            android:textSize="18sp"
-            android:layout_marginTop="70dp"
-            android:layout_below="@+id/pfeName_txt"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            <TextView
+                android:text="Edição de perfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pfeTitle_txt"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
 
-        <Button
-            android:text="Confirmar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:id="@+id/pfeConfirm_btn" />
+            <TextView
+                android:text="Nome:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:id="@+id/pfeName_txt"
+                android:layout_marginTop="91dp"
+                android:layout_below="@+id/pfeTitle_txt"
+                android:layout_toLeftOf="@+id/pfeTitle_txt"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/pfeName_edt"
-            android:layout_alignTop="@+id/pfeName_txt"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/pfeName_edt"
+                android:layout_alignTop="@+id/pfeName_txt"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/pfeEmail_edt"
-            android:layout_alignTop="@+id/pfeEmail_txt"
-            android:layout_alignLeft="@+id/pfeName_edt"
-            android:layout_alignStart="@+id/pfeName_edt" />
+            <TextView
+                android:text="Senha:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pfeEmail_txt"
+                android:textSize="18sp"
+                android:layout_marginTop="81dp"
+                android:layout_below="@+id/textView2"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
 
-        <Button
-            android:text="Cancelar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/pfeCancel_btn" />
-    </RelativeLayout>
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:ems="10"
+                android:id="@+id/pfeEmail_edt"
+                android:layout_alignBaseline="@+id/textView2"
+                android:layout_alignBottom="@+id/textView2"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:ems="10"
+                android:id="@+id/pfeSenha_editPerfil"
+                android:layout_alignBottom="@+id/pfeEmail_txt"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <Button
+                android:text="Cancelar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pfeCancel_btn"
+                android:layout_alignTop="@+id/pfeConfirm_btn"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="19dp"
+                android:layout_marginEnd="19dp" />
+
+            <Button
+                android:text="Confirmar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pfeConfirm_btn"
+                android:layout_marginTop="61dp"
+                android:layout_below="@+id/pfeEmail_txt"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp" />
+
+        </RelativeLayout>
+    </ScrollView>
+
 </FrameLayout>

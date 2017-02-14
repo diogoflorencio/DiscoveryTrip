@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.diogo.discoverytrip.R;
+import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.Util.ListAdapterEventos;
 
 /**

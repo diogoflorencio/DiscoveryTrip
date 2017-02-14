@@ -24,6 +24,7 @@ import com.example.diogo.discoverytrip.REST.ServerResponses.AttractionResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponse;
 
+import java.io.DataInput;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -37,7 +38,7 @@ import retrofit2.Response;
  * Classe fragment responsavel pelo fragmento de edição de perfil na aplicação
  */
 public class PerfilEditFragment extends Fragment implements View.OnClickListener {
-    public EditText userName_edt, userEmail_edt;
+    public EditText userName_edt, userEmail_edt, userPasswordEdit;
 
     public PerfilEditFragment() {
         // Required empty public constructor
@@ -54,6 +55,7 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
 
         userName_edt = (EditText) rootView.findViewById(R.id.pfeName_edt);
         userEmail_edt = (EditText) rootView.findViewById(R.id.pfeEmail_edt);
+        userPasswordEdit = (EditText) rootView.findViewById(R.id.pfeSenha_editPerfil);
 
         return rootView;
     }
@@ -62,21 +64,12 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
         Log.d("Looger","PerfilEditFragment updateUserData");
         //TODO testar o metodo e falta adicionar o id ao url
         String userName_value = userName_edt.getText().toString();
-        String userEmail_value = userEmail_edt.getText().toString();
-        String userPassword_value = null;
-        String userId_value = null;
-
-        Map<String, RequestBody> parametersMap = new HashMap<>();
-        MultiRequestHelper helper = new MultiRequestHelper(getContext());
-
-        parametersMap.put("password",helper.createPartFrom(userPassword_value));
-        parametersMap.put("username",helper.createPartFrom(userName_value));
-        parametersMap.put("email",helper.createPartFrom(userEmail_value));
+        String userEmail_value = getArguments().getString("email");
+        String userPassword_value = userPasswordEdit.getText().toString();
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
-        Log.d("Token",token);
 
-        Call<ServerResponse> call = ApiClient.API_SERVICE.setUsuario(new UsuarioEnvio(userName_value, userEmail_value, userPassword_value));
+        Call<ServerResponse> call = ApiClient.API_SERVICE.setUsuario("bearer " + token,new UsuarioEnvio(userName_value, userEmail_value, userPassword_value));
         call.enqueue(new Callback<ServerResponse>() {
 
             @Override
@@ -84,11 +77,14 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
                 if (response.isSuccessful()) {
                     ServerResponse serverResponse = response.body();
                     Log.d("Server Response", serverResponse.getMessage());
-                    Toast.makeText(getActivity(), R.string.pf_edicao_sucesso, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.pf_edicao_sucesso, Toast.LENGTH_SHORT).show();
+                    backToHome();
                 } else {
                     try {
                         ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                        Toast.makeText(getActivity(), error.getErrorDescription(), Toast.LENGTH_SHORT).show();
+                        Log.e("EditPerfil",error.getErrorDescription());
+                        Toast.makeText(getContext(),error.getErrorDescription(),Toast.LENGTH_SHORT).show();
+                        backToHome();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -112,8 +108,7 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
                 Log.d("Logger", "PerfilEditFragment botao confirmar");
                 try {
                     validateFields();
-//                    updateUserData();
-                    backToHome();
+                    updateUserData();
                 } catch (DataInputException exception){
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
                 }
@@ -140,7 +135,11 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
         }
 
         if(userEmail_edt.getText().toString().trim().isEmpty()){
-            throw new DataInputException(getString(R.string.validate_email));
+            //throw new DataInputException(getString(R.string.validate_email));
+        }
+
+        if(userPasswordEdit.getText().toString().isEmpty()){
+            throw new DataInputException("Digite uma nova senha");
         }
     }
 }

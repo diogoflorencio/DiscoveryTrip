@@ -19,23 +19,17 @@ public class PontoTuristico {
     @SerializedName("description")
     private String description;
 
-    @SerializedName("latitude")
-    private String latitude;
-
-    @SerializedName("longitude")
-    private String longitude;
+    @SerializedName("localization")
+    private String location;
 
     @SerializedName("photos")
-    private List<Byte> photos;
+    private List<String> photosID;
 
-    public PontoTuristico(@NonNull String name,@NonNull String description,@NonNull String latitude,
-                          @NonNull String longitude,@NonNull List<Byte> photos) {
-        this.name = name;
-        this.description = description;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.photos = photos;
-    }
+    @SerializedName("state")
+    private String state;
+
+    @SerializedName("created")
+    private String created;
 
     /**
      * Retorna o nome do ponto turístico
@@ -57,23 +51,15 @@ public class PontoTuristico {
      * Retorna a latitude do ponto turístico
      * @return latitude
      */
-    public String getLatitude() {
-        return latitude;
-    }
-
-    /**
-     * Retorna a longitude do ponto turístico
-     * @return longitude
-     */
-    public String getLongitude() {
-        return longitude;
+    public String getLocation() {
+        return location;
     }
 
     /**
      * Retorna uma lista com as fotos do ponto turístico, a lista contém pelo menos uma foto e no máximo dez.
      * @return lista de fotos
      */
-    public List<Byte> getPhotos() {
-        return photos;
+    public List<String> getPhotos() {
+        return photosID;
     }
 }

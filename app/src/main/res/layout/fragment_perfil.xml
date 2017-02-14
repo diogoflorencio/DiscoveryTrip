@@ -2,54 +2,83 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light"
     android:clickable="true"
-    tools:context="com.example.diogo.discoverytrip.Fragments.PerfilFragment">
+    tools:context="com.example.diogo.discoverytrip.Fragments.PerfilFragment"
+    android:background="@android:color/white">
 
-    <TextView
-        android:text="Perfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pfPerfil_txt"
-        android:textSize="24sp"
-        android:layout_row="0"
-        android:layout_column="1"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <TextView
-        android:text="Email:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pfEmail_txt"
-        android:textSize="18sp"
-        android:layout_marginTop="35dp"
-        android:layout_below="@+id/pfName_txt"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        <TextView
+            android:text="Perfil"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/pfPerfil_txt"
+            android:textSize="24sp"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_alignParentTop="false"
+            android:layout_centerHorizontal="false"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:gravity="center_horizontal" />
 
-    <TextView
-        android:text="Nome:"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:layout_row="1"
-        android:layout_column="0"
-        android:id="@+id/pfName_txt"
-        android:layout_below="@+id/pfPerfil_txt"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="44dp" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/pfEmail_txt"
-        android:layout_alignLeft="@+id/userName"
-        android:layout_alignStart="@+id/userName"
-        android:id="@+id/userEmail"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+            <TextView
+                android:text="Nome:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:layout_column="0"
+                android:id="@+id/pfName_txt"
+                android:layout_below="@+id/pfPerfil_txt"
+                android:layout_alignParentLeft="false"
+                android:layout_alignParentStart="false" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/userName"
+                android:layout_alignBottom="@+id/pfName_txt"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentEnd="false"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp">
+
+            <TextView
+                android:text="Email:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/pfEmail_txt"
+                android:textSize="18sp"
+                android:layout_below="@+id/pfName_txt"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/pfEmail_txt"
+                android:layout_alignLeft="@+id/userName"
+                android:layout_alignStart="@+id/userName"
+                android:id="@+id/userEmail"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentEnd="false"
+                android:layout_weight="1" />
+        </LinearLayout>
+    </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"
@@ -61,25 +90,6 @@
         android:layout_alignParentStart="true"
         android:layout_alignRight="@+id/pfEmail_txt"
         android:layout_alignEnd="@+id/pfEmail_txt" />
-
-    <TextView
-        android:text="editar perfil"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/pfConfirm_btn"
-        android:layout_marginTop="14dp"
-        android:id="@+id/textView"
-        android:layout_toLeftOf="@+id/userEmail"
-        android:layout_toRightOf="@+id/pfConfirm_btn"
-        android:layout_toEndOf="@+id/pfConfirm_btn" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/userName"
-        android:layout_alignBottom="@+id/pfName_txt"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>

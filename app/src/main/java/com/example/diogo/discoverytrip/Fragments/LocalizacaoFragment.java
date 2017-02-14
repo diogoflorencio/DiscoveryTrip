@@ -33,6 +33,8 @@ public class LocalizacaoFragment extends Fragment implements LocationListener {
     private static final int REQUEST_LOCATION = 2;
     private TextView coordenadas;
 
+    public static double latitude, longitude;
+
     public LocalizacaoFragment() {
         // Required empty public constructor
     }
@@ -72,6 +74,8 @@ public class LocalizacaoFragment extends Fragment implements LocationListener {
     @Override
     public void onLocationChanged(Location location) {
         Log.d("Logger", "LocalizacaoFragment onLocationChanged");
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
         coordenadas.setText("Latitude: " + location.getLatitude() + " Longitude: " + location.getLongitude());
     }
 

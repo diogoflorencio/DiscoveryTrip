@@ -137,8 +137,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 postTokenFacebook(getCurrentAccessToken().getToken());
 
                 Log.d("Logger", "startActivity facebook");
-                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
-                finish();
             }
 
             @Override
@@ -161,11 +159,13 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if(response.isSuccessful()) Log.d("Login","Server OK");
+                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                finish();
+                if(response.isSuccessful()) Log.d("Login face","Server OK");
                 else{
                     try {
                         ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                        Log.e("Server", error.getErrorDescription());
+                        Log.e("Login face", error.getErrorDescription());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

@@ -172,8 +172,9 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
 
         parametersMap.put("name",helper.createPartFrom(ptName_value));
         parametersMap.put("description",helper.createPartFrom(ptDesc_value));
-        parametersMap.put("latitude",helper.createPartFrom("-7.2335"));
-        parametersMap.put("longitude",helper.createPartFrom("-35.8727"));
+
+        parametersMap.put("latitude",helper.createPartFrom(String.valueOf(LocalizacaoFragment.latitude)));
+        parametersMap.put("longitude",helper.createPartFrom(String.valueOf(LocalizacaoFragment.longitude)));
 
         parametersMap.put("category ",helper.createPartFrom(ptCatg_value));
 
@@ -190,9 +191,9 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
                 }
                 else{
                     try {
-                        Log.e("Server error",response.errorBody().string());
-                        //ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                        //Log.e("Server", error.getErrorDescription());
+                        //Log.e("Server error",response.errorBody().string());
+                        ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                        Log.e("Server", error.getErrorDescription());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

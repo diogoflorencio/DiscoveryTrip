@@ -30,6 +30,8 @@ import retrofit2.Response;
  */
 public class PerfilFragment extends Fragment implements View.OnClickListener {
     public TextView userName, userEmail;
+    private String name = null;
+    private String email = null;
 
     public PerfilFragment() {
         // Required empty public constructor
@@ -56,8 +58,6 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
 
     public void receiveDataFromHome(){
         Log.d("Logger", "PerfilFragment receiveDataFromHome");
-        String name = null;
-        String email = null;
 
         if (getArguments() != null) {
             name = getArguments().getString("name");
@@ -83,6 +83,11 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         Log.d("Logger", "PerfilEditFragment goToPerfilCreation");
         FragmentManager fragmentManager = getFragmentManager();
         PerfilEditFragment fragment = new PerfilEditFragment();
+
+        Bundle bundle = new Bundle();
+        bundle.putString("name", name);
+        bundle.putString("email", email);
+        fragment.setArguments(bundle);
 
         fragmentManager.beginTransaction().replace(R.id.content_home, fragment).commit();
     }

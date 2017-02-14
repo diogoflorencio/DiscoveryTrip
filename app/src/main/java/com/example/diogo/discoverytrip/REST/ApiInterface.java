@@ -11,6 +11,7 @@ import com.example.diogo.discoverytrip.REST.ServerResponses.LogoutResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ReminderResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ResponseAbst;
 import com.example.diogo.discoverytrip.Model.UsuarioEnvio;
+import com.example.diogo.discoverytrip.REST.ServerResponses.SearchResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponse;
 
 import java.util.List;
@@ -49,7 +50,7 @@ public interface ApiInterface {
     Call<ServerResponse> getUsuario(@Header("Authorization") String accessToken);
 
     @PUT("api/users/")
-    Call<ServerResponse> setUsuario(@Body UsuarioEnvio usuarioEnvio);
+    Call<ServerResponse> setUsuario(@Header("Authorization")String accessToken, @Body UsuarioEnvio usuarioEnvio);
 
     @POST("api/facebook/login")
     Call<LoginResponse> loginFacebook(@Body AccessTokenJson accessToken);
@@ -104,4 +105,7 @@ public interface ApiInterface {
     @Multipart
     @POST("api/attraction/events")
     Call<AddEventoResponse> cadastrarEvento(@Header("Authorization") String token, @PartMap Map<String, RequestBody> parametersMap, @Part MultipartBody.Part foto);
+
+    @GET("api/search/attraction")
+    Call<SearchResponse> searchPontoTuristico(@Query("latitude") double latitude, @Query("longitude") double longitude, @Query("distance") int distance);
 }

@@ -10,8 +10,8 @@ import java.util.List;
  */
 public class AttractionResponse {
 
-    @SerializedName("attraction")
-    private Atracao atracao;
+    //@SerializedName("attraction")
+    //private Atracao atracao;
 
     @SerializedName("photos")
     private List<String> fotos;
@@ -22,9 +22,9 @@ public class AttractionResponse {
     @SerializedName("created")
     private String criacao;
 
-    public Atracao getAtracao() {
-        return atracao;
-    }
+//    public Atracao getAtracao() {
+//        return atracao;
+//    }
 
     public List<String> getFotos() {
         return fotos;
