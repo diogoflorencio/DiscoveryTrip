@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "125864993307",
+    "firebase_url": "https://discoverytrip-151602.firebaseio.com",
+    "project_id": "discoverytrip-151602",
+    "storage_bucket": "discoverytrip-151602.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:125864993307:android:3e887bc57de4408c",
+        "android_client_info": {
+          "package_name": "com.example.diogo.discoverytrip"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "125864993307-uct771sru27ies9gfkp1t027osf1hcbj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.diogo.discoverytrip",
+            "certificate_hash": "9AB1036AF754141DF5E1D1B44EA54E5D3BE06BD0"
+          }
+        },
+        {
+          "client_id": "125864993307-60ptl89f3csbeoptik7mc678sl0ek3es.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDU1LHQ9rbpJgKLPikN1htMhicYi3grDjU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "125864993307-60ptl89f3csbeoptik7mc678sl0ek3es.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,38 @@
+<resources>
+
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/discoveryStatusColor</item>
+        <item name="android:colorBackground">@color/background_material_dark</item>
+        <item name="android:colorForeground">@color/discoverytripforeground</item>
+        <item name="android:textColorPrimary">@color/common_google_signin_btn_text_light_default</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:navigationBarColor">@android:color/background_dark</item>
+        <item name="android:textColorPrimaryInverse">@color/cardview_dark_background</item>
+        <item name="android:textColorSecondary">@color/cardview_dark_background</item>
+        <item name="android:windowBackground">@color/com_facebook_button_border_color_focused</item>
+        <item name="android:textColorSecondaryInverse">@color/cardview_shadow_start_color</item>
+        <item name="colorPrimary">@color/discoverytripforeground</item>
+    </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+        <item name="android:colorBackground">@color/background_material_dark</item>
+        <item name="android:navigationBarColor">@android:color/black</item>
+        <item name="android:colorForeground">@color/foreground_material_dark</item>
+        <item name="android:statusBarColor">@color/discoveryStatusColor</item>
+    </style>
+
+    <style name="DiscoveryTripTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/discoveryTrip_PrimaryColor</item>
+        <item name="colorAccent">@color/discoveryTripAccentColor</item>
+        <item name="android:colorForeground">@color/discoverytripforeground</item>
+        <item name="android:navigationBarColor">@android:color/background_dark</item>
+        <item name="android:statusBarColor">@color/discoveryStatusColor</item>
+    </style>
+</resources>
