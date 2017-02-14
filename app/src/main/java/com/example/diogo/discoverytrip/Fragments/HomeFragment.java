@@ -43,7 +43,8 @@ public class HomeFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         final ListView listView = (ListView) rootView.findViewById(R.id.fragment_home_list);
 
-        Call<SearchResponse> call = ApiClient.API_SERVICE.searchPontoTuristico(LocalizacaoFragment.latitude, LocalizacaoFragment.longitude,2000);
+        String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
+        Call<SearchResponse> call = ApiClient.API_SERVICE.searchPontoTuristico("bearer "+token,LocalizacaoFragment.latitude, LocalizacaoFragment.longitude,2000);
         call.enqueue(new Callback<SearchResponse>() {
             @Override
             public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
@@ -67,7 +68,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SearchResponse> call, Throwable t) {
-
+                Log.e("Pesquisa de ponto turisticos",t.toString());
             }
         });
 

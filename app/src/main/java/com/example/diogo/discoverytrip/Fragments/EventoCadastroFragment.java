@@ -19,6 +19,7 @@ import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.MultiRequestHelper;
+import com.example.diogo.discoverytrip.REST.ServerResponses.AddEventoResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.AttractionResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.EventosResponse;
 
@@ -141,43 +142,43 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
                 break;
         }
 
-//        Map<String, RequestBody> parametersMap = new HashMap<>();
-//        MultiRequestHelper helper = new MultiRequestHelper(getContext());
-//
-//        parametersMap.put("name",helper.createPartFrom(eventName_value));
-//        parametersMap.put("description",helper.createPartFrom(eventDesc_value));
-//        parametersMap.put("endData ",helper.createPartFrom(eventDate_value));
-//        parametersMap.put("kind",helper.createPartFrom(eventKind_value));
-//        parametersMap.put("price",helper.createPartFrom(eventPrice_value));
-//
-//        String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
-//        Log.d("Token",token);
-//        //List<byte[]> fotos = new ArrayList<>();
-//
-//        Call<EventosResponse> call = ApiClient.API_SERVICE.cadastrarEvento("bearer "+token,parametersMap,helper.loadPhoto("photos",foto));
-//        call.enqueue(new Callback<EventosResponse>() {
-//            @Override
-//            public void onResponse(Call<EventosResponse> call, Response<EventosResponse> response) {
-//                if(response.isSuccessful()) {
-//                    Log.d("Server Evento","Cadastro OK");
-//                }
-//                else{
-//                    try {
-//                        Log.e("Server error",response.errorBody().string());
-//                        //ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-//                        //Log.e("Server", error.getErrorDescription());
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<EventosResponse> call, Throwable t) {
-//                // Log error here since request failed
-//                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-//                Log.e("App Server Error", t.toString());
-//            }
-//        });
+        Map<String, RequestBody> parametersMap = new HashMap<>();
+        MultiRequestHelper helper = new MultiRequestHelper(getContext());
+
+        parametersMap.put("name",helper.createPartFrom(eventName_value));
+        parametersMap.put("description",helper.createPartFrom(eventDesc_value));
+        parametersMap.put("endData ",helper.createPartFrom(eventDate_value));
+        parametersMap.put("kind",helper.createPartFrom(eventKind_value));
+        parametersMap.put("price",helper.createPartFrom(eventPrice_value));
+
+        String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
+        Log.d("Token",token);
+        //List<byte[]> fotos = new ArrayList<>();
+
+        Call<AddEventoResponse> call = ApiClient.API_SERVICE.cadastrarEvento("bearer "+token,parametersMap);
+        call.enqueue(new Callback<AddEventoResponse>() {
+            @Override
+            public void onResponse(Call<AddEventoResponse> call, Response<AddEventoResponse> response) {
+                if(response.isSuccessful()) {
+                    Log.d("Server Evento","Cadastro OK");
+                }
+                else{
+                    try {
+                        Log.e("Server error",response.errorBody().string());
+                        //ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                        //Log.e("Server", error.getErrorDescription());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AddEventoResponse> call, Throwable t) {
+                // Log error here since request failed
+                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.e("App Server Error", t.toString());
+            }
+        });
     }
 }

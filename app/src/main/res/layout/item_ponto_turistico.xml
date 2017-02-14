@@ -6,7 +6,7 @@
 
     <ImageView
         app:srcCompat="@mipmap/icon"
-        android:id="@+id/item_evento_img"
+        android:id="@+id/item_pontoTuristico_img"
         android:layout_height="110dp"
         android:layout_width="110dp" />
 
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Medium Text"
-                android:id="@+id/item_evento_txtCidade" />
+                android:id="@+id/item_pontoTuristico_cidade" />
         </LinearLayout>
     </LinearLayout>
 

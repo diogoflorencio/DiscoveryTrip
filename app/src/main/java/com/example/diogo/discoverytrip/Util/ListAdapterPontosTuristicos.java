@@ -19,6 +19,8 @@ import com.example.diogo.discoverytrip.Model.PontoTuristico;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -51,14 +53,16 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<PontoTuristico>{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        View view = inflater.inflate(R.layout.item_evento, null, true);
-        ImageView foto = (ImageView) view.findViewById(R.id.item_evento_img);
+        View view = inflater.inflate(R.layout.item_ponto_turistico, null, true);
+        ImageView foto = (ImageView) view.findViewById(R.id.item_pontoTuristico_img);
 
-        TextView titulo  = (TextView) view.findViewById(R.id.item_evento_txtTitulo);
-        TextView descricao  = (TextView) view.findViewById(R.id.item_evento_txtDescricao);
+        TextView titulo  = (TextView) view.findViewById(R.id.item_pontoTuristico_txtTitulo);
+        TextView descricao  = (TextView) view.findViewById(R.id.item_pontoTuristico_txtDescricao);
+        TextView cidade = (TextView) view.findViewById(R.id.item_pontoTuristico_cidade);
 
         titulo.setText(pontosTuristicos.get(position).getName());
         descricao.setText(pontosTuristicos.get(position).getDescription());
+        cidade.setText(pontosTuristicos.get(position).getLocation().getCity());
         loadImage(foto,position);
         return view;
     }
@@ -71,13 +75,13 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<PontoTuristico>{
                 Request request = new Request.Builder()
                         .addHeader("Content-Type","application/json")
                         .addHeader("Authorization","bearer "+ AcessToken.recuperar(context.getSharedPreferences("acessToken", Context.MODE_PRIVATE)))
-                        .url(ApiClient.BASE_URL + "api/photos/:"+pontosTuristicos.get(position).getPhotos().get(0)+"/download/")
+                        .url(ApiClient.BASE_URL + "api/photos/:"+pontosTuristicos.get(position).getPhotos().get(0)+"/download")
                         .build();
 
                 client.newCall(request).enqueue(new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
-
+                        Log.e("Pesquisa de pontos turisticos","Erro ao baixar imagem");
                     }
 
                     @Override

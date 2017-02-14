@@ -20,7 +20,7 @@ public class PontoTuristico {
     private String description;
 
     @SerializedName("localization")
-    private String location;
+    private Localizacao location;
 
     @SerializedName("photos")
     private List<String> photosID;
@@ -51,7 +51,7 @@ public class PontoTuristico {
      * Retorna a latitude do ponto turístico
      * @return latitude
      */
-    public String getLocation() {
+    public Localizacao getLocation() {
         return location;
     }
 

@@ -106,6 +106,10 @@ public interface ApiInterface {
     @POST("api/attraction/events")
     Call<AddEventoResponse> cadastrarEvento(@Header("Authorization") String token, @PartMap Map<String, RequestBody> parametersMap, @Part MultipartBody.Part foto);
 
+    @Multipart
+    @POST("api/attraction/events")
+    Call<AddEventoResponse> cadastrarEvento(@Header("Authorization") String token, @PartMap Map<String, RequestBody> parametersMap);
+
     @GET("api/search/attraction")
-    Call<SearchResponse> searchPontoTuristico(@Query("latitude") double latitude, @Query("longitude") double longitude, @Query("distance") int distance);
+    Call<SearchResponse> searchPontoTuristico(@Header("Authorization") String token, @Query("latitude") double latitude, @Query("longitude") double longitude, @Query("distance") int distance);
 }
