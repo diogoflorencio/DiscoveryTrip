@@ -19,6 +19,10 @@
     //PontoTuristicoFragment strings
     <string name="pt_cadastro_sucesso">Ponto turístico cadastrado com sucesso!</string>
 
+    //EventoCadastroFragment strings
+    <string name="pf_edicao_sucesso">Dados alterados com sucesso!</string>
+    <string name="pf_edicao_falha">Não foi possível realizar a edição</string>
+
     //HomeActivity strings
     <string name="gps_loading">Carregando Localização...</string>
     <string name="address_found">Endereço localizado: </string>
@@ -31,6 +35,9 @@
     //LoginActivity strings
     <string name="login_cancel">LoginActivity cancelado</string>
     <string name="login_error">Ocorreu um erro ao realizar login</string>
+
+    <string name="login_unable">Não foi possível realizar o login</string>
+
     <string name="conection_failed">Conexao falhou</string>
 
     //Validção strings

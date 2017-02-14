@@ -84,7 +84,6 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         FragmentManager fragmentManager = getFragmentManager();
         PerfilEditFragment fragment = new PerfilEditFragment();
 
-        fragmentManager.beginTransaction().replace(R.id.content_home, fragment
-        ).commit();
+        fragmentManager.beginTransaction().replace(R.id.content_home, fragment).commit();
     }
 }

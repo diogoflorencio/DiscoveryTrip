@@ -80,7 +80,11 @@ public class HomeActivity extends AppCompatActivity
 
         buildGooglePlusConfigs();
 
-        getUserData();
+        try{
+            getUserData();
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
         createHomeFragment();
 
@@ -111,7 +115,12 @@ public class HomeActivity extends AppCompatActivity
                     Log.d("Perfil", "Server OK");
                     ServerResponse serverResponse = response.body();
                     user = serverResponse.getUsuario();
-                    Log.d("Perfil", user.getId());
+                    try{
+                        Log.d("Perfil", user.getId());
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+
                 } else {
                     // try {
                     // ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
@@ -161,8 +170,8 @@ public class HomeActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d("Logger", "Home onCreateOptionsMenu");
         // Inflate the menu; this adds items to the action bar if it is present.
+        Log.d("Logger", "Home onCreateOptionsMenu");
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }

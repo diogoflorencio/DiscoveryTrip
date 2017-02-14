@@ -13,7 +13,6 @@
     tools:showIn="@layout/app_bar_home"
     android:id="@+id/content_home"
     android:background="@color/discoveryTrip_Background">
-
     <ViewFlipper
         android:id="@+id/home_flipper"
         android:layout_width="match_parent"

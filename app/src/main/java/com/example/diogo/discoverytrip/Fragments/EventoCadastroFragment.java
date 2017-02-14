@@ -1,5 +1,6 @@
 package com.example.diogo.discoverytrip.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,8 +14,22 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.R;
+import com.example.diogo.discoverytrip.REST.ApiClient;
+import com.example.diogo.discoverytrip.REST.MultiRequestHelper;
+import com.example.diogo.discoverytrip.REST.ServerResponses.AttractionResponse;
+import com.example.diogo.discoverytrip.REST.ServerResponses.EventosResponse;
+
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class EventoCadastroFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     public EditText nameVal_txt, descVal_txt, dateVal_txt, priceVal_txt;
@@ -111,12 +126,14 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
     public void sendEventData(){
         Log.d("Logger", "EventoCadastroFragment sendEventData");
         //precisa fazer um post e mandar os dados atualizados pro servidor
-        //TODO
+
+        //TODO corrigir e testar o metodo
         String eventName_value = nameVal_txt.getText().toString();
         String eventDesc_value = descVal_txt.getText().toString();
         String eventDate_value = dateVal_txt.getText().toString();
         String eventPrice_value = priceVal_txt.getText().toString();
-        String eventKind_value;
+
+        String eventKind_value = null;
         switch (evKind_spn.getSelectedItemPosition()) {
             case 0: eventKind_value = "private";
                 break;
@@ -124,5 +141,43 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
                 break;
         }
 
+//        Map<String, RequestBody> parametersMap = new HashMap<>();
+//        MultiRequestHelper helper = new MultiRequestHelper(getContext());
+//
+//        parametersMap.put("name",helper.createPartFrom(eventName_value));
+//        parametersMap.put("description",helper.createPartFrom(eventDesc_value));
+//        parametersMap.put("endData ",helper.createPartFrom(eventDate_value));
+//        parametersMap.put("kind",helper.createPartFrom(eventKind_value));
+//        parametersMap.put("price",helper.createPartFrom(eventPrice_value));
+//
+//        String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
+//        Log.d("Token",token);
+//        //List<byte[]> fotos = new ArrayList<>();
+//
+//        Call<EventosResponse> call = ApiClient.API_SERVICE.cadastrarEvento("bearer "+token,parametersMap,helper.loadPhoto("photos",foto));
+//        call.enqueue(new Callback<EventosResponse>() {
+//            @Override
+//            public void onResponse(Call<EventosResponse> call, Response<EventosResponse> response) {
+//                if(response.isSuccessful()) {
+//                    Log.d("Server Evento","Cadastro OK");
+//                }
+//                else{
+//                    try {
+//                        Log.e("Server error",response.errorBody().string());
+//                        //ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+//                        //Log.e("Server", error.getErrorDescription());
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<EventosResponse> call, Throwable t) {
+//                // Log error here since request failed
+//                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+//                Log.e("App Server Error", t.toString());
+//            }
+//        });
     }
 }

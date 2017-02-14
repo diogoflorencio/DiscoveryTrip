@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.util.Log;
+import android.app.Activity;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +31,7 @@ public class ListAdapterEventos extends ArrayAdapter<Evento>{
     private List<Evento> eventos;
     private Handler handler = new Handler();
 
+
     public ListAdapterEventos(Context context, LayoutInflater inflater, List<Evento> eventos){
         super(context, R.layout.item_evento,eventos);
 
@@ -40,6 +43,7 @@ public class ListAdapterEventos extends ArrayAdapter<Evento>{
     public View getView(int position, View convertView, ViewGroup parent){
         View view = inflater.inflate(R.layout.item_evento, null, true);
         ImageView foto = (ImageView) view.findViewById(R.id.item_evento_img);
+
         TextView titulo  = (TextView) view.findViewById(R.id.item_evento_txtTitulo);
         TextView descricao  = (TextView) view.findViewById(R.id.item_evento_txtDescricao);
         TextView data  = (TextView) view.findViewById(R.id.item_evento_txtData);

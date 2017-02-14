@@ -30,6 +30,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
@@ -46,6 +47,9 @@ public interface ApiInterface {
 
     @GET("api/users/")
     Call<ServerResponse> getUsuario(@Header("Authorization") String accessToken);
+
+    @PUT("api/users/")
+    Call<ServerResponse> setUsuario(@Body UsuarioEnvio usuarioEnvio);
 
     @POST("api/facebook/login")
     Call<LoginResponse> loginFacebook(@Body AccessTokenJson accessToken);
