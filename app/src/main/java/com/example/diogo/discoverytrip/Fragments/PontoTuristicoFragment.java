@@ -3,12 +3,17 @@ package com.example.diogo.discoverytrip.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -50,14 +55,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Classe fragment responsavel pelo fragmento ponto turistico na aplicação
  */
-public class PontoTuristicoFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class PontoTuristicoFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener, LocationListener {
     public EditText nameVal_txt, catgVal_txt, descVal_txt;
     private Uri foto;
     Spinner ptCategory_spn;
+    private LocationManager locationManager;
+    double latitude, longitude;
+    private static final int REQUEST_LOCATION = 2;
 
     public PontoTuristicoFragment() {
         // Required empty public constructor
@@ -69,6 +78,7 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        startGPS();
         Log.d("Logger", "PontoTuristicoFragment onCreate");
         View rootView = inflater.inflate(R.layout.fragment_ponto_turistico, container, false);
 
@@ -89,6 +99,25 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
         ptCategory_spn.setAdapter(adapter);
 
         return rootView;
+    }
+
+    private void startGPS() {
+        Log.d("Logger", "LocalizacaoFragment startGPS");
+        locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        //permissão de GPS
+        if (ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(),
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)) ;
+                // Esperando usuário autorizar permissão
+            else
+                ActivityCompat.requestPermissions(this.getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        REQUEST_LOCATION);
+        } else
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
+
     }
 
     @Override
@@ -173,8 +202,8 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
         parametersMap.put("name",helper.createPartFrom(ptName_value));
         parametersMap.put("description",helper.createPartFrom(ptDesc_value));
 
-        parametersMap.put("latitude",helper.createPartFrom(String.valueOf(LocalizacaoFragment.latitude)));
-        parametersMap.put("longitude",helper.createPartFrom(String.valueOf(LocalizacaoFragment.longitude)));
+        parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
+        parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
 
         parametersMap.put("category ",helper.createPartFrom(ptCatg_value));
 
@@ -240,5 +269,26 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
 
     public void onNothingSelected(AdapterView<?> parent) {
         // Another interface callback
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }
