@@ -38,6 +38,7 @@ import retrofit2.Response;
  */
 public class PerfilEditFragment extends Fragment implements View.OnClickListener {
     public EditText userName_edt, userEmail_edt;
+    private String name, email, id;
 
     public PerfilEditFragment() {
         // Required empty public constructor
@@ -58,25 +59,35 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
         return rootView;
     }
 
+    public void receiveDataFromPerfil(){
+        Log.d("Logger", "PerfilFragment receiveDataFromHome");
+
+        if (getArguments() != null) {
+            name = getArguments().getString("name");
+            email = getArguments().getString("email");
+            id = getArguments().getString("id");
+        }
+    }
+
     private void updateUserData(){
         Log.d("Looger","PerfilEditFragment updateUserData");
         //TODO testar o metodo e falta adicionar o id ao url
-        String userName_value = userName_edt.getText().toString();
-        String userEmail_value = userEmail_edt.getText().toString();
-        String userPassword_value = null;
-        String userId_value = null;
+//        String userName_value = userName_edt.getText().toString();
+//        String userEmail_value = userEmail_edt.getText().toString();
+//        String userId_value = "";
+        String userPassword_value = "";
 
         Map<String, RequestBody> parametersMap = new HashMap<>();
         MultiRequestHelper helper = new MultiRequestHelper(getContext());
 
+        parametersMap.put("username",helper.createPartFrom(name));
+        parametersMap.put("email",helper.createPartFrom(email));
         parametersMap.put("password",helper.createPartFrom(userPassword_value));
-        parametersMap.put("username",helper.createPartFrom(userName_value));
-        parametersMap.put("email",helper.createPartFrom(userEmail_value));
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Log.d("Token",token);
 
-        Call<ServerResponse> call = ApiClient.API_SERVICE.setUsuario(new UsuarioEnvio(userName_value, userEmail_value, userPassword_value));
+        Call<ServerResponse> call = ApiClient.API_SERVICE.setUsuario(new UsuarioEnvio(name, email, userPassword_value));
         call.enqueue(new Callback<ServerResponse>() {
 
             @Override
@@ -113,6 +124,7 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
                 try {
                     validateFields();
 //                    updateUserData();
+                    Toast.makeText(this.getActivity(), R.string.pf_edicao_sucesso, Toast.LENGTH_SHORT).show();
                     backToHome();
                 } catch (DataInputException exception){
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
@@ -135,12 +147,8 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
 
     private void validateFields() throws DataInputException {
         Log.d("Logger", "PerfilEditFragment validateFields");
-        if(userName_edt.getText().toString().trim().isEmpty()){
-            throw new DataInputException(getString(R.string.validate_name));
-        }
-
-        if(userEmail_edt.getText().toString().trim().isEmpty()){
-            throw new DataInputException(getString(R.string.validate_email));
+        if(userName_edt.getText().toString().trim().isEmpty() && userEmail_edt.getText().toString().trim().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_any_field));
         }
     }
 }

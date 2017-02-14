@@ -93,12 +93,13 @@ public class HomeActivity extends AppCompatActivity
             startService(new Intent(HomeActivity.this, ServiceLembrete.class));
     }
 
-    public void sendDatatoPerfil(String name, String email, Fragment fragment){
+    public void sendDatatoPerfil(String name, String email, String id, Fragment fragment){
         Log.d("Logger", "Home sendDatatoPerfil");
 
         Bundle bundle = new Bundle();
         bundle.putString("name", name);
         bundle.putString("email", email);
+        bundle.putString("id", id);
         fragment.setArguments(bundle);
     }
 
@@ -239,14 +240,17 @@ public class HomeActivity extends AppCompatActivity
                 Log.d("Logger", "Home localizacao");
                 String name = null;
                 String email = null;
+                String password = null;
+                String user_id = null;
                 try{
                     name = user.getNome();
                     email = user.getEmail();
+                    user_id = user.getId();
                 } catch (Exception e) {
                     //o usuário nao foi recuperado no servidor
                 }
                 fragment = new PerfilFragment();
-                sendDatatoPerfil(name, email, fragment);
+                sendDatatoPerfil(name, email, user_id, fragment);
                 break;
             case R.id.nav_ponto_turistico:
                 Log.d("Logger", "Home localizacao");

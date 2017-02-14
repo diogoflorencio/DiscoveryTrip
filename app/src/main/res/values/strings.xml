@@ -50,6 +50,7 @@
     <string name="validate_date">Informe uma data</string>
     <string name="validate_kind">Informe um tipo</string>
     <string name="validate_price">Informe um preço</string>
+    <string name="validate_any_field">Nenhum dos campos foi alterado</string>
 
     //AppLoginJson strings
     <string name="login_id">discoveryTrip</string>

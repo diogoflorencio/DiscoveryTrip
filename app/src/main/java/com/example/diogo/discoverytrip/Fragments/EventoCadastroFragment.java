@@ -1,6 +1,5 @@
 package com.example.diogo.discoverytrip.Fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,22 +13,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.R;
-import com.example.diogo.discoverytrip.REST.ApiClient;
-import com.example.diogo.discoverytrip.REST.MultiRequestHelper;
-import com.example.diogo.discoverytrip.REST.ServerResponses.AttractionResponse;
-import com.example.diogo.discoverytrip.REST.ServerResponses.EventosResponse;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class EventoCadastroFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     public EditText nameVal_txt, descVal_txt, dateVal_txt, priceVal_txt;

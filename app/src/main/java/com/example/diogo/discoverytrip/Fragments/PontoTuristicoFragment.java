@@ -3,12 +3,8 @@ package com.example.diogo.discoverytrip.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -22,26 +18,15 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.diogo.discoverytrip.Activities.LoginActivity;
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
-import com.example.diogo.discoverytrip.DataBase.RefreshToken;
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
-import com.example.diogo.discoverytrip.Model.AccessTokenJson;
-import com.example.diogo.discoverytrip.Model.PontoTuristico;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.MultiRequestHelper;
-import com.example.diogo.discoverytrip.REST.ServerResponses.AddEventoResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.AttractionResponse;
-import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
-import com.example.diogo.discoverytrip.REST.ServerResponses.LoginResponse;
-import com.facebook.AccessToken;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -211,8 +196,6 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
         Log.d("Logger", "PontoTuristicoFragment backToHome");
         FragmentManager fragmentManager = getFragmentManager();
         HomeFragment fragment = new HomeFragment();
-
-//        getActivity().getSupportFragmentManager().popBackStack();
 
         fragmentManager.beginTransaction().replace(R.id.content_home, fragment
         ).commit();
