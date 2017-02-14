@@ -224,10 +224,6 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
             throw new DataInputException(getString(R.string.validate_name));
         }
 
-        if(catgVal_txt.getText().toString().trim().isEmpty()){
-            throw new DataInputException(getString(R.string.validate_category));
-        }
-
         if(descVal_txt.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_description));
         }
