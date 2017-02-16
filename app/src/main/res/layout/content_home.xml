@@ -33,10 +33,10 @@
             android:layout_height="match_parent"
             tools:layout="@layout/fragment_perfil" />
 
-        <fragment class="com.example.diogo.discoverytrip.Fragments.PontoTuristicoFragment"
+        <fragment class="com.example.diogo.discoverytrip.Fragments.PontoTuristicoCadastroFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout="@layout/fragment_ponto_turistico" />
+            tools:layout="@layout/fragment_ponto_turistico_cadastro" />
 
         <fragment class="com.example.diogo.discoverytrip.Fragments.EventoFragment"
             android:layout_width="match_parent"

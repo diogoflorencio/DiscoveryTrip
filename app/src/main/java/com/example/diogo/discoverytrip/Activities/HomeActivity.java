@@ -22,6 +22,7 @@ import com.example.diogo.discoverytrip.Fragments.EventoFragment;
 import com.example.diogo.discoverytrip.Fragments.HomeFragment;
 import com.example.diogo.discoverytrip.Fragments.LocalizacaoFragment;
 import com.example.diogo.discoverytrip.Fragments.PerfilFragment;
+import com.example.diogo.discoverytrip.Fragments.PontoTuristicoCadastroFragment;
 import com.example.diogo.discoverytrip.Fragments.PontoTuristicoFragment;
 import com.example.diogo.discoverytrip.Model.RefreshTokenManeger;
 import com.example.diogo.discoverytrip.Model.User;
