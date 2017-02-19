@@ -28,6 +28,8 @@ public class EventoFragment extends Fragment implements View.OnClickListener {
         View rootView = inflater.inflate(R.layout.fragment_evento, container, false);
 
         rootView.findViewById(R.id.createEvent_btn).setOnClickListener(this);
+        rootView.findViewById(R.id.pesquisa_evento_btnOK).setOnClickListener(this);
+        rootView.findViewById(R.id.pesquisa_evento_btnLocalizacao).setOnClickListener(this);
 
         ListView viewEventos = (ListView) rootView.findViewById(R.id.fragment_evento_listEvento);
         //TODO fazer a chamada ao servidor para pegar os eventos e setar o adapter da list view
@@ -45,10 +47,8 @@ public class EventoFragment extends Fragment implements View.OnClickListener {
                 goToEventCreation();
                 break;
             case R.id.pesquisa_evento_btnOK:
-
                 break;
             case R.id.pesquisa_evento_btnLocalizacao:
-
                 break;
         }
     }

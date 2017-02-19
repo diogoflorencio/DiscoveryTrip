@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/pnt_search_edt"
+            android:layout_weight="1"
+            android:hint="Palavra chave"
+            android:drawableLeft="@android:drawable/ic_menu_search" />
+
+        <Button
+            android:text="OK"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/pnt_search_ok_btn" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.11">
+
+        <TextView
+            android:text="Mais próximos de você"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pnt_closer_txt"
+            android:textSize="18sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/pesquisa_ponto_btnLocalizacao"
+            android:foreground="@android:drawable/ic_menu_mylocation"
+            style="?android:attr/buttonStyleSmall"
+            android:background="@color/com_facebook_messenger_blue"
+            android:layout_marginLeft="8dp" />
+    </LinearLayout>
+</LinearLayout>

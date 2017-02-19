@@ -3,9 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:clickable="true"
     tools:context="com.example.diogo.discoverytrip.Fragments.PontoTuristicoFragment">
-
-    <!-- TODO: Update blank fragment layout -->
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,6 +21,23 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="1">
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="102dp"
+                layout="@layout/content_pesquisa_ponto_turistico" />
+
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/fragment_ponto_turistico_listEvento" />
+        </LinearLayout>
     </RelativeLayout>
 
 </FrameLayout>
