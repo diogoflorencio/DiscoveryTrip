@@ -38,8 +38,8 @@ import retrofit2.Response;
  * Classe fragment responsavel pelo fragmento de edição de perfil na aplicação
  */
 public class PerfilEditFragment extends Fragment implements View.OnClickListener {
-    public EditText userName_edt, userEmail_edt;
-    private String name, email, id;
+    public EditText userName_edt, userEmail_edt, userPassword_edt;
+    private String name, email, id, password;
 
     public PerfilEditFragment() {
         // Required empty public constructor
@@ -58,6 +58,8 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
         userEmail_edt = (EditText) rootView.findViewById(R.id.pfeEmail_edt);
         //userPasswordEdit = (EditText) rootView.findViewById(R.id.pfeSenha_editPerfil);
 
+        receiveDataFromPerfil();
+
         return rootView;
     }
 
@@ -75,8 +77,8 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
         Log.d("Looger","PerfilEditFragment updateUserData");
         //TODO testar o metodo e falta adicionar o id ao url
 
-//        String userName_value = userName_edt.getText().toString();
-//        String userEmail_value = userEmail_edt.getText().toString();
+        String userName_value = userName_edt.getText().toString();
+        String userEmail_value = userEmail_edt.getText().toString();
 //        String userId_value = "";
         String userPassword_value = "";
 
@@ -85,7 +87,7 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
 
         parametersMap.put("username",helper.createPartFrom(name));
         parametersMap.put("email",helper.createPartFrom(email));
-        parametersMap.put("password",helper.createPartFrom(userPassword_value));
+        password = userPassword_edt.getText().toString();
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
 
@@ -128,7 +130,7 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
                 Log.d("Logger", "PerfilEditFragment botao confirmar");
                 try {
                     validateFields();
-//                    updateUserData();
+                    updateUserData();
                     Toast.makeText(this.getActivity(), R.string.pf_edicao_sucesso, Toast.LENGTH_SHORT).show();
                     backToHome();
                 } catch (DataInputException exception){
@@ -154,6 +156,10 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
         Log.d("Logger", "PerfilEditFragment validateFields");
         if(userName_edt.getText().toString().trim().isEmpty() && userEmail_edt.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_any_field));
+        }
+
+        if(userPassword_edt.getText().toString().trim().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_password_empty));
         }
     }
 }

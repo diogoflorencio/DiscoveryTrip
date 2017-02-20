@@ -103,13 +103,13 @@ public interface ApiInterface {
      * @return objeto contendo a resposta do servidor. Caso seja uma resposta de erro deve-se usar o errorBodyConverter da classe ApiClient.
      */
     @Multipart
-    @POST("api/attraction/events")
+    @POST("api/events")
     Call<AddEventoResponse> cadastrarEvento(@Header("Authorization") String token, @PartMap Map<String, RequestBody> parametersMap, @Part MultipartBody.Part foto);
 
     @Multipart
-    @POST("api/attraction/events")
+    @POST("api/events")
     Call<AddEventoResponse> cadastrarEvento(@Header("Authorization") String token, @PartMap Map<String, RequestBody> parametersMap);
 
-    @GET("api/search/attraction")
+    @GET("api/search/attractions")
     Call<SearchResponse> searchPontoTuristico(@Header("Authorization") String token, @Query("latitude") double latitude, @Query("longitude") double longitude, @Query("distance") int distance);
 }

@@ -86,8 +86,6 @@ public class PontoTuristicoCadastroFragment extends Fragment implements View.OnC
                 try {
                     validateFields();
                     postData();
-                    Toast.makeText(this.getActivity(), R.string.pt_cadastro_sucesso,Toast.LENGTH_SHORT).show();
-                    backToHome();
                 } catch (DataInputException exception){
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
                 }
@@ -174,11 +172,13 @@ public class PontoTuristicoCadastroFragment extends Fragment implements View.OnC
             @Override
             public void onResponse(Call<AttractionResponse> call, Response<AttractionResponse> response) {
                 if(response.isSuccessful()) {
-                    Log.d("Server Ponto Turístico","Cadastro OK");
+                    Log.d("Cadastro de ponto turístico","Cadastro OK");
+                    Toast.makeText(getActivity(), R.string.pt_cadastro_sucesso,Toast.LENGTH_SHORT).show();
+                    backToHome();
                 }
                 else{
                     try {
-                        Log.e("Server error",response.errorBody().string());
+                        Log.e("Cadastro de ponto turístico",response.errorBody().string());
                         //ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
                         //Log.e("Server", error.getErrorDescription());
                     } catch (IOException e) {
@@ -191,7 +191,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements View.OnC
             public void onFailure(Call<AttractionResponse> call, Throwable t) {
                 // Log error here since request failed
                 Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("App Server Error", t.toString());
+                Log.e("Cadastro de ponto turístico", t.toString());
             }
         });
     }

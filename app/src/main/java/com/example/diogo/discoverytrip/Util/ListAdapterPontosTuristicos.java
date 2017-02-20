@@ -76,7 +76,7 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<PontoTuristico>{
                 Request request = new Request.Builder()
                         .addHeader("Content-Type","application/json")
                         .addHeader("Authorization","bearer "+ AcessToken.recuperar(context.getSharedPreferences("acessToken", Context.MODE_PRIVATE)))
-                        .url("http://www.thiengo.com.br/img/system/logo/thiengo-80-80.png")
+                        .url(ApiClient.BASE_URL+"api/photos/"+pontosTuristicos.get(position).getPhotos().get(0)+"/download")
                         .build();
 
                 client.newCall(request).enqueue(new Callback() {
@@ -87,18 +87,22 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<PontoTuristico>{
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
-                        InputStream input = response.body().byteStream();
+                        if(response.isSuccessful()) {
+                            InputStream input = response.body().byteStream();
+                            //Convert a foto em Bitmap
+                            final Bitmap img = BitmapFactory.decodeStream(input);
 
-                        //Convert a foto em Bitmap
-                        final Bitmap img = BitmapFactory.decodeStream(input);
-
-                        //Coloca a foto na imageView
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                imgView.setImageBitmap(img);
-                            }
-                        });
+                            //Coloca a foto na imageView
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    imgView.setImageBitmap(img);
+                                }
+                            });
+                        }
+                        else{
+                            Log.e("Pesquisa de pontos turisticos",""+response.code() + response.message());
+                        }
                     }
                 });
             }
