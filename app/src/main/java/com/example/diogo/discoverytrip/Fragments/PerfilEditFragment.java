@@ -38,7 +38,8 @@ import retrofit2.Response;
  * Classe fragment responsavel pelo fragmento de edição de perfil na aplicação
  */
 public class PerfilEditFragment extends Fragment implements View.OnClickListener {
-    public EditText userName_edt, userEmail_edt, userPasswordEdit;
+    public EditText userName_edt, userEmail_edt;
+    private String name, email, id;
 
     public PerfilEditFragment() {
         // Required empty public constructor
@@ -55,21 +56,40 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
 
         userName_edt = (EditText) rootView.findViewById(R.id.pfeName_edt);
         userEmail_edt = (EditText) rootView.findViewById(R.id.pfeEmail_edt);
-        userPasswordEdit = (EditText) rootView.findViewById(R.id.pfeSenha_editPerfil);
+        //userPasswordEdit = (EditText) rootView.findViewById(R.id.pfeSenha_editPerfil);
 
         return rootView;
+    }
+
+    public void receiveDataFromPerfil(){
+        Log.d("Logger", "PerfilFragment receiveDataFromHome");
+
+        if (getArguments() != null) {
+            name = getArguments().getString("name");
+            email = getArguments().getString("email");
+            id = getArguments().getString("id");
+        }
     }
 
     private void updateUserData(){
         Log.d("Looger","PerfilEditFragment updateUserData");
         //TODO testar o metodo e falta adicionar o id ao url
-        String userName_value = userName_edt.getText().toString();
-        String userEmail_value = getArguments().getString("email");
-        String userPassword_value = userPasswordEdit.getText().toString();
+
+//        String userName_value = userName_edt.getText().toString();
+//        String userEmail_value = userEmail_edt.getText().toString();
+//        String userId_value = "";
+        String userPassword_value = "";
+
+        Map<String, RequestBody> parametersMap = new HashMap<>();
+        MultiRequestHelper helper = new MultiRequestHelper(getContext());
+
+        parametersMap.put("username",helper.createPartFrom(name));
+        parametersMap.put("email",helper.createPartFrom(email));
+        parametersMap.put("password",helper.createPartFrom(userPassword_value));
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
 
-        Call<ServerResponse> call = ApiClient.API_SERVICE.setUsuario("bearer " + token,new UsuarioEnvio(userName_value, userEmail_value, userPassword_value));
+        Call<ServerResponse> call = ApiClient.API_SERVICE.setUsuario("bearer "+token, new UsuarioEnvio(name, email, userPassword_value));
         call.enqueue(new Callback<ServerResponse>() {
 
             @Override
@@ -108,7 +128,9 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
                 Log.d("Logger", "PerfilEditFragment botao confirmar");
                 try {
                     validateFields();
-                    updateUserData();
+//                    updateUserData();
+                    Toast.makeText(this.getActivity(), R.string.pf_edicao_sucesso, Toast.LENGTH_SHORT).show();
+                    backToHome();
                 } catch (DataInputException exception){
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
                 }
@@ -130,16 +152,8 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
 
     private void validateFields() throws DataInputException {
         Log.d("Logger", "PerfilEditFragment validateFields");
-        if(userName_edt.getText().toString().trim().isEmpty()){
-            throw new DataInputException(getString(R.string.validate_name));
-        }
-
-        if(userEmail_edt.getText().toString().trim().isEmpty()){
-            //throw new DataInputException(getString(R.string.validate_email));
-        }
-
-        if(userPasswordEdit.getText().toString().isEmpty()){
-            throw new DataInputException("Digite uma nova senha");
+        if(userName_edt.getText().toString().trim().isEmpty() && userEmail_edt.getText().toString().trim().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_any_field));
         }
     }
 }

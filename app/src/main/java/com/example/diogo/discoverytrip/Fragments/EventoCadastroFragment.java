@@ -20,8 +20,6 @@ import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.MultiRequestHelper;
 import com.example.diogo.discoverytrip.REST.ServerResponses.AddEventoResponse;
-import com.example.diogo.discoverytrip.REST.ServerResponses.AttractionResponse;
-import com.example.diogo.discoverytrip.REST.ServerResponses.EventosResponse;
 
 import java.io.IOException;
 import java.util.HashMap;

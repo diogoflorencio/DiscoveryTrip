@@ -72,10 +72,11 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<PontoTuristico>{
             public void run(){
                 OkHttpClient client = new OkHttpClient();
 
+
                 Request request = new Request.Builder()
                         .addHeader("Content-Type","application/json")
                         .addHeader("Authorization","bearer "+ AcessToken.recuperar(context.getSharedPreferences("acessToken", Context.MODE_PRIVATE)))
-                        .url(ApiClient.BASE_URL + "api/photos/:"+pontosTuristicos.get(position).getPhotos().get(0)+"/download")
+                        .url("http://www.thiengo.com.br/img/system/logo/thiengo-80-80.png")
                         .build();
 
                 client.newCall(request).enqueue(new Callback() {

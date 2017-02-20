@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -93,12 +94,13 @@ public class HomeActivity extends AppCompatActivity
             startService(new Intent(HomeActivity.this, ServiceLembrete.class));
     }
 
-    public void sendDatatoPerfil(String name, String email, Fragment fragment){
+    public void sendDatatoPerfil(String name, String email, String id, Fragment fragment){
         Log.d("Logger", "Home sendDatatoPerfil");
 
         Bundle bundle = new Bundle();
         bundle.putString("name", name);
         bundle.putString("email", email);
+        bundle.putString("id", id);
         fragment.setArguments(bundle);
     }
 
@@ -239,14 +241,17 @@ public class HomeActivity extends AppCompatActivity
                 Log.d("Logger", "Home localizacao");
                 String name = null;
                 String email = null;
+                String password = null;
+                String user_id = null;
                 try{
                     name = user.getNome();
                     email = user.getEmail();
+                    user_id = user.getId();
                 } catch (Exception e) {
                     //o usuário nao foi recuperado no servidor
                 }
                 fragment = new PerfilFragment();
-                sendDatatoPerfil(name, email, fragment);
+                sendDatatoPerfil(name, email, user_id, fragment);
                 break;
             case R.id.nav_ponto_turistico:
                 Log.d("Logger", "Home localizacao");
@@ -259,12 +264,13 @@ public class HomeActivity extends AppCompatActivity
         }
 
         if (fragment != null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
+            FragmentTransaction fragmentManager = getSupportFragmentManager().beginTransaction();
             Bundle extras = getIntent().getExtras();
             if(extras !=null) {
                 fragment.setArguments(extras);
             }
-            fragmentManager.beginTransaction().replace(R.id.content_home, fragment).commit();
+            fragmentManager.replace(R.id.content_home, fragment);
+            fragmentManager.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -274,10 +280,12 @@ public class HomeActivity extends AppCompatActivity
 
     private void createHomeFragment() {
         Log.d("Logger", "Home createHomeFragment");
-        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         HomeFragment fragment = new HomeFragment();
 
-        fragmentManager.beginTransaction().replace(R.id.content_home, fragment).commit();
+        transaction.add(R.id.content_home, fragment);
+
+        transaction.commit();
     }
 
     @Override
