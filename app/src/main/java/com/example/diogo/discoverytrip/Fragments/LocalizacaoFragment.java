@@ -31,7 +31,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class LocalizacaoFragment extends Fragment implements LocationListener {
     private LocationManager locationManager;
     private static final int REQUEST_LOCATION = 2;
-    private TextView coordenadas;
+    private TextView coordenadas, endereco;
 
     public LocalizacaoFragment() {
         // Required empty public constructor
@@ -45,6 +45,7 @@ public class LocalizacaoFragment extends Fragment implements LocationListener {
         Log.d("Logger", "LocalizacaoFragment onCreate");
         View rootView = inflater.inflate(R.layout.fragment_localizacao, container, false);
         coordenadas = (TextView) rootView.findViewById(R.id.coordenadas);
+        endereco = (TextView) rootView.findViewById(R.id.local_endereco);
         startGPS();
         return rootView;
     }
@@ -73,6 +74,7 @@ public class LocalizacaoFragment extends Fragment implements LocationListener {
     public void onLocationChanged(Location location) {
         Log.d("Logger", "LocalizacaoFragment onLocationChanged");
         coordenadas.setText("Latitude: " + location.getLatitude() + " Longitude: " + location.getLongitude());
+        endereco.setText(getEndereco(location));
     }
 
     @Override
