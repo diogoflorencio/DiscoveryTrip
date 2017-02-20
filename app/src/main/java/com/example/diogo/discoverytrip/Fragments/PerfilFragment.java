@@ -29,7 +29,7 @@ import retrofit2.Response;
  * Classe fragment responsavel pelo fragmento perfil na aplicação
  */
 public class PerfilFragment extends Fragment implements View.OnClickListener {
-    public TextView userName, userEmail;
+    public static TextView userName, userEmail;
     private String name, email, id;
 
     public PerfilFragment() {
@@ -98,5 +98,10 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
 
         fragmentManager.beginTransaction().replace(R.id.content_home, fragment
         ).commit();
+    }
+
+    public static void refreshPerfil(String name, String email){
+        userName.setText(name);
+        userEmail.setText(email);
     }
 }

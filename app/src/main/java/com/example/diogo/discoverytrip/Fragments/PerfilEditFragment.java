@@ -100,6 +100,7 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
                     ServerResponse serverResponse = response.body();
                     Log.d("Server Response", serverResponse.getMessage());
                     Toast.makeText(getContext(), R.string.pf_edicao_sucesso, Toast.LENGTH_SHORT).show();
+                    PerfilFragment.refreshPerfil(name,email);
                     backToHome();
                 } else {
                     try {
