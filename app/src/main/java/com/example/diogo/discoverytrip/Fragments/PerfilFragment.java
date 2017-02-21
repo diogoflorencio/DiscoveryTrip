@@ -45,6 +45,8 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         Log.d("Logger", "PerfilFragment onCreate");
         View rootView = inflater.inflate(R.layout.fragment_perfil, container, false);
 
+        getActivity().setTitle(R.string.perfil_label);
+
         Button confirmarBtn = (Button) rootView.findViewById(R.id.pfConfirm_btn);
         confirmarBtn.setOnClickListener(this);
         userName = (TextView) rootView.findViewById(R.id.userName);

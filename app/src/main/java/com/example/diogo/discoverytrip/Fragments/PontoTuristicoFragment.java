@@ -28,6 +28,8 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
 
         View rootView = inflater.inflate(R.layout.fragment_ponto_turistico, container, false);
 
+        getActivity().setTitle(R.string.ponto_turistico_label);
+
         rootView.findViewById(R.id.createPntTuristico_btn).setOnClickListener(this);
         rootView.findViewById(R.id.pnt_search_ok_btn).setOnClickListener(this);
         rootView.findViewById(R.id.pesquisa_ponto_btnLocalizacao).setOnClickListener(this);

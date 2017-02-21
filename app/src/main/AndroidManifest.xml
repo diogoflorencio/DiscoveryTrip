@@ -48,7 +48,6 @@
 
         <activity
             android:name=".Activities.HomeActivity"
-            android:label="@string/title_activity_home"
             android:theme="@style/DiscoveryTripTheme" />
         <activity
             android:name=".Activities.CadastroActivity"

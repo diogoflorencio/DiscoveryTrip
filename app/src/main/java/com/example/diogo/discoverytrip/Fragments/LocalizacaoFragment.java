@@ -46,6 +46,9 @@ public class LocalizacaoFragment extends Fragment implements LocationListener {
                              Bundle savedInstanceState) {
         Log.d("Logger", "LocalizacaoFragment onCreate");
         View rootView = inflater.inflate(R.layout.fragment_localizacao, container, false);
+
+        getActivity().setTitle(R.string.localizacao_label);
+
         coordenadas = (TextView) rootView.findViewById(R.id.coordenadas);
         endereco = (TextView) rootView.findViewById(R.id.local_endereco);
         startGPS();

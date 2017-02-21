@@ -11,10 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
-import com.example.diogo.discoverytrip.Model.Localizacao;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
-import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.SearchResponse;
 import com.example.diogo.discoverytrip.Util.ListAdapterPontosTuristicos;
 
@@ -41,6 +39,9 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         Log.d("Logger", "HomeFragment onCreate");
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
+        getActivity().setTitle(R.string.home_label);
+
         final ListView listView = (ListView) rootView.findViewById(R.id.fragment_home_list);
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
@@ -57,7 +58,7 @@ public class HomeFragment extends Fragment {
                 }
                 else{
                     try {
-                        Log.e("Pesquisa de pontos turisticos",response.errorBody().string());
+                        Log.e("Pesq pontosTuristicos",response.errorBody().string());
                         //ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
                         //Log.e("Pesquisa de pontos turisticos", error.getErrorDescription());
                     } catch (IOException e) {
@@ -68,7 +69,7 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onFailure(Call<SearchResponse> call, Throwable t) {
-                Log.e("Pesquisa de ponto turisticos",t.toString());
+                Log.e("Pesq pontosTuristicos",t.toString());
             }
         });
 

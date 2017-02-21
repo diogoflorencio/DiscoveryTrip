@@ -56,7 +56,7 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
 
         userName_edt = (EditText) rootView.findViewById(R.id.pfeName_edt);
         userEmail_edt = (EditText) rootView.findViewById(R.id.pfeEmail_edt);
-        //userPasswordEdit = (EditText) rootView.findViewById(R.id.pfeSenha_editPerfil);
+        userPassword_edt = (EditText) rootView.findViewById(R.id.pfeSenha_editPerfil);
 
         receiveDataFromPerfil();
 
@@ -99,14 +99,14 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
                 if (response.isSuccessful()) {
                     ServerResponse serverResponse = response.body();
                     Log.d("Server Response", serverResponse.getMessage());
-                    Toast.makeText(getContext(), R.string.pf_edicao_sucesso, Toast.LENGTH_SHORT).show();
                     PerfilFragment.refreshPerfil(name,email);
+                    Toast.makeText(getContext(), R.string.pf_edicao_sucesso, Toast.LENGTH_SHORT).show();
                     backToHome();
                 } else {
                     try {
                         ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
                         Log.e("EditPerfil",error.getErrorDescription());
-                        Toast.makeText(getContext(),error.getErrorDescription(),Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(getContext(),error.getErrorDescription(),Toast.LENGTH_SHORT).show();
                         backToHome();
                     } catch (IOException e) {
                         e.printStackTrace();
