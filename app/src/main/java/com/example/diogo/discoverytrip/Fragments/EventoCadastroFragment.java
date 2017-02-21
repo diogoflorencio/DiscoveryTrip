@@ -1,9 +1,15 @@
 package com.example.diogo.discoverytrip.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +27,10 @@ import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.MultiRequestHelper;
 import com.example.diogo.discoverytrip.REST.ServerResponses.AddEventoResponse;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,9 +39,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import static android.app.Activity.RESULT_OK;
+
 public class EventoCadastroFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     public EditText nameVal_txt, descVal_txt, dateVal_txt, priceVal_txt;
     Spinner evKind_spn;
+    private final int CAM_REQUEST = 1313;
+    private final int CAM_SELECT = 1234;
+    private String mCurrentPhotoPath;
+    private Uri foto;
 
     public EventoCadastroFragment() {
         // Required empty public constructor
@@ -46,6 +61,8 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
 
         rootView.findViewById(R.id.evConfirm_btn).setOnClickListener(this);
         rootView.findViewById(R.id.evCancel_btn).setOnClickListener(this);
+        rootView.findViewById(R.id.evCamera_btn).setOnClickListener(this);
+        rootView.findViewById(R.id.evento_btnFoto).setOnClickListener(this);
 
         nameVal_txt = (EditText) rootView.findViewById(R.id.evName_edt);
         descVal_txt = (EditText) rootView.findViewById(R.id.evDesc_edt);
@@ -80,7 +97,71 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
             case R.id.evCancel_btn:
                 Log.d("Logger", "EventoCadastroFragment botao cancelar");
                 backToHome();
+                break;
+            case R.id.evCamera_btn:
+                Log.d("Logger", "EventoCadastroFragment botao camera");
+                startCameraActivity();
+                galleryAddPic();
+                break;
+            case R.id.evento_btnFoto:
+                Log.d("Looger","EventoCadastroFragment selecionar foto");
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Selecione uma imagem"), CAM_SELECT);
+                break;
         }
+    }
+
+    private void startCameraActivity() {
+        Log.d("Logger", "EventoCadastroFragment startCameraActivity");
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+            Log.d("Logger", "EventoCadastroFragment onActivityResult " + CAM_REQUEST);
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException e) {
+                // Error occurred while creating the File
+                e.printStackTrace();
+            }
+            // Continue only if the File was successfully created
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(getContext(),
+                        "com.example.android.fileprovider",
+                        photoFile);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(intent, CAM_REQUEST);
+            }
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        Log.d("Logger", "EventoCadastroFragment createImageFile");
+        // Create a collision-resistant image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
+    }
+
+    private void galleryAddPic() {
+        Log.d("Logger", "EventoCadastroFragment galleryAddPic");
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        getActivity().sendBroadcast(mediaScanIntent);
     }
 
     private void backToHome() {
@@ -119,6 +200,7 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
+        Log.d("Logger", "EventoCadastroFragment onNothingSelected");
         // Another interface callback
     }
 
@@ -178,5 +260,22 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
                 Log.e("App Server Error", t.toString());
             }
         });
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("Logger", "EventoCadastroFragment onActivityResult");
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == CAM_SELECT && resultCode == RESULT_OK) {
+            Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult " + CAM_SELECT);
+            foto = data.getData();
+            Log.d("Logger","Seleciona imagem"+foto.getPath());
+        }
+
+//        if(requestCode == CAM_REQUEST) {
+//            Log.d("Logger", "EventoCadastroFragment onActivityResult " + CAM_REQUEST);
+//            Bitmap bitmap = (Bitmap)data.getExtras().get("data");
+//        }
     }
 }

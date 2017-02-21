@@ -119,6 +119,15 @@
                 android:layout_alignLeft="@+id/pntNameVal_txt"
                 android:layout_alignStart="@+id/pntNameVal_txt" />
 
+            <Button
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pntDescVal_txt"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/pntCamera_btn"
+                android:background="@drawable/ic_menu_camera" />
+
         </RelativeLayout>
     </ScrollView>
 
