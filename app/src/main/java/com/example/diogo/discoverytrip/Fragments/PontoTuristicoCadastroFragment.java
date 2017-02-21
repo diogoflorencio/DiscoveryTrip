@@ -3,8 +3,13 @@ package com.example.diogo.discoverytrip.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
@@ -35,14 +40,18 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 /**
  * Classe fragment responsavel pelo fragmento ponto turistico na aplicação
  */
-public class PontoTuristicoCadastroFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class PontoTuristicoCadastroFragment extends Fragment implements LocationListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
     public EditText nameVal_txt, catgVal_txt, descVal_txt;
+    private LocationManager locationManager;
+    private static final int REQUEST_LOCATION = 2;
     private Uri foto;
     Spinner ptCategory_spn;
+    private double latitude, longitude;
 
     public PontoTuristicoCadastroFragment() {
         // Required empty public constructor
@@ -56,7 +65,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements View.OnC
                              Bundle savedInstanceState) {
         Log.d("Logger", "PontoTuristicoCadastroFragment onCreate");
         View rootView = inflater.inflate(R.layout.fragment_ponto_turistico_cadastro, container, false);
-
+        startGPS();
         Button cadastrarBtn = (Button) rootView.findViewById(R.id.pntRegister_btn);
         cadastrarBtn.setOnClickListener(this);
         rootView.findViewById(R.id.pntCancel_btn).setOnClickListener(this);
@@ -159,8 +168,8 @@ public class PontoTuristicoCadastroFragment extends Fragment implements View.OnC
 
         parametersMap.put("name",helper.createPartFrom(ptName_value));
         parametersMap.put("description",helper.createPartFrom(ptDesc_value));
-        parametersMap.put("latitude",helper.createPartFrom("-7.2335"));
-        parametersMap.put("longitude",helper.createPartFrom("-35.8727"));
+        parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
+        parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
         parametersMap.put("category ",helper.createPartFrom(ptCatg_value));
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
@@ -225,5 +234,44 @@ public class PontoTuristicoCadastroFragment extends Fragment implements View.OnC
 
     public void onNothingSelected(AdapterView<?> parent) {
         // Another interface callback
+    }
+
+    private void startGPS() {
+        Log.d("Logger", "LocalizacaoFragment startGPS");
+        locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        //permissão de GPS
+        if (ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(),
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)) ;
+                // Esperando usuário autorizar permissão
+            else
+                ActivityCompat.requestPermissions(this.getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        REQUEST_LOCATION);
+        } else
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }

@@ -40,6 +40,8 @@ import retrofit2.Response;
 public class PerfilEditFragment extends Fragment implements View.OnClickListener {
     public EditText userName_edt, userEmail_edt, userPassword_edt;
     private String name, email, id, password;
+    String userName_value;
+    String userEmail_value;
 
     public PerfilEditFragment() {
         // Required empty public constructor
@@ -77,21 +79,13 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
         Log.d("Looger","PerfilEditFragment updateUserData");
         //TODO testar o metodo e falta adicionar o id ao url
 
-        String userName_value = userName_edt.getText().toString();
-        String userEmail_value = userEmail_edt.getText().toString();
-//        String userId_value = "";
-        String userPassword_value = "";
+        userName_value = userName_edt.getText().toString();
 
-        Map<String, RequestBody> parametersMap = new HashMap<>();
-        MultiRequestHelper helper = new MultiRequestHelper(getContext());
-
-        parametersMap.put("username",helper.createPartFrom(name));
-        parametersMap.put("email",helper.createPartFrom(email));
         password = userPassword_edt.getText().toString();
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
 
-        Call<ServerResponse> call = ApiClient.API_SERVICE.setUsuario("bearer "+token, new UsuarioEnvio(name, email, userPassword_value));
+        Call<ServerResponse> call = ApiClient.API_SERVICE.setUsuario("bearer "+token, new UsuarioEnvio(userName_value, userEmail_value, password));
         call.enqueue(new Callback<ServerResponse>() {
 
             @Override
@@ -159,7 +153,13 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
             throw new DataInputException(getString(R.string.validate_any_field));
         }
 
-        if(userPassword_edt.getText().toString().trim().isEmpty()){
+        if(userEmail_edt.getText().toString().trim().isEmpty()){
+            userEmail_value = email;
+        }else{
+            userEmail_value = userEmail_edt.getText().toString();
+        }
+
+        if(userPassword_edt.getText().toString().isEmpty()){
             throw new DataInputException(getString(R.string.validate_password_empty));
         }
     }
