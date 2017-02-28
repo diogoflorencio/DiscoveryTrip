@@ -87,5 +87,6 @@
         <item>Ponte</item>
     </string-array>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_maps_activityfdsf">Map</string>
 
 </resources>

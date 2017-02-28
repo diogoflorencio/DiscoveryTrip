@@ -54,9 +54,7 @@
 
         <activity
             android:name=".Activities.MapsActivity"
-            android:label="@string/title_activity_maps">
-        </activity>
-
+            android:label="@string/title_activity_maps"></activity>
         <activity
             android:name=".Activities.LoginActivity"
             android:theme="@style/DiscoveryTripTheme">
@@ -71,10 +69,10 @@
             android:theme="@style/DiscoveryTripTheme" />
         <activity
             android:name=".Activities.CadastroActivity"
-            android:theme="@style/DiscoveryTripTheme"></activity>
+            android:theme="@style/DiscoveryTripTheme" />
         <activity
             android:name=".Activities.RecuperarSenhaActivity"
-            android:theme="@style/DiscoveryTripTheme"></activity>
+            android:theme="@style/DiscoveryTripTheme" />
 
         <receiver android:name=".Service.ServiceBroadcast">
             <intent-filter>
@@ -93,7 +91,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
-
 
     </application>
 
