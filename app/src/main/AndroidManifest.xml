@@ -17,11 +17,15 @@
     <!-- permissão para inicio de service junto ao sistema -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
-    <!--permissão vibração da notificação-->
+    <!-- permissão vibração da notificação -->
     <uses-permission android:name="android.permission.VIBRATE" />
 
-    <!--permissão para salvar arquivos-->
+    <!-- permissão para salvar arquivos -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <!-- permissão para google maps -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -35,9 +39,23 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+
+        <!--
+             The API key for Google Maps-based APIs is defined as a string resource.
+             (See the file "res/values/google_maps_api.xml").
+             Note that the API key is linked to the encryption key used to sign the APK.
+             You need a different API key for each encryption key, including the release key that is used to
+             sign the APK for publishing.
+             You can define the keys for the debug and release targets in src/debug/ and src/release/.
+        -->
         <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+
+        <activity
+            android:name=".Activities.MapsActivity"
+            android:label="@string/title_activity_maps">
+        </activity>
 
         <activity
             android:name=".Activities.LoginActivity"
@@ -48,19 +66,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Activities.HomeActivity"
             android:theme="@style/DiscoveryTripTheme" />
         <activity
             android:name=".Activities.CadastroActivity"
-            android:theme="@style/DiscoveryTripTheme">
-        </activity>
-
+            android:theme="@style/DiscoveryTripTheme"></activity>
         <activity
             android:name=".Activities.RecuperarSenhaActivity"
-            android:theme="@style/DiscoveryTripTheme">
-        </activity>
+            android:theme="@style/DiscoveryTripTheme"></activity>
 
         <receiver android:name=".Service.ServiceBroadcast">
             <intent-filter>
@@ -77,8 +91,10 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"></meta-data>
+                android:resource="@xml/file_paths" />
         </provider>
 
+
     </application>
+
 </manifest>
