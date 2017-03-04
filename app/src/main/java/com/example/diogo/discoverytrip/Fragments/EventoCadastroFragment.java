@@ -47,7 +47,7 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
     private final int CAM_REQUEST = 1313;
     private final int CAM_SELECT = 1234;
     private String mCurrentPhotoPath;
-    private Uri foto;
+    private Uri foto = null;
 
     public EventoCadastroFragment() {
         // Required empty public constructor
@@ -189,6 +189,10 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
 
         if(priceVal_txt.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_price));
+        }
+
+        if(foto == null){
+            throw new DataInputException(getString(R.string.validate_photo));
         }
     }
 

@@ -48,7 +48,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class PontoTuristicoCadastroFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
     public EditText nameVal_txt, descVal_txt;
-    private Uri foto;
+    private Uri foto = null;
     Spinner ptCategory_spn;
     private final int CAM_REQUEST = 1313;
     private final int CAM_SELECT = 1234;
@@ -97,6 +97,8 @@ public class PontoTuristicoCadastroFragment extends Fragment implements View.OnC
                 try {
                     validateFields();
                     postData();
+                    Toast.makeText(this.getActivity(), R.string.pt_cadastro_sucesso,Toast.LENGTH_SHORT).show();
+                    backToHome();
                 } catch (DataInputException exception){
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
                 }
@@ -299,6 +301,10 @@ public class PontoTuristicoCadastroFragment extends Fragment implements View.OnC
 
         if(descVal_txt.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_description));
+        }
+
+        if(foto == null){
+            throw new DataInputException(getString(R.string.validate_photo));
         }
     }
 
