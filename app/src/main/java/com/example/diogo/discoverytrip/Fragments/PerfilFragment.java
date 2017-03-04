@@ -1,6 +1,5 @@
 package com.example.diogo.discoverytrip.Fragments;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -11,19 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.diogo.discoverytrip.DataBase.AcessToken;
-import com.example.diogo.discoverytrip.Model.User;
 import com.example.diogo.discoverytrip.R;
-import com.example.diogo.discoverytrip.REST.ApiClient;
-import com.example.diogo.discoverytrip.REST.ApiInterface;
-import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponse;
-
-import java.io.IOException;
-
-import okhttp3.RequestBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Classe fragment responsavel pelo fragmento perfil na aplicação
@@ -103,6 +90,7 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
     }
 
     public static void refreshPerfil(String name, String email){
+        Log.d("Logger", "PerfilEditFragment refreshPerfil");
         userName.setText(name);
         userEmail.setText(email);
     }
