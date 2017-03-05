@@ -221,6 +221,7 @@ public class HomeActivity extends AppCompatActivity
                 });
     }
 
+    //pra adicionar uma opção aqui (menu lateral), basta colocar um item no "activity_home_drawer", botar um case nesse switch
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         // Handle navigation view item clicks here.
@@ -260,6 +261,10 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_evento:
                 Log.d("Logger", "Home localizacao");
                 fragment = new EventoFragment();
+                break;
+            case R.id.nav_map:
+                Log.d("Logger", "Home map");
+                startActivity(new Intent(HomeActivity.this,MapsActivity.class));
                 break;
         }
 

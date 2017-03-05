@@ -1,0 +1,19 @@
+<resources>
+    <!--
+    To get one, follow this link, follow the directions and press "Create" at the end:
+
+    https://console.developers.google.com/flows/enableapi?apiid=maps_android_backend&keyType=CLIENT_SIDE_ANDROID&r=9A:B1:03:6A:F7:54:14:1D:F5:E1:D1:B4:4E:A5:4E:5D:3B:E0:6B:D0%3Bcom.example.diogo.discoverytrip.Activities
+
+    You can also add your credentials to an existing key, using this line:
+    9A:B1:03:6A:F7:54:14:1D:F5:E1:D1:B4:4E:A5:4E:5D:3B:E0:6B:D0;com.example.diogo.discoverytrip.Activities
+
+    Alternatively, follow the directions here:
+    https://developers.google.com/maps/documentation/android/start#get-key
+
+    Once you have your key (it starts with "AIza"), replace the "google_maps_key"
+    string in this file.
+    -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyAwFghwl02hfhcBYgtIIjmklXotq_Eack4
+    </string>
+</resources>
