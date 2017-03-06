@@ -88,8 +88,6 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
                 try {
                     validateFields();
                     sendEventData();
-                    Toast.makeText(this.getActivity(), R.string.ev_cadastro_sucesso,Toast.LENGTH_SHORT).show();
-                    backToHome();
                 } catch (DataInputException exception){
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
                 }
@@ -244,7 +242,9 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
             @Override
             public void onResponse(Call<AddEventoResponse> call, Response<AddEventoResponse> response) {
                 if(response.isSuccessful()) {
-                    Log.d("Server Evento","Cadastro OK");
+                    Log.d("Logger","Cadastro de evento OK");
+                    Toast.makeText(getActivity(), R.string.ev_cadastro_sucesso,Toast.LENGTH_SHORT).show();
+                    backToHome();
                 }
                 else{
                     try {

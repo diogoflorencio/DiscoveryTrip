@@ -1,6 +1,7 @@
 package com.example.diogo.discoverytrip.Fragments;
 
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -29,10 +30,12 @@ import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
+import com.example.diogo.discoverytrip.Model.PontoTuristico;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.MultiRequestHelper;
 import com.example.diogo.discoverytrip.REST.ServerResponses.AttractionResponse;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
 
 import java.io.File;
 import java.io.IOException;
@@ -209,6 +212,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
 
     public void postData(){
         Log.d("Looger","PontoTuristicoCadastroFragment postData");
+        openLoadingDialog();
         String ptName_value = nameVal_txt.getText().toString();
         String ptDesc_value = descVal_txt.getText().toString();
         String ptCatg_value = null;
@@ -262,6 +266,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
         Log.d("Token",token);
         //List<byte[]> fotos = new ArrayList<>();
 
+        final AlertDialog dialog = openLoadingDialog();
         Call<AttractionResponse> call = ApiClient.API_SERVICE.cadastrarPontoTuristico("bearer "+token,parametersMap,helper.loadPhoto("photos",foto));
         call.enqueue(new Callback<AttractionResponse>() {
             @Override
@@ -269,13 +274,13 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
                 if(response.isSuccessful()) {
                     Log.d("Cadastro de ponto turístico","Cadastro OK");
                     Toast.makeText(getActivity(), R.string.pt_cadastro_sucesso,Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
                     backToHome();
                 }
                 else{
                     try {
-                        Log.e("Cadastro de ponto turístico",response.errorBody().string());
-                        //ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                        //Log.e("Server", error.getErrorDescription());
+                        ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                        Log.e("Server", error.getErrorDescription());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -324,6 +329,16 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
 
     public void onNothingSelected(AdapterView<?> parent) {
         // Another interface callback
+    }
+
+    private AlertDialog openLoadingDialog(){
+        final AlertDialog dialog = new AlertDialog.Builder(getContext()).create();
+
+        View dialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_aguarde,null);
+        dialog.setView(dialogView);
+        dialog.setTitle("Enviando");
+        dialog.setCancelable(false);
+        return dialog;
     }
 
     private void startGPS() {
