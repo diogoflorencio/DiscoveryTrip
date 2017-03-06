@@ -11,7 +11,6 @@ import android.view.View;;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.DataBase.RefreshToken;
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
@@ -21,8 +20,6 @@ import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.LoginResponse;
 import com.example.diogo.discoverytrip.REST.ApiClient;
-import com.example.diogo.discoverytrip.REST.ApiInterface;
-import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -65,7 +62,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         Log.d("Logger", "LoginActivity Oncreate");
         /* iniciando SDK facebook*/
         FacebookSdk.sdkInitialize(getApplicationContext());
-        loggedInFacebook();
+        loggedIn();
         /*iniciando SDK google*/
         buildGooglePlusConfigs();
         /*instanciando objetos da activity*/
@@ -130,13 +127,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                     }
                 };
                 profileTracker.startTracking();
-
                 AcessToken.salvar(getCurrentAccessToken().getToken(),
                         getSharedPreferences("acessToken", Context.MODE_PRIVATE));
-
                 postTokenFacebook(getCurrentAccessToken().getToken());
-
-                Log.d("Logger", "startActivity facebook");
             }
 
             @Override
@@ -181,10 +174,9 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         });
     }
 
-    private void loggedInFacebook(){
-        /* verificando validade de token facebook */
-        if(AccessToken.getCurrentAccessToken() != null){
-            startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+    private void loggedIn(){
+        if (!AcessToken.recuperar(this.getSharedPreferences("acessToken", Context.MODE_PRIVATE)).equals("")){
+            startActivity(new Intent(LoginActivity.this, HomeActivity.class));
             finish();
         }
     }
