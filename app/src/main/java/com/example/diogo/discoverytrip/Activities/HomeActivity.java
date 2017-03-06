@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -16,7 +15,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-
 
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.Fragments.EventoFragment;
@@ -43,8 +41,6 @@ import java.io.IOException;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.facebook.AccessToken.getCurrentAccessToken;
 
 /**
  * Classe activity responsavel pela activity home (principal) na aplicação
@@ -75,20 +71,15 @@ public class HomeActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
         /* start Thread refreshToken */
         RefreshTokenManeger.refreshToken(getSharedPreferences("refreshToken", Context.MODE_PRIVATE));
-
         buildGooglePlusConfigs();
-
         try{
             getUserData();
         } catch (Exception e){
             e.printStackTrace();
         }
-
         createHomeFragment();
-
         /*start ServiceLembrete*/
         if(!ServiceLembrete.isRun())
             startService(new Intent(HomeActivity.this, ServiceLembrete.class));
@@ -124,27 +115,18 @@ public class HomeActivity extends AppCompatActivity
                     }
 
                 } else {
-                    // try {
-                    // ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
                     try {
                         Log.e("Perfil", "" + response.errorBody().string());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    // } catch (IOException e) {
-                    //  e.printStackTrace();
-                    // }
                 }
             }
             @Override
             public void onFailure(Call<ServerResponse> call, Throwable t) {
                 Log.e("Perfil", "Server" + t.toString());
             }
-
         });
-
-        Log.d("Perfil", "AcessToken " + AcessToken.recuperar(
-                this.getSharedPreferences("acessToken", Context.MODE_PRIVATE)));
     }
 
     public void buildGooglePlusConfigs() {
@@ -192,21 +174,16 @@ public class HomeActivity extends AppCompatActivity
                 return true;
             case R.id.logout:
                 Log.d("Logger", "Home logout");
-
-                if (getCurrentAccessToken() != null)
-                    AccessToken.setCurrentAccessToken(null);/*logout facebook*/
-                else if(RefreshTokenManeger.isRunning()) RefreshTokenManeger.stop(); /*stop thread RefreshTokenManeger*/
-                else signOutGooglePlus();/*logout google plus*/
-
+                AcessToken.salvar("", getSharedPreferences("acessToken", Context.MODE_PRIVATE));/*clear AcessToken*/
+                AccessToken.setCurrentAccessToken(null);/*logout facebook*/
+                signOutGooglePlus();/*logout google plus*/
+                if(RefreshTokenManeger.isRunning()) RefreshTokenManeger.stop(); /*stop thread RefreshTokenManeger*/
                 stopService(new Intent(HomeActivity.this, ServiceLembrete.class));/*stop ServiceLembrete*/
-
                 startActivity(new Intent(HomeActivity.this,LoginActivity.class));
                 finish();
                 return true;
         }
         return super.onOptionsItemSelected(item);
-
-
     }
 
     private void signOutGooglePlus() {
