@@ -3,11 +3,16 @@ package com.example.diogo.discoverytrip.Fragments;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
@@ -47,13 +52,16 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 /**
  * Classe fragment responsavel pelo fragmento ponto turistico na aplicação
  */
-public class PontoTuristicoCadastroFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class PontoTuristicoCadastroFragment extends Fragment implements LocationListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
     public EditText nameVal_txt, descVal_txt;
     private Uri foto = null;
     Spinner ptCategory_spn;
     private final int CAM_REQUEST = 1313;
     private final int CAM_SELECT = 1234;
     private String mCurrentPhotoPath;
+    private double latitude,longitude;
+    private LocationManager locationManager;
+    private static final int REQUEST_LOCATION = 2;
 
     public PontoTuristicoCadastroFragment() {
         // Required empty public constructor
@@ -98,8 +106,6 @@ public class PontoTuristicoCadastroFragment extends Fragment implements View.OnC
                 try {
                     validateFields();
                     postData();
-                    Toast.makeText(this.getActivity(), R.string.pt_cadastro_sucesso,Toast.LENGTH_SHORT).show();
-                    backToHome();
                 } catch (DataInputException exception){
                     Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
                 }
@@ -242,7 +248,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements View.OnC
             case 16: ptCatg_value = "bridges";
                 break;
         }
-
+        
         Map<String, RequestBody> parametersMap = new HashMap<>();
         MultiRequestHelper helper = new MultiRequestHelper(getContext());
 

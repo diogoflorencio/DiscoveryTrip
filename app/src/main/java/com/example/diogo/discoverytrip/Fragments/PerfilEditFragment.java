@@ -25,12 +25,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+
 /**
  * Classe fragment responsavel pelo fragmento de edição de perfil na aplicação
  */
 
 public class PerfilEditFragment extends Fragment implements View.OnClickListener {
     public EditText userName_edt, userEmail_edt, userPassword_edt;
+    String userEmail_value;
 
     public PerfilEditFragment() {
         // Required empty public constructor
@@ -56,7 +58,6 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
         //TODO testar o metodo e falta adicionar o id ao url
 
         final String userName_value = userName_edt.getText().toString();
-        final String userEmail_value = userEmail_edt.getText().toString();
         String userPassword_value = userPassword_edt.getText().toString();
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
 
@@ -126,7 +127,7 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
         }
 
         if(userEmail_edt.getText().toString().trim().isEmpty()){
-            userEmail_value = email;
+            userEmail_value = null;
         }else{
             userEmail_value = userEmail_edt.getText().toString();
         }
