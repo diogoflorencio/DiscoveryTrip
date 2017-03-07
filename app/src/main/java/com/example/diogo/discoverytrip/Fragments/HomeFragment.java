@@ -217,4 +217,26 @@ public class HomeFragment extends Fragment implements LocationListener {
     public void onProviderDisabled(String provider) {
 
     }
+
+    @Override
+    public void onDestroy() {
+        Log.d("Logger", "LocalizacaoFragment onDestroy");
+        super.onDestroy();
+        stopGPS();
+    }
+
+    private void stopGPS(){
+        //permissão de GPS
+        if (ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(),
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)) ;
+                // Esperando usuário autorizar permissão
+            else
+                ActivityCompat.requestPermissions(this.getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        REQUEST_LOCATION);
+        } else locationManager.removeUpdates(this);
+    }
 }
