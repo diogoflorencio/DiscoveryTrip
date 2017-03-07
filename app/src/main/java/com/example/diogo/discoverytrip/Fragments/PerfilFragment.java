@@ -1,5 +1,6 @@
 package com.example.diogo.discoverytrip.Fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,14 +11,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.diogo.discoverytrip.DataBase.UserData;
 import com.example.diogo.discoverytrip.R;
+
+import java.util.Map;
 
 /**
  * Classe fragment responsavel pelo fragmento perfil na aplicação
  */
 public class PerfilFragment extends Fragment implements View.OnClickListener {
-    public static TextView userName, userEmail;
-    private String name, email, id;
+    public TextView userName, userEmail;
 
     public PerfilFragment() {
         // Required empty public constructor
@@ -39,32 +42,11 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         userName = (TextView) rootView.findViewById(R.id.userName);
         userEmail = (TextView) rootView.findViewById(R.id.userEmail);
 
-        receiveDataFromHome();
+        Map<String,String> map = UserData.recuperar(getContext().getSharedPreferences("userData", Context.MODE_PRIVATE));
+        userName.setText(map.get("name"));
+        userEmail.setText(map.get("email"));
 
         return rootView;
-    }
-
-    public void receiveDataFromHome(){
-        Log.d("Logger", "PerfilFragment receiveDataFromHome");
-
-        if (getArguments() != null) {
-            name = getArguments().getString("name");
-            email = getArguments().getString("email");
-            id = getArguments().getString("id");
-        }
-
-        userName.setText(name);
-        userEmail.setText(email);
-    }
-
-    public void sendDatatoEdit(String name, String email, String id, Fragment fragment){
-        Log.d("Logger", "PerfilFragment sendDatatoEdit");
-
-        Bundle bundle = new Bundle();
-        bundle.putString("name", name);
-        bundle.putString("email", email);
-        bundle.putString("id", id);
-        fragment.setArguments(bundle);
     }
 
     @Override
@@ -82,16 +64,7 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         Log.d("Logger", "PerfilEditFragment goToPerfilCreation");
         FragmentManager fragmentManager = getFragmentManager();
         PerfilEditFragment fragment = new PerfilEditFragment();
-
-        sendDatatoEdit(name, email, id, fragment);
-
         fragmentManager.beginTransaction().replace(R.id.content_home, fragment
         ).commit();
-    }
-
-    public static void refreshPerfil(String name, String email){
-        Log.d("Logger", "PerfilEditFragment refreshPerfil");
-        userName.setText(name);
-        userEmail.setText(email);
     }
 }

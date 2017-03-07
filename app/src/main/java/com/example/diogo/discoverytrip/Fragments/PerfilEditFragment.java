@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
+import com.example.diogo.discoverytrip.DataBase.UserData;
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.Model.UsuarioEnvio;
 import com.example.diogo.discoverytrip.R;
@@ -33,7 +34,6 @@ import retrofit2.Response;
 public class PerfilEditFragment extends Fragment implements View.OnClickListener {
     public EditText userName_edt, userEmail_edt, userPassword_edt;
     String userEmail_value;
-
     public PerfilEditFragment() {
         // Required empty public constructor
     }
@@ -58,6 +58,7 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
         //TODO testar o metodo e falta adicionar o id ao url
 
         final String userName_value = userName_edt.getText().toString();
+        userEmail_value = userEmail_edt.getText().toString();
         String userPassword_value = userPassword_edt.getText().toString();
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
 
@@ -69,7 +70,8 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
                 if (response.isSuccessful()) {
                     ServerResponse serverResponse = response.body();
                     Log.d("Server Response", serverResponse.getMessage());
-                    PerfilFragment.refreshPerfil(userName_value,userEmail_value);
+                    UserData.salvar("id",userName_value,userEmail_value,
+                            getActivity().getSharedPreferences("userData", Context.MODE_PRIVATE));
                     Toast.makeText(getContext(), R.string.pf_edicao_sucesso, Toast.LENGTH_SHORT).show();
                     backToHome();
                 } else {
