@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Requisitando ao servidor..."
+        android:text="Por favor aguarde..."
         android:id="@+id/dialog_aguarde_txtStatus"
         android:layout_gravity="center_horizontal" />
 

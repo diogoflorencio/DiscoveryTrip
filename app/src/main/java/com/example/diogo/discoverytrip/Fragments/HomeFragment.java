@@ -14,14 +14,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
+import com.example.diogo.discoverytrip.Model.Atracao;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ServerResponses.SearchResponse;
 import com.example.diogo.discoverytrip.Util.ListAdapterPontosTuristicos;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,6 +40,8 @@ public class HomeFragment extends Fragment implements LocationListener {
     private LocationManager locationManager;
     private static final int REQUEST_LOCATION = 2;
     private double latitude, longitude;
+    private boolean requestCompleted = false;
+    private List<Atracao> atracoes;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -50,6 +56,7 @@ public class HomeFragment extends Fragment implements LocationListener {
         Log.d("Logger", "HomeFragment onCreate");
         startGPS();
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        atracoes = new ArrayList<>();
 
         getActivity().setTitle(R.string.home_label);
 
@@ -62,12 +69,24 @@ public class HomeFragment extends Fragment implements LocationListener {
             public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
                 if(response.isSuccessful()){
                     Log.d("Logger","pesquisa de pontos turisticos realizada com sucesso");
-                    ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
-                            getActivity().getLayoutInflater(),
-                            response.body().getPontosTuristicos());
-                    listView.setAdapter(adapter);
+
+                    atracoes.addAll(response.body().getAtracoes());
+                    if(requestCompleted){
+                        ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
+                                getActivity().getLayoutInflater(),
+                                atracoes);
+                        listView.setAdapter(adapter);
+                    }
+                    requestCompleted = true;
                 }
                 else{
+                    if(requestCompleted){
+                        ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
+                                getActivity().getLayoutInflater(),
+                                atracoes);
+                        listView.setAdapter(adapter);
+                    }
+                    requestCompleted = true;
                     try {
                         Log.e("Pesq pontosTuristicos",response.errorBody().string());
                         //ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
@@ -80,11 +99,65 @@ public class HomeFragment extends Fragment implements LocationListener {
 
             @Override
             public void onFailure(Call<SearchResponse> call, Throwable t) {
-                Log.e("Pesq pontosTuristicos",t.toString());
+                if(requestCompleted){
+                    ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
+                            getActivity().getLayoutInflater(),
+                            atracoes);
+                    listView.setAdapter(adapter);
+                }
+                requestCompleted = true;
+                Log.e("Logger","Pesquisa de pontos turisticos error: "+t.toString());
+                Toast.makeText(getContext(),"Erro ao se conectar com o servidor!",Toast.LENGTH_SHORT).show();
             }
         });
 
+        Call<SearchResponse> callEvents = ApiClient.API_SERVICE.searchEventos("bearer "+token,latitude, longitude,2000);
+        callEvents.enqueue(new Callback<SearchResponse>() {
+            @Override
+            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+                if(response.isSuccessful()){
+                    Log.d("Logger","pesquisa de eventos realizada com sucesso");
+                    atracoes.addAll(response.body().getAtracoes());
 
+                    if(requestCompleted){
+                        ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
+                                getActivity().getLayoutInflater(),
+                                atracoes);
+                        listView.setAdapter(adapter);
+                    }
+                    requestCompleted = true;
+                }
+                else{
+                    if(requestCompleted){
+                        ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
+                                getActivity().getLayoutInflater(),
+                                atracoes);
+                        listView.setAdapter(adapter);
+                    }
+                    requestCompleted = true;
+                    try {
+                        Log.e("Logger", "pesquisa de eventos"+response.errorBody().string());
+                        //ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                        //Log.e("Pesquisa de pontos turisticos", error.getErrorDescription());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SearchResponse> call, Throwable t) {
+                if(requestCompleted){
+                    ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
+                            getActivity().getLayoutInflater(),
+                            atracoes);
+                    listView.setAdapter(adapter);
+                }
+                requestCompleted = true;
+                Log.e("Logger","pesquisa de eventos error: "+t.toString());
+                Toast.makeText(getContext(),"Erro ao se conectar com o servidor!",Toast.LENGTH_SHORT).show();
+            }
+        });
         return rootView;
     }
 

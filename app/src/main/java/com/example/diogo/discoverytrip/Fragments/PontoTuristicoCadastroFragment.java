@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -30,7 +29,6 @@ import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
-import com.example.diogo.discoverytrip.Model.PontoTuristico;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.MultiRequestHelper;
@@ -171,6 +169,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
+        foto = Uri.fromFile(image);
         return image;
     }
 
@@ -212,7 +211,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
 
     public void postData(){
         Log.d("Looger","PontoTuristicoCadastroFragment postData");
-        openLoadingDialog();
+        createLoadingDialog();
         String ptName_value = nameVal_txt.getText().toString();
         String ptDesc_value = descVal_txt.getText().toString();
         String ptCatg_value = null;
@@ -266,7 +265,8 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
         Log.d("Token",token);
         //List<byte[]> fotos = new ArrayList<>();
 
-        final AlertDialog dialog = openLoadingDialog();
+        final AlertDialog dialog = createLoadingDialog();
+        dialog.show();
         Call<AttractionResponse> call = ApiClient.API_SERVICE.cadastrarPontoTuristico("bearer "+token,parametersMap,helper.loadPhoto("photos",foto));
         call.enqueue(new Callback<AttractionResponse>() {
             @Override
@@ -281,6 +281,8 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
                     try {
                         ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
                         Log.e("Server", error.getErrorDescription());
+                        Toast.makeText(getActivity(), error.getErrorDescription(),Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -290,7 +292,8 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
             @Override
             public void onFailure(Call<AttractionResponse> call, Throwable t) {
                 // Log error here since request failed
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Erro ao se conectar com o servidor!", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
                 Log.e("Cadastro de ponto turístico", t.toString());
             }
         });
@@ -331,7 +334,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
         // Another interface callback
     }
 
-    private AlertDialog openLoadingDialog(){
+    private AlertDialog createLoadingDialog(){
         final AlertDialog dialog = new AlertDialog.Builder(getContext()).create();
 
         View dialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_aguarde,null);

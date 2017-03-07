@@ -18,6 +18,24 @@ public class Atracao {
     @SerializedName("localization")
     private Localizacao localizacao;
 
+    @SerializedName("photos")
+    List<String> photosId;
+
+    @SerializedName("photo")
+    private String photoId;
+
+    @SerializedName("kind")
+    private String kind;
+
+    @SerializedName("price")
+    private String price;
+
+    @SerializedName("startDate")
+    private String startDate;
+
+    @SerializedName("endDate")
+    private String endDate;
+
     public String getName() {
         return nome;
     }
@@ -26,7 +44,31 @@ public class Atracao {
         return descricao;
     }
 
-    public Localizacao getLocalizacao() {
+    public Localizacao getLocation() {
         return localizacao;
+    }
+
+    public String getPhotoId() {
+        return photoId;
+    }
+
+    public String getKind() {
+        return kind;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public String getEndDate() {
+        return endDate;
+    }
+
+    public List<String> getPhotos(){
+        return photosId;
     }
 }

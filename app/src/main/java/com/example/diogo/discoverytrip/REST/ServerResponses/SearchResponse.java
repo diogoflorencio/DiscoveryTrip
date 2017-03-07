@@ -1,5 +1,6 @@
 package com.example.diogo.discoverytrip.REST.ServerResponses;
 
+import com.example.diogo.discoverytrip.Model.Atracao;
 import com.example.diogo.discoverytrip.Model.PontoTuristico;
 import com.google.gson.annotations.SerializedName;
 
@@ -12,10 +13,10 @@ import java.util.List;
 public class SearchResponse {
 
     @SerializedName("attractions")
-    List<PontoTuristico> pontosTuristicos;
+    List<Atracao> pontosTuristicos;
 
 
-    public List<PontoTuristico> getPontosTuristicos(){
+    public List<Atracao> getAtracoes(){
         return pontosTuristicos;
     }
 }

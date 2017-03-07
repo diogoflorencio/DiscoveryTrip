@@ -1,5 +1,6 @@
 package com.example.diogo.discoverytrip.Fragments;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -26,6 +27,7 @@ import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.MultiRequestHelper;
 import com.example.diogo.discoverytrip.REST.ServerResponses.AddEventoResponse;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
 
 import java.io.File;
 import java.io.IOException;
@@ -150,6 +152,7 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
+        foto = Uri.fromFile(image);
         return image;
     }
 
@@ -237,33 +240,79 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
         Log.d("Token",token);
         //List<byte[]> fotos = new ArrayList<>();
 
-        Call<AddEventoResponse> call = ApiClient.API_SERVICE.cadastrarEvento("bearer "+token,parametersMap);
-        call.enqueue(new Callback<AddEventoResponse>() {
-            @Override
-            public void onResponse(Call<AddEventoResponse> call, Response<AddEventoResponse> response) {
-                if(response.isSuccessful()) {
-                    Log.d("Logger","Cadastro de evento OK");
-                    Toast.makeText(getActivity(), R.string.ev_cadastro_sucesso,Toast.LENGTH_SHORT).show();
-                    backToHome();
-                }
-                else{
-                    try {
-                        Log.e("Server error",response.errorBody().string());
-                        //ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                        //Log.e("Server", error.getErrorDescription());
-                    } catch (IOException e) {
-                        e.printStackTrace();
+        final AlertDialog dialog = createLoadingDialog();
+        dialog.show();
+
+        if(foto != null){
+            Call<AddEventoResponse> call = ApiClient.API_SERVICE.cadastrarEvento("bearer " + token, parametersMap,helper.loadPhoto("photos",foto));
+            call.enqueue(new Callback<AddEventoResponse>() {
+                @Override
+                public void onResponse(Call<AddEventoResponse> call, Response<AddEventoResponse> response) {
+                    dialog.dismiss();
+                    if (response.isSuccessful()) {
+                        Log.d("Logger", "Cadastro de evento OK");
+                        Toast.makeText(getActivity(), R.string.ev_cadastro_sucesso, Toast.LENGTH_SHORT).show();
+                        backToHome();
+                    } else {
+                        try {
+                            ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                            Log.e("Server", error.getErrorDescription());
+                            Toast.makeText(getContext(),error.getErrorDescription(),Toast.LENGTH_SHORT).show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<AddEventoResponse> call, Throwable t) {
-                // Log error here since request failed
-                Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                Log.e("App Server Error", t.toString());
-            }
-        });
+                @Override
+                public void onFailure(Call<AddEventoResponse> call, Throwable t) {
+                    dialog.dismiss();
+                    // Log error here since request failed
+                    Toast.makeText(getContext(), "Erro ao se conectar com o servidor!", Toast.LENGTH_SHORT).show();
+                    Log.e("App Server Error", t.toString());
+                }
+            });
+        }
+        else {
+            Call<AddEventoResponse> call = ApiClient.API_SERVICE.cadastrarEvento("bearer " + token, parametersMap);
+            call.enqueue(new Callback<AddEventoResponse>() {
+                @Override
+                public void onResponse(Call<AddEventoResponse> call, Response<AddEventoResponse> response) {
+                    dialog.dismiss();
+                    if (response.isSuccessful()) {
+                        Log.d("Logger", "Cadastro de evento OK");
+                        Toast.makeText(getActivity(), R.string.ev_cadastro_sucesso, Toast.LENGTH_SHORT).show();
+                        backToHome();
+                    } else {
+                        try {
+                            Log.e("Server error", response.errorBody().string());
+                            //ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                            //Log.e("Server", error.getErrorDescription());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<AddEventoResponse> call, Throwable t) {
+                    dialog.dismiss();
+                    // Log error here since request failed
+                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Log.e("App Server Error", t.toString());
+                }
+            });
+        }
+    }
+
+    private AlertDialog createLoadingDialog(){
+        final AlertDialog dialog = new AlertDialog.Builder(getContext()).create();
+
+        View dialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_aguarde,null);
+        dialog.setView(dialogView);
+        dialog.setTitle("Enviando");
+        dialog.setCancelable(false);
+        return dialog;
     }
 
     @Override

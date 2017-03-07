@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.Fragments.PerfilFragment;
+import com.example.diogo.discoverytrip.Model.Atracao;
 import com.example.diogo.discoverytrip.Model.PontoTuristico;
 import com.example.diogo.discoverytrip.Model.UsuarioEnvio;
 import com.example.diogo.discoverytrip.R;
@@ -42,14 +43,14 @@ import okhttp3.ResponseBody;
 /**
  * Created by renato on 07/02/17.
  */
-public class ListAdapterPontosTuristicos extends ArrayAdapter<PontoTuristico>{
+public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
     private LayoutInflater inflater;
-    private List<PontoTuristico> pontosTuristicos;
+    private List<Atracao> pontosTuristicos;
     private Context context;
     private Handler handler = new Handler();
 
 
-    public ListAdapterPontosTuristicos(Context context, LayoutInflater inflater, List<PontoTuristico> pontosTuristicos){
+    public ListAdapterPontosTuristicos(Context context, LayoutInflater inflater, List<Atracao> pontosTuristicos){
         super(context, R.layout.item_evento,pontosTuristicos);
 
         this.inflater = inflater;
@@ -59,6 +60,7 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<PontoTuristico>{
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
+        Atracao atracao = pontosTuristicos.get(position);
         View view = inflater.inflate(R.layout.item_ponto_turistico, null, true);
         ImageView foto = (ImageView) view.findViewById(R.id.item_pontoTuristico_img);
 
@@ -66,18 +68,41 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<PontoTuristico>{
         TextView descricao  = (TextView) view.findViewById(R.id.item_pontoTuristico_txtDescricao);
         TextView cidade = (TextView) view.findViewById(R.id.item_pontoTuristico_cidade);
 
-        titulo.setText(pontosTuristicos.get(position).getName());
-        descricao.setText(pontosTuristicos.get(position).getDescription());
-        cidade.setText(pontosTuristicos.get(position).getLocation().getCity());
-        loadImage(foto,position);
+        titulo.setText(atracao.getName());
+        descricao.setText(atracao.getDescription());
+        cidade.setText(atracao.getLocation().getCity() +", "+
+                atracao.getLocation().getStreetName());
+
+        if(atracao.getEndDate() != null){
+            TextView data = (TextView) view.findViewById(R.id.item_pontoTuristico_data);
+            if(atracao.getStartDate() != null) {
+                data.setText(atracao.getStartDate() + " à " +
+                atracao.getEndDate());
+            }
+            else{
+                data.setText(atracao.getEndDate());
+            }
+            loadImage(foto,position,true);
+        }
+        else{
+            loadImage(foto,position,false);
+        }
         return view;
     }
 
-    private void loadImage(final ImageView imgView, final int position){
+    private void loadImage(final ImageView imgView, final int position, boolean isEvent){
+
+        String photoId;
+        if(isEvent){
+            photoId = pontosTuristicos.get(position).getPhotoId();
+        }
+        else{
+            photoId = pontosTuristicos.get(position).getPhotos().get(0);
+        }
 
         Log.d("Pesquisa de pontos turisticos",pontosTuristicos.get(position).getPhotos().get(0));
         retrofit2.Call<ResponseBody> call = ApiClient.API_SERVICE.downloadFoto("bearer "+AcessToken.recuperar(context.getSharedPreferences("acessToken", Context.MODE_PRIVATE)),
-                pontosTuristicos.get(position).getPhotos().get(0));
+                photoId);
         call.enqueue(new retrofit2.Callback<ResponseBody>() {
 
             @Override

@@ -24,23 +24,17 @@
             android:id="@+id/item_pontoTuristico_txtTitulo" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Medium Text"
             android:id="@+id/item_pontoTuristico_txtDescricao"
-            android:maxLines="3"
-            android:layout_height="60sp" />
+            android:layout_width="match_parent"
+            android:layout_height="40sp"
+            android:maxLines="2"
+            android:text="Medium Text"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="Cidade:" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -49,6 +43,11 @@
                 android:text="Medium Text"
                 android:id="@+id/item_pontoTuristico_cidade" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/item_pontoTuristico_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
 </LinearLayout>
