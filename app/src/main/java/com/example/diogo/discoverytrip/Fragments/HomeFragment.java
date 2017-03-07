@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -42,6 +43,7 @@ public class HomeFragment extends Fragment implements LocationListener {
     private double latitude, longitude;
     private boolean requestCompleted = false;
     private List<Atracao> atracoes;
+    ListView listView;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -60,7 +62,36 @@ public class HomeFragment extends Fragment implements LocationListener {
 
         getActivity().setTitle(R.string.home_label);
 
-        final ListView listView = (ListView) rootView.findViewById(R.id.fragment_home_list);
+        listView = (ListView) rootView.findViewById(R.id.fragment_home_list);
+
+        return rootView;
+    }
+
+    private void startGPS() {
+        Log.d("Logger", "LocalizacaoFragment startGPS");
+        locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        //permissão de GPS
+        if (ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(),
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)) ;
+                // Esperando usuário autorizar permissão
+            else
+                ActivityCompat.requestPermissions(this.getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        REQUEST_LOCATION);
+        } else
+        if(verificaConexao())
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (LocationListener) this);
+        else
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Call<SearchResponse> call = ApiClient.API_SERVICE.searchPontoTuristico("bearer "+token,latitude, longitude,2000);
@@ -158,31 +189,18 @@ public class HomeFragment extends Fragment implements LocationListener {
                 Toast.makeText(getContext(),"Erro ao se conectar com o servidor!",Toast.LENGTH_SHORT).show();
             }
         });
-        return rootView;
     }
 
-    private void startGPS() {
-        Log.d("Logger", "LocalizacaoFragment startGPS");
-        locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        //permissão de GPS
-        if (ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
-                PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
-                        PackageManager.PERMISSION_GRANTED) {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(),
-                    android.Manifest.permission.ACCESS_FINE_LOCATION)) ;
-                // Esperando usuário autorizar permissão
-            else
-                ActivityCompat.requestPermissions(this.getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                        REQUEST_LOCATION);
-        } else
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        latitude = location.getLatitude();
-        longitude = location.getLongitude();
+    private boolean verificaConexao() {
+        //verificando se o dispositivo tem conexão com internet
+        ConnectivityManager conectivtyManager =
+                (ConnectivityManager) this.getActivity().getSystemService(this.getActivity().CONNECTIVITY_SERVICE);
+        if (conectivtyManager.getActiveNetworkInfo() != null
+                && conectivtyManager.getActiveNetworkInfo().isAvailable()
+                && conectivtyManager.getActiveNetworkInfo().isConnected())
+            return true;
+        else
+            return false;
     }
 
     @Override

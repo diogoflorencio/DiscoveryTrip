@@ -3,11 +3,17 @@ package com.example.diogo.discoverytrip.Fragments;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.FileProvider;
@@ -43,8 +49,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class EventoCadastroFragment extends Fragment implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class EventoCadastroFragment extends Fragment implements LocationListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
     public EditText nameVal_txt, descVal_txt, dateVal_txt, priceVal_txt;
     Spinner evKind_spn;
     private final int CAM_REQUEST = 1313;
@@ -52,6 +59,10 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
     private String mCurrentPhotoPath;
     private Uri foto = null;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DDThh:mm:ss.sssZ");
+    private double latitude,longitude;
+    private LocationManager locationManager;
+    private static final int REQUEST_LOCATION = 2;
+
     public EventoCadastroFragment() {
         // Required empty public constructor
     }
@@ -60,6 +71,7 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         Log.d("Logger", "EventoCadastroFragment onCreate");
+        startGPS();
         View rootView = inflater.inflate(R.layout.fragment_evento_cadastro, container, false);
 
         rootView.findViewById(R.id.evConfirm_btn).setOnClickListener(this);
@@ -241,6 +253,8 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
         parametersMap.put("endData ",helper.createPartFrom(dateFormat.format(eventDate_value)));
         parametersMap.put("kind",helper.createPartFrom(eventKind_value));
         parametersMap.put("price",helper.createPartFrom(eventPrice_value));
+        parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
+        parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Log.d("Token",token);
@@ -311,6 +325,39 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
         }
     }
 
+    private void startGPS() {
+        Log.d("Logger", "LocalizacaoFragment startGPS");
+        locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        //permissão de GPS
+        if (ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
+                PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_COARSE_LOCATION) !=
+                        PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this.getActivity(),
+                    android.Manifest.permission.ACCESS_FINE_LOCATION)) ;
+                // Esperando usuário autorizar permissão
+            else
+                ActivityCompat.requestPermissions(this.getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        REQUEST_LOCATION);
+        } else
+        if(verificaConexao())
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (LocationListener) this);
+        else
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
+    }
+
+    private boolean verificaConexao() {
+        //verificando se o dispositivo tem conexão com internet
+        ConnectivityManager conectivtyManager =
+                (ConnectivityManager) this.getActivity().getSystemService(this.getActivity().CONNECTIVITY_SERVICE);
+        if (conectivtyManager.getActiveNetworkInfo() != null
+                && conectivtyManager.getActiveNetworkInfo().isAvailable()
+                && conectivtyManager.getActiveNetworkInfo().isConnected())
+            return true;
+        else
+            return false;
+    }
+
     private AlertDialog createLoadingDialog(){
         final AlertDialog dialog = new AlertDialog.Builder(getContext()).create();
 
@@ -336,5 +383,26 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
 //            Log.d("Logger", "EventoCadastroFragment onActivityResult " + CAM_REQUEST);
 //            Bitmap bitmap = (Bitmap)data.getExtras().get("data");
 //        }
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        latitude = location.getLatitude();
+        longitude = location.getLongitude();
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
     }
 }
