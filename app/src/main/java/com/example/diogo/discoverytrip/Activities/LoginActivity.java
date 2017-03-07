@@ -100,8 +100,6 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Log.d("Logger", "LoginActivity login padrão");
                 try {
                     loginApp();
-                     /* start Thread refreshToken */
-                    RefreshTokenManeger.refreshToken(getSharedPreferences("refreshToken", Context.MODE_PRIVATE));
                 } catch (DataInputException e){
                     Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
                 }

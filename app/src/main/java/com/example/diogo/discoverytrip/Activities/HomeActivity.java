@@ -78,10 +78,10 @@ public class HomeActivity extends AppCompatActivity
         /*start ServiceLembrete*/
         if(!ServiceLembrete.isRun())
             startService(new Intent(HomeActivity.this, ServiceLembrete.class));
+        if(AccessToken.getCurrentAccessToken() == null)
+            /* start Thread refreshToken */
+            RefreshTokenManeger.refreshToken(getSharedPreferences("refreshToken", Context.MODE_PRIVATE));
     }
-
-
-
 
     public void buildGooglePlusConfigs() {
         Log.d("Logger", "Home buildGooglePlusConfigs");
