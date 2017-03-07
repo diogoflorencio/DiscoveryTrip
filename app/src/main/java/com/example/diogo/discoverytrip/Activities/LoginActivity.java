@@ -13,13 +13,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.DataBase.RefreshToken;
+import com.example.diogo.discoverytrip.DataBase.UserData;
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.Model.AccessTokenJson;
 import com.example.diogo.discoverytrip.Model.AppLoginJson;
+import com.example.diogo.discoverytrip.Model.RefreshTokenManeger;
+import com.example.diogo.discoverytrip.Model.User;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.LoginResponse;
 import com.example.diogo.discoverytrip.REST.ApiClient;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponse;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -96,6 +100,8 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 Log.d("Logger", "LoginActivity login padrão");
                 try {
                     loginApp();
+                     /* start Thread refreshToken */
+                    RefreshTokenManeger.refreshToken(getSharedPreferences("refreshToken", Context.MODE_PRIVATE));
                 } catch (DataInputException e){
                     Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
                 }
@@ -106,6 +112,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 break;
         }
     }
+
     private void loginFacebook(){
         /*permissões do facebook*/
         loginButton.setReadPermissions(Arrays.asList("public_profile","email"));
@@ -152,17 +159,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
         call.enqueue(new Callback<LoginResponse>() {
             @Override
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                startActivity(new Intent(LoginActivity.this,HomeActivity.class));
-                finish();
-                if(response.isSuccessful()) Log.d("Login face","Server OK");
-                else{
-                    try {
-                        ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                        Log.e("Login face", error.getErrorDescription());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
+                if(response.isSuccessful()) getUserData();
             }
 
             @Override
@@ -214,9 +211,7 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                             getSharedPreferences("refreshToken", Context.MODE_PRIVATE));
                     AcessToken.salvar(loginResponse.getAccesstoken(),
                             getSharedPreferences("acessToken", Context.MODE_PRIVATE));
-                    Log.d("Token",loginResponse.getAccesstoken());
-                    startActivity(new Intent(LoginActivity.this,HomeActivity.class));
-                    finish();
+                    getUserData();
                 }
                 else{
                     try {
@@ -329,5 +324,35 @@ public class LoginActivity extends AppCompatActivity implements GoogleApiClient.
                 }
             });
         }
+    }
+
+    private void getUserData(){
+        //funcao pra pegar os dados do perfil do usuário e colocar nos campos
+        Call<ServerResponse> call = ApiClient.API_SERVICE.getUsuario("bearer "+
+                AcessToken.recuperar(this.getSharedPreferences("acessToken", Context.MODE_PRIVATE)));
+        call.enqueue(new Callback<ServerResponse>() {
+            @Override
+            public void onResponse(Call<ServerResponse> call, Response<ServerResponse> response) {
+                if (response.isSuccessful()) {
+                    Log.d("Perfil", "Server OK");
+                    ServerResponse serverResponse = response.body();
+                    User user = serverResponse.getUsuario();
+                    UserData.salvar(user.getId(),user.getNome(),user.getEmail(),
+                            getSharedPreferences("userData", Context.MODE_PRIVATE));
+                    startActivity(new Intent(LoginActivity.this,HomeActivity.class));
+                    finish();
+                } else {
+                    try {
+                        Log.e("Perfil", "" + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+            @Override
+            public void onFailure(Call<ServerResponse> call, Throwable t) {
+                Log.e("Perfil", "Server" + t.toString());
+            }
+        });
     }
 }
