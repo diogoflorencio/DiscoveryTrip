@@ -84,7 +84,7 @@ public interface ApiInterface {
      */
     @Multipart
     @POST("api/attractions")
-    Call<AttractionResponse> cadastrarPontoTuristico(@Header("Authorization") String token, @PartMap Map<String, RequestBody> parametersMap, @Part MultipartBody.Part fotos);
+    Call<AttractionResponse> cadastrarPontoTuristico(@Header("Authorization") String token, @PartMap Map<String, RequestBody> parametersMap, @Part MultipartBody.Part... fotos);
 
     /**
      * Cadastra um evento no servidor
