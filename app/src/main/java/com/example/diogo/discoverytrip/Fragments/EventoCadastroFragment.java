@@ -31,6 +31,7 @@ import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -50,7 +51,7 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
     private final int CAM_SELECT = 1234;
     private String mCurrentPhotoPath;
     private Uri foto = null;
-
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DDThh:mm:ss.sssZ");
     public EventoCadastroFragment() {
         // Required empty public constructor
     }
@@ -216,7 +217,12 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
         //TODO corrigir e testar o metodo
         String eventName_value = nameVal_txt.getText().toString();
         String eventDesc_value = descVal_txt.getText().toString();
-        String eventDate_value = dateVal_txt.getText().toString();
+        Date eventDate_value = null;
+        try {
+            eventDate_value = dateFormat.parse(dateVal_txt.getText().toString());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         String eventPrice_value = priceVal_txt.getText().toString();
 
         String eventKind_value = null;
@@ -232,7 +238,7 @@ public class EventoCadastroFragment extends Fragment implements View.OnClickList
 
         parametersMap.put("name",helper.createPartFrom(eventName_value));
         parametersMap.put("description",helper.createPartFrom(eventDesc_value));
-        parametersMap.put("endData ",helper.createPartFrom(eventDate_value));
+        parametersMap.put("endData ",helper.createPartFrom(dateFormat.format(eventDate_value)));
         parametersMap.put("kind",helper.createPartFrom(eventKind_value));
         parametersMap.put("price",helper.createPartFrom(eventPrice_value));
 

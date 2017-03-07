@@ -31,6 +31,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import okhttp3.Call;
@@ -48,7 +50,8 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
     private List<Atracao> pontosTuristicos;
     private Context context;
     private Handler handler = new Handler();
-
+    private SimpleDateFormat BDFormat = new SimpleDateFormat("YYYY-MM-DDThh:mm:ss.sssZ");
+    private SimpleDateFormat nomalFormat = new SimpleDateFormat("DD/MM/yyyy");
 
     public ListAdapterPontosTuristicos(Context context, LayoutInflater inflater, List<Atracao> pontosTuristicos){
         super(context, R.layout.item_evento,pontosTuristicos);
@@ -76,11 +79,19 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
         if(atracao.getEndDate() != null){
             TextView data = (TextView) view.findViewById(R.id.item_pontoTuristico_data);
             if(atracao.getStartDate() != null) {
-                data.setText(atracao.getStartDate() + " à " +
-                atracao.getEndDate());
+                try {
+                    data.setText(nomalFormat.format(BDFormat.parse(atracao.getStartDate())) + " à " +
+                            nomalFormat.format(BDFormat.parse(atracao.getEndDate())));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
             else{
-                data.setText(atracao.getEndDate());
+                try {
+                    data.setText(nomalFormat.format(BDFormat.parse(atracao.getEndDate())));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
             loadImage(foto,position,true);
         }

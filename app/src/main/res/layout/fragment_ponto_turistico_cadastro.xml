@@ -7,27 +7,12 @@
 
     <!-- TODO: Update blank fragment layout -->
 
-    <Button
-        android:text="Confirmar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/pntRegister_btn"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:text="Cancelar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/pntCancel_btn" />
-
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -127,6 +112,24 @@
                 android:layout_alignParentEnd="true"
                 android:id="@+id/pntCamera_btn"
                 android:background="@drawable/ic_menu_camera" />
+
+            <Button
+                android:id="@+id/pntCancel_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:text="Cancelar" />
+
+            <Button
+                android:id="@+id/pntRegister_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ponto_turistico_btnFoto"
+                android:layout_marginTop="22dp"
+
+                android:text="Confirmar" />
 
         </RelativeLayout>
     </ScrollView>
