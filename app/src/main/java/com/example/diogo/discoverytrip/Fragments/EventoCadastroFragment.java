@@ -165,7 +165,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
-        foto = Uri.fromFile(image);
         return image;
     }
 
