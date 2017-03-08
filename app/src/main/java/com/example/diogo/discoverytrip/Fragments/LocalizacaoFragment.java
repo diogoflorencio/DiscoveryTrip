@@ -73,8 +73,8 @@ public class LocalizacaoFragment extends Fragment implements LocationListener {
         } else
                 if(verificaConexao())
                     locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, (LocationListener) this);
-                else
-                    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
+               else
+                   locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
         coordenadas.setText("carregando...");
     }
 

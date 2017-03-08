@@ -43,7 +43,8 @@ public class HomeFragment extends Fragment implements LocationListener {
     private double latitude, longitude;
     private boolean requestCompleted = false;
     private List<Atracao> atracoes;
-    ListView listView;
+    private ListView listView;
+    private boolean get = true;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -93,15 +94,50 @@ public class HomeFragment extends Fragment implements LocationListener {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
 
-        String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
-        Call<SearchResponse> call = ApiClient.API_SERVICE.searchPontoTuristico("bearer "+token,latitude, longitude,2000);
-        call.enqueue(new Callback<SearchResponse>() {
-            @Override
-            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
-                if(response.isSuccessful()){
-                    Log.d("Logger","pesquisa de pontos turisticos realizada com sucesso");
+        if(get){
+            get = false;
+            String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
+            Call<SearchResponse> call = ApiClient.API_SERVICE.searchPontoTuristico("bearer "+token,latitude, longitude,2000);
+            call.enqueue(new Callback<SearchResponse>() {
+                @Override
+                public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+                    if(response.isSuccessful()){
+                        Log.d("Logger","pesquisa de pontos turisticos realizada com sucesso");
 
-                    atracoes.addAll(response.body().getAtracoes());
+                        if(response.body().getAtracoes() != null){
+                            atracoes.addAll(response.body().getAtracoes());
+                        }
+
+                        if(requestCompleted){
+                            ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
+                                    getActivity().getLayoutInflater(),
+                                    atracoes);
+                            listView.setAdapter(adapter);
+                        }
+                        requestCompleted = true;
+                    }
+                    else{
+                        get = true;
+                        if(requestCompleted){
+                            ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
+                                    getActivity().getLayoutInflater(),
+                                    atracoes);
+                            listView.setAdapter(adapter);
+                        }
+                        requestCompleted = true;
+                        try {
+                            Log.e("Logger",response.errorBody().string());
+                            //ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                            //Log.e("Pesquisa de pontos turisticos", error.getErrorDescription());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SearchResponse> call, Throwable t) {
+                    get = true;
                     if(requestCompleted){
                         ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
                                 getActivity().getLayoutInflater(),
@@ -109,8 +145,51 @@ public class HomeFragment extends Fragment implements LocationListener {
                         listView.setAdapter(adapter);
                     }
                     requestCompleted = true;
+                    Log.e("Logger","Pesquisa de pontos turisticos error: "+t.toString());
+                    Toast.makeText(getContext(),"Erro ao se conectar com o servidor!",Toast.LENGTH_SHORT).show();
                 }
-                else{
+            });
+
+            Call<SearchResponse> callEvents = ApiClient.API_SERVICE.searchEventos("bearer "+token,latitude, longitude,2000);
+            callEvents.enqueue(new Callback<SearchResponse>() {
+                @Override
+                public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+                    if(response.isSuccessful()){
+                        Log.d("Logger","pesquisa de eventos realizada com sucesso");
+                        if(response.body().getAtracoes() != null){
+                            atracoes.addAll(response.body().getAtracoes());
+                        }
+
+                        if(requestCompleted){
+                            ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
+                                    getActivity().getLayoutInflater(),
+                                    atracoes);
+                            listView.setAdapter(adapter);
+                        }
+                        requestCompleted = true;
+                    }
+                    else{
+                        get = true;
+                        if(requestCompleted){
+                            ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
+                                    getActivity().getLayoutInflater(),
+                                    atracoes);
+                            listView.setAdapter(adapter);
+                        }
+                        requestCompleted = true;
+                        try {
+                            Log.e("Logger", "pesquisa de eventos"+response.errorBody().string());
+                            //ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                            //Log.e("Pesquisa de pontos turisticos", error.getErrorDescription());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<SearchResponse> call, Throwable t) {
+                    get = true;
                     if(requestCompleted){
                         ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
                                 getActivity().getLayoutInflater(),
@@ -118,77 +197,11 @@ public class HomeFragment extends Fragment implements LocationListener {
                         listView.setAdapter(adapter);
                     }
                     requestCompleted = true;
-                    try {
-                        Log.e("Pesq pontosTuristicos",response.errorBody().string());
-                        //ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                        //Log.e("Pesquisa de pontos turisticos", error.getErrorDescription());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    Log.e("Logger","pesquisa de eventos error: "+t.toString());
+                    Toast.makeText(getContext(),"Erro ao se conectar com o servidor!",Toast.LENGTH_SHORT).show();
                 }
-            }
-
-            @Override
-            public void onFailure(Call<SearchResponse> call, Throwable t) {
-                if(requestCompleted){
-                    ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
-                            getActivity().getLayoutInflater(),
-                            atracoes);
-                    listView.setAdapter(adapter);
-                }
-                requestCompleted = true;
-                Log.e("Logger","Pesquisa de pontos turisticos error: "+t.toString());
-                Toast.makeText(getContext(),"Erro ao se conectar com o servidor!",Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        Call<SearchResponse> callEvents = ApiClient.API_SERVICE.searchEventos("bearer "+token,latitude, longitude,2000);
-        callEvents.enqueue(new Callback<SearchResponse>() {
-            @Override
-            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
-                if(response.isSuccessful()){
-                    Log.d("Logger","pesquisa de eventos realizada com sucesso");
-                    atracoes.addAll(response.body().getAtracoes());
-
-                    if(requestCompleted){
-                        ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
-                                getActivity().getLayoutInflater(),
-                                atracoes);
-                        listView.setAdapter(adapter);
-                    }
-                    requestCompleted = true;
-                }
-                else{
-                    if(requestCompleted){
-                        ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
-                                getActivity().getLayoutInflater(),
-                                atracoes);
-                        listView.setAdapter(adapter);
-                    }
-                    requestCompleted = true;
-                    try {
-                        Log.e("Logger", "pesquisa de eventos"+response.errorBody().string());
-                        //ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                        //Log.e("Pesquisa de pontos turisticos", error.getErrorDescription());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<SearchResponse> call, Throwable t) {
-                if(requestCompleted){
-                    ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
-                            getActivity().getLayoutInflater(),
-                            atracoes);
-                    listView.setAdapter(adapter);
-                }
-                requestCompleted = true;
-                Log.e("Logger","pesquisa de eventos error: "+t.toString());
-                Toast.makeText(getContext(),"Erro ao se conectar com o servidor!",Toast.LENGTH_SHORT).show();
-            }
-        });
+            });
+        }
     }
 
     private boolean verificaConexao() {
@@ -222,6 +235,7 @@ public class HomeFragment extends Fragment implements LocationListener {
     public void onDestroy() {
         Log.d("Logger", "LocalizacaoFragment onDestroy");
         super.onDestroy();
+        get = true;
         stopGPS();
     }
 

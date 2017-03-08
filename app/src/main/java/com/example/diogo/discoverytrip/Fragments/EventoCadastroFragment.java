@@ -58,7 +58,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
     private final int CAM_SELECT = 1234;
     private String mCurrentPhotoPath;
     private Uri foto = null;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-DDThh:mm:ss.sssZ");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-DD'T'HH:mm:ss.SSS'Z'");
     private double latitude,longitude;
     private LocationManager locationManager;
     private static final int REQUEST_LOCATION = 2;

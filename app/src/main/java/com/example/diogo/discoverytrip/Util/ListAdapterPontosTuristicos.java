@@ -50,7 +50,7 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
     private List<Atracao> pontosTuristicos;
     private Context context;
     private Handler handler = new Handler();
-    private SimpleDateFormat BDFormat = new SimpleDateFormat("YYYY-MM-DDThh:mm:ss.sssZ");
+    private SimpleDateFormat BDFormat = new SimpleDateFormat("yyyy-MM-DD'T'HH:mm:ss.SSS'Z'");
     private SimpleDateFormat nomalFormat = new SimpleDateFormat("DD/MM/yyyy");
 
     public ListAdapterPontosTuristicos(Context context, LayoutInflater inflater, List<Atracao> pontosTuristicos){
@@ -93,7 +93,9 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
                     e.printStackTrace();
                 }
             }
-            loadImage(foto,position,true);
+            if(atracao.getPhotoId() != null) {
+                loadImage(foto, position, true);
+            }
         }
         else{
             loadImage(foto,position,false);
