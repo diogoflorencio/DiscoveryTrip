@@ -20,7 +20,6 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "DiscoveryTrip.bd";
 
-
     public DiscoveryTripBD(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -49,6 +48,7 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
         long newRowId = db.insert(LembretesTable.TABLE_NAME, null, values);
     }
 
+    /*recupera todos os lembretes do dia corrente*/
     public Cursor selectLembretesTable(){
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -76,10 +76,44 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
         return cursor;
     }
 
+    /*recupera todos os lembretes da base de dados*/
+    public Cursor selectAllLembretesTable(){
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] projection = {
+                LembretesTable.Column._ID,
+                LembretesTable.Column.COLUMN_Nome,
+                LembretesTable.Column.COLUMN_Descricao
+        };
+
+        String sortOrder =
+                LembretesTable.Column.COLUMN_Nome + " DESC";
+
+        Cursor cursor = db.query(
+                LembretesTable.TABLE_NAME,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                sortOrder
+        );
+        return cursor;
+    }
+
+    /*deleta os lembretes do dia corrente*/
     public void deleteLembretesTable(){
         SQLiteDatabase db = this.getWritableDatabase();
         String selection = LembretesTable.Column.COLUMN_Data + " LIKE ?";
         String[] selectionArgs = { DataHoraSystem.data() };
+        db.delete(LembretesTable.TABLE_NAME, selection, selectionArgs);
+    }
+
+    /*deleta um lembrete por id*/
+    public void deleteLembreteTable(String id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String selection = LembretesTable.Column._ID + " LIKE ?";
+        String[] selectionArgs = { id };
         db.delete(LembretesTable.TABLE_NAME, selection, selectionArgs);
     }
 }
