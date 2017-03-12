@@ -1,18 +1,14 @@
 package com.example.diogo.discoverytrip.Activities;
 
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
 import com.example.diogo.discoverytrip.Fragments.EventoCadastroFragment;
-import com.example.diogo.discoverytrip.Fragments.EventoFragment;
 import com.example.diogo.discoverytrip.Fragments.PontoTuristicoCadastroFragment;
 import com.example.diogo.discoverytrip.R;
 import com.google.android.gms.maps.CameraUpdateFactory;

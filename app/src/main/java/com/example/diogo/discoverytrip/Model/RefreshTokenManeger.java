@@ -5,7 +5,6 @@ import android.util.Log;
 
 import com.example.diogo.discoverytrip.DataBase.RefreshToken;
 import com.example.diogo.discoverytrip.REST.ApiClient;
-import com.example.diogo.discoverytrip.REST.ApiInterface;
 import com.example.diogo.discoverytrip.REST.ServerResponses.LoginResponse;
 
 import java.io.IOException;

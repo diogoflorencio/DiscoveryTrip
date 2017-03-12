@@ -17,17 +17,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
-import com.example.diogo.discoverytrip.DataBase.UserData;
 import com.example.diogo.discoverytrip.Fragments.EventoFragment;
 import com.example.diogo.discoverytrip.Fragments.HomeFragment;
 import com.example.diogo.discoverytrip.Fragments.LocalizacaoFragment;
 import com.example.diogo.discoverytrip.Fragments.PerfilFragment;
 import com.example.diogo.discoverytrip.Fragments.PontoTuristicoFragment;
 import com.example.diogo.discoverytrip.Model.RefreshTokenManeger;
-import com.example.diogo.discoverytrip.Model.User;
 import com.example.diogo.discoverytrip.R;
-import com.example.diogo.discoverytrip.REST.ApiClient;
-import com.example.diogo.discoverytrip.REST.ServerResponses.ServerResponse;
 import com.example.diogo.discoverytrip.Service.ServiceLembrete;
 import com.facebook.AccessToken;
 import com.google.android.gms.auth.api.Auth;
@@ -36,14 +32,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-
-import java.io.IOException;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static java.security.AccessController.getContext;
 
 /**
  * Classe activity responsavel pela activity home (principal) na aplicação

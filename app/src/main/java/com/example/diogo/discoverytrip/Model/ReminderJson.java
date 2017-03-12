@@ -1,6 +1,5 @@
 package com.example.diogo.discoverytrip.Model;
 
-import com.example.diogo.discoverytrip.REST.ServerResponses.ReminderResponse;
 import com.google.gson.annotations.SerializedName;
 
 /**

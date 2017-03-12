@@ -1,7 +1,5 @@
 package com.example.diogo.discoverytrip.Model;
 
-import android.support.annotation.NonNull;
-
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

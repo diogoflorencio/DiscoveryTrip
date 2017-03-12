@@ -2,18 +2,11 @@ package com.example.diogo.discoverytrip.REST;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.InputStream;
-import java.net.URI;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
