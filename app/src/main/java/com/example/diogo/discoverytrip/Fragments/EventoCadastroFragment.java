@@ -1,10 +1,11 @@
 package com.example.diogo.discoverytrip.Fragments;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -14,8 +15,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,8 +26,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
@@ -34,12 +39,16 @@ import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.MultiRequestHelper;
 import com.example.diogo.discoverytrip.REST.ServerResponses.AddEventoResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
+import com.example.diogo.discoverytrip.Util.DatePickerFragment;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,8 +60,9 @@ import retrofit2.Response;
 import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class EventoCadastroFragment extends Fragment implements LocationListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
-    public EditText nameVal_txt, descVal_txt, dateVal_txt, priceVal_txt;
+public class EventoCadastroFragment extends Fragment implements LocationListener, View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerFragment.DatePickerFragmentListener {
+    public EditText nameVal_txt, descVal_txt, priceVal_txt;
+    public TextView dateVal_txt;
     Spinner evKind_spn;
     private final int CAM_REQUEST = 1313;
     private final int CAM_SELECT = 1234;
@@ -64,6 +74,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
     private static final int REQUEST_LOCATION = 2;
 
     public EventoCadastroFragment() {
+        Log.d("Logger", "EventoCadastroFragment EventoCadastroFragment");
         // Required empty public constructor
     }
 
@@ -78,11 +89,13 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         rootView.findViewById(R.id.evCancel_btn).setOnClickListener(this);
         rootView.findViewById(R.id.evCamera_btn).setOnClickListener(this);
         rootView.findViewById(R.id.evento_btnFoto).setOnClickListener(this);
+        rootView.findViewById(R.id.evDatePicker_btn).setOnClickListener(this);
 
         nameVal_txt = (EditText) rootView.findViewById(R.id.evName_edt);
         descVal_txt = (EditText) rootView.findViewById(R.id.evDesc_edt);
-        dateVal_txt = (EditText) rootView.findViewById(R.id.evDate_edt);
         priceVal_txt = (EditText) rootView.findViewById(R.id.evPrice_edt);
+
+        dateVal_txt = (TextView) rootView.findViewById(R.id.dateVal_txt);
 
         evKind_spn = (Spinner) rootView.findViewById(R.id.evKind_spn);
         evKind_spn.setOnItemSelectedListener(this);
@@ -92,6 +105,30 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         evKind_spn.setAdapter(adapter);
 
         return rootView;
+    }
+
+    public void datePicker(View view){
+        Log.d("Logger", "EventoCadastroFragment DatePicker");
+        DatePickerFragment fragment = DatePickerFragment.newInstance(this);
+        fragment.show(getActivity().getSupportFragmentManager(), "datePicker");
+    }
+
+    public void setDate(int year, int month, int dayOfMonth) {
+        Log.d("Logger", "EventoCadastroFragment setDate");
+        final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
+        month = month +1;
+        dateVal_txt.setText(dayOfMonth+"/"+month+"/"+year);
+        Log.d("Logger", "data " + dateVal_txt.getText());
+    }
+
+    @Override
+    public void onDateSet(Date date) {
+        Log.d("Logger", "EventoCadastroFragment onDateSet");
+        int year = date.getYear() + 1900;
+        int month = date.getMonth();
+        int dayOfMonth = date.getDate();
+        Calendar calendar = new GregorianCalendar(year, month, dayOfMonth);
+        setDate(year, month, dayOfMonth);
     }
 
     @Override
@@ -122,6 +159,10 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Selecione uma imagem"), CAM_SELECT);
+                break;
+            case R.id.evDatePicker_btn:
+                Log.d("Logger", "EventoCadastroFragment botao datePicker");
+                datePicker(view);
                 break;
         }
     }
@@ -192,6 +233,10 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
             throw new DataInputException(getString(R.string.validate_name));
         }
 
+        if(dateVal_txt.getText().toString().trim().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_date));
+        }
+
         if(descVal_txt.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_description));
         }
@@ -202,10 +247,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
 
         if(priceVal_txt.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_price));
-        }
-
-        if(foto == null){
-            throw new DataInputException(getString(R.string.validate_photo));
         }
     }
 
@@ -223,9 +264,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
 
     public void sendEventData(){
         Log.d("Logger", "EventoCadastroFragment sendEventData");
-        //precisa fazer um post e mandar os dados atualizados pro servidor
 
-        //TODO corrigir e testar o metodo
         String eventName_value = nameVal_txt.getText().toString();
         String eventDesc_value = descVal_txt.getText().toString();
         Date eventDate_value = null;
@@ -426,4 +465,5 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                         REQUEST_LOCATION);
         } else locationManager.removeUpdates(this);
     }
+
 }

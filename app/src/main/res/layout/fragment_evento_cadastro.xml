@@ -76,16 +76,19 @@
                         android:text="Data"
                         android:textSize="18sp" />
 
-                    <EditText
-                        android:id="@+id/evDate_edt"
+                    <TextView
+                        android:id="@+id/dateVal_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignLeft="@+id/evName_edt"
-                        android:layout_alignStart="@+id/evName_edt"
-                        android:layout_alignTop="@+id/evDate_txt"
                         android:layout_weight="1"
-                        android:ems="10"
-                        android:inputType="date" />
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/evDatePicker_btn"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:drawable/ic_menu_my_calendar" />
+
                 </LinearLayout>
 
                 <LinearLayout
