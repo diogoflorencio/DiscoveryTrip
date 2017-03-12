@@ -54,7 +54,8 @@
 
         <activity
             android:name=".Activities.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity
             android:name=".Activities.LoginActivity"
             android:theme="@style/DiscoveryTripTheme">

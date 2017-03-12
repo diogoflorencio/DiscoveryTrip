@@ -66,6 +66,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
     private static final int REQUEST_LOCATION = 2;
 
     public PontoTuristicoCadastroFragment() {
+        Log.d("Logger", "PontoTuristicoCadastroFragment PontoTuristicoCadastroFragment");
         // Required empty public constructor
     }
 

@@ -1,8 +1,45 @@
-<fragment xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:map="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/map"
-    android:name="com.google.android.gms.maps.SupportMapFragment"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/content_map"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.diogo.discoverytrip.Activities.MapsActivity" />
+    android:layout_height="match_parent">
+
+    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:map="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.diogo.discoverytrip.Activities.MapsActivity"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:id="@+id/mapCreateEv_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@android:drawable/radiobutton_off_background"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:text="EV"
+        android:textSize="18sp" />
+
+    <Button
+        android:id="@+id/mapCreatePnt_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/mapCreateEv_btn"
+        android:layout_alignBottom="@+id/mapCreateEv_btn"
+        android:layout_toLeftOf="@+id/mapCreateEv_btn"
+        android:layout_toStartOf="@+id/mapCreateEv_btn"
+        android:background="@android:drawable/radiobutton_off_background"
+        android:backgroundTint="@android:color/holo_green_dark"
+        android:text="PT"
+        android:textSize="18sp" />
+
+
+</RelativeLayout>

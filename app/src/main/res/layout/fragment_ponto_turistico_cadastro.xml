@@ -3,9 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.diogo.discoverytrip.Fragments.PontoTuristicoCadastroFragment"
-    android:background="@android:color/white">
-
-    <!-- TODO: Update blank fragment layout -->
+    android:background="@android:color/darker_gray">
 
     <ScrollView
         android:layout_width="match_parent"

@@ -3,9 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clickable="true"
-    tools:context="com.example.diogo.discoverytrip.Fragments.EventoCadastroFragment">
-
-    <!-- TODO: Update blank fragment layout -->
+    tools:context="com.example.diogo.discoverytrip.Fragments.EventoCadastroFragment"
+    android:background="@android:color/darker_gray">
 
     <ScrollView
         android:layout_width="match_parent"
