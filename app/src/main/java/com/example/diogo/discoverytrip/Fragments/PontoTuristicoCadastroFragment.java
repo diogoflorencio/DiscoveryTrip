@@ -28,6 +28,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.example.diogo.discoverytrip.Activities.HomeActivity;
+import com.example.diogo.discoverytrip.Activities.MapsActivity;
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
 import com.example.diogo.discoverytrip.R;
@@ -303,11 +305,19 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
 
     private void backToHome() {
         Log.d("Logger", "PontoTuristicoCadastroFragment backToHome");
-        FragmentManager fragmentManager = getFragmentManager();
-        HomeFragment fragment = new HomeFragment();
 
-        fragmentManager.beginTransaction().replace(R.id.content_home, fragment
-        ).commit();
+        if(getActivity().getClass().equals(HomeActivity.class)){
+            FragmentManager fragmentManager = getFragmentManager();
+            HomeFragment fragment = new HomeFragment();
+            fragmentManager.beginTransaction().replace(R.id.content_home, fragment
+            ).commit();
+        }
+        if(getActivity().getClass().equals(MapsActivity.class)){
+            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+
+            MapsActivity currentActivity = (MapsActivity) getActivity();
+            currentActivity.showInterface();
+        }
     }
 
     private void validateFields() throws DataInputException {

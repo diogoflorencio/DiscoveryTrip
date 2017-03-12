@@ -85,6 +85,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         findViewById(R.id.mapCreatePnt_btn).setVisibility(View.INVISIBLE);
     }
 
+    public void showInterface(){
+        Log.d("Logger", "MapsActivity showInterface");
+        findViewById(R.id.mapCreateEv_btn).setVisibility(View.VISIBLE);
+        findViewById(R.id.mapCreatePnt_btn).setVisibility(View.VISIBLE);
+    }
+
     @Override
     protected void onResume() {
         Log.d("Logger", "MapsActivity onResume");
