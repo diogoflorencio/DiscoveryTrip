@@ -59,6 +59,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class EventoCadastroFragment extends Fragment implements LocationListener, View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerFragment.DatePickerFragmentListener {
     public EditText nameVal_txt, descVal_txt, priceVal_txt;
+    private Date dateVal_date;
     public TextView dateVal_txt;
     Spinner evKind_spn;
     private final int CAM_REQUEST = 1313;
@@ -126,6 +127,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         int dayOfMonth = date.getDate();
         Calendar calendar = new GregorianCalendar(year, month, dayOfMonth);
         setDate(year, month, dayOfMonth);
+        dateVal_date = calendar.getTime();
     }
 
     @Override
@@ -272,8 +274,10 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
 
         String eventName_value = nameVal_txt.getText().toString();
         String eventDesc_value = descVal_txt.getText().toString();
+//        String eventDate_value = dateVal_txt.getText().toString();
         Date eventDate_value = null;
         try {
+//            eventDate_value = dateFormat.parse(dateVal_txt.getText().toString());
             eventDate_value = dateFormat.parse(dateVal_txt.getText().toString());
         } catch (ParseException e) {
             e.printStackTrace();
@@ -293,7 +297,14 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
 
         parametersMap.put("name",helper.createPartFrom(eventName_value));
         parametersMap.put("description",helper.createPartFrom(eventDesc_value));
-        parametersMap.put("endData ",helper.createPartFrom(dateFormat.format(eventDate_value)));
+
+        try {
+//            parametersMap.put("endData ",helper.createPartFrom(dateFormat.format(eventDate_value)));
+            parametersMap.put("endData ",helper.createPartFrom(dateFormat.format(dateVal_date)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         parametersMap.put("kind",helper.createPartFrom(eventKind_value));
         parametersMap.put("price",helper.createPartFrom(eventPrice_value));
         parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
@@ -302,6 +313,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Log.d("Token",token);
         //List<byte[]> fotos = new ArrayList<>();
+        Log.d("Logger", "parametersMap " + parametersMap.toString());
 
         final AlertDialog dialog = createLoadingDialog();
         dialog.show();
