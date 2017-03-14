@@ -155,7 +155,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                 galleryAddPic();
                 break;
             case R.id.evento_btnFoto:
-                Log.d("Looger","EventoCadastroFragment selecionar foto");
+                Log.d("Logger","EventoCadastroFragment selecionar foto");
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -211,6 +211,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
     }
 
     private void galleryAddPic() {
+        //isso provavelmente nao funciona porque o path esta incorreto, não funciona
         Log.d("Logger", "EventoCadastroFragment galleryAddPic");
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
         File f = new File(mCurrentPhotoPath);
@@ -325,6 +326,8 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         Log.d("Token",token);
         //List<byte[]> fotos = new ArrayList<>();
         Log.d("Logger", "parametersMap " + parametersMap.toString());
+        Log.d("Logger", "name " + eventName_value + " description " + eventDesc_value +
+                " endData " + eventDate_formated  + " kind " + eventKind_value  + " price " + eventPrice_value);
 
         final AlertDialog dialog = createLoadingDialog();
         dialog.show();
@@ -440,15 +443,15 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == CAM_SELECT && resultCode == RESULT_OK) {
-            Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult " + CAM_SELECT);
+            Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult CAM_SELECT " + CAM_SELECT);
             foto = data.getData();
             Log.d("Logger","Seleciona imagem"+foto.getPath());
         }
 
-//        if(requestCode == CAM_REQUEST) {
-//            Log.d("Logger", "EventoCadastroFragment onActivityResult " + CAM_REQUEST);
+        if(requestCode == CAM_REQUEST) {
+            Log.d("Logger", "EventoCadastroFragment onActivityResult CAM_REQUEST " + CAM_REQUEST);
 //            Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-//        }
+        }
     }
 
     @Override
