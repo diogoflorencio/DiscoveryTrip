@@ -281,7 +281,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         }
         Log.d("Logger","Date formated "+eventDate_formated);
         String eventPrice_value = priceVal_txt.getText().toString();
-        eventPrice_value.replaceAll(".",",");
         String eventKind_value = null;
         switch (evKind_spn.getSelectedItemPosition()) {
             case 0: eventKind_value = "private";

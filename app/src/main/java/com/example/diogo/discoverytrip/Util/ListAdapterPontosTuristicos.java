@@ -38,7 +38,7 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
     private List<Atracao> pontosTuristicos;
     private Activity context;
     private Handler handler = new Handler();
-    private SimpleDateFormat BDFormat = new SimpleDateFormat("yyyy-MM-DD'T'HH:mm:ss.SSS'Z'");
+    private SimpleDateFormat BDFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     private SimpleDateFormat nomalFormat = new SimpleDateFormat("dd/M/yyyy");
 
     public ListAdapterPontosTuristicos(Activity context, LayoutInflater inflater, List<Atracao> pontosTuristicos){
