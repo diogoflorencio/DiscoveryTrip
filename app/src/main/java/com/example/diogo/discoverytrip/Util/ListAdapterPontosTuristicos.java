@@ -70,7 +70,7 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
                 @Override
                 public void onClick(View v) {
                     DiscoveryTripBD bd = new DiscoveryTripBD(context);
-                    bd.insertLembretesTable(atracao.getName(),atracao.getDescription(),atracao.getEndDate());
+                    bd.insertLembretesTable(atracao);
                     context.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
