@@ -88,7 +88,7 @@ public class ServiceLembrete extends Service {
     }
 
     private void verificaNotificacao(){
-        List<Atracao> lembretes = discoveryTripBD.selectLembretesTable();
+        List<Atracao> lembretes = discoveryTripBD.selectDayLembretesTable();
         if(lembretes.size() == 0 || !isRun()) return;
         enviaNotificacao();
     }
