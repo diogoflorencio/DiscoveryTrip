@@ -60,7 +60,7 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
     }
 
     /*recupera todos os lembretes do dia corrente*/
-    public Cursor selectLembretesTable(){
+    public List<Atracao> selectLembretesTable(){
         SQLiteDatabase db = this.getReadableDatabase();
 
         String[] projection = {
@@ -84,7 +84,7 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
                 null,
                 sortOrder
         );
-        return cursor;
+        return parseCursoToAtracao(cursor);
     }
 
     /*recupera todos os lembretes da base de dados*/
@@ -121,10 +121,10 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
     }
 
     /*deleta um lembrete por id*/
-    public void deleteLembreteTable(String id){
+    public void deleteLembreteTable(Atracao atracao){
         SQLiteDatabase db = this.getWritableDatabase();
         String selection = LembretesTable.Column._ID + " LIKE ?";
-        String[] selectionArgs = { id };
+        String[] selectionArgs = { atracao.getId() };
         db.delete(LembretesTable.TABLE_NAME, selection, selectionArgs);
     }
 
@@ -136,6 +136,7 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
                 Atracao atracao = new Atracao();
                 Localizacao localizacao = new Localizacao();
 
+                atracao.setId(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column._ID)));
                 atracao.setNome(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Nome)));
                 atracao.setDescricao(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Descricao)));
                 atracao.setEndDate(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Data)));
