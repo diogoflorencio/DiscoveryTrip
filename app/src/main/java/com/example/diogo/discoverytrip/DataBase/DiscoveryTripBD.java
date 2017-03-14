@@ -7,6 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.diogo.discoverytrip.DataHora.DataHoraSystem;
+import com.example.diogo.discoverytrip.Model.Atracao;
+import com.example.diogo.discoverytrip.Model.Localizacao;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by diogo on 04/02/17.
@@ -35,13 +40,20 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
         * onCreate(sqLiteDatabase);*/
     }
 
-    public void insertLembretesTable(String nome, String descricao, String data){
+    public void insertLembretesTable(Atracao atracao){
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(LembretesTable.Column.COLUMN_Nome, nome);
-        values.put(LembretesTable.Column.COLUMN_Descricao, descricao);
-        values.put(LembretesTable.Column.COLUMN_Data, data);
+        values.put(LembretesTable.Column.COLUMN_Nome, atracao.getName());
+        values.put(LembretesTable.Column.COLUMN_Descricao, atracao.getDescription());
+        values.put(LembretesTable.Column.COLUMN_Data, atracao.getEndDate());
+        values.put(LembretesTable.Column.COLUMN_Latitude, atracao.getLocation().getLatitude());
+        values.put(LembretesTable.Column.COLUMN_Longitude, atracao.getLocation().getLongitude());
+        values.put(LembretesTable.Column.COLUMN_Pais, atracao.getLocation().getCountry());
+        values.put(LembretesTable.Column.COLUMN_Cidade, atracao.getLocation().getCity());
+        values.put(LembretesTable.Column.COLUMN_Rua, atracao.getLocation().getStreetName());
+        values.put(LembretesTable.Column.COLUMN_Numero, atracao.getLocation().getStreetNumber());
+        values.put(LembretesTable.Column.COLUMN_FotoID, atracao.getPhotoId());
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId = db.insert(LembretesTable.TABLE_NAME, null, values);
@@ -76,7 +88,7 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
     }
 
     /*recupera todos os lembretes da base de dados*/
-    public Cursor selectAllLembretesTable(){
+    public List<Atracao> selectAllLembretesTable(){
         SQLiteDatabase db = this.getReadableDatabase();
 
         String[] projection = {
@@ -97,7 +109,7 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
                 null,
                 sortOrder
         );
-        return cursor;
+        return parseCursoToAtracao(cursor);
     }
 
     /*deleta os lembretes do dia corrente*/
@@ -114,5 +126,35 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
         String selection = LembretesTable.Column._ID + " LIKE ?";
         String[] selectionArgs = { id };
         db.delete(LembretesTable.TABLE_NAME, selection, selectionArgs);
+    }
+
+    private List<Atracao> parseCursoToAtracao(Cursor cursor){
+        List<Atracao> lembretes = new ArrayList<Atracao>();
+        if(cursor.moveToFirst()){
+            do {
+
+                Atracao atracao = new Atracao();
+                Localizacao localizacao = new Localizacao();
+
+                atracao.setNome(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Nome)));
+                atracao.setDescricao(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Descricao)));
+                atracao.setEndDate(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Data)));
+                atracao.setNome(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Nome)));
+
+                localizacao.setLatitude(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Latitude)));
+                localizacao.setLongitude(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Longitude)));
+                localizacao.setCountry(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Pais)));
+                localizacao.setCity(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Cidade)));
+                localizacao.setStreetName(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Rua)));
+                localizacao.setStreetNumber(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Numero)));
+
+                atracao.setLocalizacao(localizacao);
+                atracao.setPhotoId(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_FotoID)));
+
+                lembretes.add(atracao);
+            }while (cursor.moveToNext());
+        }
+        cursor.close();
+        return lembretes;
     }
 }
