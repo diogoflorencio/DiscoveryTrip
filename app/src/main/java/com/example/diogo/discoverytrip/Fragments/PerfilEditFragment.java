@@ -33,7 +33,7 @@ import retrofit2.Response;
 
 public class PerfilEditFragment extends Fragment implements View.OnClickListener {
     public EditText userName_edt, userEmail_edt, userPassword_edt;
-    String userEmail_value;
+    public static String userEmail_value;
     public PerfilEditFragment() {
         // Required empty public constructor
     }

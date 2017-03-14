@@ -240,7 +240,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
     private void validateFields() throws DataInputException {
         Log.d("Logger", "EventoCadastroFragment validateFields");
         if(nameVal_txt.getText().toString().trim().isEmpty()){
-            throw new DataInputException(getString(R.string.validate_name));
+            throw new DataInputException("Digite o nome do evento!");
         }
 
         if(dateVal_txt.getText().toString().trim().isEmpty()){
@@ -249,14 +249,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
 
         if(descVal_txt.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_description));
-        }
-
-        if(dateVal_txt.getText().toString().trim().isEmpty()){
-            throw new DataInputException(getString(R.string.validate_date));
-        }
-
-        if(priceVal_txt.getText().toString().trim().isEmpty()){
-            throw new DataInputException(getString(R.string.validate_price));
         }
     }
 

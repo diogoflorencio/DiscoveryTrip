@@ -45,7 +45,7 @@ public class PerfilFragment extends Fragment implements View.OnClickListener {
         Map<String,String> map = UserData.recuperar(getContext().getSharedPreferences("userData", Context.MODE_PRIVATE));
         userName.setText(map.get("name"));
         userEmail.setText(map.get("email"));
-
+        PerfilEditFragment.userEmail_value = map.get("email");
         return rootView;
     }
 

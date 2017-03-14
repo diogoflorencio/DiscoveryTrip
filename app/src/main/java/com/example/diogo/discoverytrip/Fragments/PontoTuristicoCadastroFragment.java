@@ -342,7 +342,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
     private void validateFields() throws DataInputException {
         Log.d("Logger", "PontoTuristicoCadastroFragment validate");
         if(nameVal_txt.getText().toString().trim().isEmpty()){
-            throw new DataInputException(getString(R.string.validate_name));
+            throw new DataInputException("Digite o nome do ponto turístico!");
         }
 
         if(descVal_txt.getText().toString().trim().isEmpty()){
