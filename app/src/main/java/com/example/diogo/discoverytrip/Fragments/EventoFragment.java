@@ -9,7 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.diogo.discoverytrip.DataBase.DiscoveryTripBD;
+import com.example.diogo.discoverytrip.Model.Atracao;
 import com.example.diogo.discoverytrip.R;
+import com.example.diogo.discoverytrip.Util.ListAdapterEventos;
+import com.example.diogo.discoverytrip.Util.ListAdapterPontosTuristicos;
+
+import java.util.List;
 
 /**
  * Classe fragment responsavel pelo fragmento evento na aplicação
@@ -33,6 +39,14 @@ public class EventoFragment extends Fragment implements View.OnClickListener {
         rootView.findViewById(R.id.pesquisa_evento_btnLocalizacao).setOnClickListener(this);
 
         ListView viewEventos = (ListView) rootView.findViewById(R.id.fragment_evento_listEvento);
+
+        DiscoveryTripBD bd = new DiscoveryTripBD(getContext());
+        List<Atracao> atracoes = bd.selectAllLembretesTable();
+
+        ListAdapterEventos adapter = new ListAdapterEventos(getActivity(),
+                getActivity().getLayoutInflater(),
+                atracoes);
+        viewEventos.setAdapter(adapter);
 
 
         //TODO fazer a chamada ao servidor para pegar os eventos e setar o adapter da list view
