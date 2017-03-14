@@ -16,13 +16,16 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 
-public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener {
+public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, OnMapLongClickListener {
 
     private GoogleMap mMap;
     private static final int DEFAULT_ZOOM = 17;
-    private final LatLng defaultLocation = new LatLng(-7.212023, -35.9086433);
+    private final LatLng defaultLocation = new LatLng(-7.212023, -35.9086433); //Ebedded
     private static final int REQUEST_MAP = 2;
+
+//    private GoogleMap.OnMapLongClickListener OnMapLongClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +42,12 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mapFragment.getMapAsync(this);
     }
 
+    @Override
+    public void onMapLongClick(LatLng point) {
+        Log.d("Logger", "MapsActivity onMapLongClick");
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(point));
+    }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -52,9 +61,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void onMapReady(GoogleMap googleMap) {
         Log.d("Logger", "MapsActivity onMapReady");
         mMap = googleMap;
+        mMap.setOnMapLongClickListener(this);
         setUpMap();
 
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(defaultLocation));
         startingZoom();
     }
@@ -99,24 +108,36 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
 
     private void goToEventCreation(){
         Log.d("Logger", "MapsActivity goToEventCreation");
+        LatLng latLng =  mMap.getCameraPosition().target;
         EventoCadastroFragment fragment = new EventoCadastroFragment();
         FragmentTransaction fragmentManager = getSupportFragmentManager().beginTransaction();
+        Bundle extras = new Bundle();
+
+        extras.putDouble("Lat", latLng.latitude);
+        extras.putDouble("Lng", latLng.longitude);
+        if(extras !=null) {
+            fragment.setArguments(extras);
+        }
+
         fragmentManager.replace(R.id.content_map, fragment);
         fragmentManager.commit();
-
         hideInterface();
-
-//        Intent intent = new Intent(MapsActivity.this,HomeActivity.class);
-//        startActivity(intent);
     }
 
     private void goToAttractionCreation(){
         Log.d("Logger", "MapsActivity goToAttractionCreation");
+        LatLng latLng =  mMap.getCameraPosition().target;
         PontoTuristicoCadastroFragment fragment = new PontoTuristicoCadastroFragment();
         FragmentTransaction fragmentManager = getSupportFragmentManager().beginTransaction();
+        Bundle extras = new Bundle();
+
+        extras.putDouble("Lat", latLng.latitude);
+        extras.putDouble("Lng", latLng.longitude);
+        if(extras !=null) {
+            fragment.setArguments(extras);
+        }
         fragmentManager.replace(R.id.content_map, fragment);
         fragmentManager.commit();
-
         hideInterface();
     }
 

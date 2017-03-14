@@ -18,7 +18,10 @@ import android.util.Log;
 import com.example.diogo.discoverytrip.Activities.HomeActivity;
 import com.example.diogo.discoverytrip.DataBase.DiscoveryTripBD;
 import com.example.diogo.discoverytrip.DataHora.DataHoraSystem;
+import com.example.diogo.discoverytrip.Model.Atracao;
 import com.example.diogo.discoverytrip.R;
+
+import java.util.List;
 
 /**
  * Created by diogo on 04/02/17.
@@ -85,9 +88,9 @@ public class ServiceLembrete extends Service {
     }
 
     private void verificaNotificacao(){
-//        Cursor cursor = discoveryTripBD.selectLembretesTable();
-//        if(cursor.getCount() == 0 || !isRun()) return;
-//        enviaNotificacao();
+        List<Atracao> lembretes = discoveryTripBD.selectDayLembretesTable();
+        if(lembretes.size() == 0 || !isRun()) return;
+        enviaNotificacao();
     }
 
     private void enviaNotificacao() {

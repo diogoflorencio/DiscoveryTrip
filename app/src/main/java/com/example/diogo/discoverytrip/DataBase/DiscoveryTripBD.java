@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import com.example.diogo.discoverytrip.DataHora.DataHoraSystem;
 import com.example.diogo.discoverytrip.Model.Atracao;
@@ -60,7 +61,7 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
     }
 
     /*recupera todos os lembretes do dia corrente*/
-    public List<Atracao> selectLembretesTable(){
+    public List<Atracao> selectDayLembretesTable(){
         SQLiteDatabase db = this.getReadableDatabase();
 
         String[] projection = {
@@ -94,7 +95,15 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
         String[] projection = {
                 LembretesTable.Column._ID,
                 LembretesTable.Column.COLUMN_Nome,
-                LembretesTable.Column.COLUMN_Descricao
+                LembretesTable.Column.COLUMN_Descricao,
+                LembretesTable.Column.COLUMN_Data,
+                LembretesTable.Column.COLUMN_Latitude,
+                LembretesTable.Column.COLUMN_Longitude,
+                LembretesTable.Column.COLUMN_Pais,
+                LembretesTable.Column.COLUMN_Cidade,
+                LembretesTable.Column.COLUMN_Rua,
+                LembretesTable.Column.COLUMN_Numero,
+                LembretesTable.Column.COLUMN_FotoID
         };
 
         String sortOrder =
@@ -129,18 +138,11 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
     }
 
     private List<Atracao> parseCursoToAtracao(Cursor cursor){
-        List<Atracao> lembretes = new ArrayList<Atracao>();
+        List<Atracao> atracoes = new ArrayList<Atracao>();
         if(cursor.moveToFirst()){
             do {
-
                 Atracao atracao = new Atracao();
                 Localizacao localizacao = new Localizacao();
-
-                atracao.setId(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column._ID)));
-                atracao.setNome(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Nome)));
-                atracao.setDescricao(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Descricao)));
-                atracao.setEndDate(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Data)));
-                atracao.setNome(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Nome)));
 
                 localizacao.setLatitude(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Latitude)));
                 localizacao.setLongitude(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Longitude)));
@@ -149,13 +151,17 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
                 localizacao.setStreetName(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Rua)));
                 localizacao.setStreetNumber(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Numero)));
 
+                atracao.setId(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column._ID)));
+                atracao.setNome(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Nome)));
+                atracao.setDescricao(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Descricao)));
+                atracao.setEndDate(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Data)));
                 atracao.setLocalizacao(localizacao);
                 atracao.setPhotoId(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_FotoID)));
 
-                lembretes.add(atracao);
+                atracoes.add(atracao);
             }while (cursor.moveToNext());
         }
         cursor.close();
-        return lembretes;
+        return atracoes;
     }
 }

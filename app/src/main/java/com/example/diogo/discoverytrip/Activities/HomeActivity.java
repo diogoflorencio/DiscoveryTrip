@@ -17,11 +17,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
+import com.example.diogo.discoverytrip.DataBase.DiscoveryTripBD;
 import com.example.diogo.discoverytrip.Fragments.EventoFragment;
 import com.example.diogo.discoverytrip.Fragments.HomeFragment;
 import com.example.diogo.discoverytrip.Fragments.LocalizacaoFragment;
 import com.example.diogo.discoverytrip.Fragments.PerfilFragment;
 import com.example.diogo.discoverytrip.Fragments.PontoTuristicoFragment;
+import com.example.diogo.discoverytrip.Model.Atracao;
+import com.example.diogo.discoverytrip.Model.Localizacao;
 import com.example.diogo.discoverytrip.Model.RefreshTokenManeger;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.Service.ServiceLembrete;
@@ -204,4 +207,25 @@ public class HomeActivity extends AppCompatActivity
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d("Logger", "Home onConnectionFailed");
     }
+
+    /* private void addEvent(){
+        Localizacao localizacao =  new Localizacao();
+        localizacao.setLatitude("latitude");
+        localizacao.setLongitude("longitude");
+        localizacao.setCountry("pais");
+        localizacao.setCity("cidade");
+        localizacao.setStreetName("rua");
+        localizacao.setStreetNumber("numero");
+
+        Atracao atracao = new Atracao();
+        atracao.setNome("nome");
+        atracao.setDescricao("descrição");
+        atracao.setEndDate("data");
+        atracao.setPhotoId("foto");
+        atracao.setLocalizacao(localizacao);
+
+        DiscoveryTripBD bd = new DiscoveryTripBD(this);
+        bd.insertLembretesTable(atracao);
+        Log.d("Logger", bd.selectAllLembretesTable().get(0).getLocation().getCity()+ " aqui");
+    }*/
 }
