@@ -54,7 +54,7 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
     }
 
     private void updateUserData(){
-        Log.d("Looger","PerfilEditFragment updateUserData");
+        Log.d("Logger","PerfilEditFragment updateUserData");
         //TODO testar o metodo e falta adicionar o id ao url
 
         final String userName_value = userName_edt.getText().toString();

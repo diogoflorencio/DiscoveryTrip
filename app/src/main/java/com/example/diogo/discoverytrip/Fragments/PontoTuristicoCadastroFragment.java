@@ -116,7 +116,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
                 }
                 break;
             case R.id.ponto_turistico_btnFoto:
-                Log.d("Looger","Ponto turistico selecionar foto");
+                Log.d("Logger","Ponto turistico selecionar foto");
                 Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -129,7 +129,6 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
             case R.id.pntCamera_btn:
                 Log.d("Logger", "PontoTuristicoCadastroFragment botao camera");
                 startCameraActivity();
-                galleryAddPic();
                 break;
         }
     }
@@ -173,23 +172,19 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
-        foto = Uri.fromFile(image);
+//        foto = Uri.fromFile(image);
         return image;
     }
 
     private void galleryAddPic() {
+        //isso provavelmente nao funciona porque o path esta incorreto, não funciona
         Log.d("Logger", "PontoTuristicoCadastroFragment galleryAddPic");
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        Log.d("Logger", "PontoTuristicoCadastroFragment galleryAddPic1");
         try{
             File f = new File(mCurrentPhotoPath);
-            Log.d("Logger", "PontoTuristicoCadastroFragment galleryAddPic2");
             Uri contentUri = Uri.fromFile(f);
-            Log.d("Logger", "PontoTuristicoCadastroFragment galleryAddPic3");
             mediaScanIntent.setData(contentUri);
-            Log.d("Logger", "PontoTuristicoCadastroFragment galleryAddPic4");
             getActivity().sendBroadcast(mediaScanIntent);
-            Log.d("Logger", "PontoTuristicoCadastroFragment galleryAddPic5");
         } catch (Exception e){
             //path não existe
             e.printStackTrace();
@@ -198,63 +193,73 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("Looger","PontoTuristicoCadastroFragment onActivityResult");
+        Log.d("Logger","PontoTuristicoCadastroFragment onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == CAM_SELECT && resultCode == RESULT_OK) {
-            Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult " + CAM_SELECT);
+            Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult CAM_SELECT " + CAM_SELECT);
             foto = data.getData();
             Log.d("Logger","Seleciona imagem"+foto.getPath());
+            Log.d("Logger","data "+ data.toString());
         }
 
-//        if(requestCode == CAM_REQUEST) {
-//            Log.d("Logger", "EventoCadastroFragment onActivityResult " + CAM_REQUEST);
+        if(requestCode == CAM_REQUEST) {
+            Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult CAM_REQUEST " + CAM_REQUEST);
 //            Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-//        }
+            galleryAddPic();
+        }
+    }
+
+    private String translateCategory(){
+        Log.d("Logger", "PontoTuristicoCadastroFragment translateCategory");
+        String categoryVal = "";
+
+        switch (ptCategory_spn.getSelectedItemPosition()) {
+            case 0: categoryVal = "beaches";
+                break;
+            case 1: categoryVal = "island resorts";
+                break;
+            case 2: categoryVal = "parks";
+                break;
+            case 3: categoryVal = "forests";
+                break;
+            case 4: categoryVal = "monuments";
+                break;
+            case 5: categoryVal = "temples";
+                break;
+            case 6: categoryVal = "zoos";
+                break;
+            case 7: categoryVal = "aquariums";
+                break;
+            case 8: categoryVal = "museums";
+                break;
+            case 9: categoryVal = "art galleries";
+                break;
+            case 10: categoryVal = "botanical";
+                break;
+            case 11: categoryVal = "gardens";
+                break;
+            case 12: categoryVal = "castles";
+                break;
+            case 13: categoryVal = "libraries";
+                break;
+            case 14: categoryVal = "prisons";
+                break;
+            case 15: categoryVal = "skyscrapers";
+                break;
+            case 16: categoryVal = "bridges";
+                break;
+        }
+
+        return categoryVal;
     }
 
     public void postData(){
-        Log.d("Looger","PontoTuristicoCadastroFragment postData");
+        Log.d("Logger","PontoTuristicoCadastroFragment postData");
         createLoadingDialog();
         String ptName_value = nameVal_txt.getText().toString();
         String ptDesc_value = descVal_txt.getText().toString();
-        String ptCatg_value = null;
-        switch (ptCategory_spn.getSelectedItemPosition()) {
-            case 0: ptCatg_value = "beaches";
-                break;
-            case 1: ptCatg_value = "island resorts";
-                break;
-            case 2: ptCatg_value = "parks";
-                break;
-            case 3: ptCatg_value = "forests";
-                break;
-            case 4: ptCatg_value = "monuments";
-                break;
-            case 5: ptCatg_value = "temples";
-                break;
-            case 6: ptCatg_value = "zoos";
-                break;
-            case 7: ptCatg_value = "aquariums";
-                break;
-            case 8: ptCatg_value = "museums";
-                break;
-            case 9: ptCatg_value = "art galleries";
-                break;
-            case 10: ptCatg_value = "botanical";
-                break;
-            case 11: ptCatg_value = "gardens";
-                break;
-            case 12: ptCatg_value = "castles";
-                break;
-            case 13: ptCatg_value = "libraries";
-                break;
-            case 14: ptCatg_value = "prisons";
-                break;
-            case 15: ptCatg_value = "skyscrapers";
-                break;
-            case 16: ptCatg_value = "bridges";
-                break;
-        }
+        String ptCatg_value = translateCategory();
         
         Map<String, RequestBody> parametersMap = new HashMap<>();
         MultiRequestHelper helper = new MultiRequestHelper(getContext());
@@ -281,6 +286,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
         Log.d("Token",token);
         //List<byte[]> fotos = new ArrayList<>();
         Log.d("Logger", "parametersMap " + parametersMap.toString());
+        Log.d("Logger", "name " + ptName_value + " description " + ptDesc_value + " category " + ptCatg_value);
 
         final AlertDialog dialog = createLoadingDialog();
         dialog.show();
