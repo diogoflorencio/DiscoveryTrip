@@ -128,9 +128,7 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
             throw new DataInputException(getString(R.string.validate_any_field));
         }
 
-        if(userEmail_edt.getText().toString().trim().isEmpty()){
-            userEmail_value = null;
-        }else{
+        if(!userEmail_edt.getText().toString().trim().isEmpty()){
             userEmail_value = userEmail_edt.getText().toString();
         }
 
