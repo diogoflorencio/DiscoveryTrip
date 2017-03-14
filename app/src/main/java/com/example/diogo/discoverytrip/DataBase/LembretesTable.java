@@ -27,7 +27,7 @@ public abstract class LembretesTable {
     private static final String COLUMN_SEP = ",";
     protected static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " +TABLE_NAME + " (" +
-                    Column._ID + " INTEGER PRIMARY KEY AUTO_INCREMENT," +
+                    Column._ID + " INTEGER PRIMARY KEY," +
                     Column.COLUMN_Nome + TEXT_TYPE + COLUMN_SEP +
                     Column.COLUMN_Descricao + TEXT_TYPE + COLUMN_SEP +
                     Column.COLUMN_Data + TEXT_TYPE + COLUMN_SEP +
