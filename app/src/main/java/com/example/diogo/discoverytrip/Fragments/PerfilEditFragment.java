@@ -34,6 +34,7 @@ import retrofit2.Response;
 public class PerfilEditFragment extends Fragment implements View.OnClickListener {
     public EditText userName_edt, userEmail_edt, userPassword_edt;
     public static String userEmail_value;
+    public static String userName_value;
     public PerfilEditFragment() {
         // Required empty public constructor
     }
@@ -57,8 +58,6 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
         Log.d("Logger","PerfilEditFragment updateUserData");
         //TODO testar o metodo e falta adicionar o id ao url
 
-        final String userName_value = userName_edt.getText().toString();
-        userEmail_value = userEmail_edt.getText().toString();
         String userPassword_value = userPassword_edt.getText().toString();
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
 
@@ -127,9 +126,11 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
         if(userName_edt.getText().toString().trim().isEmpty() && userEmail_edt.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_any_field));
         }
-
         if(!userEmail_edt.getText().toString().trim().isEmpty()){
-            userEmail_value = userEmail_edt.getText().toString();
+            userEmail_value = userEmail_edt.getText().toString().trim();
+        }
+        if(!userName_edt.getText().toString().trim().isEmpty()){
+            userName_value = userName_edt.getText().toString().trim();
         }
 
         if(userPassword_edt.getText().toString().isEmpty()){
