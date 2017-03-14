@@ -261,13 +261,26 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
 
         parametersMap.put("name",helper.createPartFrom(ptName_value));
         parametersMap.put("description",helper.createPartFrom(ptDesc_value));
-        parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
-        parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
+
+//        parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
+//        parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
+
+        try{
+            parametersMap.put("latitude",helper.createPartFrom(String.valueOf(getArguments().getDouble("Lat"))));
+            parametersMap.put("longitude",helper.createPartFrom(String.valueOf(getArguments().getDouble("Lng"))));
+        }
+        catch (Exception e){
+            //o fragmento não veio pela "map activity"
+            parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
+            parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
+        }
+
         parametersMap.put("category ",helper.createPartFrom(ptCatg_value));
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Log.d("Token",token);
         //List<byte[]> fotos = new ArrayList<>();
+        Log.d("Logger", "parametersMap " + parametersMap.toString());
 
         final AlertDialog dialog = createLoadingDialog();
         dialog.show();

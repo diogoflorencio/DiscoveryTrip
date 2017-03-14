@@ -37,6 +37,7 @@ import com.example.diogo.discoverytrip.REST.MultiRequestHelper;
 import com.example.diogo.discoverytrip.REST.ServerResponses.AddEventoResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
 import com.example.diogo.discoverytrip.Util.DatePickerFragment;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.File;
 import java.io.IOException;
@@ -306,8 +307,19 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
 
         parametersMap.put("kind",helper.createPartFrom(eventKind_value));
         parametersMap.put("price",helper.createPartFrom(eventPrice_value));
-        parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
-        parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
+
+//        parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
+//        parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
+
+        try{
+            parametersMap.put("latitude",helper.createPartFrom(String.valueOf(getArguments().getDouble("Lat"))));
+            parametersMap.put("longitude",helper.createPartFrom(String.valueOf(getArguments().getDouble("Lng"))));
+        }
+        catch (Exception e){
+            //o fragmento não veio pela "map activity"
+            parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
+            parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
+        }
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Log.d("Token",token);
