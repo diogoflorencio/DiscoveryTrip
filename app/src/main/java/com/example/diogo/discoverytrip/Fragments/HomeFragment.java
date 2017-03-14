@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment implements LocationListener {
 
         if(get){
             get = false;
-            String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
+            String token = AcessToken.recuperar(getActivity().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
             Call<SearchResponse> call = ApiClient.API_SERVICE.searchPontoTuristico("bearer "+token,latitude, longitude,2000);
             call.enqueue(new Callback<SearchResponse>() {
                 @Override
@@ -109,7 +109,7 @@ public class HomeFragment extends Fragment implements LocationListener {
                         }
 
                         if(requestCompleted){
-                            ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
+                            ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getActivity(),
                                     getActivity().getLayoutInflater(),
                                     atracoes);
                             listView.setAdapter(adapter);
@@ -119,7 +119,7 @@ public class HomeFragment extends Fragment implements LocationListener {
                     else{
                         get = true;
                         if(requestCompleted){
-                            ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
+                            ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getActivity(),
                                     getActivity().getLayoutInflater(),
                                     atracoes);
                             listView.setAdapter(adapter);
@@ -139,14 +139,14 @@ public class HomeFragment extends Fragment implements LocationListener {
                 public void onFailure(Call<SearchResponse> call, Throwable t) {
                     get = true;
                     if(requestCompleted){
-                        ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
+                        ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getActivity(),
                                 getActivity().getLayoutInflater(),
                                 atracoes);
                         listView.setAdapter(adapter);
                     }
                     requestCompleted = true;
                     Log.e("Logger","Pesquisa de pontos turisticos error: "+t.toString());
-                    Toast.makeText(getContext(),"Erro ao se conectar com o servidor!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Erro ao se conectar com o servidor!",Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -161,7 +161,7 @@ public class HomeFragment extends Fragment implements LocationListener {
                         }
 
                         if(requestCompleted){
-                            ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
+                            ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getActivity(),
                                     getActivity().getLayoutInflater(),
                                     atracoes);
                             listView.setAdapter(adapter);
@@ -171,7 +171,7 @@ public class HomeFragment extends Fragment implements LocationListener {
                     else{
                         get = true;
                         if(requestCompleted){
-                            ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
+                            ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getActivity(),
                                     getActivity().getLayoutInflater(),
                                     atracoes);
                             listView.setAdapter(adapter);
@@ -191,14 +191,14 @@ public class HomeFragment extends Fragment implements LocationListener {
                 public void onFailure(Call<SearchResponse> call, Throwable t) {
                     get = true;
                     if(requestCompleted){
-                        ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
+                        ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getActivity(),
                                 getActivity().getLayoutInflater(),
                                 atracoes);
                         listView.setAdapter(adapter);
                     }
                     requestCompleted = true;
                     Log.e("Logger","pesquisa de eventos error: "+t.toString());
-                    Toast.makeText(getContext(),"Erro ao se conectar com o servidor!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),"Erro ao se conectar com o servidor!",Toast.LENGTH_SHORT).show();
                 }
             });
         }

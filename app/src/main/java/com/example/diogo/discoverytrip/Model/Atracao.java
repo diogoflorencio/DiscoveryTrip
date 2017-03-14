@@ -71,4 +71,40 @@ public class Atracao {
     public List<String> getPhotos(){
         return photosId;
     }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public void setLocalizacao(Localizacao localizacao) {
+        this.localizacao = localizacao;
+    }
+
+    public void setPhotosId(List<String> photosId) {
+        this.photosId = photosId;
+    }
+
+    public void setPhotoId(String photoId) {
+        this.photoId = photoId;
+    }
+
+    public void setKind(String kind) {
+        this.kind = kind;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
 }

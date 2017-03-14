@@ -62,4 +62,12 @@ public class Localizacao {
     public String getLongitude() {
         return longitude;
     }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
 }

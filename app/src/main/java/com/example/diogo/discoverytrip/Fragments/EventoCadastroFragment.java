@@ -67,6 +67,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
     private String mCurrentPhotoPath;
     private Uri foto = null;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-DD'T'HH:mm:ss.SSS'Z'");
+    private SimpleDateFormat normalDateFormat = new SimpleDateFormat("dd/M/yyyy");
     private double latitude,longitude;
     private LocationManager locationManager;
     private static final int REQUEST_LOCATION = 2;
@@ -274,14 +275,17 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
 
         String eventName_value = nameVal_txt.getText().toString();
         String eventDesc_value = descVal_txt.getText().toString();
-//        String eventDate_value = dateVal_txt.getText().toString();
-        Date eventDate_value = null;
+        String eventDate_value = dateVal_txt.getText().toString();
+        Log.d("Logger","Date txt "+eventDate_value);
+        String eventDate_formated = null;
         try {
-//            eventDate_value = dateFormat.parse(dateVal_txt.getText().toString());
-            eventDate_value = dateFormat.parse(dateVal_txt.getText().toString());
+            Date date = normalDateFormat.parse(eventDate_value);
+            date.toString();
+            eventDate_formated = dateFormat.format(date);
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        Log.d("Logger","Date formated "+eventDate_formated);
         String eventPrice_value = priceVal_txt.getText().toString();
 
         String eventKind_value = null;
@@ -298,12 +302,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         parametersMap.put("name",helper.createPartFrom(eventName_value));
         parametersMap.put("description",helper.createPartFrom(eventDesc_value));
 
-        try {
-//            parametersMap.put("endData ",helper.createPartFrom(dateFormat.format(eventDate_value)));
-            parametersMap.put("endData ",helper.createPartFrom(dateFormat.format(dateVal_date)));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        parametersMap.put("endData",helper.createPartFrom(eventDate_formated));
 
         parametersMap.put("kind",helper.createPartFrom(eventKind_value));
         parametersMap.put("price",helper.createPartFrom(eventPrice_value));
@@ -319,7 +318,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         dialog.show();
 
         if(foto != null){
-            Call<AddEventoResponse> call = ApiClient.API_SERVICE.cadastrarEvento("bearer " + token, parametersMap,helper.loadPhoto("photos",foto));
+            Call<AddEventoResponse> call = ApiClient.API_SERVICE.cadastrarEvento("bearer " + token, parametersMap,helper.loadPhoto("photo",foto));
             call.enqueue(new Callback<AddEventoResponse>() {
                 @Override
                 public void onResponse(Call<AddEventoResponse> call, Response<AddEventoResponse> response) {
@@ -331,7 +330,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                     } else {
                         try {
                             ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                            Log.e("Server", error.getErrorDescription());
+                            Log.e("Logger", "Server error: "+error.getErrorType()+", "+error.getErrorDescription());
                             Toast.makeText(getContext(),error.getErrorDescription(),Toast.LENGTH_SHORT).show();
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -360,9 +359,9 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                         backToHome();
                     } else {
                         try {
-                            Log.e("Server error", response.errorBody().string());
-                            //ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                            //Log.e("Server", error.getErrorDescription());
+                            ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                            Log.e("Logger", "Server error: "+error.getErrorType()+", "+error.getErrorDescription());
+                            Toast.makeText(getContext(),error.getErrorDescription(),Toast.LENGTH_SHORT).show();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
