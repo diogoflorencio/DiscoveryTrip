@@ -66,7 +66,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
     private final int CAM_SELECT = 1234;
     private String mCurrentPhotoPath;
     private Uri foto = null;
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-DD'T'HH:mm:ss.SSS'Z'");
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss'Z'");
     private SimpleDateFormat normalDateFormat = new SimpleDateFormat("dd/M/yyyy");
     private double latitude,longitude;
     private LocationManager locationManager;
@@ -287,7 +287,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         }
         Log.d("Logger","Date formated "+eventDate_formated);
         String eventPrice_value = priceVal_txt.getText().toString();
-
+        eventPrice_value.replaceAll(".",",");
         String eventKind_value = null;
         switch (evKind_spn.getSelectedItemPosition()) {
             case 0: eventKind_value = "private";
@@ -302,7 +302,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         parametersMap.put("name",helper.createPartFrom(eventName_value));
         parametersMap.put("description",helper.createPartFrom(eventDesc_value));
 
-        parametersMap.put("endData",helper.createPartFrom(eventDate_formated));
+        parametersMap.put("endDate",helper.createPartFrom(eventDate_formated));
 
         parametersMap.put("kind",helper.createPartFrom(eventKind_value));
         parametersMap.put("price",helper.createPartFrom(eventPrice_value));

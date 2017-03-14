@@ -85,9 +85,9 @@ public class ServiceLembrete extends Service {
     }
 
     private void verificaNotificacao(){
-        Cursor cursor = discoveryTripBD.selectLembretesTable();
-        if(cursor.getCount() == 0 || !isRun()) return;
-        enviaNotificacao();
+//        Cursor cursor = discoveryTripBD.selectLembretesTable();
+//        if(cursor.getCount() == 0 || !isRun()) return;
+//        enviaNotificacao();
     }
 
     private void enviaNotificacao() {
