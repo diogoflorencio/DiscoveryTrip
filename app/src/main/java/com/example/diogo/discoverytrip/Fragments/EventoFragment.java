@@ -43,13 +43,10 @@ public class EventoFragment extends Fragment implements View.OnClickListener {
         DiscoveryTripBD bd = new DiscoveryTripBD(getContext());
         List<Atracao> atracoes = bd.selectAllLembretesTable();
 
-       /* ListAdapterEventos adapter = new ListAdapterEventos(getActivity(),
+       ListAdapterEventos adapter = new ListAdapterEventos(getActivity(),
                 getActivity().getLayoutInflater(),
                 atracoes);
         viewEventos.setAdapter(adapter);
-        *
-        * erro ao instanciar o List Adapter
-        */
 
 
         //TODO fazer a chamada ao servidor para pegar os eventos e setar o adapter da list view

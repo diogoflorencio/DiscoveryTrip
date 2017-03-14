@@ -12,7 +12,7 @@ public abstract class LembretesTable {
         public static final String COLUMN_Nome = "nome";
         public static final String COLUMN_Descricao = "descricao";
         public static final String COLUMN_Data = "data";
-        public static final String COLUMN_Latitude = "latitutde";
+        public static final String COLUMN_Latitude = "latitude";
         public static final String COLUMN_Longitude= "longitude";
         public static final String COLUMN_Pais = "pais";
         public static final String COLUMN_Cidade = "cidade";

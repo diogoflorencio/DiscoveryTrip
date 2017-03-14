@@ -309,18 +309,8 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         parametersMap.put("kind",helper.createPartFrom(eventKind_value));
         parametersMap.put("price",helper.createPartFrom(eventPrice_value));
 
-//        parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
-//        parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
-
-        try{
-            parametersMap.put("latitude",helper.createPartFrom(String.valueOf(getArguments().getDouble("Lat"))));
-            parametersMap.put("longitude",helper.createPartFrom(String.valueOf(getArguments().getDouble("Lng"))));
-        }
-        catch (Exception e){
-            //o fragmento não veio pela "map activity"
-            parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
-            parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
-        }
+        parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
+        parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Log.d("Token",token);
@@ -394,6 +384,16 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         }
     }
 
+    private AlertDialog createLoadingDialog(){
+        final AlertDialog dialog = new AlertDialog.Builder(getContext()).create();
+
+        View dialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_aguarde,null);
+        dialog.setView(dialogView);
+        dialog.setTitle("Enviando");
+        dialog.setCancelable(false);
+        return dialog;
+    }
+
     private void startGPS() {
         Log.d("Logger", "LocalizacaoFragment startGPS");
         locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
@@ -425,33 +425,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
             return true;
         else
             return false;
-    }
-
-    private AlertDialog createLoadingDialog(){
-        final AlertDialog dialog = new AlertDialog.Builder(getContext()).create();
-
-        View dialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_aguarde,null);
-        dialog.setView(dialogView);
-        dialog.setTitle("Enviando");
-        dialog.setCancelable(false);
-        return dialog;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("Logger", "EventoCadastroFragment onActivityResult");
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == CAM_SELECT && resultCode == RESULT_OK) {
-            Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult CAM_SELECT " + CAM_SELECT);
-            foto = data.getData();
-            Log.d("Logger","Seleciona imagem"+foto.getPath());
-        }
-
-        if(requestCode == CAM_REQUEST) {
-            Log.d("Logger", "EventoCadastroFragment onActivityResult CAM_REQUEST " + CAM_REQUEST);
-//            Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-        }
     }
 
     @Override
@@ -496,5 +469,4 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                         REQUEST_LOCATION);
         } else locationManager.removeUpdates(this);
     }
-
 }
