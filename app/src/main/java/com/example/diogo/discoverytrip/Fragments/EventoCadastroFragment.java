@@ -300,8 +300,23 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         parametersMap.put("kind",helper.createPartFrom(eventKind_value));
         parametersMap.put("price",helper.createPartFrom(eventPrice_value));
 
-        parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
-        parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
+//        parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
+//        parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
+
+        try{
+            //o fragmento veio pela "map activity"
+            parametersMap.put("latitude",helper.createPartFrom(getArguments().getString("Lat")));
+            parametersMap.put("longitude",helper.createPartFrom(getArguments().getString("Lng")));
+            Log.d("Logger", "latitude " + getArguments().getString("Lat"));
+            Log.d("Logger", "longitude " + getArguments().getString("Lng"));
+        }
+        catch (Exception e){
+            //o fragmento não veio pela "map activity"
+            parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
+            parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
+            Log.d("Logger", "latitude " + String.valueOf(latitude));
+            Log.d("Logger", "longitude " + String.valueOf(longitude));
+        }
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Log.d("Token",token);

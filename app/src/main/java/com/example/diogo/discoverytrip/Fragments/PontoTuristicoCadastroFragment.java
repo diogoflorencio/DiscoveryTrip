@@ -267,12 +267,10 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
         parametersMap.put("name",helper.createPartFrom(ptName_value));
         parametersMap.put("description",helper.createPartFrom(ptDesc_value));
 
-//        parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
-//        parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
-
         try{
-            parametersMap.put("latitude",helper.createPartFrom(String.valueOf(getArguments().getDouble("Lat"))));
-            parametersMap.put("longitude",helper.createPartFrom(String.valueOf(getArguments().getDouble("Lng"))));
+            //o fragmento veio pela "map activity"
+            parametersMap.put("latitude",helper.createPartFrom(getArguments().getString("Lat")));
+            parametersMap.put("longitude",helper.createPartFrom(getArguments().getString("Lng")));
         }
         catch (Exception e){
             //o fragmento não veio pela "map activity"

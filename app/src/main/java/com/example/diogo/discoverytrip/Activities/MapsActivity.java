@@ -18,12 +18,16 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.GoogleMap.OnMapLongClickListener;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback, View.OnClickListener, OnMapLongClickListener {
 
     private GoogleMap mMap;
     private static final int DEFAULT_ZOOM = 17;
     private final LatLng defaultLocation = new LatLng(-7.212023, -35.9086433); //Ebedded
     private static final int REQUEST_MAP = 2;
+    private NumberFormat formatter = new DecimalFormat("#0.000000");
 
 //    private GoogleMap.OnMapLongClickListener OnMapLongClickListener;
 
@@ -113,12 +117,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         FragmentTransaction fragmentManager = getSupportFragmentManager().beginTransaction();
         Bundle extras = new Bundle();
 
-        extras.putDouble("Lat", latLng.latitude);
-        extras.putDouble("Lng", latLng.longitude);
-        if(extras !=null) {
-            fragment.setArguments(extras);
-        }
-
+        extras.putString("Lat", formatter.format(latLng.latitude));
+        extras.putString("Lng", formatter.format(latLng.longitude));
+        fragment.setArguments(extras);
         fragmentManager.replace(R.id.content_map, fragment);
         fragmentManager.commit();
         hideInterface();
@@ -131,11 +132,9 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         FragmentTransaction fragmentManager = getSupportFragmentManager().beginTransaction();
         Bundle extras = new Bundle();
 
-        extras.putDouble("Lat", latLng.latitude);
-        extras.putDouble("Lng", latLng.longitude);
-        if(extras !=null) {
-            fragment.setArguments(extras);
-        }
+        extras.putString("Lat", formatter.format(latLng.latitude));
+        extras.putString("Lng", formatter.format(latLng.longitude));
+        fragment.setArguments(extras);
         fragmentManager.replace(R.id.content_map, fragment);
         fragmentManager.commit();
         hideInterface();
