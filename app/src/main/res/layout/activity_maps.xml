@@ -17,29 +17,13 @@
         android:layout_alignParentStart="true" />
 
     <Button
-        android:id="@+id/mapCreateEv_btn"
+        android:id="@+id/mapSelect_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:background="@android:drawable/radiobutton_off_background"
-        android:backgroundTint="@android:color/holo_blue_dark"
-        android:text="EV"
-        android:textSize="18sp" />
-
-    <Button
-        android:id="@+id/mapCreatePnt_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/mapCreateEv_btn"
-        android:layout_alignBottom="@+id/mapCreateEv_btn"
-        android:layout_toLeftOf="@+id/mapCreateEv_btn"
-        android:layout_toStartOf="@+id/mapCreateEv_btn"
-        android:background="@android:drawable/radiobutton_off_background"
-        android:backgroundTint="@android:color/holo_green_dark"
-        android:text="PT"
-        android:textSize="18sp" />
+        android:text="Selecionar" />
 
 
 </RelativeLayout>

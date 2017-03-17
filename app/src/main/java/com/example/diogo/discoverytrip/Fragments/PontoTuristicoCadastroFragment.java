@@ -133,7 +133,9 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
                 break;
             case R.id.pntMap_btn:
                 Log.d("Logger", "PontoTuristicoCadastroFragment botao mapa");
-                startActivity(new Intent(getActivity(),MapsActivity.class));
+                Intent mapIntent = new Intent(getActivity(),MapsActivity.class);
+                mapIntent.putExtra("Caller", "Attraction");
+                startActivity(mapIntent);
                 break;
         }
     }
@@ -328,18 +330,23 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
     private void backToHome() {
         Log.d("Logger", "PontoTuristicoCadastroFragment backToHome");
 
-        if(getActivity().getClass().equals(HomeActivity.class)){
-            FragmentManager fragmentManager = getFragmentManager();
-            HomeFragment fragment = new HomeFragment();
-            fragmentManager.beginTransaction().replace(R.id.content_home, fragment
-            ).commit();
-        }
-        if(getActivity().getClass().equals(MapsActivity.class)){
-            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+        FragmentManager fragmentManager = getFragmentManager();
+        HomeFragment fragment = new HomeFragment();
+        fragmentManager.beginTransaction().replace(R.id.content_home, fragment
+        ).commit();
 
-            MapsActivity currentActivity = (MapsActivity) getActivity();
-            currentActivity.showInterface();
-        }
+//        if(getActivity().getClass().equals(HomeActivity.class)){
+//            FragmentManager fragmentManager = getFragmentManager();
+//            HomeFragment fragment = new HomeFragment();
+//            fragmentManager.beginTransaction().replace(R.id.content_home, fragment
+//            ).commit();
+//        }
+//        if(getActivity().getClass().equals(MapsActivity.class)){
+//            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+//
+//            MapsActivity currentActivity = (MapsActivity) getActivity();
+//            currentActivity.showInterface();
+//        }
     }
 
     private void validateFields() throws DataInputException {

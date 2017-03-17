@@ -168,7 +168,9 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                 break;
             case R.id.evMap_btn:
                 Log.d("Logger", "EventoCadastroFragment botao mapa");
-                startActivity(new Intent(getActivity(),MapsActivity.class));
+                Intent mapIntent = new Intent(getActivity(),MapsActivity.class);
+                mapIntent.putExtra("Caller", "Event");
+                startActivity(mapIntent);
                 break;
         }
     }
@@ -227,19 +229,23 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
 
     private void backToHome() {
         Log.d("Logger", "EventoCadastroFragment backToHome");
+        FragmentManager fragmentManager = getFragmentManager();
+        HomeFragment fragment = new HomeFragment();
+        fragmentManager.beginTransaction().replace(R.id.content_home, fragment
+        ).commit();
 
-        if(getActivity().getClass().equals(HomeActivity.class)){
-            FragmentManager fragmentManager = getFragmentManager();
-            HomeFragment fragment = new HomeFragment();
-            fragmentManager.beginTransaction().replace(R.id.content_home, fragment
-            ).commit();
-        }
-        if(getActivity().getClass().equals(MapsActivity.class)){
-            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
-
-            MapsActivity currentActivity = (MapsActivity) getActivity();
-            currentActivity.showInterface();
-        }
+//        if(getActivity().getClass().equals(HomeActivity.class)){
+//            FragmentManager fragmentManager = getFragmentManager();
+//            HomeFragment fragment = new HomeFragment();
+//            fragmentManager.beginTransaction().replace(R.id.content_home, fragment
+//            ).commit();
+//        }
+//        if(getActivity().getClass().equals(MapsActivity.class)){
+//            getActivity().getSupportFragmentManager().beginTransaction().remove(this).commit();
+//
+//            MapsActivity currentActivity = (MapsActivity) getActivity();
+//            currentActivity.showInterface();
+//        }
     }
 
     private void validateFields() throws DataInputException {
@@ -315,15 +321,11 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
             //o fragmento veio pela "map activity"
             parametersMap.put("latitude",helper.createPartFrom(getArguments().getString("Lat")));
             parametersMap.put("longitude",helper.createPartFrom(getArguments().getString("Lng")));
-            Log.d("Logger", "latitude " + getArguments().getString("Lat"));
-            Log.d("Logger", "longitude " + getArguments().getString("Lng"));
         }
         catch (Exception e){
             //o fragmento não veio pela "map activity"
             parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
             parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
-            Log.d("Logger", "latitude " + String.valueOf(latitude));
-            Log.d("Logger", "longitude " + String.valueOf(longitude));
         }
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));

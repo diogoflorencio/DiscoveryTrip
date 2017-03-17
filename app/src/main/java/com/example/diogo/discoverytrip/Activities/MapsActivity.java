@@ -3,13 +3,10 @@ package com.example.diogo.discoverytrip.Activities;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.example.diogo.discoverytrip.Fragments.EventoCadastroFragment;
-import com.example.diogo.discoverytrip.Fragments.PontoTuristicoCadastroFragment;
 import com.example.diogo.discoverytrip.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -37,8 +34,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
-        findViewById(R.id.mapCreateEv_btn).setOnClickListener(this);
-        findViewById(R.id.mapCreatePnt_btn).setOnClickListener(this);
+//        findViewById(R.id.mapCreateEv_btn).setOnClickListener(this);
+//        findViewById(R.id.mapCreatePnt_btn).setOnClickListener(this);
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -92,17 +89,17 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         mMap.animateCamera(CameraUpdateFactory.zoomTo(DEFAULT_ZOOM));
     }
 
-    private void hideInterface(){
-        Log.d("Logger", "MapsActivity hideInterface");
-        findViewById(R.id.mapCreateEv_btn).setVisibility(View.INVISIBLE);
-        findViewById(R.id.mapCreatePnt_btn).setVisibility(View.INVISIBLE);
-    }
-
-    public void showInterface(){
-        Log.d("Logger", "MapsActivity showInterface");
-        findViewById(R.id.mapCreateEv_btn).setVisibility(View.VISIBLE);
-        findViewById(R.id.mapCreatePnt_btn).setVisibility(View.VISIBLE);
-    }
+//    private void hideInterface(){
+//        Log.d("Logger", "MapsActivity hideInterface");
+//        findViewById(R.id.mapCreateEv_btn).setVisibility(View.INVISIBLE);
+//        findViewById(R.id.mapCreatePnt_btn).setVisibility(View.INVISIBLE);
+//    }
+//
+//    public void showInterface(){
+//        Log.d("Logger", "MapsActivity showInterface");
+//        findViewById(R.id.mapCreateEv_btn).setVisibility(View.VISIBLE);
+//        findViewById(R.id.mapCreatePnt_btn).setVisibility(View.VISIBLE);
+//    }
 
     @Override
     protected void onResume() {
@@ -110,49 +107,75 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         super.onResume();
     }
 
-    private void goToEventCreation(){
-        Log.d("Logger", "MapsActivity goToEventCreation");
-        LatLng latLng =  mMap.getCameraPosition().target;
-        EventoCadastroFragment fragment = new EventoCadastroFragment();
-        FragmentTransaction fragmentManager = getSupportFragmentManager().beginTransaction();
-        Bundle extras = new Bundle();
-
-        extras.putString("Lat", formatter.format(latLng.latitude));
-        extras.putString("Lng", formatter.format(latLng.longitude));
-        fragment.setArguments(extras);
-        fragmentManager.replace(R.id.content_map, fragment);
-        fragmentManager.commit();
-        hideInterface();
-    }
-
-    private void goToAttractionCreation(){
-        Log.d("Logger", "MapsActivity goToAttractionCreation");
-        LatLng latLng =  mMap.getCameraPosition().target;
-        PontoTuristicoCadastroFragment fragment = new PontoTuristicoCadastroFragment();
-        FragmentTransaction fragmentManager = getSupportFragmentManager().beginTransaction();
-        Bundle extras = new Bundle();
-
-        extras.putString("Lat", formatter.format(latLng.latitude));
-        extras.putString("Lng", formatter.format(latLng.longitude));
-        fragment.setArguments(extras);
-        fragmentManager.replace(R.id.content_map, fragment);
-        fragmentManager.commit();
-        hideInterface();
-    }
+//    private void goToEventCreation(){
+//        Log.d("Logger", "MapsActivity goToEventCreation");
+//        LatLng latLng =  mMap.getCameraPosition().target;
+//        EventoCadastroFragment fragment = new EventoCadastroFragment();
+//        FragmentTransaction fragmentManager = getSupportFragmentManager().beginTransaction();
+//        Bundle extras = new Bundle();
+//
+//        extras.putString("Lat", formatter.format(latLng.latitude));
+//        extras.putString("Lng", formatter.format(latLng.longitude));
+//        fragment.setArguments(extras);
+//        fragmentManager.replace(R.id.content_map, fragment);
+//        fragmentManager.commit();
+//        hideInterface();
+//    }
+//
+//    private void goToAttractionCreation(){
+//        Log.d("Logger", "MapsActivity goToAttractionCreation");
+//        LatLng latLng =  mMap.getCameraPosition().target;
+//        PontoTuristicoCadastroFragment fragment = new PontoTuristicoCadastroFragment();
+//        FragmentTransaction fragmentManager = getSupportFragmentManager().beginTransaction();
+//        Bundle extras = new Bundle();
+//
+//        extras.putString("Lat", formatter.format(latLng.latitude));
+//        extras.putString("Lng", formatter.format(latLng.longitude));
+//        fragment.setArguments(extras);
+//        fragmentManager.replace(R.id.content_map, fragment);
+//        fragmentManager.commit();
+//        hideInterface();
+//    }
 
     @Override
     public void onClick(View view) {
         Log.d("Logger", "MapsActivity onClick");
         switch (view.getId()) {
-            case R.id.mapCreateEv_btn:
-                Log.d("Logger", "MapsActivity botao criar evento");
-                goToEventCreation();
+            case R.id.mapSelect_btn:
+                Log.d("Logger", "MapsActivity botao ok");
+                createCaller();
                 break;
-            case R.id.mapCreatePnt_btn:
-                Log.d("Logger", "MapsActivity botao criar ponto turistico");
-                goToAttractionCreation();
-                break;
+//            case R.id.mapCreateEv_btn:
+//                Log.d("Logger", "MapsActivity botao criar evento");
+//                goToEventCreation();
+//                break;
+//            case R.id.mapCreatePnt_btn:
+//                Log.d("Logger", "MapsActivity botao criar ponto turistico");
+//                goToAttractionCreation();
+//                break;
         }
+    }
+
+    private void createCaller() {
+        String caller = getIntent().getStringExtra("Caller");
+
+        switch (caller) {
+            case "Event":
+                Log.d("Logger", "MapsActivity createCaller Event");
+                createEvent();
+                break;
+            case "Attraction":
+                Log.d("Logger", "MapsActivity createCaller Attraction");
+                createAttraction();
+                break;
+
+        }
+    }
+
+    private void createEvent() {
+    }
+
+    private void createAttraction() {
     }
 }
 
