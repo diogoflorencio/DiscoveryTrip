@@ -6,4 +6,6 @@
     <color name="discoveryStatusColor">#c58c3c</color>
     <color name="discoverytripforeground">#760c02</color>
     <color name="discoveryTrip_Background">#d74b00</color>
+    <color name="discoveryStatusColor2">#a8c58c3c</color>
+    <color name="discoverytripforeground2">#c1760c02</color>
 </resources>

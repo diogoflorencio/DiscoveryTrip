@@ -90,6 +90,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         rootView.findViewById(R.id.evCamera_btn).setOnClickListener(this);
         rootView.findViewById(R.id.evento_btnFoto).setOnClickListener(this);
         rootView.findViewById(R.id.evDatePicker_btn).setOnClickListener(this);
+        rootView.findViewById(R.id.evMap_btn).setOnClickListener(this);
 
         nameVal_txt = (EditText) rootView.findViewById(R.id.evName_edt);
         descVal_txt = (EditText) rootView.findViewById(R.id.evDesc_edt);
@@ -164,6 +165,10 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
             case R.id.evDatePicker_btn:
                 Log.d("Logger", "EventoCadastroFragment botao datePicker");
                 datePicker(view);
+                break;
+            case R.id.evMap_btn:
+                Log.d("Logger", "EventoCadastroFragment botao mapa");
+                startActivity(new Intent(getActivity(),MapsActivity.class));
                 break;
         }
     }
@@ -275,6 +280,9 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         try {
             Date date = normalDateFormat.parse(eventDate_value);
             date.toString();
+            date.setHours(23);
+            date.setMinutes(59);
+            date.setSeconds(59);
             eventDate_formated = dateFormat.format(date);
         } catch (ParseException e) {
             e.printStackTrace();

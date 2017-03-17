@@ -155,10 +155,6 @@ public class HomeActivity extends AppCompatActivity
                 Log.d("Logger", "Home localizacao");
                 fragment = new HomeFragment();
                 break;
-            case R.id.nav_localizacao:
-                Log.d("Logger", "Home localizacao");
-                fragment = new LocalizacaoFragment();
-                break;
             case R.id.nav_perfil:
                 Log.d("Logger", "Home localizacao");
                 fragment = new PerfilFragment();
@@ -170,10 +166,6 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_evento:
                 Log.d("Logger", "Home localizacao");
                 fragment = new EventoFragment();
-                break;
-            case R.id.nav_map:
-                Log.d("Logger", "Home map");
-                startActivity(new Intent(HomeActivity.this,MapsActivity.class));
                 break;
         }
 

@@ -2,9 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/common_google_signin_btn_text_dark_default"
     android:clickable="true"
-    tools:context="com.example.diogo.discoverytrip.Fragments.EventoCadastroFragment"
-    android:background="@android:color/darker_gray">
+    tools:context="com.example.diogo.discoverytrip.Fragments.EventoCadastroFragment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -189,7 +189,13 @@
                         android:id="@+id/evCamera_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ic_menu_camera" />
+                        android:background="@android:drawable/ic_menu_camera" />
+
+                    <Button
+                        android:id="@+id/evMap_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:drawable/ic_menu_mapmode" />
 
                 </LinearLayout>
 

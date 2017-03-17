@@ -41,14 +41,15 @@
             android:layout_marginTop="20dp" />
 
         <com.google.android.gms.common.SignInButton
+            android:id="@+id/login_google"
             android:layout_width="195dp"
             android:layout_height="35dp"
-            android:id="@+id/login_google"
             android:layout_gravity="center_horizontal"
-            tools:visivility="gone"
             android:layout_marginTop="20dp"
             android:background="@android:color/transparent"
-            android:backgroundTint="@android:drawable/screen_background_light_transparent" /> />
+            android:backgroundTint="@android:drawable/screen_background_light_transparent"
+            tools:visivility="gone" />
+        />
 
         <LinearLayout
             android:orientation="horizontal"

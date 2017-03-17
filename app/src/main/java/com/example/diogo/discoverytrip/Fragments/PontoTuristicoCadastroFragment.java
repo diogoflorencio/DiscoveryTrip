@@ -88,6 +88,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
         rootView.findViewById(R.id.pntCamera_btn).setOnClickListener(this);
         Button selecionarFoto = (Button) rootView.findViewById(R.id.ponto_turistico_btnFoto);
         selecionarFoto.setOnClickListener(this);
+        rootView.findViewById(R.id.pntMap_btn).setOnClickListener(this);
 
         nameVal_txt = (EditText) rootView.findViewById(R.id.pntNameVal_txt);
         descVal_txt = (EditText) rootView.findViewById(R.id.pntDescVal_txt);
@@ -129,6 +130,10 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
             case R.id.pntCamera_btn:
                 Log.d("Logger", "PontoTuristicoCadastroFragment botao camera");
                 startCameraActivity();
+                break;
+            case R.id.pntMap_btn:
+                Log.d("Logger", "PontoTuristicoCadastroFragment botao mapa");
+                startActivity(new Intent(getActivity(),MapsActivity.class));
                 break;
         }
     }
