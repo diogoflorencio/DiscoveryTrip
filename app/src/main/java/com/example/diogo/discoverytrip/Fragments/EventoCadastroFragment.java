@@ -15,7 +15,6 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +26,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.diogo.discoverytrip.Activities.HomeActivity;
 import com.example.diogo.discoverytrip.Activities.MapsActivity;
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
@@ -37,7 +35,6 @@ import com.example.diogo.discoverytrip.REST.MultiRequestHelper;
 import com.example.diogo.discoverytrip.REST.ServerResponses.AddEventoResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
 import com.example.diogo.discoverytrip.Util.DatePickerFragment;
-import com.google.android.gms.maps.model.LatLng;
 
 import java.io.File;
 import java.io.IOException;
@@ -153,7 +150,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
             case R.id.evCamera_btn:
                 Log.d("Logger", "EventoCadastroFragment botao camera");
                 startCameraActivity();
-                galleryAddPic();
                 break;
             case R.id.evento_btnFoto:
                 Log.d("Logger","EventoCadastroFragment selecionar foto");
@@ -180,23 +176,55 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-            Log.d("Logger", "EventoCadastroFragment onActivityResult " + CAM_REQUEST);
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException e) {
-                // Error occurred while creating the File
-                e.printStackTrace();
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(getContext(),
-                        "com.example.android.fileprovider",
-                        photoFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+//            // Create the File where the photo should go
+//            File photoFile = null;
+//            try {
+//                photoFile = createImageFile();
+//            } catch (IOException e) {
+//                // Error occurred while creating the File
+//                e.printStackTrace();
+//            }
+//            // Continue only if the File was successfully created
+//            if (photoFile != null) {
+//                Uri photoURI = FileProvider.getUriForFile(getContext(),
+//                        "com.example.android.fileprovider",
+//                        photoFile);
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File("/sdcard/tmp")));
                 startActivityForResult(intent, CAM_REQUEST);
+//            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d("Logger","EventoCadastroFragment onActivityResult");
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == CAM_SELECT && resultCode == RESULT_OK) {
+            Log.d("Logger", "EventoCadastroFragment onActivityResult CAM_SELECT " + CAM_SELECT);
+            foto = data.getData();
+            Log.d("Logger","Seleciona imagem" + foto.getPath());
+        }
+
+        if(requestCode == CAM_REQUEST && resultCode == RESULT_OK) {
+            Log.d("Logger", "EventoCadastroFragment onActivityResult CAM_REQUEST " + CAM_REQUEST);
+            try{
+                foto = data.getData();
+            } catch (Exception e){
+                e.printStackTrace();
+                File file = new File("/sdcard/tmp");
+                try {
+                    foto = Uri.parse(MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), file.getAbsolutePath(), null, null));
+                    Log.d("Logger","Seleciona imagem" + foto.getPath());
+                    if (!file.delete()) {
+                        Log.d("logMarker", "Failed to delete " + file);
+                    }
+                } catch (Exception e2) {
+                    e2.printStackTrace();
+                }
             }
+//            galleryAddPic();
         }
     }
 
@@ -221,10 +249,15 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         //isso provavelmente nao funciona porque o path esta incorreto, não funciona
         Log.d("Logger", "EventoCadastroFragment galleryAddPic");
         Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        File f = new File(mCurrentPhotoPath);
-        Uri contentUri = Uri.fromFile(f);
-        mediaScanIntent.setData(contentUri);
-        getActivity().sendBroadcast(mediaScanIntent);
+        try{
+            File f = new File(mCurrentPhotoPath);
+            Uri contentUri = Uri.fromFile(f);
+            mediaScanIntent.setData(contentUri);
+            getActivity().sendBroadcast(mediaScanIntent);
+        } catch (Exception e){
+            //path não existe
+            e.printStackTrace();
+        }
     }
 
     private void backToHome() {

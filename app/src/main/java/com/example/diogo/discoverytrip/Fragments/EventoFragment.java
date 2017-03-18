@@ -40,19 +40,13 @@ public class EventoFragment extends Fragment implements View.OnClickListener {
 
         ListView viewEventos = (ListView) rootView.findViewById(R.id.fragment_evento_listEvento);
 
-
-        Log.d("Logger", "EventoFragment onCreate2");
         DiscoveryTripBD bd = new DiscoveryTripBD(getContext());
-        Log.d("Logger", "EventoFragment onCreate3");
         List<Atracao> atracoes = bd.selectAllLembretesTable();
-        Log.d("Logger", "EventoFragment onCreate4");
 
 //       ListAdapterEventos adapter = new ListAdapterEventos(getActivity(),
 //                getActivity().getLayoutInflater(),
 //                atracoes);
 //        viewEventos.setAdapter(adapter);
-        Log.d("Logger", "EventoFragment onCreate5");
-
 
         //TODO fazer a chamada ao servidor para pegar os eventos e setar o adapter da list view
         //ListAdapterEventos adapter = new ListAdapterEventos(inflater, 'lista de eventos');

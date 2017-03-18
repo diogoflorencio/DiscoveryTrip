@@ -16,7 +16,6 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.FileProvider;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,7 +27,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.example.diogo.discoverytrip.Activities.HomeActivity;
 import com.example.diogo.discoverytrip.Activities.MapsActivity;
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.Exceptions.DataInputException;
@@ -145,23 +143,23 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-            Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult " + CAM_REQUEST);
-            // Create the File where the photo should go
-            File photoFile = null;
-            try {
-                photoFile = createImageFile();
-            } catch (IOException e) {
-                // Error occurred while creating the File
-                e.printStackTrace();
-            }
-            // Continue only if the File was successfully created
-            if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(getContext(),
-                        "com.example.android.fileprovider",
-                        photoFile);
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+//            // Create the File where the photo should go
+//            File photoFile = null;
+//            try {
+//                photoFile = createImageFile();
+//            } catch (IOException e) {
+//                // Error occurred while creating the File
+//                e.printStackTrace();
+//            }
+//            // Continue only if the File was successfully created
+//            if (photoFile != null) {
+//                Uri photoURI = FileProvider.getUriForFile(getContext(),
+//                        "com.example.android.fileprovider",
+//                        photoFile);
+//                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File("/sdcard/tmp")));
                 startActivityForResult(intent, CAM_REQUEST);
-            }
+//            }
         }
     }
 
@@ -179,7 +177,6 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
 
         // Save a file: path for use with ACTION_VIEW intents
         mCurrentPhotoPath = image.getAbsolutePath();
-//        foto = Uri.fromFile(image);
         return image;
     }
 
@@ -206,14 +203,27 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
         if(requestCode == CAM_SELECT && resultCode == RESULT_OK) {
             Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult CAM_SELECT " + CAM_SELECT);
             foto = data.getData();
-            Log.d("Logger","Seleciona imagem"+foto.getPath());
-            Log.d("Logger","data "+ data.toString());
+            Log.d("Logger","Seleciona imagem" + foto.getPath());
         }
 
-        if(requestCode == CAM_REQUEST) {
+        if(requestCode == CAM_REQUEST && resultCode == RESULT_OK) {
             Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult CAM_REQUEST " + CAM_REQUEST);
-//            Bitmap bitmap = (Bitmap)data.getExtras().get("data");
-            galleryAddPic();
+            try{
+                foto = data.getData();
+            } catch (Exception e){
+                e.printStackTrace();
+                File file = new File("/sdcard/tmp");
+                try {
+                    foto = Uri.parse(MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), file.getAbsolutePath(), null, null));
+                    Log.d("Logger","Seleciona imagem" + foto.getPath());
+                    if (!file.delete()) {
+                        Log.d("logMarker", "Failed to delete " + file);
+                    }
+                } catch (Exception e2) {
+                    e2.printStackTrace();
+                }
+            }
+//            galleryAddPic();
         }
     }
 
