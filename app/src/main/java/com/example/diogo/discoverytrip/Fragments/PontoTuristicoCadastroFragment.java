@@ -64,6 +64,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
     private double latitude,longitude;
     private LocationManager locationManager;
     private static final int REQUEST_LOCATION = 2;
+    static final int PNTTURISTICOCAD = 0001;
 
     public PontoTuristicoCadastroFragment() {
         Log.d("Logger", "PontoTuristicoCadastroFragment PontoTuristicoCadastroFragment");
@@ -131,11 +132,15 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
                 break;
             case R.id.pntMap_btn:
                 Log.d("Logger", "PontoTuristicoCadastroFragment botao mapa");
-                Intent mapIntent = new Intent(getActivity(),MapsActivity.class);
-                mapIntent.putExtra("Caller", "Attraction");
-                startActivity(mapIntent);
+                openMapActivity();
                 break;
         }
+    }
+
+    private void openMapActivity(){
+        Log.d("Logger", "PontoTuristicoCadastroFragment openMapActivity");
+        Intent mapIntent = new Intent(getActivity(), MapsActivity.class);
+        startActivityForResult(mapIntent, PNTTURISTICOCAD);
     }
 
     private void startCameraActivity(){
@@ -225,6 +230,23 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
             }
 //            galleryAddPic();
         }
+
+        if(requestCode == PNTTURISTICOCAD  && resultCode == RESULT_OK) {
+            Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult PNTTURISTICOCAD " + PNTTURISTICOCAD);
+
+            try{
+                Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult PNTTURISTICOCAD1 " + data.getStringExtra("Lat"));
+                getActivity().getIntent().putExtra("Lat", data.getStringExtra("Lat"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try{
+                Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult PNTTURISTICOCAD2 " + data.getStringExtra("Lng"));
+                getActivity().getIntent().putExtra("Lng", data.getStringExtra("Lng"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private String translateCategory(){
@@ -285,12 +307,12 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
         parametersMap.put("description",helper.createPartFrom(ptDesc_value));
 
         try{
-            //o fragmento veio pela "map activity"
+            //o coordenadas escolhidas pela "map activity"
             parametersMap.put("latitude",helper.createPartFrom(getArguments().getString("Lat")));
             parametersMap.put("longitude",helper.createPartFrom(getArguments().getString("Lng")));
         }
         catch (Exception e){
-            //o fragmento não veio pela "map activity"
+            //o coordenadas não foram escolhidas pela "map activity"
             parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
             parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
         }
