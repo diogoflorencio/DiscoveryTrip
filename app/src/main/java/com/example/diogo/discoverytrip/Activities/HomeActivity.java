@@ -116,6 +116,8 @@ public class HomeActivity extends AppCompatActivity
         switch (id) {
             case R.id.action_settings:
                 Log.d("Logger", "Home action_settings");
+                startActivity(new Intent(HomeActivity.this,MeusEventosActivity.class));
+                finish();
                 return true;
             case R.id.logout:
                 Log.d("Logger", "Home logout");
