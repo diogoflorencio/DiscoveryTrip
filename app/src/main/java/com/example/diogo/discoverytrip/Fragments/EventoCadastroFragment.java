@@ -69,6 +69,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
     private double latitude,longitude;
     private LocationManager locationManager;
     private static final int REQUEST_LOCATION = 2;
+    static final int PNTTURISTICOCAD = 0001;
 
     public EventoCadastroFragment() {
         Log.d("Logger", "EventoCadastroFragment EventoCadastroFragment");
@@ -164,11 +165,15 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                 break;
             case R.id.evMap_btn:
                 Log.d("Logger", "EventoCadastroFragment botao mapa");
-                Intent mapIntent = new Intent(getActivity(),MapsActivity.class);
-                mapIntent.putExtra("Caller", "Event");
-                startActivity(mapIntent);
+                openMapActivity();
                 break;
         }
+    }
+
+    private void openMapActivity(){
+        Log.d("Logger", "PontoTuristicoCadastroFragment openMapActivity");
+        Intent mapIntent = new Intent(getActivity(), MapsActivity.class);
+        startActivityForResult(mapIntent, PNTTURISTICOCAD);
     }
 
     private void startCameraActivity() {
@@ -225,6 +230,23 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                 }
             }
 //            galleryAddPic();
+        }
+
+        if(requestCode == PNTTURISTICOCAD  && resultCode == RESULT_OK) {
+            Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult PNTTURISTICOCAD " + PNTTURISTICOCAD);
+
+            try{
+                Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult PNTTURISTICOCAD1 " + data.getStringExtra("Lat"));
+                getActivity().getIntent().putExtra("Lat", data.getStringExtra("Lat"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            try{
+                Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult PNTTURISTICOCAD2 " + data.getStringExtra("Lng"));
+                getActivity().getIntent().putExtra("Lng", data.getStringExtra("Lng"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
