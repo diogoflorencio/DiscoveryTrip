@@ -92,7 +92,10 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
-        <activity android:name=".Activities.LembreteActivity"></activity>
+        <activity android:name=".Activities.LembreteActivity" />
+        <activity
+            android:name=".Activities.MeusEventosActivity"
+            android:label="@string/title_activity_meus_eventos"></activity>
     </application>
 
 </manifest>

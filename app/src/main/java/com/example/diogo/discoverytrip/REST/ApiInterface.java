@@ -109,4 +109,7 @@ public interface ApiInterface {
 
     @GET("api/images/{id}/download")
     Call<ResponseBody> downloadFoto(@Header("Authorization") String token, @Path("id") String photoId);
+
+    @GET("/api/points")
+    Call<SearchResponse> userPoints(@Header("Authorization") String accessToken);
 }
