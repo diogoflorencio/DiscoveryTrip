@@ -13,10 +13,10 @@ import java.util.List;
 public class SearchResponse {
 
     @SerializedName("attractions")
-    List<Atracao> pontosTuristicos;
+    List<Atracao> atracoes;
 
 
     public List<Atracao> getAtracoes(){
-        return pontosTuristicos;
+        return atracoes;
     }
 }

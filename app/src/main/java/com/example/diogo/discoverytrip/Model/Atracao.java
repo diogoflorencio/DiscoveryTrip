@@ -9,6 +9,12 @@ import java.util.List;
  */
 public class Atracao {
 
+    @SerializedName("_id")
+    private String id;
+
+    @SerializedName("_type")
+    private String type;
+
     @SerializedName("name")
     private String nome;
 
@@ -36,6 +42,14 @@ public class Atracao {
     @SerializedName("endDate")
     private String endDate;
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     public String getId() {
         return id;
     }
@@ -43,9 +57,6 @@ public class Atracao {
     public void setId(String id) {
         this.id = id;
     }
-
-    @SerializedName("id")
-    private String id;
 
     public String getName() {
         return nome;
@@ -93,10 +104,6 @@ public class Atracao {
 
     public void setLocalizacao(Localizacao localizacao) {
         this.localizacao = localizacao;
-    }
-
-    public void setPhotosId(List<String> photosId) {
-        this.photosId = photosId;
     }
 
     public void setPhotoId(String photoId) {

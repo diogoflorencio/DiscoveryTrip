@@ -104,12 +104,8 @@ public interface ApiInterface {
     @POST("api/events")
     Call<AddEventoResponse> cadastrarEvento(@Header("Authorization") String token, @PartMap Map<String, RequestBody> parametersMap);
 
-    @GET("api/search/attractions")
+    @GET("api/search/points")
     Call<SearchResponse> searchPontoTuristico(@Header("Authorization") String token, @Query("latitude") double latitude, @Query("longitude") double longitude, @Query("distance") int distance);
-
-    @GET("api/search/events")
-    Call<SearchResponse> searchEventos(@Header("Authorization") String token, @Query("latitude") double latitude, @Query("longitude") double longitude, @Query("distance") int distance);
-
 
     @GET("api/images/{id}/download")
     Call<ResponseBody> downloadFoto(@Header("Authorization") String token, @Path("id") String photoId);

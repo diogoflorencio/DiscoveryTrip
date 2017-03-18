@@ -293,6 +293,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
             //o fragmento não veio pela "map activity"
             parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
             parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
+            Log.d("Logger","Location add pnt latitude: "+latitude+" longitude: "+longitude);
         }
 
         parametersMap.put("category ",helper.createPartFrom(ptCatg_value));
