@@ -6,7 +6,6 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -42,7 +41,7 @@ public class ServiceLembrete extends Service {
     @Override
     public void onCreate() {
         Log.d("Logger", "onCreate ServiceLembrete");
-        discoveryTripBD = new DiscoveryTripBD(getApplicationContext());
+
     }
 
     @Override
@@ -88,8 +87,9 @@ public class ServiceLembrete extends Service {
     }
 
     private void verificaNotificacao(){
+        discoveryTripBD = new DiscoveryTripBD(getApplicationContext());
         List<Atracao> lembretes = discoveryTripBD.selectDayLembretesTable();
-        if(lembretes.size() == 0 || !isRun()) return;
+        if(lembretes.isEmpty() || !isRun()) return;
         enviaNotificacao();
     }
 
