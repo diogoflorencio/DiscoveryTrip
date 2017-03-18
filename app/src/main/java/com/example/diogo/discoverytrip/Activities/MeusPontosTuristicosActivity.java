@@ -19,31 +19,29 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MeusEventosActivity extends Activity {
-    List<Atracao> userEventos;
+public class MeusPontosTuristicosActivity extends Activity {
+
+    private List<Atracao> userPoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_meus_eventos);
-        Log.d("Logger","MeusEventosActivity onCreate");
-        getUserEventos();
-
+        setContentView(R.layout.activity_meus_pontos_turisticos);
+        getUserPoints();
     }
-
-    private void getUserEventos(){
+    private void getUserPoints(){
         String token = AcessToken.recuperar(this.getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Call<SearchResponse> call = ApiClient.API_SERVICE.userPoints("bearer "+token);
         call.enqueue(new Callback<SearchResponse>() {
             @Override
             public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
                 if(response.isSuccessful()){
-                    Log.d("Logger","UserEventos ok");
-                    userEventos = response.body().getAtracoes();
+                    Log.d("Logger","UserPoints ok");
+                    userPoints = response.body().getAtracoes();
                 }else {
                     try {
                         ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                        Log.e("Logger", "UserEventos ServerResponse "+error.getErrorDescription());
+                        Log.e("Logger", "UserPoints ServerResponse "+error.getErrorDescription());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -52,13 +50,12 @@ public class MeusEventosActivity extends Activity {
 
             @Override
             public void onFailure(Call<SearchResponse> call, Throwable t) {
-                Log.e("Logger","UserEventos error: "+ t.toString());
+                Log.e("Logger","UserPoints error: "+t.toString());
             }
         });
     }
 
-    private void deleteEventos(String id){
+    private void deletePoints(String id){
 
     }
-
 }

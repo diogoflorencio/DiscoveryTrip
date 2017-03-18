@@ -95,7 +95,10 @@
         <activity android:name=".Activities.LembreteActivity" />
         <activity
             android:name=".Activities.MeusEventosActivity"
-            android:label="@string/title_activity_meus_eventos"></activity>
+            android:label="@string/title_activity_meus_eventos" />
+        <activity
+            android:name=".Activities.MeusPontosTuristicosActivity"
+            android:label="@string/title_activity_meus_pontos_turisticos"></activity>
     </application>
 
 </manifest>

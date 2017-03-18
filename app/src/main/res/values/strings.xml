@@ -90,5 +90,6 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_maps_activityfdsf">Map</string>
     <string name="title_activity_meus_eventos">MeusEventosActivity</string>
+    <string name="title_activity_meus_pontos_turisticos">MeusPontosTuristicosActivity</string>
 
 </resources>
