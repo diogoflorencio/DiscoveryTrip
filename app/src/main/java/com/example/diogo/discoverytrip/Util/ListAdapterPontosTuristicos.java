@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,6 +41,7 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
     private Handler handler = new Handler();
     private SimpleDateFormat BDFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     private SimpleDateFormat nomalFormat = new SimpleDateFormat("dd/M/yyyy");
+    private static final String EVENT_TYPE = "Event", POINT_TYPE = "Attraction";
 
     public ListAdapterPontosTuristicos(Activity context, LayoutInflater inflater, List<Atracao> pontosTuristicos){
         super(context, R.layout.item_evento,pontosTuristicos);
@@ -53,55 +55,20 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
     public View getView(int position, View convertView, ViewGroup parent){
         final Atracao atracao = pontosTuristicos.get(position);
         View view = inflater.inflate(R.layout.item_ponto_turistico, null, true);
-        ImageView foto = (ImageView) view.findViewById(R.id.item_pontoTuristico_img);
-        ImageButton button = (ImageButton) view.findViewById(R.id.item_pontoTuristico_btn_participate);
+        ImageView foto = (ImageView) view.findViewById(R.id.iten_img);
+        ImageView icone = (ImageView) view.findViewById(R.id.iten_icon);
 
-        final TextView titulo  = (TextView) view.findViewById(R.id.item_pontoTuristico_txtTitulo);
-        final TextView descricao  = (TextView) view.findViewById(R.id.item_pontoTuristico_txtDescricao);
-        TextView cidade = (TextView) view.findViewById(R.id.item_pontoTuristico_cidade);
+        final TextView titulo  = (TextView) view.findViewById(R.id.iten_name);
 
         titulo.setText(atracao.getName());
-        descricao.setText(atracao.getDescription());
-        cidade.setText(atracao.getLocation().getCity() +", "+
-                atracao.getLocation().getStreetName());
 
-        if(atracao.getEndDate() != null){
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    DiscoveryTripBD bd = new DiscoveryTripBD(context);
-                    bd.insertLembretesTable(atracao);
-                    context.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Toast.makeText(context,"Evento salvo com sucesso",Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                }
-            });
-
-            TextView data = (TextView) view.findViewById(R.id.item_pontoTuristico_data);
-            if(atracao.getStartDate() != null) {
-                try {
-                    data.setText(nomalFormat.format(BDFormat.parse(atracao.getStartDate())) + " à " +
-                            nomalFormat.format(BDFormat.parse(atracao.getEndDate())));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-            else{
-                try {
-                    data.setText(nomalFormat.format(BDFormat.parse(atracao.getEndDate())));
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-            if(atracao.getPhotoId() != null) {
-                loadImage(foto, position, true);
+        if(atracao.getType().equals(EVENT_TYPE)){
+            if(atracao.getPhotoId() != null){
+                loadImage(foto,position,true);
             }
         }
         else{
-            button.setVisibility(View.INVISIBLE);
+            icone.setImageResource(R.drawable.ponto_turistico_icon);
             loadImage(foto,position,false);
         }
         return view;
@@ -117,7 +84,6 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
             photoId = pontosTuristicos.get(position).getPhotos().get(0);
         }
 
-        Log.d("Pesquisa de pontos turisticos",pontosTuristicos.get(position).getPhotos().get(0));
         retrofit2.Call<ResponseBody> call = ApiClient.API_SERVICE.downloadFoto("bearer "+AcessToken.recuperar(context.getSharedPreferences("acessToken", Context.MODE_PRIVATE)),
                 photoId);
         call.enqueue(new retrofit2.Callback<ResponseBody>() {

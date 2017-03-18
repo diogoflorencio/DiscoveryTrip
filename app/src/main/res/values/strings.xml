@@ -89,5 +89,6 @@
     </string-array>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_maps_activityfdsf">Map</string>
+    <string name="title_activity_detalhes_atracao">DetalhesAtracaoActivity</string>
 
 </resources>

@@ -311,7 +311,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
             @Override
             public void onResponse(Call<AttractionResponse> call, Response<AttractionResponse> response) {
                 if(response.isSuccessful()) {
-                    Log.d("Cadastro PT","Cadastro OK");
+                    Log.d("Logger","Cadastro ponto turístico ok");
                     Toast.makeText(getActivity(), R.string.pt_cadastro_sucesso,Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                     backToHome();
@@ -333,7 +333,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
                 // Log error here since request failed
                 Toast.makeText(getContext(), "Erro ao se conectar com o servidor!", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
-                Log.e("Cadastro PT", t.toString());
+                Log.e("Logger", t.toString());
             }
         });
     }

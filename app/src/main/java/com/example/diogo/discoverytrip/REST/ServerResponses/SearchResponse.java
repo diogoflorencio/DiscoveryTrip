@@ -12,7 +12,7 @@ import java.util.List;
 
 public class SearchResponse {
 
-    @SerializedName("attractions")
+    @SerializedName("points")
     List<Atracao> atracoes;
 
 

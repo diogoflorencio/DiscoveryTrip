@@ -12,7 +12,6 @@ import android.widget.ListView;
 import com.example.diogo.discoverytrip.DataBase.DiscoveryTripBD;
 import com.example.diogo.discoverytrip.Model.Atracao;
 import com.example.diogo.discoverytrip.R;
-import com.example.diogo.discoverytrip.Util.ListAdapterEventos;
 import com.example.diogo.discoverytrip.Util.ListAdapterPontosTuristicos;
 
 import java.util.List;

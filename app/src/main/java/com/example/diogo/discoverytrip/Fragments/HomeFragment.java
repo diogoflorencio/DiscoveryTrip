@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
+import com.example.diogo.discoverytrip.Model.Atracao;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
@@ -25,6 +26,7 @@ import com.example.diogo.discoverytrip.REST.ServerResponses.SearchResponse;
 import com.example.diogo.discoverytrip.Util.ListAdapterPontosTuristicos;
 
 import java.io.IOException;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -91,18 +93,19 @@ public class HomeFragment extends Fragment implements LocationListener {
             Log.d("Logger","Location search latitude: "+latitude+" longitude: "+longitude);
             get = false;
             String token = AcessToken.recuperar(getActivity().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
-            Call<SearchResponse> call = ApiClient.API_SERVICE.searchPontoTuristico("bearer "+token,latitude, longitude,2000);
+            Call<SearchResponse> call = ApiClient.API_SERVICE.searchPontoTuristico("bearer "+token,latitude, longitude,500);
             call.enqueue(new Callback<SearchResponse>() {
                 @Override
                 public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
                     if(response.isSuccessful()){
 
                         Log.d("Logger","pesquisa de atrações realizada com sucesso");
-                        if(response.body().getAtracoes() != null){
+                        List<Atracao> atracoes = response.body().getAtracoes();
+                        if(atracoes != null){
                             Log.d("Logger","Setting listview adapter");
                             ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getActivity(),
                                     getActivity().getLayoutInflater(),
-                                    response.body().getAtracoes());
+                                    atracoes.subList(atracoes.size()-1,atracoes.size()));
                             listView.setAdapter(adapter);
                         }
                     }

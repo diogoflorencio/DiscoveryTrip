@@ -1,0 +1,9 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <gradient
+        android:angle="0"
+        android:startColor="#FFC5C5C5"
+        android:centerColor="@color/discoveryTrip_PrimaryColor"
+        android:endColor="@color/discoverytripforeground"
+        android:type="linear" />
+</shape>

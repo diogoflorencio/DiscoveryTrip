@@ -54,7 +54,7 @@
 
         <activity
             android:name=".Activities.MapsActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Activities.LoginActivity"
             android:theme="@style/DiscoveryTripTheme">
@@ -92,6 +92,9 @@
                 android:resource="@xml/file_paths" />
         </provider>
 
+        <activity
+            android:name=".Activities.DetalhesAtracaoActivity"
+            android:label="@string/title_activity_detalhes_atracao"></activity>
     </application>
 
 </manifest>
