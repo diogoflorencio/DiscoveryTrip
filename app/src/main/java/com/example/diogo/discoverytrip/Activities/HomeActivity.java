@@ -116,8 +116,6 @@ public class HomeActivity extends AppCompatActivity
         switch (id) {
             case R.id.action_settings:
                 Log.d("Logger", "Home action_settings");
-                startActivity(new Intent(HomeActivity.this,MeusPontosTuristicosActivity.class));
-                finish();
                 return true;
             case R.id.logout:
                 Log.d("Logger", "Home logout");
@@ -202,7 +200,7 @@ public class HomeActivity extends AppCompatActivity
         Log.d("Logger", "Home onConnectionFailed");
     }
 
-    /* private void addEvent(){
+     /*private void addEvent(){
         Localizacao localizacao =  new Localizacao();
         localizacao.setLatitude("latitude");
         localizacao.setLongitude("longitude");
@@ -216,10 +214,11 @@ public class HomeActivity extends AppCompatActivity
         atracao.setDescricao("descrição");
         atracao.setEndDate("data");
         atracao.setPhotoId("foto");
+        atracao.setType("type");
         atracao.setLocalizacao(localizacao);
 
         DiscoveryTripBD bd = new DiscoveryTripBD(this);
         bd.insertLembretesTable(atracao);
-        Log.d("Logger", bd.selectAllLembretesTable().get(0).getLocation().getCity()+ " aqui");
+        Log.d("Logger", bd.selectAllLembretesTable().get(0).getType()+ " aqui");
     }*/
 }

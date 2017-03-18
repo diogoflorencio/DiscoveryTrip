@@ -55,6 +55,7 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
         values.put(LembretesTable.Column.COLUMN_Rua, atracao.getLocation().getStreetName());
         values.put(LembretesTable.Column.COLUMN_Numero, atracao.getLocation().getStreetNumber());
         values.put(LembretesTable.Column.COLUMN_FotoID, atracao.getPhotoId());
+        values.put(LembretesTable.Column.COLUMN_Type, atracao.getType());
 
         // Insert the new row, returning the primary key value of the new row
         long newRowId = db.insert(LembretesTable.TABLE_NAME, null, values);
@@ -66,7 +67,8 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
 
         String[] projection = {
                 LembretesTable.Column.COLUMN_Nome,
-                LembretesTable.Column.COLUMN_Descricao
+                LembretesTable.Column.COLUMN_Descricao,
+                LembretesTable.Column.COLUMN_Type
         };
 
 
@@ -103,7 +105,8 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
                 LembretesTable.Column.COLUMN_Cidade,
                 LembretesTable.Column.COLUMN_Rua,
                 LembretesTable.Column.COLUMN_Numero,
-                LembretesTable.Column.COLUMN_FotoID
+                LembretesTable.Column.COLUMN_FotoID,
+                LembretesTable.Column.COLUMN_Type
         };
 
         String sortOrder =
@@ -157,6 +160,7 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
                 atracao.setEndDate(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Data)));
                 atracao.setLocalizacao(localizacao);
                 atracao.setPhotoId(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_FotoID)));
+                atracao.setType(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Type)));
 
                 atracoes.add(atracao);
             }while (cursor.moveToNext());
