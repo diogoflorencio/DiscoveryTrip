@@ -9,6 +9,7 @@ import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.Model.Atracao;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
+import com.example.diogo.discoverytrip.REST.ServerResponses.DeleteEventoResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.SearchResponse;
 
@@ -20,7 +21,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MeusEventosActivity extends Activity {
-    List<Atracao> userEventos;
+
+    private List<Atracao> userEventos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +30,6 @@ public class MeusEventosActivity extends Activity {
         setContentView(R.layout.activity_meus_eventos);
         Log.d("Logger","MeusEventosActivity onCreate");
         getUserEventos();
-
     }
 
     private void getUserEventos(){
@@ -58,7 +59,27 @@ public class MeusEventosActivity extends Activity {
     }
 
     private void deleteEventos(String id){
+        String token = AcessToken.recuperar(this.getSharedPreferences("acessToken", Context.MODE_PRIVATE));
+        Call<DeleteEventoResponse> call = ApiClient.API_SERVICE.deleteEvento("bearer "+token,id);
+        call.enqueue(new Callback<DeleteEventoResponse>() {
+            @Override
+            public void onResponse(Call<DeleteEventoResponse> call, Response<DeleteEventoResponse> response) {
+                if(response.isSuccessful()){
+                    Log.d("Logger","deleteEventos ok");
+                }else {
+                    try {
+                        ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                        Log.e("Logger", "deleteEventos ServerResponse "+error.getErrorDescription());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<DeleteEventoResponse> call, Throwable t) {
+                Log.e("Logger","deleteEventos error: "+ t.toString());
+            }
+        });
     }
-
 }

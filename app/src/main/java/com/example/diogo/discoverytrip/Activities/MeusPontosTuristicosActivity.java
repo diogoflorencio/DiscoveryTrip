@@ -9,6 +9,7 @@ import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.Model.Atracao;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
+import com.example.diogo.discoverytrip.REST.ServerResponses.DeleteAttractionResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.SearchResponse;
 
@@ -27,7 +28,8 @@ public class MeusPontosTuristicosActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meus_pontos_turisticos);
-        getUserPoints();
+       // getUserPoints();
+        deletePoints("0");
     }
     private void getUserPoints(){
         String token = AcessToken.recuperar(this.getSharedPreferences("acessToken", Context.MODE_PRIVATE));
@@ -56,6 +58,27 @@ public class MeusPontosTuristicosActivity extends Activity {
     }
 
     private void deletePoints(String id){
+        String token = AcessToken.recuperar(this.getSharedPreferences("acessToken", Context.MODE_PRIVATE));
+        Call<DeleteAttractionResponse> call = ApiClient.API_SERVICE.deleteAttraction("bearer "+token,id);
+        call.enqueue(new Callback<DeleteAttractionResponse>() {
+            @Override
+            public void onResponse(Call<DeleteAttractionResponse> call, Response<DeleteAttractionResponse> response) {
+                if(response.isSuccessful()) {
+                    Log.d("Logger", "deletePoints ok");
+                }else {
+                    try {
+                        ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                        Log.e("Logger", "deletePoints ServerResponse "+error.getErrorDescription());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
 
+            @Override
+            public void onFailure(Call<DeleteAttractionResponse> call, Throwable t) {
+                Log.e("Logger","deletePoints error: "+t.toString());
+            }
+        });
     }
 }
