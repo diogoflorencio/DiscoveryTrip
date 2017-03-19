@@ -58,7 +58,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class EventoCadastroFragment extends Fragment implements LocationListener, View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerFragment.DatePickerFragmentListener {
     public EditText nameVal_txt, descVal_txt, priceVal_txt;
     private Date dateVal_date;
-    public TextView dateVal_txt;
+    public TextView dateInicioVal_txt, dateFimVal_txt;
     Spinner evKind_spn;
     private final int CAM_REQUEST = 1313;
     private final int CAM_SELECT = 1234;
@@ -87,14 +87,16 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         rootView.findViewById(R.id.evCancel_btn).setOnClickListener(this);
         rootView.findViewById(R.id.evCamera_btn).setOnClickListener(this);
         rootView.findViewById(R.id.evento_btnFoto).setOnClickListener(this);
-        rootView.findViewById(R.id.evDatePicker_btn).setOnClickListener(this);
+        rootView.findViewById(R.id.evDatePickerInicio_btn).setOnClickListener(this);
+        rootView.findViewById(R.id.evDatePickerFim_btn).setOnClickListener(this);
         rootView.findViewById(R.id.evMap_btn).setOnClickListener(this);
 
         nameVal_txt = (EditText) rootView.findViewById(R.id.evName_edt);
         descVal_txt = (EditText) rootView.findViewById(R.id.evDesc_edt);
         priceVal_txt = (EditText) rootView.findViewById(R.id.evPrice_edt);
 
-        dateVal_txt = (TextView) rootView.findViewById(R.id.dateVal_txt);
+        dateInicioVal_txt = (TextView) rootView.findViewById(R.id.dateValInicio_txt);
+        dateFimVal_txt = (TextView) rootView.findViewById(R.id.dateValFim_txt);
 
         evKind_spn = (Spinner) rootView.findViewById(R.id.evKind_spn);
         evKind_spn.setOnItemSelectedListener(this);
@@ -106,9 +108,10 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         return rootView;
     }
 
-    public void datePicker(View view){
+    public void datePicker(View view, String dateKind){
         Log.d("Logger", "EventoCadastroFragment DatePicker");
         DatePickerFragment fragment = DatePickerFragment.newInstance(this);
+        getActivity().getIntent().putExtra("DateKind", dateKind);
         fragment.show(getActivity().getSupportFragmentManager(), "datePicker");
     }
 
@@ -116,8 +119,24 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         Log.d("Logger", "EventoCadastroFragment setDate");
         final DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.MEDIUM);
         month = month +1;
-        dateVal_txt.setText(dayOfMonth+"/"+month+"/"+year);
-        Log.d("Logger", "data " + dateVal_txt.getText());
+
+        try {
+            String dateKind = getActivity().getIntent().getStringExtra("DateKind");
+            switch (dateKind){
+                case "Inicio":
+                    dateInicioVal_txt.setText(dayOfMonth+"/"+month+"/"+year);
+                    break;
+                case "Fim":
+                    dateFimVal_txt.setText(dayOfMonth+"/"+month+"/"+year);
+                    break;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        Log.d("Logger", "data " + dateInicioVal_txt.getText());
     }
 
     @Override
@@ -159,9 +178,13 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                 intent.setAction(Intent.ACTION_GET_CONTENT);
                 startActivityForResult(Intent.createChooser(intent, "Selecione uma imagem"), CAM_SELECT);
                 break;
-            case R.id.evDatePicker_btn:
-                Log.d("Logger", "EventoCadastroFragment botao datePicker");
-                datePicker(view);
+            case R.id.evDatePickerInicio_btn:
+                Log.d("Logger", "EventoCadastroFragment botao datePickerInicio");
+                datePicker(view, "Inicio");
+                break;
+            case R.id.evDatePickerFim_btn:
+                Log.d("Logger", "EventoCadastroFragment botao datePickerFim");
+                datePicker(view, "Fim");
                 break;
             case R.id.evMap_btn:
                 Log.d("Logger", "EventoCadastroFragment botao mapa");
@@ -233,16 +256,16 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         }
 
         if(requestCode == PNTTURISTICOCAD  && resultCode == RESULT_OK) {
-            Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult PNTTURISTICOCAD " + PNTTURISTICOCAD);
+            Log.d("Logger", "EventoCadastroFragment onActivityResult PNTTURISTICOCAD " + PNTTURISTICOCAD);
 
             try{
-                Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult PNTTURISTICOCAD1 " + data.getStringExtra("Lat"));
+                Log.d("Logger", "EventoCadastroFragment onActivityResult PNTTURISTICOCAD1 " + data.getStringExtra("Lat"));
                 getActivity().getIntent().putExtra("Lat", data.getStringExtra("Lat"));
             } catch (Exception e) {
                 e.printStackTrace();
             }
             try{
-                Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult PNTTURISTICOCAD2 " + data.getStringExtra("Lng"));
+                Log.d("Logger", "EventoCadastroFragment onActivityResult PNTTURISTICOCAD2 " + data.getStringExtra("Lng"));
                 getActivity().getIntent().putExtra("Lng", data.getStringExtra("Lng"));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -309,9 +332,29 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
             throw new DataInputException("Digite o nome do evento!");
         }
 
-        if(dateVal_txt.getText().toString().trim().isEmpty()){
-            throw new DataInputException(getString(R.string.validate_date));
+        if(dateInicioVal_txt.getText().toString().trim().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_date_begin));
         }
+
+        if(dateFimVal_txt.getText().toString().trim().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_date_end));
+        }
+
+
+        try {
+            Date dateBegin = normalDateFormat.parse(dateInicioVal_txt.getText().toString());
+            Date dateEnd = normalDateFormat.parse(dateFimVal_txt.getText().toString());
+
+            if(dateBegin.compareTo(dateEnd) > 0){
+                throw new DataInputException(getString(R.string.validate_date_dontMatch));
+
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+
+
 
         if(descVal_txt.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_description));
@@ -335,20 +378,11 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
 
         String eventName_value = nameVal_txt.getText().toString();
         String eventDesc_value = descVal_txt.getText().toString();
-        String eventDate_value = dateVal_txt.getText().toString();
-        Log.d("Logger","Date txt "+eventDate_value);
-        String eventDate_formated = null;
-        try {
-            Date date = normalDateFormat.parse(eventDate_value);
-            date.toString();
-            date.setHours(23);
-            date.setMinutes(59);
-            date.setSeconds(59);
-            eventDate_formated = dateFormat.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        Log.d("Logger","Date formated "+eventDate_formated);
+        String eventDateBegin_value = dateInicioVal_txt.getText().toString();
+        String eventDateEnd_value = dateFimVal_txt.getText().toString();
+        Log.d("Logger","DateBegin txt "+ eventDateBegin_value);
+        Log.d("Logger","DateEnd txt "+ eventDateEnd_value);
+
         String eventPrice_value = priceVal_txt.getText().toString();
         String eventKind_value = null;
         switch (evKind_spn.getSelectedItemPosition()) {
@@ -358,19 +392,59 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                 break;
         }
 
+        String eventDateBegin_formated = null;
+        String eventDateEnd_formated = null;
+
+//        String eventDate_formated = null;
+
+//        try {
+//            Date date = normalDateFormat.parse(eventDateBegin_value);
+//            date.toString();
+//            date.setHours(23);
+//            date.setMinutes(59);
+//            date.setSeconds(59);
+//            eventDate_formated = dateFormat.format(date);
+//            Log.d("Logger","Date formated "+eventDate_formated);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+
+        try {
+            Date dateBegin = normalDateFormat.parse(eventDateBegin_value);
+            dateBegin.toString();
+            dateBegin.setHours(0);
+            dateBegin.setMinutes(59);
+            dateBegin.setSeconds(59);
+            eventDateBegin_formated = dateFormat.format(dateBegin);
+            Log.d("Logger","DateBegin formated "+ eventDateBegin_formated);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            Date dateEnd = normalDateFormat.parse(eventDateEnd_value);
+            dateEnd.toString();
+            dateEnd.setHours(23);
+            dateEnd.setMinutes(59);
+            dateEnd.setSeconds(59);
+            eventDateEnd_formated = dateFormat.format(dateEnd);
+            Log.d("Logger","DateEnd formated "+ eventDateEnd_formated);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         Map<String, RequestBody> parametersMap = new HashMap<>();
         MultiRequestHelper helper = new MultiRequestHelper(getContext());
 
         parametersMap.put("name",helper.createPartFrom(eventName_value));
         parametersMap.put("description",helper.createPartFrom(eventDesc_value));
 
-        parametersMap.put("endDate",helper.createPartFrom(eventDate_formated));
+//        parametersMap.put("endDate",helper.createPartFrom(eventDate_formated));
+        parametersMap.put("startDate",helper.createPartFrom(eventDateBegin_formated));
+        parametersMap.put("endDate",helper.createPartFrom(eventDateEnd_formated));
 
         parametersMap.put("kind",helper.createPartFrom(eventKind_value));
         parametersMap.put("price",helper.createPartFrom(eventPrice_value));
-
-//        parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
-//        parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
 
         try{
             //o fragmento veio pela "map activity"
@@ -388,7 +462,8 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         //List<byte[]> fotos = new ArrayList<>();
         Log.d("Logger", "parametersMap " + parametersMap.toString());
         Log.d("Logger", "name " + eventName_value + " description " + eventDesc_value +
-                " endData " + eventDate_formated  + " kind " + eventKind_value  + " price " + eventPrice_value);
+                " startDate " + eventDateBegin_formated  + " endDate " + eventDateEnd_formated  +
+                " kind " + eventKind_value  + " price " + eventPrice_value);
 
         final AlertDialog dialog = createLoadingDialog();
         dialog.show();
@@ -466,7 +541,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
     }
 
     private void startGPS() {
-        Log.d("Logger", "LocalizacaoFragment startGPS");
+        Log.d("Logger", "EventoCadastroFragment startGPS");
         locationManager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
         //permissão de GPS
         if (ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
@@ -527,6 +602,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
     }
 
     private void stopGPS(){
+        Log.d("Logger","EventoCadastroFragment stopGPS");
         //permissão de GPS
         if (ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) !=
                 PackageManager.PERMISSION_GRANTED &&

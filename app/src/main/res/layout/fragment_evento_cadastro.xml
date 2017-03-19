@@ -21,6 +21,13 @@
 
 
                 <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="18sp" />
+
+                <TextView
                     android:id="@+id/eventCreation_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -56,6 +63,40 @@
                         android:layout_weight="1"
                         android:ems="10"
                         android:inputType="textPersonName" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/evDateInicio_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/evName_txt"
+                        android:layout_weight="1"
+                        android:text="Data de inicio"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/dateValInicio_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/evDatePickerInicio_btn"
+                        android:layout_width="55dp"
+                        android:layout_height="wrap_content"
+                        android:background="@android:drawable/ic_menu_my_calendar" />
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -65,25 +106,25 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/evDate_txt"
+                        android:id="@+id/evDateFim_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/evName_txt"
                         android:layout_weight="1"
-                        android:text="Data"
+                        android:text="Data de fim"
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/dateVal_txt"
+                        android:id="@+id/dateValFim_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="18sp" />
 
                     <Button
-                        android:id="@+id/evDatePicker_btn"
+                        android:id="@+id/evDatePickerFim_btn"
                         android:layout_width="55dp"
                         android:layout_height="wrap_content"
                         android:background="@android:drawable/ic_menu_my_calendar" />
