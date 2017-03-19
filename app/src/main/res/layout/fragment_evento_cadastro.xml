@@ -93,9 +93,9 @@
 
                     <Button
                         android:id="@+id/evDatePickerInicio_btn"
-                        android:layout_width="55dp"
-                        android:layout_height="wrap_content"
-                        android:background="@android:drawable/ic_menu_my_calendar" />
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/calendar_icon" />
 
                 </LinearLayout>
 
@@ -125,9 +125,9 @@
 
                     <Button
                         android:id="@+id/evDatePickerFim_btn"
-                        android:layout_width="55dp"
-                        android:layout_height="wrap_content"
-                        android:background="@android:drawable/ic_menu_my_calendar" />
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/calendar_icon" />
 
                 </LinearLayout>
 
@@ -158,8 +158,8 @@
 
                     <Button
                         android:id="@+id/evTimePicker_btn"
-                        android:layout_width="55dp"
-                        android:layout_height="55dp"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
                         android:background="@drawable/clock_icon" />
 
                 </LinearLayout>
@@ -261,15 +261,15 @@
 
                     <Button
                         android:id="@+id/evCamera_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@android:drawable/ic_menu_camera" />
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/ic_menu_camera" />
 
                     <Button
                         android:id="@+id/evMap_btn"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="@android:drawable/ic_menu_mapmode" />
+                        android:layout_width="60dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/map_icon" />
 
                 </LinearLayout>
 
