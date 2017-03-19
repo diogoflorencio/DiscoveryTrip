@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TabHost;
 
 import com.example.diogo.discoverytrip.R;
 
@@ -31,13 +32,7 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
         getActivity().setTitle(R.string.ponto_turistico_label);
 
         rootView.findViewById(R.id.createPntTuristico_btn).setOnClickListener(this);
-        rootView.findViewById(R.id.pnt_search_ok_btn).setOnClickListener(this);
-        rootView.findViewById(R.id.pesquisa_ponto_btnLocalizacao).setOnClickListener(this);
-
-        ListView viewPntsTuristicos = (ListView) rootView.findViewById(R.id.fragment_ponto_turistico_listEvento);
-        //TODO fazer a chamada ao servidor para pegar os pontos turisticos e setar o adapter da list view
-        //ListAdapterEventos adapter = new ListAdapterEventos(inflater, 'lista de pontos turisticos');
-        //viewEventos.setAdapter(adapter);
+        
         return rootView;
     }
 
@@ -49,10 +44,7 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
                 Log.d("Logger", "EventoFragment botao confirmar");
                 goToPntTuristicoCreation();
                 break;
-            case R.id.pnt_search_ok_btn:
-                break;
-            case R.id.pesquisa_ponto_btnLocalizacao:
-                break;
+
         }
     }
 

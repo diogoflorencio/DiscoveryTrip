@@ -3,8 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:clickable="true"
+    android:clickable="false"
     tools:context="com.example.diogo.discoverytrip.Fragments.EventoFragment">
 
     <RelativeLayout
@@ -12,32 +11,81 @@
         android:layout_height="match_parent">
 
         <android.support.design.widget.FloatingActionButton
+            android:id="@+id/createEvent_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
             android:clickable="true"
             app:fabSize="mini"
-            app:srcCompat="@android:drawable/ic_input_add"
-            android:id="@+id/createEvent_btn"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            app:srcCompat="@android:drawable/ic_input_add" />
 
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true">
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
 
-            <include layout="@layout/content_pesquisa_evento"
+            <TabHost
+
+                android:id="@+id/tabhost_eventos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                />
+                android:background="@color/cardview_light_background">
 
-            <ListView
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TabWidget
+                        android:id="@android:id/tabs"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                    <FrameLayout
+                        android:id="@android:id/tabcontent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:id="@+id/tab_meus_eventos"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <ListView
+                                android:id="@+id/meus_eventos_list"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/tab_lembretes"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <ListView
+                                android:id="@+id/lembretes_eventos_list"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+
+                    </FrameLayout>
+                </LinearLayout>
+            </TabHost>
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/fragment_evento_listEvento" />
+                android:layout_height="match_parent"
+                android:alpha="0.7"
+                android:background="@color/cardview_light_background"
+                android:orientation="horizontal"></LinearLayout>
+
         </LinearLayout>
+
     </RelativeLayout>
 </FrameLayout>

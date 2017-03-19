@@ -29,15 +29,16 @@
             android:weightSum="1">
 
             <include
+                layout="@layout/content_pesquisa_ponto_turistico"
                 android:layout_width="match_parent"
-                android:layout_height="102dp"
-                layout="@layout/content_pesquisa_ponto_turistico" />
+                android:layout_height="wrap_content" />
 
             <ListView
+                android:id="@+id/meus_ponto_turistico_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/fragment_ponto_turistico_listEvento" />
+                android:layout_height="match_parent" />
         </LinearLayout>
+
     </RelativeLayout>
 
 </FrameLayout>

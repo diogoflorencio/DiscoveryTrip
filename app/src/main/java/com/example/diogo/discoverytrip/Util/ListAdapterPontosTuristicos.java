@@ -4,20 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
-import com.example.diogo.discoverytrip.DataBase.DiscoveryTripBD;
 import com.example.diogo.discoverytrip.Model.Atracao;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
@@ -25,11 +21,12 @@ import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
 import okhttp3.ResponseBody;
+
+import static com.example.diogo.discoverytrip.Activities.HomeActivity.EVENT_TYPE;
 
 /**
  * Created by renato on 07/02/17.
@@ -37,13 +34,12 @@ import okhttp3.ResponseBody;
 public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
     private LayoutInflater inflater;
     private List<Atracao> pontosTuristicos;
-    private Activity context;
+    private Context context;
     private Handler handler = new Handler();
     private SimpleDateFormat BDFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     private SimpleDateFormat nomalFormat = new SimpleDateFormat("dd/M/yyyy");
-    private static final String EVENT_TYPE = "Event", POINT_TYPE = "Attraction";
 
-    public ListAdapterPontosTuristicos(Activity context, LayoutInflater inflater, List<Atracao> pontosTuristicos){
+    public ListAdapterPontosTuristicos(Context context, LayoutInflater inflater, List<Atracao> pontosTuristicos){
         super(context, R.layout.item_evento,pontosTuristicos);
 
         this.inflater = inflater;
