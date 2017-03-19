@@ -29,6 +29,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.diogo.discoverytrip.Activities.HomeActivity.EVENT_TYPE;
+import static com.example.diogo.discoverytrip.Activities.HomeActivity.POINT_TYPE;
 
 /**
  * Classe fragment responsavel pelo fragmento evento na aplicação
@@ -98,7 +99,7 @@ public class EventoFragment extends Fragment implements View.OnClickListener {
 
     private void setMeusEventosAdapter(){
         for (int i = meusEventos.size() - 1; i >= 0; i--){
-            if(meusEventos.get(i).getType() != EVENT_TYPE){
+            if(!meusEventos.get(i).getType().equals(EVENT_TYPE)){
                 meusEventos.remove(i);
             }
         }
