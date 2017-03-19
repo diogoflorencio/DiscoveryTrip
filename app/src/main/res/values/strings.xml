@@ -52,7 +52,10 @@
     <string name="validate_password_empty">Digite sua senha!</string>
     <string name="validate_category">Informe uma categoria</string>
     <string name="validate_description">Informe uma descrição</string>
-    <string name="validate_date">Informe uma data</string>
+    <string name="validate_date_begin">Informe uma data de inicio</string>
+    <string name="validate_date_end">Informe uma data de fim</string>
+    <string name="validate_date_dontMatch">A data de inicio deve ser menor que a de fim</string>
+    <string name="validate_time">Informe uma hora</string>
     <string name="validate_kind">Informe um tipo</string>
     <string name="validate_price">Informe um preço</string>
     <string name="validate_any_field">Nenhum dos campos foi alterado</string>
