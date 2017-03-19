@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.DataBase.DiscoveryTripBD;
@@ -44,6 +45,9 @@ public class HomeActivity extends AppCompatActivity
 
     private GoogleApiClient mGoogleApiClient;
     public static final String EVENT_TYPE = "Event", POINT_TYPE = "Attraction";
+    private View background;
+    private boolean isAtHome;
+    private NavigationView navigationView;
 
     /**
      * Metodo responsavel por gerenciar a criacao de um objeto 'HomeActivity'
@@ -55,6 +59,8 @@ public class HomeActivity extends AppCompatActivity
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        background = findViewById(R.id.home_activity_background);
+        isAtHome = true;
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -62,7 +68,7 @@ public class HomeActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
         buildGooglePlusConfigs();
@@ -85,17 +91,6 @@ public class HomeActivity extends AppCompatActivity
                 .enableAutoManage(this /* FragmentActivity */, this /* OnConnectionFailedListener */)
                 .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
                 .build();
-    }
-
-    @Override
-    public void onBackPressed() {
-        Log.d("Logger", "Home onBackPressed");
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
     }
 
     @Override
@@ -156,21 +151,28 @@ public class HomeActivity extends AppCompatActivity
                 Log.d("Logger", "Home localizacao");
                 fragment = new HomeFragment();
                 getSupportActionBar().show();
+                background.setBackgroundResource(R.drawable.home_background);
+                isAtHome = true;
                 break;
             case R.id.nav_perfil:
                 Log.d("Logger", "Home localizacao");
                 fragment = new PerfilFragment();
                 getSupportActionBar().show();
+                isAtHome = false;
                 break;
             case R.id.nav_ponto_turistico:
                 Log.d("Logger", "Home localizacao");
                 fragment = new PontoTuristicoFragment();
                 getSupportActionBar().show();
+                background.setBackgroundResource(R.drawable.ponto_turistico_background);
+                isAtHome = false;
                 break;
             case R.id.nav_evento:
                 Log.d("Logger", "Home localizacao");
                 fragment = new EventoFragment();
                 getSupportActionBar().hide();
+                background.setBackgroundResource(R.drawable.event_background);
+                isAtHome = false;
                 break;
         }
 
@@ -203,6 +205,23 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
         Log.d("Logger", "Home onConnectionFailed");
+    }
+
+    @Override
+    public void onBackPressed() {
+        Log.d("Logger", "Home onBackPressed");
+        if(!isAtHome){
+            navigationView.getMenu().performIdentifierAction(R.id.nav_home,0);
+            return;
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+
     }
 
      /*private void addEvent(){
