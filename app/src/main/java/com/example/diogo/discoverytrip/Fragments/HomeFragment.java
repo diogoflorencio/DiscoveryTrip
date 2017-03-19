@@ -93,7 +93,7 @@ public class HomeFragment extends Fragment implements LocationListener {
             Log.d("Logger","Location search latitude: "+latitude+" longitude: "+longitude);
             get = false;
             String token = AcessToken.recuperar(getActivity().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
-            Call<SearchResponse> call = ApiClient.API_SERVICE.searchPontoTuristico("bearer "+token,latitude, longitude,500);
+            Call<SearchResponse> call = ApiClient.API_SERVICE.searchPontoTuristico("bearer "+token,latitude, longitude,2000);
             call.enqueue(new Callback<SearchResponse>() {
                 @Override
                 public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
@@ -105,7 +105,7 @@ public class HomeFragment extends Fragment implements LocationListener {
                             Log.d("Logger","Setting listview adapter");
                             ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getActivity(),
                                     getActivity().getLayoutInflater(),
-                                    atracoes.subList(atracoes.size()-1,atracoes.size()));
+                                    atracoes);
                             listView.setAdapter(adapter);
                         }
                     }
