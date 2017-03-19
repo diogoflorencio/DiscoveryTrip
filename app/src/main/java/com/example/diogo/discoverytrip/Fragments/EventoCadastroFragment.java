@@ -58,7 +58,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class EventoCadastroFragment extends Fragment implements LocationListener, View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerFragment.DatePickerFragmentListener {
     public EditText nameVal_txt, descVal_txt, priceVal_txt;
     private Date dateVal_date;
-    public TextView dateInicioVal_txt, dateFimVal_txt;
+    public TextView dateInicioVal_txt, dateFimVal_txt, timeVal_txt;
     Spinner evKind_spn;
     private final int CAM_REQUEST = 1313;
     private final int CAM_SELECT = 1234;
@@ -81,7 +81,9 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                              Bundle savedInstanceState) {
         Log.d("Logger", "EventoCadastroFragment onCreate");
         startGPS();
+        Log.d("Logger", "EventoCadastroFragment onCreate0");
         View rootView = inflater.inflate(R.layout.fragment_evento_cadastro, container, false);
+        Log.d("Logger", "EventoCadastroFragment onCreate1");
 
         rootView.findViewById(R.id.evConfirm_btn).setOnClickListener(this);
         rootView.findViewById(R.id.evCancel_btn).setOnClickListener(this);
@@ -90,13 +92,18 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         rootView.findViewById(R.id.evDatePickerInicio_btn).setOnClickListener(this);
         rootView.findViewById(R.id.evDatePickerFim_btn).setOnClickListener(this);
         rootView.findViewById(R.id.evMap_btn).setOnClickListener(this);
+        rootView.findViewById(R.id.evTimePicker_btn).setOnClickListener(this);
+        Log.d("Logger", "EventoCadastroFragment onCreate2");
 
         nameVal_txt = (EditText) rootView.findViewById(R.id.evName_edt);
         descVal_txt = (EditText) rootView.findViewById(R.id.evDesc_edt);
         priceVal_txt = (EditText) rootView.findViewById(R.id.evPrice_edt);
+        Log.d("Logger", "EventoCadastroFragment onCreate3");
 
         dateInicioVal_txt = (TextView) rootView.findViewById(R.id.dateValInicio_txt);
         dateFimVal_txt = (TextView) rootView.findViewById(R.id.dateValFim_txt);
+        timeVal_txt = (TextView) rootView.findViewById(R.id.evTimeVal_txt);
+        Log.d("Logger", "EventoCadastroFragment onCreate4");
 
         evKind_spn = (Spinner) rootView.findViewById(R.id.evKind_spn);
         evKind_spn.setOnItemSelectedListener(this);
@@ -189,6 +196,10 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
             case R.id.evMap_btn:
                 Log.d("Logger", "EventoCadastroFragment botao mapa");
                 openMapActivity();
+                break;
+            case R.id.evTimePicker_btn:
+                Log.d("Logger", "EventoCadastroFragment botao time");
+//                timPicker();
                 break;
         }
     }
@@ -332,10 +343,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
             throw new DataInputException("Digite o nome do evento!");
         }
 
-        if(dateInicioVal_txt.getText().toString().trim().isEmpty()){
-            throw new DataInputException(getString(R.string.validate_date_begin));
-        }
-
         if(dateFimVal_txt.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_date_end));
         }
@@ -409,17 +416,27 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
 //            e.printStackTrace();
 //        }
 
-        try {
-            Date dateBegin = normalDateFormat.parse(eventDateBegin_value);
+        if (dateInicioVal_txt.getText().toString().trim().isEmpty()){
+            Date dateBegin = new Date();
             dateBegin.toString();
             dateBegin.setHours(0);
             dateBegin.setMinutes(59);
             dateBegin.setSeconds(59);
             eventDateBegin_formated = dateFormat.format(dateBegin);
-            Log.d("Logger","DateBegin formated "+ eventDateBegin_formated);
-        } catch (ParseException e) {
-            e.printStackTrace();
+        }else{
+            try {
+                Date dateBegin = normalDateFormat.parse(eventDateBegin_value);
+                dateBegin.toString();
+                dateBegin.setHours(0);
+                dateBegin.setMinutes(59);
+                dateBegin.setSeconds(59);
+                eventDateBegin_formated = dateFormat.format(dateBegin);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
+        Log.d("Logger","DateBegin formated "+ eventDateBegin_formated);
+
 
         try {
             Date dateEnd = normalDateFormat.parse(eventDateEnd_value);
