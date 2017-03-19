@@ -35,6 +35,7 @@ import com.example.diogo.discoverytrip.REST.MultiRequestHelper;
 import com.example.diogo.discoverytrip.REST.ServerResponses.AddEventoResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
 import com.example.diogo.discoverytrip.Util.DatePickerFragment;
+import com.example.diogo.discoverytrip.Util.TimePickerFragment;
 
 import java.io.File;
 import java.io.IOException;
@@ -55,7 +56,7 @@ import retrofit2.Response;
 import static android.app.Activity.RESULT_OK;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
-public class EventoCadastroFragment extends Fragment implements LocationListener, View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerFragment.DatePickerFragmentListener {
+public class EventoCadastroFragment extends Fragment implements LocationListener, View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerFragment.DatePickerFragmentListener, TimePickerFragment.TimePickerFragmentListener {
     public EditText nameVal_txt, descVal_txt, priceVal_txt;
     private Date dateVal_date;
     public TextView dateInicioVal_txt, dateFimVal_txt, timeVal_txt;
@@ -115,6 +116,24 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         return rootView;
     }
 
+    private void timPicker() {
+        Log.d("Logger", "EventoCadastroFragment timPicker");
+        TimePickerFragment fragment = TimePickerFragment.newInstance(this);
+        fragment.show(getActivity().getSupportFragmentManager(), "timePicker");
+    }
+
+    @Override
+    public void onTimeSet(int hour, int minute) {
+        Log.d("Logger", "EventoCadastroFragment onTimeSet");
+        setTime(hour, minute);
+    }
+
+    public void setTime(int hour, int minute) {
+        Log.d("Logger", "EventoCadastroFragment setTime");
+        timeVal_txt.setText(hour+":"+minute);
+        Log.d("Logger", "hora " + timeVal_txt.getText());
+    }
+
     public void datePicker(View view, String dateKind){
         Log.d("Logger", "EventoCadastroFragment DatePicker");
         DatePickerFragment fragment = DatePickerFragment.newInstance(this);
@@ -141,7 +160,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         catch (Exception e){
             e.printStackTrace();
         }
-
 
         Log.d("Logger", "data " + dateInicioVal_txt.getText());
     }
@@ -199,7 +217,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                 break;
             case R.id.evTimePicker_btn:
                 Log.d("Logger", "EventoCadastroFragment botao time");
-//                timPicker();
+                timPicker();
                 break;
         }
     }
@@ -347,7 +365,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
             throw new DataInputException(getString(R.string.validate_date_end));
         }
 
-
         try {
             Date dateBegin = normalDateFormat.parse(dateInicioVal_txt.getText().toString());
             Date dateEnd = normalDateFormat.parse(dateFimVal_txt.getText().toString());
@@ -360,8 +377,9 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
             e.printStackTrace();
         }
 
-
-
+        if(timeVal_txt.getText().toString().trim().isEmpty()){
+            throw new DataInputException(getString(R.string.validate_time));
+        }
 
         if(descVal_txt.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_description));
@@ -387,6 +405,10 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         String eventDesc_value = descVal_txt.getText().toString();
         String eventDateBegin_value = dateInicioVal_txt.getText().toString();
         String eventDateEnd_value = dateFimVal_txt.getText().toString();
+
+        //todo diogo o valor da hora é esse aqui
+        String time_value = timeVal_txt.getText().toString();
+
         Log.d("Logger","DateBegin txt "+ eventDateBegin_value);
         Log.d("Logger","DateEnd txt "+ eventDateEnd_value);
 

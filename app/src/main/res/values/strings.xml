@@ -55,6 +55,7 @@
     <string name="validate_date_begin">Informe uma data de inicio</string>
     <string name="validate_date_end">Informe uma data de fim</string>
     <string name="validate_date_dontMatch">A data de inicio deve ser menor que a de fim</string>
+    <string name="validate_time">Informe uma hora</string>
     <string name="validate_kind">Informe um tipo</string>
     <string name="validate_price">Informe um preço</string>
     <string name="validate_any_field">Nenhum dos campos foi alterado</string>
