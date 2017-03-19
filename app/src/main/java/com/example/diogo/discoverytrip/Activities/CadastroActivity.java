@@ -75,7 +75,7 @@ public class CadastroActivity extends AppCompatActivity {
                         ServerResponse serverResponse = response.body();
                         Log.d("Server Response",serverResponse.getMessage());
                         waitDialog.dismiss();
-                        Toast.makeText(CadastroActivity.this, R.string.ev_cadastro_sucesso, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(CadastroActivity.this, R.string.us_cadastro_sucesso, Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(CadastroActivity.this, LoginActivity.class));
                         finish();
                     }else{

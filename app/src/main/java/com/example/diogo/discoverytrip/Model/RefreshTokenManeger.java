@@ -18,11 +18,12 @@ import retrofit2.Response;
  */
 
 public class RefreshTokenManeger {
-    private static final int timeSleep = 3300000; //55 min
+    private static final int timeSleep = 2400000; //40 min
     private static boolean loggedIn = true , running = false;
     private static Thread thread;
 
     public static void refreshToken(final SharedPreferences prefs){
+        Log.d("Logger", "refreshToken");
         if(!running) return;
         running = true;
         final Runnable runnable = new Runnable() {
@@ -30,6 +31,7 @@ public class RefreshTokenManeger {
             public void run() {
                 while (loggedIn) {
                     try {
+                        Log.d("Logger", "refreshToken start");
                         Thread.sleep(timeSleep);
                         refresh(prefs);
                     } catch (Exception e){

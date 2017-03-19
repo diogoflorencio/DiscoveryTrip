@@ -7,6 +7,8 @@ import com.example.diogo.discoverytrip.Model.ReminderJson;
 import com.example.diogo.discoverytrip.Model.UsuarioEnvio;
 import com.example.diogo.discoverytrip.REST.ServerResponses.AddEventoResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.AttractionResponse;
+import com.example.diogo.discoverytrip.REST.ServerResponses.DeleteAttractionResponse;
+import com.example.diogo.discoverytrip.REST.ServerResponses.DeleteEventoResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.LoginResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.LogoutResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ReminderResponse;
@@ -109,4 +111,13 @@ public interface ApiInterface {
 
     @GET("api/images/{id}/download")
     Call<ResponseBody> downloadFoto(@Header("Authorization") String token, @Path("id") String photoId);
+
+    @GET("/api/points")
+    Call<SearchResponse> userPoints(@Header("Authorization") String accessToken);
+
+    @DELETE("/api/points")
+    Call<DeleteEventoResponse> deleteEvento(@Header("Authorization") String accessToken, @Query("id") String id);
+
+    @DELETE("/api/points")
+    Call<DeleteAttractionResponse> deleteAttraction(@Header("Authorization") String accessToken, @Query("id") String id);
 }

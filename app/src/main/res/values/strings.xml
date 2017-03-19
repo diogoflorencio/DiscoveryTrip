@@ -15,6 +15,7 @@
 
     //CadastroActivity strings
     <string name="falha_conexao">Falha na conexão com o servidor!</string>
+    <string name="us_cadastro_sucesso">Usuário cadastrado com sucesso!</string>
 
     //EventoCadastroFragment strings
     <string name="ev_cadastro_sucesso">Evento cadastrado com sucesso!</string>
@@ -90,5 +91,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_maps_activityfdsf">Map</string>
     <string name="title_activity_detalhes_atracao">DetalhesAtracaoActivity</string>
+    <string name="title_activity_meus_eventos">MeusEventosActivity</string>
+    <string name="title_activity_meus_pontos_turisticos">MeusPontosTuristicosActivity</string>
 
 </resources>

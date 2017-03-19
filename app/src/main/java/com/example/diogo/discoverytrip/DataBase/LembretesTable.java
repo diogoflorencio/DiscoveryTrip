@@ -19,6 +19,7 @@ public abstract class LembretesTable {
         public static final String COLUMN_Rua = "rua";
         public static final String COLUMN_Numero = "numero";
         public static final String COLUMN_FotoID = "fotoId";
+        public static final String COLUMN_Type = "type";
     }
 
     /* Script Lembretes.DML */
@@ -37,7 +38,8 @@ public abstract class LembretesTable {
                     Column.COLUMN_Cidade + TEXT_TYPE + COLUMN_SEP +
                     Column.COLUMN_Rua + TEXT_TYPE + COLUMN_SEP +
                     Column.COLUMN_Numero + TEXT_TYPE + COLUMN_SEP +
-                    Column.COLUMN_FotoID + TEXT_TYPE + " )";
+                    Column.COLUMN_FotoID + TEXT_TYPE + COLUMN_SEP +
+                    Column.COLUMN_Type + TEXT_TYPE + " )";
 
     protected static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + TABLE_NAME;
