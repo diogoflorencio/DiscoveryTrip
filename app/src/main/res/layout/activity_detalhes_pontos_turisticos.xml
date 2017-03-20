@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/ponto_turistico_background"
+    android:paddingBottom="7dp"
+    android:paddingLeft="7dp"
+    android:paddingRight="7dp"
+    android:paddingTop="7dp"
+    tools:context="com.example.diogo.discoverytrip.Activities.DetalhesPontosTuristicosActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/scrollView2">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_border"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/detalhes_pt_titulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:text="Título"
+                    android:textSize="22sp"
+                    android:textColor="@color/common_google_signin_btn_text_light_pressed" />
+
+                <ImageView
+                    android:id="@+id/detalhes_pt_imagem"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detalhes_pt_titulo"
+                    android:layout_centerHorizontal="true"
+                    app:srcCompat="@mipmap/icon" />
+
+                <TextView
+                    android:id="@+id/detalhes_pt_descricao"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/detalhes_pt_imagem"
+                    android:text="Descrição"
+                    android:textSize="18sp"
+                    android:textColor="@color/cast_expanded_controller_background_color" />
+
+                <TextView
+                    android:id="@+id/detalhes_lbltipo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/detalhes_pt_descricao"
+                    android:inputType="textPersonName"
+                    android:text="Categoria:"
+                    android:textSize="18sp"
+                    android:textColor="@color/cast_expanded_controller_background_color" />
+
+                <TextView
+                    android:id="@+id/detalhes_pt_categoria"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detalhes_pt_descricao"
+                    android:layout_toRightOf="@+id/detalhes_lbltipo"
+                    android:inputType="textPersonName"
+                    android:text="categoria"
+                    android:textSize="18sp"
+                    android:textColor="@color/cast_expanded_controller_background_color" />
+
+                <TextView
+                    android:id="@+id/textView6"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/detalhes_lbltipo"
+                    android:text="Endereço"
+                    android:textColor="@color/cast_expanded_controller_background_color"
+                    android:textSize="18sp" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

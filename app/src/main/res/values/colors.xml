@@ -8,4 +8,6 @@
     <color name="discoveryTrip_Background">#d74b00</color>
     <color name="discoveryStatusColor2">#a8c58c3c</color>
     <color name="discoverytripforeground2">#c1760c02</color>
+    <color name="discoverytrip_view_background">#ebffffff</color>
+    <color name="confirmebutton">#82c300</color>
 </resources>
