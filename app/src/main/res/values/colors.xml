@@ -10,4 +10,5 @@
     <color name="discoverytripforeground2">#c1760c02</color>
     <color name="discoverytrip_view_background">#ebffffff</color>
     <color name="confirmebutton">#82c300</color>
+    <color name="transparent">#00ffffff</color>
 </resources>

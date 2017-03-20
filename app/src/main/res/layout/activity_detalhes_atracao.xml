@@ -12,11 +12,12 @@
     tools:context="com.example.diogo.discoverytrip.Activities.DetalhesAtracaoActivity">
 
     <ScrollView
+        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,122 +29,153 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <EditText
-                    android:id="@+id/detalhes_pt_titulo"
+                <TextView
+                    android:id="@+id/detalhes_evento_titulo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
                     android:text="Título"
-                    android:textColor="@color/common_google_signin_btn_text_light_pressed" />
+                    android:textColor="@color/common_google_signin_btn_text_light_pressed"
+                    android:textSize="24sp" />
 
                 <ImageView
-                    android:id="@+id/detalhes_pt_imagem"
+                    android:id="@+id/detalhes_evento_imagem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/detalhes_pt_titulo"
+                    android:layout_below="@+id/detalhes_evento_titulo"
                     android:layout_centerHorizontal="true"
                     app:srcCompat="@mipmap/icon" />
 
-                <EditText
-                    android:id="@+id/detalhes_pt_descricao"
+                <TextView
+                    android:id="@+id/detalhes_evento_descricao"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/detalhes_pt_imagem"
+                    android:layout_below="@+id/detalhes_evento_imagem"
+                    android:layout_marginTop="10dp"
                     android:text="Descrição"
-                    android:textColor="@color/cast_expanded_controller_background_color" />
+                    android:textColor="@color/cast_expanded_controller_background_color"
+                    android:textSize="18sp" />
 
-                <EditText
+                <TextView
                     android:id="@+id/detalhes_lbltipo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/detalhes_pt_descricao"
+                    android:layout_below="@+id/detalhes_evento_descricao"
+                    android:layout_marginTop="10dp"
                     android:inputType="textPersonName"
-                    android:text="Categoria:"
-                    android:textColor="@color/cast_expanded_controller_background_color" />
+                    android:text="Categoria: "
+                    android:textColor="@color/cast_expanded_controller_background_color"
+                    android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/detalhes_tipo_categoria"
+                <TextView
+                    android:id="@+id/detalhes_evento_endereco"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentRight="false"
+                    android:layout_below="@+id/detalhes_evento_tipo"
+                    android:layout_marginTop="10dp"
+                    android:text="Endereço"
+                    android:textColor="@color/cast_expanded_controller_background_color"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/detalhes_evento_tipo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/detalhes_pt_descricao"
+                    android:layout_alignBottom="@+id/detalhes_lbltipo"
+                    android:layout_marginTop="10dp"
                     android:layout_toRightOf="@+id/detalhes_lbltipo"
                     android:inputType="textPersonName"
                     android:text="categoria"
-                    android:textColor="@color/cast_expanded_controller_background_color" />
+                    android:textColor="@color/cast_expanded_controller_background_color"
+                    android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/editText9"
+                <TextView
+                    android:id="@+id/TextView9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/detalhes_lbltipo"
-                    android:text="Início:"
-                    android:textColor="@color/cast_expanded_controller_background_color" />
+                    android:layout_below="@+id/detalhes_evento_endereco"
+                    android:layout_marginTop="10dp"
+                    android:text="Início: "
+                    android:textColor="@color/cast_expanded_controller_background_color"
+                    android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/detalhes_pt_startDate"
+                <TextView
+                    android:id="@+id/detalhes_evento_inicio"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/editText9"
-                    android:layout_alignBottom="@+id/editText9"
-                    android:layout_toEndOf="@+id/editText9"
-                    android:layout_toRightOf="@+id/editText9"
+                    android:layout_alignBaseline="@+id/TextView9"
+                    android:layout_alignBottom="@+id/TextView9"
+                    android:layout_toEndOf="@+id/TextView9"
+                    android:layout_toRightOf="@+id/TextView9"
                     android:text="30/12/2017 23:59"
-                    android:textColor="@color/cast_expanded_controller_background_color" />
+                    android:textColor="@color/cast_expanded_controller_background_color"
+                    android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/editText10"
+                <TextView
+                    android:id="@+id/TextView10"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/editText9"
+                    android:layout_below="@+id/TextView9"
+                    android:layout_marginTop="10dp"
                     android:text="Fim:"
-                    android:textColor="@color/cast_expanded_controller_background_color" />
+                    android:textColor="@color/cast_expanded_controller_background_color"
+                    android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/editText11"
+                <TextView
+                    android:id="@+id/detalhes_evento_fim"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/detalhes_pt_startDate"
-                    android:layout_toRightOf="@+id/editText9"
+                    android:layout_below="@+id/detalhes_evento_inicio"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/TextView9"
                     android:text="30/12/2017 23:59"
-                    android:textColor="@color/cast_expanded_controller_background_color" />
+                    android:textColor="@color/cast_expanded_controller_background_color"
+                    android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/editText12"
+                <TextView
+                    android:id="@+id/TextView12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/editText10"
-                    android:text="Preço:"
-                    android:textColor="@color/cast_expanded_controller_background_color" />
+                    android:layout_below="@+id/TextView10"
+                    android:layout_marginTop="10dp"
+                    android:text="Preço: "
+                    android:textColor="@color/cast_expanded_controller_background_color"
+                    android:textSize="18sp" />
 
-                <EditText
-                    android:id="@+id/editText13"
+                <TextView
+                    android:id="@+id/detalhes_evento_preco"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="false"
-                    android:layout_below="@+id/editText11"
-                    android:layout_toRightOf="@+id/editText12"
+                    android:layout_below="@+id/detalhes_evento_fim"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/TextView12"
                     android:inputType="textPersonName"
                     android:text="Name"
-                    android:textColor="@color/cast_expanded_controller_background_color" />
+                    android:textColor="@color/cast_expanded_controller_background_color"
+                    android:textSize="18sp" />
 
                 <Button
                     android:id="@+id/detalhes_btn_lembrar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="false"
-                    android:layout_below="@+id/editText13"
+                    android:layout_below="@+id/detalhes_evento_preco"
                     android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
                     android:background="@color/confirmebutton"
                     android:paddingLeft="3dp"
                     android:paddingRight="3dp"
@@ -152,5 +184,26 @@
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
+
+    <ImageButton
+        android:id="@+id/detalhes_pt_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="false"
+        android:layout_marginEnd="8dp"
+        android:layout_toLeftOf="@+id/detalhes_pt_delete"
+        android:background="@color/transparent"
+        android:hapticFeedbackEnabled="false"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
+
+    <ImageButton
+        android:id="@+id/detalhes_pt_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/transparent"
+        app:srcCompat="@android:drawable/ic_delete" />
 
 </RelativeLayout>
