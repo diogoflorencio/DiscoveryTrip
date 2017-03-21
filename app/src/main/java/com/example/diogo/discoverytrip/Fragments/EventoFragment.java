@@ -1,6 +1,7 @@
 package com.example.diogo.discoverytrip.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -8,12 +9,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TabHost;
 
+import com.example.diogo.discoverytrip.Activities.DetalhesAtracaoActivity;
+import com.example.diogo.discoverytrip.Activities.DetalhesPontosTuristicosActivity;
+import com.example.diogo.discoverytrip.Activities.HomeActivity;
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.DataBase.DiscoveryTripBD;
 import com.example.diogo.discoverytrip.Model.Atracao;
+import com.example.diogo.discoverytrip.Model.VisualizationType;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ServerResponses.DeleteAttractionResponse;
@@ -69,6 +75,28 @@ public class EventoFragment extends Fragment implements View.OnClickListener {
 
         listViewMeusEventos = (ListView) rootView.findViewById(R.id.meus_eventos_list);
         listViewLembretes = (ListView) rootView.findViewById(R.id.lembretes_eventos_list);
+
+        listViewMeusEventos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Atracao atracao = (Atracao) parent.getAdapter().getItem(position);
+
+                DetalhesAtracaoActivity.atracao = atracao;
+                DetalhesAtracaoActivity.visualizationType = VisualizationType.Editar;
+                startActivity(new Intent(getContext(),DetalhesAtracaoActivity.class));
+            }
+        });
+
+        listViewLembretes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Atracao atracao = (Atracao) parent.getAdapter().getItem(position);
+
+                DetalhesAtracaoActivity.atracao = atracao;
+                DetalhesAtracaoActivity.visualizationType = VisualizationType.Visualizar;
+                startActivity(new Intent(getContext(),DetalhesAtracaoActivity.class));
+            }
+        });
 
         getUserPoints();
         DiscoveryTripBD discoveryTripBD = new DiscoveryTripBD(getContext());

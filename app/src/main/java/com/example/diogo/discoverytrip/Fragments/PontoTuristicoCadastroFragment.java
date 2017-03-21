@@ -318,7 +318,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
             Log.d("Logger","Location add pnt latitude: "+latitude+" longitude: "+longitude);
         }
 
-        parametersMap.put("category ",helper.createPartFrom(ptCatg_value));
+        parametersMap.put("category",helper.createPartFrom(ptCatg_value));
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Log.d("Token",token);

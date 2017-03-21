@@ -94,14 +94,15 @@
 
         <activity
             android:name=".Activities.DetalhesAtracaoActivity"
-            android:label="@string/title_activity_detalhes_atracao"></activity>
+            android:label="@string/title_activity_detalhes_atracao" />
         <activity android:name=".Activities.LembreteActivity" />
         <activity
             android:name=".Activities.MeusEventosActivity"
             android:label="@string/title_activity_meus_eventos" />
         <activity
             android:name=".Activities.MeusPontosTuristicosActivity"
-            android:label="@string/title_activity_meus_pontos_turisticos"></activity>
+            android:label="@string/title_activity_meus_pontos_turisticos" />
+        <activity android:name=".Activities.DetalhesPontosTuristicosActivity"></activity>
     </application>
 
 </manifest>

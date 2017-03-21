@@ -4,20 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/event_background"
+    android:background="@drawable/ponto_turistico_background"
     android:paddingBottom="7dp"
     android:paddingLeft="7dp"
     android:paddingRight="7dp"
     android:paddingTop="7dp"
-    tools:context="com.example.diogo.discoverytrip.Activities.DetalhesAtracaoActivity">
+    tools:context="com.example.diogo.discoverytrip.Activities.DetalhesPontosTuristicosActivity">
 
     <ScrollView
-        android:id="@+id/scrollView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/scrollView2"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,7 +30,7 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    android:id="@+id/detalhes_evento_titulo"
+                    android:id="@+id/detalhes_pt_titulo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
@@ -40,20 +40,20 @@
                     android:textSize="24sp" />
 
                 <ImageView
-                    android:id="@+id/detalhes_evento_image"
+                    android:id="@+id/detalhes_pt_imagem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/detalhes_evento_titulo"
+                    android:layout_below="@+id/detalhes_pt_titulo"
                     android:layout_centerHorizontal="true"
                     app:srcCompat="@mipmap/icon" />
 
                 <TextView
-                    android:id="@+id/detalhes_evento_descricao"
+                    android:id="@+id/detalhes_pt_descricao"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/detalhes_evento_image"
+                    android:layout_below="@+id/detalhes_pt_imagem"
                     android:layout_marginTop="10dp"
                     android:text="Descrição"
                     android:textColor="@color/cast_expanded_controller_background_color"
@@ -65,30 +65,18 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/detalhes_evento_descricao"
+                    android:layout_below="@+id/detalhes_pt_descricao"
                     android:layout_marginTop="10dp"
                     android:inputType="textPersonName"
-                    android:text="Categoria: "
+                    android:text="Categoria:"
                     android:textColor="@color/cast_expanded_controller_background_color"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/detalhes_evento_endereco"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="false"
-                    android:layout_alignParentRight="false"
-                    android:layout_below="@+id/detalhes_evento_tipo"
-                    android:layout_marginTop="10dp"
-                    android:text="Endereço"
-                    android:textColor="@color/cast_expanded_controller_background_color"
-                    android:textSize="18sp" />
-
-                <TextView
-                    android:id="@+id/detalhes_evento_tipo"
+                    android:id="@+id/detalhes_pt_categoria"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/detalhes_lbltipo"
+                    android:layout_below="@+id/detalhes_pt_descricao"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@+id/detalhes_lbltipo"
                     android:inputType="textPersonName"
@@ -97,107 +85,67 @@
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/TextView9"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/detalhes_pt_endereco"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/detalhes_evento_endereco"
+                    android:layout_below="@+id/detalhes_lbltipo"
                     android:layout_marginTop="10dp"
-                    android:text="Início: "
+                    android:text="Endereço"
                     android:textColor="@color/cast_expanded_controller_background_color"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/detalhes_evento_inicio"
+                    android:id="@+id/textView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/TextView9"
-                    android:layout_alignBottom="@+id/TextView9"
-                    android:layout_toEndOf="@+id/TextView9"
-                    android:layout_toRightOf="@+id/TextView9"
-                    android:text="30/12/2017 23:59"
+                    android:layout_below="@+id/detalhes_pt_endereco"
+                    android:layout_marginTop="10dp"
+                    android:text="Lat:"
                     android:textColor="@color/cast_expanded_controller_background_color"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/TextView10"
+                    android:id="@+id/detalhes_pt_latitude"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/TextView9"
-                    android:layout_marginTop="10dp"
-                    android:text="Fim:"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toEndOf="@+id/textView"
+                    android:layout_toRightOf="@+id/textView"
+                    android:text="TextView"
                     android:textColor="@color/cast_expanded_controller_background_color"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/detalhes_evento_fim"
+                    android:id="@+id/detalhes_pt_longitude"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/detalhes_evento_inicio"
-                    android:layout_marginTop="10dp"
-                    android:layout_toRightOf="@+id/TextView9"
-                    android:text="30/12/2017 23:59"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toEndOf="@+id/textView8"
+                    android:layout_toRightOf="@+id/textView8"
+                    android:text="TextView"
                     android:textColor="@color/cast_expanded_controller_background_color"
                     android:textSize="18sp" />
 
                 <TextView
-                    android:id="@+id/TextView12"
+                    android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_below="@+id/TextView10"
-                    android:layout_marginTop="10dp"
-                    android:text="Preço: "
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toEndOf="@+id/detalhes_pt_latitude"
+                    android:layout_toRightOf="@+id/detalhes_pt_latitude"
+                    android:text="Lon:"
                     android:textColor="@color/cast_expanded_controller_background_color"
                     android:textSize="18sp" />
 
-                <TextView
-                    android:id="@+id/detalhes_evento_preco"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="false"
-                    android:layout_below="@+id/detalhes_evento_fim"
-                    android:layout_marginTop="10dp"
-                    android:layout_toRightOf="@+id/TextView12"
-                    android:inputType="textPersonName"
-                    android:text="Name"
-                    android:textColor="@color/cast_expanded_controller_background_color"
-                    android:textSize="18sp" />
-
-                <Button
-                    android:id="@+id/detalhes_btn_lembrar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="false"
-                    android:layout_below="@+id/detalhes_evento_preco"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/confirmebutton"
-                    android:paddingLeft="3dp"
-                    android:paddingRight="3dp"
-                    android:text="Marcar Presença"
-                    android:textColor="@color/common_google_signin_btn_text_dark_pressed" />
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
 
     <ImageButton
-        android:id="@+id/detalhes_evento_edita"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="false"
-        android:layout_marginEnd="8dp"
-        android:layout_toLeftOf="@+id/detalhes_evento_deleta"
-        android:background="@color/transparent"
-        android:hapticFeedbackEnabled="false"
-        app:srcCompat="@android:drawable/ic_menu_edit" />
-
-    <ImageButton
-        android:id="@+id/detalhes_evento_deleta"
+        android:id="@+id/detalhes_pt_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -205,5 +153,16 @@
         android:layout_alignParentTop="true"
         android:background="@color/transparent"
         app:srcCompat="@android:drawable/ic_delete" />
+
+    <ImageButton
+        android:id="@+id/detalhes_pt_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="false"
+        android:layout_marginEnd="8dp"
+        android:layout_toLeftOf="@+id/detalhes_pt_delete"
+        android:background="@color/transparent"
+        android:hapticFeedbackEnabled="false"
+        app:srcCompat="@android:drawable/ic_menu_edit" />
 
 </RelativeLayout>
