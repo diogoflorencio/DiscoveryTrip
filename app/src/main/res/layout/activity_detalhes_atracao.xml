@@ -40,7 +40,7 @@
                     android:textSize="24sp" />
 
                 <ImageView
-                    android:id="@+id/detalhes_evento_imagem"
+                    android:id="@+id/detalhes_evento_image"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/detalhes_evento_titulo"
@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/detalhes_evento_imagem"
+                    android:layout_below="@+id/detalhes_evento_image"
                     android:layout_marginTop="10dp"
                     android:text="Descrição"
                     android:textColor="@color/cast_expanded_controller_background_color"
@@ -186,18 +186,18 @@
     </ScrollView>
 
     <ImageButton
-        android:id="@+id/detalhes_pt_edit"
+        android:id="@+id/detalhes_evento_edita"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="false"
         android:layout_marginEnd="8dp"
-        android:layout_toLeftOf="@+id/detalhes_pt_delete"
+        android:layout_toLeftOf="@+id/detalhes_evento_deleta"
         android:background="@color/transparent"
         android:hapticFeedbackEnabled="false"
         app:srcCompat="@android:drawable/ic_menu_edit" />
 
     <ImageButton
-        android:id="@+id/detalhes_pt_delete"
+        android:id="@+id/detalhes_evento_deleta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

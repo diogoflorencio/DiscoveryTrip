@@ -1,6 +1,5 @@
 package com.example.diogo.discoverytrip.Util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -33,23 +32,23 @@ import static com.example.diogo.discoverytrip.Activities.HomeActivity.EVENT_TYPE
  */
 public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
     private LayoutInflater inflater;
-    private List<Atracao> pontosTuristicos;
+    private List<Atracao> atracoes;
     private Context context;
     private Handler handler = new Handler();
     private SimpleDateFormat BDFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     private SimpleDateFormat nomalFormat = new SimpleDateFormat("dd/M/yyyy");
 
-    public ListAdapterPontosTuristicos(Context context, LayoutInflater inflater, List<Atracao> pontosTuristicos){
-        super(context, R.layout.item_evento,pontosTuristicos);
+    public ListAdapterPontosTuristicos(Context context, LayoutInflater inflater, List<Atracao> atracoes){
+        super(context, R.layout.item_evento,atracoes);
 
         this.inflater = inflater;
-        this.pontosTuristicos = pontosTuristicos;
+        this.atracoes = atracoes;
         this.context = context;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
-        final Atracao atracao = pontosTuristicos.get(position);
+        final Atracao atracao = atracoes.get(position);
         View view = inflater.inflate(R.layout.item_ponto_turistico, null, true);
         ImageView foto = (ImageView) view.findViewById(R.id.iten_img);
         ImageView icone = (ImageView) view.findViewById(R.id.iten_icon);
@@ -74,10 +73,10 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
 
         String photoId;
         if(isEvent){
-            photoId = pontosTuristicos.get(position).getPhotoId();
+            photoId = atracoes.get(position).getPhotoId();
         }
         else{
-            photoId = pontosTuristicos.get(position).getPhotos().get(0);
+            photoId = atracoes.get(position).getPhotos().get(0);
         }
 
         retrofit2.Call<ResponseBody> call = ApiClient.API_SERVICE.downloadFoto("bearer "+AcessToken.recuperar(context.getSharedPreferences("acessToken", Context.MODE_PRIVATE)),
@@ -114,5 +113,10 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
                 Log.e("Pesquisa de pontos turisticos","Erro ao baixar imagem");
             }
         });
+    }
+
+    @Override
+    public Atracao getItem(int position){
+        return atracoes.get(position);
     }
 }

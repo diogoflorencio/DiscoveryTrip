@@ -145,7 +145,7 @@
     </ScrollView>
 
     <ImageButton
-        android:id="@+id/detalhes_evento_delete"
+        android:id="@+id/detalhes_pt_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -155,12 +155,12 @@
         app:srcCompat="@android:drawable/ic_delete" />
 
     <ImageButton
-        android:id="@+id/detalhes_evento_edit"
+        android:id="@+id/detalhes_pt_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="false"
         android:layout_marginEnd="8dp"
-        android:layout_toLeftOf="@+id/detalhes_evento_delete"
+        android:layout_toLeftOf="@+id/detalhes_pt_delete"
         android:background="@color/transparent"
         android:hapticFeedbackEnabled="false"
         app:srcCompat="@android:drawable/ic_menu_edit" />

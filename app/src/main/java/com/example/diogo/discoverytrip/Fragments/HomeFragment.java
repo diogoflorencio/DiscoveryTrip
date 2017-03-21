@@ -2,6 +2,7 @@ package com.example.diogo.discoverytrip.Fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -14,11 +15,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.diogo.discoverytrip.Activities.DetalhesAtracaoActivity;
+import com.example.diogo.discoverytrip.Activities.DetalhesPontosTuristicosActivity;
+import com.example.diogo.discoverytrip.Activities.HomeActivity;
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.Model.Atracao;
+import com.example.diogo.discoverytrip.Model.VisualizationType;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
@@ -60,6 +66,23 @@ public class HomeFragment extends Fragment implements LocationListener {
         getActivity().setTitle(R.string.home_label);
         listView = (ListView) rootView.findViewById(R.id.fragment_home_list);
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Atracao atracao = (Atracao) parent.getAdapter().getItem(position);
+                if(atracao.getType().equals(HomeActivity.EVENT_TYPE)){
+                    DetalhesAtracaoActivity.atracao = atracao;
+                    DetalhesAtracaoActivity.visualizationType = VisualizationType.Lembrar_Evento;
+                    startActivity(new Intent(getContext(),DetalhesAtracaoActivity.class));
+                }
+                else{
+                    DetalhesPontosTuristicosActivity.pontoTuristico = atracao;
+                    DetalhesPontosTuristicosActivity.visualizationType = VisualizationType.Visualizar;
+                    startActivity(new Intent(getContext(),DetalhesPontosTuristicosActivity.class));
+                }
+            }
+        });
+
         return rootView;
     }
 
@@ -93,7 +116,7 @@ public class HomeFragment extends Fragment implements LocationListener {
             Log.d("Logger","Location search latitude: "+latitude+" longitude: "+longitude);
             get = false;
             String token = AcessToken.recuperar(getActivity().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
-            Call<SearchResponse> call = ApiClient.API_SERVICE.searchPontoTuristico("bearer "+token,latitude, longitude,2000);
+            Call<SearchResponse> call = ApiClient.API_SERVICE.searchPontoTuristico("bearer "+token,latitude, longitude,500);
             call.enqueue(new Callback<SearchResponse>() {
                 @Override
                 public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
@@ -105,7 +128,7 @@ public class HomeFragment extends Fragment implements LocationListener {
                             Log.d("Logger","Setting listview adapter");
                             ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getActivity(),
                                     getActivity().getLayoutInflater(),
-                                    atracoes);
+                                    atracoes.subList(atracoes.size()-2,atracoes.size()));
                             listView.setAdapter(adapter);
                         }
                     }

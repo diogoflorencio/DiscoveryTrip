@@ -9,7 +9,6 @@ import android.app.Activity;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -58,11 +57,11 @@ public class DetalhesAtracaoActivity extends Activity implements View.OnClickLis
         inicio = (TextView) findViewById(R.id.detalhes_evento_inicio);
         fim = (TextView) findViewById(R.id.detalhes_evento_fim);
         preco = (TextView) findViewById(R.id.detalhes_evento_preco);
-        foto = (ImageView) findViewById(R.id.detalhes_evento_imagem);
+        foto = (ImageView) findViewById(R.id.detalhes_evento_image);
 
         lembrar = (Button) findViewById(R.id.detalhes_btn_lembrar);
-        editar = (ImageButton) findViewById(R.id.detalhes_evento_edit);
-        deletar = (ImageButton) findViewById(R.id.detalhes_evento_delete);
+        editar = (ImageButton) findViewById(R.id.detalhes_evento_edita);
+        deletar = (ImageButton) findViewById(R.id.detalhes_evento_deleta);
 
         lembrar.setOnClickListener(this);
         editar.setOnClickListener(this);
@@ -102,6 +101,14 @@ public class DetalhesAtracaoActivity extends Activity implements View.OnClickLis
             deletar.setVisibility(View.INVISIBLE);
         }
         else if(visualizationType.equals(VisualizationType.Editar)){
+            lembrar.setEnabled(false);
+            lembrar.setVisibility(View.INVISIBLE);
+        }
+        else if(visualizationType.equals(VisualizationType.Visualizar)){
+            editar.setEnabled(false);
+            deletar.setEnabled(false);
+            editar.setVisibility(View.INVISIBLE);
+            deletar.setVisibility(View.INVISIBLE);
             lembrar.setEnabled(false);
             lembrar.setVisibility(View.INVISIBLE);
         }
@@ -150,12 +157,13 @@ public class DetalhesAtracaoActivity extends Activity implements View.OnClickLis
         switch (id){
             case R.id.detalhes_btn_lembrar:
                 lembrarEvento();
+                Toast.makeText(this,"Evento adicionado a sua lista de lembretes",Toast.LENGTH_SHORT).show();
                 onBackPressed();
                 break;
-            case R.id.detalhes_evento_delete:
+            case R.id.detalhes_evento_deletar:
                 deleteEvent();
                 break;
-            case R.id.detalhes_evento_edit:
+            case R.id.detalhes_evento_editar:
                 //TODO fazer o método e a tela de edição
                 break;
         }

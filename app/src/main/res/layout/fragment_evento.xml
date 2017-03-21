@@ -51,18 +51,6 @@
                         android:layout_height="match_parent">
 
                         <LinearLayout
-                            android:id="@+id/tab_meus_eventos"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical">
-
-                            <ListView
-                                android:id="@+id/meus_eventos_list"
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent" />
-                        </LinearLayout>
-
-                        <LinearLayout
                             android:id="@+id/tab_lembretes"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -70,6 +58,18 @@
 
                             <ListView
                                 android:id="@+id/lembretes_eventos_list"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/tab_meus_eventos"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+                            <ListView
+                                android:id="@+id/meus_eventos_list"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent" />
                         </LinearLayout>

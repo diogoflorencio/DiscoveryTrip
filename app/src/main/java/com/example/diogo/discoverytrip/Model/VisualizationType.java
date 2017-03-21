@@ -5,5 +5,5 @@ package com.example.diogo.discoverytrip.Model;
  */
 
 public enum VisualizationType {
-    Editar, Lembrar_Evento, Visualizar_PT;
+    Editar, Lembrar_Evento, Visualizar;
 }
