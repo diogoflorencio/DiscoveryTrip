@@ -4,7 +4,8 @@
     android:layout_height="match_parent"
     android:clickable="true"
     tools:context="com.example.diogo.discoverytrip.Fragments.PerfilFragment"
-    android:background="@android:color/white">
+    android:alpha="0.7"
+    android:background="@color/cardview_light_background">
 
     <LinearLayout
         android:orientation="vertical"
