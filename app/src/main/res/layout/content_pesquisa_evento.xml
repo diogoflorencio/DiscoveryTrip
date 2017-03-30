@@ -20,12 +20,13 @@
             android:drawableLeft="@android:drawable/ic_menu_search"/>
 
         <Button
+            android:id="@+id/pesquisa_evento_btnOK"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OK"
-            android:id="@+id/pesquisa_evento_btnOK"
-            android:layout_weight="0.1" />
+            android:layout_weight="0.1"
+            android:background="@drawable/styled_button"
+            android:text="OK" />
     </LinearLayout>
 
     <LinearLayout

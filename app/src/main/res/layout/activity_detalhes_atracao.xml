@@ -176,7 +176,7 @@
                     android:layout_below="@+id/detalhes_evento_preco"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:background="@color/confirmebutton"
+                    android:background="@drawable/styled_button"
                     android:paddingLeft="3dp"
                     android:paddingRight="3dp"
                     android:text="Marcar Presença"

@@ -27,6 +27,7 @@
             android:id="@+id/pnt_search_ok_btn"
             android:layout_width="48dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/styled_button"
             android:text="OK" />
     </LinearLayout>
 

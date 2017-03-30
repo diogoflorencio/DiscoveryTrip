@@ -93,27 +93,29 @@
                 android:layout_alignParentEnd="true" />
 
             <Button
-                android:text="Cancelar"
+                android:id="@+id/pfeCancel_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pfeCancel_btn"
-                android:layout_alignTop="@+id/pfeConfirm_btn"
-                android:layout_alignParentRight="true"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/pfeConfirm_btn"
+                android:layout_marginEnd="19dp"
                 android:layout_marginRight="19dp"
-                android:layout_marginEnd="19dp" />
+                android:background="@drawable/styled_button"
+                android:text="Cancelar" />
 
             <Button
-                android:text="Confirmar"
+                android:id="@+id/pfeConfirm_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pfeConfirm_btn"
-                android:layout_marginTop="61dp"
-                android:layout_below="@+id/pfeEmail_txt"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:layout_below="@+id/pfeEmail_txt"
                 android:layout_marginLeft="16dp"
-                android:layout_marginStart="16dp" />
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="61dp"
+                android:background="@drawable/styled_button"
+                android:text="Confirmar" />
 
         </RelativeLayout>
     </ScrollView>
