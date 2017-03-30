@@ -160,12 +160,12 @@ public class DetalhesAtracaoActivity extends Activity implements View.OnClickLis
                 Toast.makeText(this,"Evento adicionado a sua lista de lembretes",Toast.LENGTH_SHORT).show();
                 onBackPressed();
                 break;
-//            case R.id.detalhes_evento_deletar:
-//                deleteEvent();
-//                break;
-//            case R.id.detalhes_evento_editar:
-//                //TODO fazer o método e a tela de edição
-//                break;
+            case R.id.detalhes_evento_deletar:
+                deleteEvent();
+                break;
+            case R.id.detalhes_evento_editar:
+                //TODO fazer o método e a tela de edição
+                break;
         }
     }
 
