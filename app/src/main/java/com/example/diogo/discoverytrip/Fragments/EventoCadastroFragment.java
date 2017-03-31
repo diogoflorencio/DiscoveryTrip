@@ -59,7 +59,8 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class EventoCadastroFragment extends Fragment implements LocationListener, View.OnClickListener, AdapterView.OnItemSelectedListener, DatePickerFragment.DatePickerFragmentListener, TimePickerFragment.TimePickerFragmentListener {
     public EditText nameVal_txt, descVal_txt, priceVal_txt;
     private Date dateVal_date;
-    public TextView dateInicioVal_txt, dateFimVal_txt, timeVal_txt;
+    public TextView dateInicioVal_txt, dateFimVal_txt, timeInicioVal_txt, timeFimVal_txt;
+    private Integer horaInicio, horaFim, minutoInicio, minutoFim;
     Spinner evKind_spn;
     private final int CAM_REQUEST = 1313;
     private final int CAM_SELECT = 1234;
@@ -82,9 +83,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                              Bundle savedInstanceState) {
         Log.d("Logger", "EventoCadastroFragment onCreate");
         startGPS();
-        Log.d("Logger", "EventoCadastroFragment onCreate0");
         View rootView = inflater.inflate(R.layout.fragment_evento_cadastro, container, false);
-        Log.d("Logger", "EventoCadastroFragment onCreate1");
 
         rootView.findViewById(R.id.evConfirm_btn).setOnClickListener(this);
         rootView.findViewById(R.id.evCancel_btn).setOnClickListener(this);
@@ -93,18 +92,17 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         rootView.findViewById(R.id.evDatePickerInicio_btn).setOnClickListener(this);
         rootView.findViewById(R.id.evDatePickerFim_btn).setOnClickListener(this);
         rootView.findViewById(R.id.evMap_btn).setOnClickListener(this);
-        rootView.findViewById(R.id.evTimePicker_btn).setOnClickListener(this);
-        Log.d("Logger", "EventoCadastroFragment onCreate2");
+        rootView.findViewById(R.id.evTimePickerInicio_btn).setOnClickListener(this);
+        rootView.findViewById(R.id.evTimePickerFim_btn).setOnClickListener(this);
 
         nameVal_txt = (EditText) rootView.findViewById(R.id.evName_edt);
         descVal_txt = (EditText) rootView.findViewById(R.id.evDesc_edt);
         priceVal_txt = (EditText) rootView.findViewById(R.id.evPrice_edt);
-        Log.d("Logger", "EventoCadastroFragment onCreate3");
 
         dateInicioVal_txt = (TextView) rootView.findViewById(R.id.dateValInicio_txt);
         dateFimVal_txt = (TextView) rootView.findViewById(R.id.dateValFim_txt);
-        timeVal_txt = (TextView) rootView.findViewById(R.id.evTimeVal_txt);
-        Log.d("Logger", "EventoCadastroFragment onCreate4");
+        timeInicioVal_txt = (TextView) rootView.findViewById(R.id.evTimeInicioVal_txt);
+        timeFimVal_txt = (TextView) rootView.findViewById(R.id.evTimeFimVal_txt);
 
         evKind_spn = (Spinner) rootView.findViewById(R.id.evKind_spn);
         evKind_spn.setOnItemSelectedListener(this);
@@ -116,9 +114,10 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         return rootView;
     }
 
-    private void timPicker() {
+    private void timPicker(String timeKind) {
         Log.d("Logger", "EventoCadastroFragment timPicker");
         TimePickerFragment fragment = TimePickerFragment.newInstance(this);
+        getActivity().getIntent().putExtra("TimeKind", timeKind);
         fragment.show(getActivity().getSupportFragmentManager(), "timePicker");
     }
 
@@ -130,8 +129,27 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
 
     public void setTime(int hour, int minute) {
         Log.d("Logger", "EventoCadastroFragment setTime");
-        timeVal_txt.setText(hour+":"+minute);
-        Log.d("Logger", "hora " + timeVal_txt.getText());
+
+        try {
+            String dateKind = getActivity().getIntent().getStringExtra("TimeKind");
+            switch (dateKind){
+                case "Inicio":
+                    horaInicio = hour;
+                    minutoInicio = minute;
+                    timeInicioVal_txt.setText(horaInicio+":"+minutoInicio);
+                    Log.d("Logger", "horaInicio " + timeInicioVal_txt.getText());
+                    break;
+                case "Fim":
+                    horaFim = hour;
+                    minutoFim = minute;
+                    timeFimVal_txt.setText(horaFim+":"+minutoFim);
+                    Log.d("Logger", "horaFim " + timeFimVal_txt.getText());
+                    break;
+            }
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void datePicker(View view, String dateKind){
@@ -215,9 +233,13 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                 Log.d("Logger", "EventoCadastroFragment botao mapa");
                 openMapActivity();
                 break;
-            case R.id.evTimePicker_btn:
-                Log.d("Logger", "EventoCadastroFragment botao time");
-                timPicker();
+            case R.id.evTimePickerInicio_btn:
+                Log.d("Logger", "EventoCadastroFragment botao timePickerInicio");
+                timPicker("Inicio");
+                break;
+            case R.id.evTimePickerFim_btn:
+                Log.d("Logger", "EventoCadastroFragment botao timePickerFim");
+                timPicker("Fim");
                 break;
         }
     }
@@ -377,7 +399,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
             e.printStackTrace();
         }
 
-        if(timeVal_txt.getText().toString().trim().isEmpty()){
+        if(timeInicioVal_txt.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_time));
         }
 
@@ -406,9 +428,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         String eventDateBegin_value = dateInicioVal_txt.getText().toString();
         String eventDateEnd_value = dateFimVal_txt.getText().toString();
 
-        //todo diogo o valor da hora é esse aqui
-        String time_value = timeVal_txt.getText().toString();
-
         Log.d("Logger","DateBegin txt "+ eventDateBegin_value);
         Log.d("Logger","DateEnd txt "+ eventDateEnd_value);
 
@@ -424,20 +443,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         String eventDateBegin_formated = null;
         String eventDateEnd_formated = null;
 
-//        String eventDate_formated = null;
-
-//        try {
-//            Date date = normalDateFormat.parse(eventDateBegin_value);
-//            date.toString();
-//            date.setHours(23);
-//            date.setMinutes(59);
-//            date.setSeconds(59);
-//            eventDate_formated = dateFormat.format(date);
-//            Log.d("Logger","Date formated "+eventDate_formated);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-
         if (dateInicioVal_txt.getText().toString().trim().isEmpty()){
             Date dateBegin = new Date();
             dateBegin.toString();
@@ -449,9 +454,9 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
             try {
                 Date dateBegin = normalDateFormat.parse(eventDateBegin_value);
                 dateBegin.toString();
-                dateBegin.setHours(0);
-                dateBegin.setMinutes(59);
-                dateBegin.setSeconds(59);
+                dateBegin.setHours(horaInicio);
+                dateBegin.setMinutes(minutoInicio);
+                dateBegin.setSeconds(0);
                 eventDateBegin_formated = dateFormat.format(dateBegin);
             } catch (ParseException e) {
                 e.printStackTrace();
@@ -463,9 +468,9 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         try {
             Date dateEnd = normalDateFormat.parse(eventDateEnd_value);
             dateEnd.toString();
-            dateEnd.setHours(23);
-            dateEnd.setMinutes(59);
-            dateEnd.setSeconds(59);
+            dateEnd.setHours(horaFim);
+            dateEnd.setMinutes(minutoFim);
+            dateEnd.setSeconds(1);
             eventDateEnd_formated = dateFormat.format(dateEnd);
             Log.d("Logger","DateEnd formated "+ eventDateEnd_formated);
         } catch (ParseException e) {
@@ -484,6 +489,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
 
         parametersMap.put("kind",helper.createPartFrom(eventKind_value));
         parametersMap.put("price",helper.createPartFrom(eventPrice_value));
+        Log.d("Logger","DateEnd price "+ eventPrice_value);
 
         try{
             //o fragmento veio pela "map activity"
