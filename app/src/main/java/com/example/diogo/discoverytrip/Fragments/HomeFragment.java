@@ -128,7 +128,7 @@ public class HomeFragment extends Fragment implements LocationListener {
                             Log.d("Logger","Setting listview adapter");
                             ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getActivity(),
                                     getActivity().getLayoutInflater(),
-                                    atracoes.subList(atracoes.size()-2,atracoes.size()));
+                                    atracoes);
                             listView.setAdapter(adapter);
                         }
                     }

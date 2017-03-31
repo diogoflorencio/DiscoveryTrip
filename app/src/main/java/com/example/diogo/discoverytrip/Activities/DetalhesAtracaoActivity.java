@@ -85,11 +85,11 @@ public class DetalhesAtracaoActivity extends Activity implements View.OnClickLis
         }
 
         if(atracao.getPhotoId() != null && !atracao.getPhotoId().equals("")){
-            loadImage(foto);
+            //loadImage(foto);
         }
 
-        if(atracao.getLocation().getStreetName() != null){
-            endereco.setText("Rua "+atracao.getLocation().getStreetName()+
+        if(atracao.getLocation() != null && atracao.getLocation().getStreetName() != null){
+            endereco.setText(atracao.getLocation().getStreetName()+
                             ", "+atracao.getLocation().getStreetNumber()+
                             ", "+atracao.getLocation().getCity());
         }
@@ -160,10 +160,10 @@ public class DetalhesAtracaoActivity extends Activity implements View.OnClickLis
                 Toast.makeText(this,"Evento adicionado a sua lista de lembretes",Toast.LENGTH_SHORT).show();
                 onBackPressed();
                 break;
-            case R.id.detalhes_evento_deletar:
+            case R.id.detalhes_evento_deleta:
                 deleteEvent();
                 break;
-            case R.id.detalhes_evento_editar:
+            case R.id.detalhes_evento_edita:
                 //TODO fazer o método e a tela de edição
                 break;
         }

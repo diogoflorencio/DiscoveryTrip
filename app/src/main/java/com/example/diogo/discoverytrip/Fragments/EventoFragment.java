@@ -100,7 +100,7 @@ public class EventoFragment extends Fragment implements View.OnClickListener {
 
         getUserPoints();
         DiscoveryTripBD discoveryTripBD = new DiscoveryTripBD(getContext());
-        lembretes = discoveryTripBD.selectDayLembretesTable();
+        lembretes = discoveryTripBD.selectAllLembretesTable();
 
         ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getContext(),
                 getActivity().getLayoutInflater(),

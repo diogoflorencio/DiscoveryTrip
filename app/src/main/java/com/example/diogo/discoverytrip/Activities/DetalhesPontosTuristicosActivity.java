@@ -43,7 +43,7 @@ public class DetalhesPontosTuristicosActivity extends AppCompatActivity implemen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detalhes_pontos_turisticos);
 
-        loadImage(foto);
+//        loadImage(foto);
 
         titulo = (TextView) findViewById(R.id.detalhes_pt_titulo);
         descricao = (TextView) findViewById(R.id.detalhes_pt_descricao);
