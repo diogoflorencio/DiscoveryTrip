@@ -92,12 +92,13 @@
                 android:layout_alignParentEnd="true" />
 
             <Button
-                android:text="Selecionar Foto"
+                android:id="@+id/ponto_turistico_btnFoto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/pntDescVal_txt"
                 android:layout_centerHorizontal="true"
-                android:id="@+id/ponto_turistico_btnFoto" />
+                android:background="@drawable/styled_button"
+                android:text="Selecionar Foto" />
 
             <Spinner
                 android:layout_width="match_parent"
@@ -125,6 +126,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
+                android:background="@drawable/styled_button"
                 android:text="Cancelar" />
 
             <Button
@@ -133,6 +135,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/ponto_turistico_btnFoto"
                 android:layout_marginTop="22dp"
+                android:background="@drawable/styled_button"
                 android:text="Confirmar" />
 
         </RelativeLayout>
