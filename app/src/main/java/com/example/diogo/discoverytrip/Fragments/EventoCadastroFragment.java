@@ -431,7 +431,16 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         Log.d("Logger","DateBegin txt "+ eventDateBegin_value);
         Log.d("Logger","DateEnd txt "+ eventDateEnd_value);
 
-        String eventPrice_value = priceVal_txt.getText().toString();
+        String eventPrice_value = null;
+
+        try{
+            eventPrice_value = priceVal_txt.getText().toString().replace('.', ',');
+
+        } catch (Exception e){
+            eventPrice_value = "0";
+            e.printStackTrace();
+        }
+
         String eventKind_value = null;
         switch (evKind_spn.getSelectedItemPosition()) {
             case 0: eventKind_value = "private";
@@ -483,7 +492,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         parametersMap.put("name",helper.createPartFrom(eventName_value));
         parametersMap.put("description",helper.createPartFrom(eventDesc_value));
 
-//        parametersMap.put("endDate",helper.createPartFrom(eventDate_formated));
         parametersMap.put("startDate",helper.createPartFrom(eventDateBegin_formated));
         parametersMap.put("endDate",helper.createPartFrom(eventDateEnd_formated));
 
