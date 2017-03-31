@@ -125,4 +125,11 @@ public class Atracao {
     public void setEndDate(String endDate) {
         this.endDate = endDate;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj.getClass() != Atracao.class) return false;
+        Atracao a = (Atracao) obj;
+        return this.getId().equals(a.getId());
+    }
 }

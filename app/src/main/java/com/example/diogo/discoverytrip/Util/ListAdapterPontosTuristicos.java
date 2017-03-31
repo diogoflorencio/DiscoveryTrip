@@ -86,7 +86,7 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
         }catch (Exception e){
             e.printStackTrace();
         }
-        
+
         retrofit2.Call<ResponseBody> call = ApiClient.API_SERVICE.downloadFoto("bearer "+AcessToken.recuperar(context.getSharedPreferences("acessToken", Context.MODE_PRIVATE)),
                 photoId);
         call.enqueue(new retrofit2.Callback<ResponseBody>() {

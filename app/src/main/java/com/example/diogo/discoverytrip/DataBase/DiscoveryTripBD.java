@@ -10,9 +10,17 @@ import android.util.Log;
 import com.example.diogo.discoverytrip.DataHora.DataHoraSystem;
 import com.example.diogo.discoverytrip.Model.Atracao;
 import com.example.diogo.discoverytrip.Model.Localizacao;
+import com.example.diogo.discoverytrip.REST.ApiClient;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
+import com.example.diogo.discoverytrip.REST.ServerResponses.SearchResponse;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by diogo on 04/02/17.
@@ -167,5 +175,11 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
         }
         cursor.close();
         return atracoes;
+    }
+
+    public void updateBD(List<Atracao> eventsOfDay){
+        for (Atracao a : selectDayLembretesTable())
+            if(!eventsOfDay.contains(a))
+                deleteLembreteTable(a);
     }
 }

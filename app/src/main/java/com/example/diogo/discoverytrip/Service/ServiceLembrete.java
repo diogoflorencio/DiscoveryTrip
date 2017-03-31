@@ -15,12 +15,21 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.diogo.discoverytrip.Activities.HomeActivity;
+import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.DataBase.DiscoveryTripBD;
 import com.example.diogo.discoverytrip.DataHora.DataHoraSystem;
 import com.example.diogo.discoverytrip.Model.Atracao;
 import com.example.diogo.discoverytrip.R;
+import com.example.diogo.discoverytrip.REST.ApiClient;
+import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
+import com.example.diogo.discoverytrip.REST.ServerResponses.SearchResponse;
 
+import java.io.IOException;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by diogo on 04/02/17.
@@ -90,6 +99,7 @@ public class ServiceLembrete extends Service {
         discoveryTripBD = new DiscoveryTripBD(getApplicationContext());
         List<Atracao> lembretes = discoveryTripBD.selectDayLembretesTable();
         if(lembretes.isEmpty() || !isRun()) return;
+        getEventsOfDay();
         enviaNotificacao();
     }
 
@@ -130,5 +140,32 @@ public class ServiceLembrete extends Service {
 
     public static boolean isRun(){
         return run;
+    }
+
+    private void getEventsOfDay(){
+        String token = AcessToken.recuperar(getSharedPreferences("acessToken", Context.MODE_PRIVATE));
+        Call<SearchResponse> call = ApiClient.API_SERVICE.eventsOfDay("bearer "+token);
+        call.enqueue(new Callback<SearchResponse>() {
+            @Override
+            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+                if(response.isSuccessful()){
+                    Log.d("Logger","EventsOfDay ok");
+                    DiscoveryTripBD bd = new DiscoveryTripBD(getApplicationContext());
+                    bd.updateBD(response.body().getAtracoes());
+                }else {
+                    try {
+                        ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+                        Log.e("Logger", "EventsOfDay ServerResponse "+error.getErrorDescription());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SearchResponse> call, Throwable t) {
+                Log.e("Logger","EventsOfDay error: "+t.toString());
+            }
+        });
     }
 }

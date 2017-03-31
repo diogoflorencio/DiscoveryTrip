@@ -120,4 +120,7 @@ public interface ApiInterface {
 
     @DELETE("/api/points")
     Call<DeleteAttractionResponse> deleteAttraction(@Header("Authorization") String accessToken, @Query("id") String id);
+
+    @GET("/api/events/interestme")
+    Call<SearchResponse> eventsOfDay(@Header("Authorization") String accessToken);
 }
