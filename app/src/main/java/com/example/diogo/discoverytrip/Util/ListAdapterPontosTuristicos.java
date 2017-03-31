@@ -61,12 +61,12 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
 
         if(atracao.getType().equals(EVENT_TYPE)){
             if(atracao.getPhotoId() != null){
-                //loadImage(foto,position,true);
+                loadImage(foto,position,true);
             }
         }
         else{
             icone.setImageResource(R.drawable.ponto_turistico_icon);
-            //loadImage(foto,position,false);
+            loadImage(foto,position,false);
         }
         return view;
     }
