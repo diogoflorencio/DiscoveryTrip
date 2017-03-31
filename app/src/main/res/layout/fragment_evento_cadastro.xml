@@ -258,6 +258,7 @@
                         android:id="@+id/evento_btnFoto"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="@drawable/styled_button"
                         android:text="Selecionar Foto" />
 
                     <Button
@@ -288,6 +289,7 @@
                         android:layout_alignParentStart="false"
                         android:layout_gravity="bottom"
                         android:layout_weight="1"
+                        android:background="@drawable/styled_button"
                         android:text="Confirmar" />
 
                     <Button
@@ -299,6 +301,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_gravity="bottom"
                         android:layout_weight="1"
+                        android:background="@drawable/styled_button"
                         android:text="Cancelar" />
 
                 </LinearLayout>

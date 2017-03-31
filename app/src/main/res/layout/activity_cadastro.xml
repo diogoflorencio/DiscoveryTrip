@@ -51,9 +51,11 @@
             android:hint="Confirmar senha" />
 
         <Button
-            android:text="Cadastrar"
+            android:id="@+id/btnCadastrar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/btnCadastrar" />
+            android:background="@drawable/styled_button"
+            android:text="Cadastrar"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 </RelativeLayout>

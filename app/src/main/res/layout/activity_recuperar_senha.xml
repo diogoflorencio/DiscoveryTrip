@@ -27,11 +27,12 @@
             android:hint="digite seu email " />
 
         <Button
-            android:text="recuperar senha"
+            android:id="@+id/recuperar_senha_btnRecuperar"
             android:layout_width="match_parent"
             android:layout_height="36dp"
-            android:id="@+id/recuperar_senha_btnRecuperar"
-            android:background="@android:color/holo_blue_dark" />
+            android:background="@drawable/styled_button"
+            android:text="recuperar senha"
+            android:textColor="@android:color/white"  />
     </LinearLayout>
 
 </RelativeLayout>

@@ -112,13 +112,12 @@
             <Button
                 android:id="@+id/btnLoginApp"
                 android:layout_width="195dp"
-                android:layout_height="30dp"
+                android:layout_height="36dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/side_nav_bar"
-                android:elevation="0dp"
+                android:background="@drawable/styled_button"
                 android:text="Login"
                 android:textColor="@android:color/white" />
 
