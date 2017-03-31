@@ -23,6 +23,7 @@ import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ServerResponses.DeleteEventoResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
+import com.example.diogo.discoverytrip.REST.ServerResponses.SearchResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -156,6 +157,7 @@ public class DetalhesAtracaoActivity extends Activity implements View.OnClickLis
         int id = v.getId();
         switch (id){
             case R.id.detalhes_btn_lembrar:
+                postInterestedEvent();
                 lembrarEvento();
                 Toast.makeText(this,"Evento adicionado a sua lista de lembretes",Toast.LENGTH_SHORT).show();
                 onBackPressed();
@@ -222,4 +224,25 @@ public class DetalhesAtracaoActivity extends Activity implements View.OnClickLis
         DiscoveryTripBD bd = new DiscoveryTripBD(this);
         bd.insertLembretesTable(atracao);
     }
+
+    private void postInterestedEvent(){
+        String token = AcessToken.recuperar(this.getSharedPreferences("acessToken", Context.MODE_PRIVATE));
+        Call<ResponseBody> call = ApiClient.API_SERVICE.interestedEvent("bearer "+token, atracao.getId());
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful())
+                    Log.d("Logger","InterestedEvent ok");
+                else
+                    Log.d("Logger","InterestedEvent error request");
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Log.d("Logger","InterestedEvent failure");
+            }
+        });
+
+    }
+
 }

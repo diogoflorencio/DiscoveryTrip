@@ -123,4 +123,7 @@ public interface ApiInterface {
 
     @GET("/api/events/interestme")
     Call<SearchResponse> eventsOfDay(@Header("Authorization") String accessToken);
+
+    @POST("/api/events/{id}/interestme")
+    Call<ResponseBody> interestedEvent(@Header("Authorization") String token, @Path("id") String eventId);
 }
