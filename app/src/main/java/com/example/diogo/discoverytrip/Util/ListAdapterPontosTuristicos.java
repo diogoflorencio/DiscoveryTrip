@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 import okhttp3.ResponseBody;
 
@@ -37,6 +38,7 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
     private Handler handler = new Handler();
     private SimpleDateFormat BDFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     private SimpleDateFormat nomalFormat = new SimpleDateFormat("dd/M/yyyy");
+    private  static Semaphore semaphore = new Semaphore(1);
 
     public ListAdapterPontosTuristicos(Context context, LayoutInflater inflater, List<Atracao> atracoes){
         super(context, R.layout.item_evento,atracoes);
@@ -70,7 +72,7 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
     }
 
     private void loadImage(final ImageView imgView, final int position, boolean isEvent){
-
+        Log.d("Logger","loadImage");
         String photoId;
         if(isEvent){
             photoId = atracoes.get(position).getPhotoId();
@@ -79,6 +81,12 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
             photoId = atracoes.get(position).getPhotos().get(0);
         }
 
+        try{
+            semaphore.acquire();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        
         retrofit2.Call<ResponseBody> call = ApiClient.API_SERVICE.downloadFoto("bearer "+AcessToken.recuperar(context.getSharedPreferences("acessToken", Context.MODE_PRIVATE)),
                 photoId);
         call.enqueue(new retrofit2.Callback<ResponseBody>() {
@@ -105,12 +113,14 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
                         e.printStackTrace();
                     }
                 }
+                semaphore.release();
             }
 
             @Override
             public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
                 // Log error here since request failed
                 Log.e("Pesquisa de pontos turisticos","Erro ao baixar imagem");
+                semaphore.release();
             }
         });
     }
