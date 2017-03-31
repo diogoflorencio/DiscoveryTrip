@@ -2,8 +2,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:alpha="0.7"
-    android:background="@color/cardview_light_background"
     android:clickable="true"
     tools:context="com.example.diogo.discoverytrip.Fragments.EventoCadastroFragment">
 
@@ -18,8 +16,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:alpha="0.7"
+                android:background="@color/cardview_light_background"
                 android:orientation="vertical">
-
 
                 <TextView
                     android:id="@+id/textView4"
@@ -51,6 +50,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/eventCreation_txt"
                         android:layout_weight="1"
+                        android:alpha="1"
                         android:text="Nome"
                         android:textSize="18sp" />
 
@@ -62,6 +62,7 @@
                         android:layout_toLeftOf="@+id/evCancel_btn"
                         android:layout_toStartOf="@+id/evCancel_btn"
                         android:layout_weight="1"
+                        android:alpha="1"
                         android:ems="10"
                         android:inputType="textPersonName" />
 
@@ -97,6 +98,39 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:background="@drawable/calendar_icon" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/evTimeInicio_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/evName_txt"
+                        android:layout_weight="1"
+                        android:text="Hora de inicio"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/evTimeInicioVal_txt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="18sp" />
+
+                    <Button
+                        android:id="@+id/evTimePickerInicio_btn"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:background="@drawable/clock_icon" />
 
                 </LinearLayout>
 
@@ -140,25 +174,25 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/evTime_txt"
+                        android:id="@+id/evTimeFim_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/evName_txt"
                         android:layout_weight="1"
-                        android:text="Hora"
+                        android:text="Hora de fim"
                         android:textSize="18sp" />
 
                     <TextView
-                        android:id="@+id/evTimeVal_txt"
+                        android:id="@+id/evTimeFimVal_txt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="18sp" />
 
                     <Button
-                        android:id="@+id/evTimePicker_btn"
+                        android:id="@+id/evTimePickerFim_btn"
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:background="@drawable/clock_icon" />
