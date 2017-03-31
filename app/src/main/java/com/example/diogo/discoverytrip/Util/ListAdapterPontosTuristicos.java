@@ -38,7 +38,7 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
     private Handler handler = new Handler();
     private SimpleDateFormat BDFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
     private SimpleDateFormat nomalFormat = new SimpleDateFormat("dd/M/yyyy");
-    private  static Semaphore semaphore = new Semaphore(1);
+    private static Semaphore semaphore = new Semaphore(1);
 
     public ListAdapterPontosTuristicos(Context context, LayoutInflater inflater, List<Atracao> atracoes){
         super(context, R.layout.item_evento,atracoes);
@@ -49,10 +49,11 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent){
+    public View getView(final int position, View convertView, ViewGroup parent){
+        Log.d("Logger","getView "+position);
         final Atracao atracao = atracoes.get(position);
         View view = inflater.inflate(R.layout.item_ponto_turistico, null, true);
-        ImageView foto = (ImageView) view.findViewById(R.id.iten_img);
+        final ImageView foto = (ImageView) view.findViewById(R.id.iten_img);
         ImageView icone = (ImageView) view.findViewById(R.id.iten_icon);
 
         final TextView titulo  = (TextView) view.findViewById(R.id.iten_name);
@@ -61,7 +62,12 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
 
         if(atracao.getType().equals(EVENT_TYPE)){
             if(atracao.getPhotoId() != null){
-                loadImage(foto,position,true);
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadImage(foto,position,true);
+                    }
+                }).start();
             }
         }
         else{
@@ -72,6 +78,11 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
     }
 
     private void loadImage(final ImageView imgView, final int position, boolean isEvent){
+        try{
+            semaphore.acquire();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         Log.d("Logger","loadImage");
         String photoId;
         if(isEvent){
@@ -79,12 +90,6 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
         }
         else{
             photoId = atracoes.get(position).getPhotos().get(0);
-        }
-
-        try{
-            semaphore.acquire();
-        }catch (Exception e){
-            e.printStackTrace();
         }
 
         retrofit2.Call<ResponseBody> call = ApiClient.API_SERVICE.downloadFoto("bearer "+AcessToken.recuperar(context.getSharedPreferences("acessToken", Context.MODE_PRIVATE)),
@@ -114,6 +119,7 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
                     }
                 }
                 semaphore.release();
+                Log.d("Logger","Load image finish");
             }
 
             @Override
