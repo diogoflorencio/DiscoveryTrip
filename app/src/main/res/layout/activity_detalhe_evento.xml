@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/event_background"
+    android:paddingBottom="7dp"
+    android:paddingLeft="7dp"
+    android:paddingRight="7dp"
+    android:paddingTop="7dp"
+    tools:context="com.example.diogo.discoverytrip.Activities.DetalheEvento">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@+id/button3"
+        android:layout_toRightOf="@+id/button3"
+        android:layout_alignParentTop="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/round_border"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:id="@+id/detalhe_evento_editar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/detalhe_evento_deletar"
+                    android:background="@color/transparent"
+                    app:srcCompat="@android:drawable/ic_menu_edit" />
+
+                <ImageButton
+                    android:id="@+id/detalhe_evento_deletar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:background="@color/transparent"
+                    app:srcCompat="@android:drawable/ic_delete" />
+
+                <TextView
+                    android:id="@+id/detalhe_evento_titulo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:elevation="1dp"
+                    android:text="Título"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="24sp" />
+
+                <ImageView
+                    android:id="@+id/detalhe_evento_img"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/detalhe_evento_titulo"
+                    app:srcCompat="@mipmap/icon" />
+
+                <TextView
+                    android:id="@+id/detalhe_evento_descricao"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detalhe_evento_img"
+                    android:layout_marginTop="10dp"
+                    android:text="Descrição"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/detalhe_evento_lblCategoria"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detalhe_evento_descricao"
+                    android:layout_marginTop="10dp"
+                    android:text="Categoria: "
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/detalhe_evento_categoria"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="false"
+                    android:layout_below="@+id/detalhe_evento_descricao"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/detalhe_evento_lblCategoria"
+                    android:text="categoria"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/detalhe_evento_endereco"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detalhe_evento_lblCategoria"
+                    android:layout_marginTop="10dp"
+                    android:text="Endereço"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/detalhe_evento_lblInicio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detalhe_evento_endereco"
+                    android:layout_marginTop="10dp"
+                    android:text="Início: "
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/detalhe_evento_inicio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detalhe_evento_endereco"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/detalhe_evento_lblInicio"
+                    android:text="30/12/2017"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/detalhe_evento_lblFim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detalhe_evento_lblInicio"
+                    android:layout_marginTop="10dp"
+                    android:text="Fim: "
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/detalhe_evento_fim"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="false"
+                    android:layout_below="@+id/detalhe_evento_inicio"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/detalhe_evento_lblInicio"
+                    android:text="30/12/2017"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/detalhe_evento_lblPreco"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detalhe_evento_lblFim"
+                    android:layout_marginTop="10dp"
+                    android:text="Preço: "
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/detalhe_evento_preco"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/detalhe_evento_fim"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/detalhe_evento_lblPreco"
+                    android:text="R$ 17,90"
+                    android:textColor="@android:color/background_dark"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/detalhe_evento_marcar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="false"
+                    android:layout_below="@+id/detalhe_evento_preco"
+                    android:layout_centerHorizontal="true"
+                    android:text="Marcar presença" />
+
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</RelativeLayout>

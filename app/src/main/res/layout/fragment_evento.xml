@@ -10,6 +10,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/event_background" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:background="@color/discoverytrip_view_background">
+
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/createEvent_btn"
             android:layout_width="wrap_content"
@@ -77,14 +91,6 @@
                     </FrameLayout>
                 </LinearLayout>
             </TabHost>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha="0.7"
-                android:background="@color/cardview_light_background"
-                android:orientation="horizontal"></LinearLayout>
-
         </LinearLayout>
 
     </RelativeLayout>

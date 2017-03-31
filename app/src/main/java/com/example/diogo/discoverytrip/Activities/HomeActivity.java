@@ -150,28 +150,21 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_home:
                 Log.d("Logger", "Home localizacao");
                 fragment = new HomeFragment();
-                getSupportActionBar().show();
-                background.setBackgroundResource(R.drawable.home_background);
                 isAtHome = true;
                 break;
             case R.id.nav_perfil:
                 Log.d("Logger", "Home localizacao");
                 fragment = new PerfilFragment();
-                getSupportActionBar().show();
                 isAtHome = false;
                 break;
             case R.id.nav_ponto_turistico:
                 Log.d("Logger", "Home localizacao");
                 fragment = new PontoTuristicoFragment();
-                getSupportActionBar().show();
-                background.setBackgroundResource(R.drawable.ponto_turistico_background);
                 isAtHome = false;
                 break;
             case R.id.nav_evento:
                 Log.d("Logger", "Home localizacao");
                 fragment = new EventoFragment();
-                getSupportActionBar().hide();
-                background.setBackgroundResource(R.drawable.event_background);
                 isAtHome = false;
                 break;
         }

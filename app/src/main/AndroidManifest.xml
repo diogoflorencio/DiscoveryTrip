@@ -102,7 +102,10 @@
         <activity
             android:name=".Activities.MeusPontosTuristicosActivity"
             android:label="@string/title_activity_meus_pontos_turisticos" />
-        <activity android:name=".Activities.DetalhesPontosTuristicosActivity"></activity>
+        <activity android:name=".Activities.DetalhesPontosTuristicosActivity" />
+        <activity android:name=".Activities.DetalheEvento">
+
+        </activity>
     </application>
 
 </manifest>

@@ -4,9 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Bundle;
-import android.app.Activity;
 import android.os.Handler;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -23,7 +23,6 @@ import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ServerResponses.DeleteEventoResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
-import com.example.diogo.discoverytrip.REST.ServerResponses.SearchResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -35,7 +34,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DetalhesAtracaoActivity extends Activity implements View.OnClickListener{
+public class DetalheEvento extends AppCompatActivity implements View.OnClickListener{
+
     public static Atracao atracao;
     public static VisualizationType visualizationType;
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss'Z'");
@@ -49,20 +49,20 @@ public class DetalhesAtracaoActivity extends Activity implements View.OnClickLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalhes_atracao);
+        setContentView(R.layout.activity_detalhe_evento);
 
-        titulo = (TextView) findViewById(R.id.detalhes_evento_titulo);
-        descricao = (TextView) findViewById(R.id.detalhes_evento_descricao);
-        endereco = (TextView) findViewById(R.id.detalhes_evento_endereco);
-        tipo = (TextView) findViewById(R.id.detalhes_evento_tipo);
-        inicio = (TextView) findViewById(R.id.detalhes_evento_inicio);
-        fim = (TextView) findViewById(R.id.detalhes_evento_fim);
-        preco = (TextView) findViewById(R.id.detalhes_evento_preco);
-        foto = (ImageView) findViewById(R.id.detalhes_evento_image);
+        titulo = (TextView) findViewById(R.id.detalhe_evento_titulo);
+        descricao = (TextView) findViewById(R.id.detalhe_evento_descricao);
+        endereco = (TextView) findViewById(R.id.detalhe_evento_endereco);
+        tipo = (TextView) findViewById(R.id.detalhe_evento_categoria);
+        inicio = (TextView) findViewById(R.id.detalhe_evento_inicio);
+        fim = (TextView) findViewById(R.id.detalhe_evento_fim);
+        preco = (TextView) findViewById(R.id.detalhe_evento_preco);
+        foto = (ImageView) findViewById(R.id.detalhe_evento_img);
 
-        lembrar = (Button) findViewById(R.id.detalhes_btn_lembrar);
-        editar = (ImageButton) findViewById(R.id.detalhes_evento_edita);
-        deletar = (ImageButton) findViewById(R.id.detalhes_evento_deleta);
+        lembrar = (Button) findViewById(R.id.detalhe_evento_marcar);
+        editar = (ImageButton) findViewById(R.id.detalhe_evento_editar);
+        deletar = (ImageButton) findViewById(R.id.detalhe_evento_deletar);
 
         lembrar.setOnClickListener(this);
         editar.setOnClickListener(this);
@@ -91,8 +91,8 @@ public class DetalhesAtracaoActivity extends Activity implements View.OnClickLis
 
         if(atracao.getLocation() != null && atracao.getLocation().getStreetName() != null){
             endereco.setText(atracao.getLocation().getStreetName()+
-                            ", "+atracao.getLocation().getStreetNumber()+
-                            ", "+atracao.getLocation().getCity());
+                    ", "+atracao.getLocation().getStreetNumber()+
+                    ", "+atracao.getLocation().getCity());
         }
 
         if(visualizationType.equals(VisualizationType.Lembrar_Evento)){
@@ -156,16 +156,16 @@ public class DetalhesAtracaoActivity extends Activity implements View.OnClickLis
     public void onClick(View v) {
         int id = v.getId();
         switch (id){
-            case R.id.detalhes_btn_lembrar:
+            case R.id.detalhe_evento_marcar:
                 postInterestedEvent();
                 lembrarEvento();
                 Toast.makeText(this,"Evento adicionado a sua lista de lembretes",Toast.LENGTH_SHORT).show();
                 onBackPressed();
                 break;
-            case R.id.detalhes_evento_deleta:
+            case R.id.detalhe_evento_deletar:
                 deleteEvent();
                 break;
-            case R.id.detalhes_evento_edita:
+            case R.id.detalhe_evento_editar:
                 //TODO fazer o método e a tela de edição
                 break;
         }
@@ -188,7 +188,7 @@ public class DetalhesAtracaoActivity extends Activity implements View.OnClickLis
             public void onResponse(Call<DeleteEventoResponse> call, Response<DeleteEventoResponse> response) {
                 if(response.isSuccessful()){
                     Log.d("Logger","deleteEventos ok");
-                    Toast.makeText(DetalhesAtracaoActivity.this,"Evento deletado com sucesso!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(DetalheEvento.this,"Evento deletado com sucesso!",Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                     onBackPressed();
                 }else {
@@ -196,7 +196,7 @@ public class DetalhesAtracaoActivity extends Activity implements View.OnClickLis
                     try {
                         ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
                         Log.e("Logger", "deleteEventos ServerResponse "+error.getErrorDescription());
-                        Toast.makeText(DetalhesAtracaoActivity.this,error.getErrorDescription(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(DetalheEvento.this,error.getErrorDescription(),Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -244,5 +244,4 @@ public class DetalhesAtracaoActivity extends Activity implements View.OnClickLis
         });
 
     }
-
 }

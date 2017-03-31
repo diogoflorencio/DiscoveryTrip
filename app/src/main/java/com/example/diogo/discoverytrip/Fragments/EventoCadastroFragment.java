@@ -508,6 +508,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         dialog.show();
 
         if(foto != null){
+            Log.d("Logger","Tem foto");
             Call<AddEventoResponse> call = ApiClient.API_SERVICE.cadastrarEvento("bearer " + token, parametersMap,helper.loadPhoto("photo",foto));
             call.enqueue(new Callback<AddEventoResponse>() {
                 @Override

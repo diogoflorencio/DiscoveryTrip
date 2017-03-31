@@ -19,7 +19,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.diogo.discoverytrip.Activities.DetalhesAtracaoActivity;
+import com.example.diogo.discoverytrip.Activities.DetalheEvento;
 import com.example.diogo.discoverytrip.Activities.DetalhesPontosTuristicosActivity;
 import com.example.diogo.discoverytrip.Activities.HomeActivity;
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
@@ -71,9 +71,9 @@ public class HomeFragment extends Fragment implements LocationListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Atracao atracao = (Atracao) parent.getAdapter().getItem(position);
                 if(atracao.getType().equals(HomeActivity.EVENT_TYPE)){
-                    DetalhesAtracaoActivity.atracao = atracao;
-                    DetalhesAtracaoActivity.visualizationType = VisualizationType.Lembrar_Evento;
-                    startActivity(new Intent(getContext(),DetalhesAtracaoActivity.class));
+                    DetalheEvento.atracao = atracao;
+                    DetalheEvento.visualizationType = VisualizationType.Lembrar_Evento;
+                    startActivity(new Intent(getContext(),DetalheEvento.class));
                 }
                 else{
                     DetalhesPontosTuristicosActivity.pontoTuristico = atracao;

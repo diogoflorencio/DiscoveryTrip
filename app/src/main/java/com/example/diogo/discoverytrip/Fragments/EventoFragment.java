@@ -13,9 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TabHost;
 
-import com.example.diogo.discoverytrip.Activities.DetalhesAtracaoActivity;
-import com.example.diogo.discoverytrip.Activities.DetalhesPontosTuristicosActivity;
-import com.example.diogo.discoverytrip.Activities.HomeActivity;
+import com.example.diogo.discoverytrip.Activities.DetalheEvento;
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.DataBase.DiscoveryTripBD;
 import com.example.diogo.discoverytrip.Model.Atracao;
@@ -81,9 +79,9 @@ public class EventoFragment extends Fragment implements View.OnClickListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Atracao atracao = (Atracao) parent.getAdapter().getItem(position);
 
-                DetalhesAtracaoActivity.atracao = atracao;
-                DetalhesAtracaoActivity.visualizationType = VisualizationType.Editar;
-                startActivity(new Intent(getContext(),DetalhesAtracaoActivity.class));
+                DetalheEvento.atracao = atracao;
+                DetalheEvento.visualizationType = VisualizationType.Editar;
+                startActivity(new Intent(getContext(),DetalheEvento.class));
             }
         });
 
@@ -92,9 +90,9 @@ public class EventoFragment extends Fragment implements View.OnClickListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Atracao atracao = (Atracao) parent.getAdapter().getItem(position);
 
-                DetalhesAtracaoActivity.atracao = atracao;
-                DetalhesAtracaoActivity.visualizationType = VisualizationType.Visualizar;
-                startActivity(new Intent(getContext(),DetalhesAtracaoActivity.class));
+                DetalheEvento.atracao = atracao;
+                DetalheEvento.visualizationType = VisualizationType.Visualizar;
+                startActivity(new Intent(getContext(),DetalheEvento.class));
             }
         });
 
