@@ -44,6 +44,8 @@ public class PerfilEditFragment extends Fragment implements View.OnClickListener
                              Bundle savedInstanceState) {
         Log.d("Logger", "PerfilEditFragment onCreate");
         View rootView = inflater.inflate(R.layout.fragment_perfil_edit, container, false);
+
+        getActivity().setTitle(R.string.perfil_label);
         rootView.findViewById(R.id.pfeConfirm_btn).setOnClickListener(this);
         rootView.findViewById(R.id.pfeCancel_btn).setOnClickListener(this);
 

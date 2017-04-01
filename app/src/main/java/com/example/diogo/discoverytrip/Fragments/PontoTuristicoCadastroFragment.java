@@ -5,6 +5,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -24,7 +27,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.diogo.discoverytrip.Activities.MapsActivity;
@@ -35,12 +40,15 @@ import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.MultiRequestHelper;
 import com.example.diogo.discoverytrip.REST.ServerResponses.AttractionResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
+import com.google.android.gms.vision.text.Text;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.RequestBody;
@@ -56,7 +64,10 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  */
 public class PontoTuristicoCadastroFragment extends Fragment implements LocationListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
     public EditText nameVal_txt, descVal_txt;
+    private TextView pntPictureCnt_txt;
+    private ImageView pictureImgView;
     private Uri foto = null;
+    private List<Uri> selectedPictures;
     Spinner ptCategory_spn;
     private final int CAM_REQUEST = 1313;
     private final int CAM_SELECT = 1234;
@@ -79,6 +90,10 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
                              Bundle savedInstanceState) {
         Log.d("Logger", "PontoTuristicoCadastroFragment onCreate");
         View rootView = inflater.inflate(R.layout.fragment_ponto_turistico_cadastro, container, false);
+
+        getActivity().setTitle(R.string.ponto_turistico_label);
+        selectedPictures = new ArrayList<Uri>();
+
         startGPS();
         Button cadastrarBtn = (Button) rootView.findViewById(R.id.pntRegister_btn);
         cadastrarBtn.setOnClickListener(this);
@@ -91,6 +106,9 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
 
         nameVal_txt = (EditText) rootView.findViewById(R.id.pntNameVal_txt);
         descVal_txt = (EditText) rootView.findViewById(R.id.pntDescVal_txt);
+
+        pictureImgView = (ImageView) rootView.findViewById(R.id.pntPictureImgView);
+        pntPictureCnt_txt = (TextView) rootView.findViewById(R.id.pntPictureCnt_txt);
 
         ptCategory_spn = (Spinner) rootView.findViewById(R.id.ptCategory_spn);
         ptCategory_spn.setOnItemSelectedListener(this);
@@ -148,56 +166,42 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-//            // Create the File where the photo should go
-//            File photoFile = null;
-//            try {
-//                photoFile = createImageFile();
-//            } catch (IOException e) {
-//                // Error occurred while creating the File
-//                e.printStackTrace();
-//            }
-//            // Continue only if the File was successfully created
-//            if (photoFile != null) {
-//                Uri photoURI = FileProvider.getUriForFile(getContext(),
-//                        "com.example.android.fileprovider",
-//                        photoFile);
-//                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File("/sdcard/tmp")));
                 startActivityForResult(intent, CAM_REQUEST);
-//            }
         }
     }
 
-    private File createImageFile() throws IOException {
-        Log.d("Logger", "PontoTuristicoCadastroFragment createImageFile");
-        // Create a collision-resistant image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
+    private void addPicture(Uri pictureUri) throws DataInputException {
+        Log.d("Logger","PontoTuristicoCadastroFragment addPicture");
+        if (selectedPictures.size() < 10){
+            selectedPictures.add(pictureUri);
+        }
+        else {
+            throw new DataInputException(getString(R.string.validate_max_photo));
+        }
     }
 
-    private void galleryAddPic() {
-        //isso provavelmente nao funciona porque o path esta incorreto, não funciona
-        Log.d("Logger", "PontoTuristicoCadastroFragment galleryAddPic");
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        try{
-            File f = new File(mCurrentPhotoPath);
-            Uri contentUri = Uri.fromFile(f);
-            mediaScanIntent.setData(contentUri);
-            getActivity().sendBroadcast(mediaScanIntent);
-        } catch (Exception e){
-            //path não existe
-            e.printStackTrace();
+    private void updatePictureCounter(){
+        Log.d("Logger","PontoTuristicoCadastroFragment updatePictureCounter");
+        pntPictureCnt_txt.setText(selectedPictures.size()+"/10");
+    }
+
+    public String getPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getActivity().getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
         }
+        cursor.close();
+        return res;
+    }
+
+    private void displayPicture(Uri pictureUri){
+        Log.d("Logger", "PontoTuristicoCadastroFragment displayPicture");
+        Bitmap imageBitmap = BitmapFactory.decodeFile(getPathFromURI(pictureUri));
+        pictureImgView.setImageBitmap(imageBitmap);
     }
 
     @Override
@@ -208,6 +212,14 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
         if(requestCode == CAM_SELECT && resultCode == RESULT_OK) {
             Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult CAM_SELECT " + CAM_SELECT);
             foto = data.getData();
+            try {
+                addPicture(foto);
+                displayPicture(foto);
+                updatePictureCounter();
+            } catch (DataInputException exception){
+                Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
+            }
+            Log.d("Logger","Seleciona imagem size " + selectedPictures.size());
             Log.d("Logger","Seleciona imagem" + foto.getPath());
         }
 
@@ -220,6 +232,14 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
                 File file = new File("/sdcard/tmp");
                 try {
                     foto = Uri.parse(MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), file.getAbsolutePath(), null, null));
+                    try {
+                        addPicture(foto);
+                        displayPicture(foto);
+                        updatePictureCounter();
+                    } catch (DataInputException exception){
+                        Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
+                    }
+                    Log.d("Logger","Seleciona imagem size " + selectedPictures.size());
                     Log.d("Logger","Seleciona imagem" + foto.getPath());
                     if (!file.delete()) {
                         Log.d("logMarker", "Failed to delete " + file);
@@ -228,7 +248,6 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
                     e2.printStackTrace();
                 }
             }
-//            galleryAddPic();
         }
 
         if(requestCode == PNTTURISTICOCAD  && resultCode == RESULT_OK) {

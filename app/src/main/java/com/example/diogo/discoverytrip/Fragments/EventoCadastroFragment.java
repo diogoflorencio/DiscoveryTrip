@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -22,6 +25,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -61,6 +65,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
     private Date dateVal_date;
     public TextView dateInicioVal_txt, dateFimVal_txt, timeInicioVal_txt, timeFimVal_txt;
     private Integer horaInicio, horaFim, minutoInicio, minutoFim;
+    private ImageView pictureImgView;
     Spinner evKind_spn;
     private final int CAM_REQUEST = 1313;
     private final int CAM_SELECT = 1234;
@@ -85,6 +90,8 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         startGPS();
         View rootView = inflater.inflate(R.layout.fragment_evento_cadastro, container, false);
 
+        getActivity().setTitle(R.string.evento_label);
+
         rootView.findViewById(R.id.evConfirm_btn).setOnClickListener(this);
         rootView.findViewById(R.id.evCancel_btn).setOnClickListener(this);
         rootView.findViewById(R.id.evCamera_btn).setOnClickListener(this);
@@ -103,6 +110,8 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         dateFimVal_txt = (TextView) rootView.findViewById(R.id.dateValFim_txt);
         timeInicioVal_txt = (TextView) rootView.findViewById(R.id.evTimeInicioVal_txt);
         timeFimVal_txt = (TextView) rootView.findViewById(R.id.evTimeFimVal_txt);
+
+        pictureImgView = (ImageView) rootView.findViewById(R.id.evPictureImgView);
 
         evKind_spn = (Spinner) rootView.findViewById(R.id.evKind_spn);
         evKind_spn.setOnItemSelectedListener(this);
@@ -255,24 +264,27 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
-//            // Create the File where the photo should go
-//            File photoFile = null;
-//            try {
-//                photoFile = createImageFile();
-//            } catch (IOException e) {
-//                // Error occurred while creating the File
-//                e.printStackTrace();
-//            }
-//            // Continue only if the File was successfully created
-//            if (photoFile != null) {
-//                Uri photoURI = FileProvider.getUriForFile(getContext(),
-//                        "com.example.android.fileprovider",
-//                        photoFile);
-//                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(new File("/sdcard/tmp")));
                 startActivityForResult(intent, CAM_REQUEST);
-//            }
         }
+    }
+
+    public String getPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getActivity().getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return res;
+    }
+
+    private void displayPicture(Uri pictureUri){
+        Log.d("Logger", "PontoTuristicoCadastroFragment displayPicture");
+        Bitmap imageBitmap = BitmapFactory.decodeFile(getPathFromURI(pictureUri));
+        pictureImgView.setImageBitmap(imageBitmap);
     }
 
     @Override
@@ -283,6 +295,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         if(requestCode == CAM_SELECT && resultCode == RESULT_OK) {
             Log.d("Logger", "EventoCadastroFragment onActivityResult CAM_SELECT " + CAM_SELECT);
             foto = data.getData();
+            displayPicture(foto);
             Log.d("Logger","Seleciona imagem" + foto.getPath());
         }
 
@@ -295,6 +308,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                 File file = new File("/sdcard/tmp");
                 try {
                     foto = Uri.parse(MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), file.getAbsolutePath(), null, null));
+                    displayPicture(foto);
                     Log.d("Logger","Seleciona imagem" + foto.getPath());
                     if (!file.delete()) {
                         Log.d("logMarker", "Failed to delete " + file);
@@ -303,7 +317,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                     e2.printStackTrace();
                 }
             }
-//            galleryAddPic();
         }
 
         if(requestCode == PNTTURISTICOCAD  && resultCode == RESULT_OK) {
@@ -321,38 +334,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }
-    }
-
-    private File createImageFile() throws IOException {
-        Log.d("Logger", "EventoCadastroFragment createImageFile");
-        // Create a collision-resistant image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                storageDir      /* directory */
-        );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        mCurrentPhotoPath = image.getAbsolutePath();
-        return image;
-    }
-
-    private void galleryAddPic() {
-        //isso provavelmente nao funciona porque o path esta incorreto, não funciona
-        Log.d("Logger", "EventoCadastroFragment galleryAddPic");
-        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-        try{
-            File f = new File(mCurrentPhotoPath);
-            Uri contentUri = Uri.fromFile(f);
-            mediaScanIntent.setData(contentUri);
-            getActivity().sendBroadcast(mediaScanIntent);
-        } catch (Exception e){
-            //path não existe
-            e.printStackTrace();
         }
     }
 
@@ -434,7 +415,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         String eventPrice_value = null;
 
         try{
-            eventPrice_value = priceVal_txt.getText().toString().replace('.', ',');
+            eventPrice_value = priceVal_txt.getText().toString().replace(',', '.');
 
         } catch (Exception e){
             eventPrice_value = "0";
