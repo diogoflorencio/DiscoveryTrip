@@ -50,7 +50,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:background="@color/com_facebook_messenger_blue"
             android:foreground="@android:drawable/ic_menu_mylocation" />
     </LinearLayout>
 </LinearLayout>

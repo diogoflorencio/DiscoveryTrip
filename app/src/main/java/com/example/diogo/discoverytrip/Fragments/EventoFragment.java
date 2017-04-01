@@ -116,10 +116,6 @@ public class EventoFragment extends Fragment implements View.OnClickListener {
                 Log.d("Logger", "EventoFragment botao confirmar");
                 goToEventCreation();
                 break;
-            case R.id.pesquisa_evento_btnOK:
-                break;
-            case R.id.pesquisa_evento_btnLocalizacao:
-                break;
         }
     }
 
