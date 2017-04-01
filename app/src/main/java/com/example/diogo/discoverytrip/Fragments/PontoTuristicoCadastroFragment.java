@@ -5,6 +5,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -24,6 +27,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -56,6 +60,7 @@ import static com.facebook.FacebookSdk.getApplicationContext;
  */
 public class PontoTuristicoCadastroFragment extends Fragment implements LocationListener, View.OnClickListener, AdapterView.OnItemSelectedListener {
     public EditText nameVal_txt, descVal_txt;
+    private ImageView pictureImgView;
     private Uri foto = null;
     Spinner ptCategory_spn;
     private final int CAM_REQUEST = 1313;
@@ -94,6 +99,8 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
 
         nameVal_txt = (EditText) rootView.findViewById(R.id.pntNameVal_txt);
         descVal_txt = (EditText) rootView.findViewById(R.id.pntDescVal_txt);
+
+        pictureImgView = (ImageView) rootView.findViewById(R.id.pntPictureImgView);
 
         ptCategory_spn = (Spinner) rootView.findViewById(R.id.ptCategory_spn);
         ptCategory_spn.setOnItemSelectedListener(this);
@@ -203,6 +210,24 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
         }
     }
 
+    public String getPathFromURI(Uri contentUri) {
+        String res = null;
+        String[] proj = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getActivity().getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(column_index);
+        }
+        cursor.close();
+        return res;
+    }
+
+    private void displayPicture(Uri pictureUri){
+        Log.d("Logger", "PontoTuristicoCadastroFragment displayPicture");
+        Bitmap imageBitmap = BitmapFactory.decodeFile(getPathFromURI(pictureUri));
+        pictureImgView.setImageBitmap(imageBitmap);
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.d("Logger","PontoTuristicoCadastroFragment onActivityResult");
@@ -211,6 +236,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
         if(requestCode == CAM_SELECT && resultCode == RESULT_OK) {
             Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult CAM_SELECT " + CAM_SELECT);
             foto = data.getData();
+            displayPicture(foto);
             Log.d("Logger","Seleciona imagem" + foto.getPath());
         }
 
@@ -223,6 +249,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
                 File file = new File("/sdcard/tmp");
                 try {
                     foto = Uri.parse(MediaStore.Images.Media.insertImage(getActivity().getContentResolver(), file.getAbsolutePath(), null, null));
+                    displayPicture(foto);
                     Log.d("Logger","Seleciona imagem" + foto.getPath());
                     if (!file.delete()) {
                         Log.d("logMarker", "Failed to delete " + file);
