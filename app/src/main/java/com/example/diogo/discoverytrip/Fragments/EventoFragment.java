@@ -1,7 +1,6 @@
 package com.example.diogo.discoverytrip.Fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -13,7 +12,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TabHost;
 
-import com.example.diogo.discoverytrip.Activities.DetalheEvento;
+import com.example.diogo.discoverytrip.Activities.HomeActivity;
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.DataBase.DiscoveryTripBD;
 import com.example.diogo.discoverytrip.Model.Atracao;
@@ -33,7 +32,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.example.diogo.discoverytrip.Activities.HomeActivity.EVENT_TYPE;
-import static com.example.diogo.discoverytrip.Activities.HomeActivity.POINT_TYPE;
 
 /**
  * Classe fragment responsavel pelo fragmento evento na aplicação
@@ -81,9 +79,11 @@ public class EventoFragment extends Fragment implements View.OnClickListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Atracao atracao = (Atracao) parent.getAdapter().getItem(position);
 
-                DetalheEvento.atracao = atracao;
-                DetalheEvento.visualizationType = VisualizationType.Editar;
-                startActivity(new Intent(getContext(),DetalheEvento.class));
+                DetalhesEventoFragment.atracao = atracao;
+                DetalhesEventoFragment.visualizationType = VisualizationType.Editar;
+
+                HomeActivity activity = (HomeActivity) getActivity();
+                activity.changeFragment(new DetalhesEventoFragment());
             }
         });
 
@@ -92,9 +92,11 @@ public class EventoFragment extends Fragment implements View.OnClickListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Atracao atracao = (Atracao) parent.getAdapter().getItem(position);
 
-                DetalheEvento.atracao = atracao;
-                DetalheEvento.visualizationType = VisualizationType.Visualizar;
-                startActivity(new Intent(getContext(),DetalheEvento.class));
+                DetalhesEventoFragment.atracao = atracao;
+                DetalhesEventoFragment.visualizationType = VisualizationType.Visualizar;
+
+                HomeActivity activity = (HomeActivity) getActivity();
+                activity.changeFragment(new DetalhesEventoFragment());
             }
         });
 

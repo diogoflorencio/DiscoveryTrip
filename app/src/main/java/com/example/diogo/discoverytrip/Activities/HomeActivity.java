@@ -170,14 +170,7 @@ public class HomeActivity extends AppCompatActivity
         }
 
         if (fragment != null) {
-            FragmentTransaction fragmentManager = getSupportFragmentManager().beginTransaction();
-            Bundle extras = getIntent().getExtras();
-            if(extras !=null) {
-                fragment.setArguments(extras);
-            }
-            fragmentManager.setCustomAnimations(R.anim.left_in, R.anim.right_out);
-            fragmentManager.replace(R.id.content_home, fragment);
-            fragmentManager.commit();
+            changeFragment(fragment);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -215,6 +208,17 @@ public class HomeActivity extends AppCompatActivity
             super.onBackPressed();
         }
 
+    }
+
+    public void changeFragment(Fragment fragment){
+        FragmentTransaction fragmentManager = getSupportFragmentManager().beginTransaction();
+        Bundle extras = getIntent().getExtras();
+        if(extras !=null) {
+            fragment.setArguments(extras);
+        }
+        fragmentManager.setCustomAnimations(R.anim.left_in, R.anim.right_out);
+        fragmentManager.replace(R.id.content_home, fragment);
+        fragmentManager.commit();
     }
 
      /*private void addEvent(){

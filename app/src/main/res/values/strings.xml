@@ -98,4 +98,7 @@
     <string name="title_activity_meus_eventos">MeusEventosActivity</string>
     <string name="title_activity_meus_pontos_turisticos">MeusPontosTuristicosActivity</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

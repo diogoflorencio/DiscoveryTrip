@@ -1,14 +1,16 @@
-package com.example.diogo.discoverytrip.Activities;
+package com.example.diogo.discoverytrip.Fragments;
 
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -34,7 +36,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class DetalheEvento extends AppCompatActivity implements View.OnClickListener{
+
+public class DetalhesEventoFragment extends Fragment implements View.OnClickListener{
 
     public static Atracao atracao;
     public static VisualizationType visualizationType;
@@ -43,29 +46,32 @@ public class DetalheEvento extends AppCompatActivity implements View.OnClickList
 
     private TextView titulo, descricao, endereco, tipo, inicio, fim, preco;
     private Button lembrar;
-    private ImageButton editar, deletar;
+    private ImageButton deletar;
     private ImageView foto;
+    
+    public DetalhesEventoFragment() {
+        // Required empty public constructor
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detalhe_evento);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_detalhes_evento, container, false);
 
-        titulo = (TextView) findViewById(R.id.detalhe_evento_titulo);
-        descricao = (TextView) findViewById(R.id.detalhe_evento_descricao);
-        endereco = (TextView) findViewById(R.id.detalhe_evento_endereco);
-        tipo = (TextView) findViewById(R.id.detalhe_evento_categoria);
-        inicio = (TextView) findViewById(R.id.detalhe_evento_inicio);
-        fim = (TextView) findViewById(R.id.detalhe_evento_fim);
-        preco = (TextView) findViewById(R.id.detalhe_evento_preco);
-        foto = (ImageView) findViewById(R.id.detalhe_evento_img);
+        titulo = (TextView) view.findViewById(R.id.detalhe_evento_titulo);
+        descricao = (TextView) view.findViewById(R.id.detalhe_evento_descricao);
+        endereco = (TextView) view.findViewById(R.id.detalhe_evento_endereco);
+        tipo = (TextView) view.findViewById(R.id.detalhe_evento_categoria);
+        inicio = (TextView) view.findViewById(R.id.detalhe_evento_inicio);
+        fim = (TextView) view.findViewById(R.id.detalhe_evento_fim);
+        preco = (TextView) view.findViewById(R.id.detalhe_evento_preco);
+        foto = (ImageView) view.findViewById(R.id.detalhe_evento_img);
 
-        lembrar = (Button) findViewById(R.id.detalhe_evento_marcar);
-        editar = (ImageButton) findViewById(R.id.detalhe_evento_editar);
-        deletar = (ImageButton) findViewById(R.id.detalhe_evento_deletar);
+        lembrar = (Button) view.findViewById(R.id.detalhe_evento_marcar);
+        deletar = (ImageButton) view.findViewById(R.id.detalhe_evento_deletar);
 
         lembrar.setOnClickListener(this);
-        editar.setOnClickListener(this);
         deletar.setOnClickListener(this);
 
         titulo.setText(atracao.getName());
@@ -96,9 +102,7 @@ public class DetalheEvento extends AppCompatActivity implements View.OnClickList
         }
 
         if(visualizationType.equals(VisualizationType.Lembrar_Evento)){
-            editar.setEnabled(false);
             deletar.setEnabled(false);
-            editar.setVisibility(View.INVISIBLE);
             deletar.setVisibility(View.INVISIBLE);
         }
         else if(visualizationType.equals(VisualizationType.Editar)){
@@ -106,18 +110,17 @@ public class DetalheEvento extends AppCompatActivity implements View.OnClickList
             lembrar.setVisibility(View.INVISIBLE);
         }
         else if(visualizationType.equals(VisualizationType.Visualizar)){
-            editar.setEnabled(false);
             deletar.setEnabled(false);
-            editar.setVisibility(View.INVISIBLE);
             deletar.setVisibility(View.INVISIBLE);
             lembrar.setEnabled(false);
             lembrar.setVisibility(View.INVISIBLE);
         }
+        return view;
     }
 
     private void loadImage(final ImageView imgView){
         final Handler handler = new Handler();
-        retrofit2.Call<ResponseBody> call = ApiClient.API_SERVICE.downloadFoto("bearer "+ AcessToken.recuperar(getSharedPreferences("acessToken", Context.MODE_PRIVATE)),
+        retrofit2.Call<ResponseBody> call = ApiClient.API_SERVICE.downloadFoto("bearer "+ AcessToken.recuperar(getActivity().getSharedPreferences("acessToken", Context.MODE_PRIVATE)),
                 atracao.getPhotoId());
         call.enqueue(new retrofit2.Callback<ResponseBody>() {
 
@@ -159,14 +162,11 @@ public class DetalheEvento extends AppCompatActivity implements View.OnClickList
             case R.id.detalhe_evento_marcar:
                 postInterestedEvent();
                 lembrarEvento();
-                Toast.makeText(this,"Evento adicionado a sua lista de lembretes",Toast.LENGTH_SHORT).show();
-                onBackPressed();
+                Toast.makeText(getContext(),"Evento adicionado a sua lista de lembretes",Toast.LENGTH_SHORT).show();
+                
                 break;
             case R.id.detalhe_evento_deletar:
                 deleteEvent();
-                break;
-            case R.id.detalhe_evento_editar:
-                //TODO fazer o método e a tela de edição
                 break;
         }
     }
@@ -181,22 +181,21 @@ public class DetalheEvento extends AppCompatActivity implements View.OnClickList
         final AlertDialog dialog = createLoadingDialog();
         dialog.show();
 
-        String token = AcessToken.recuperar(this.getSharedPreferences("acessToken", Context.MODE_PRIVATE));
+        String token = AcessToken.recuperar(getActivity().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Call<DeleteEventoResponse> call = ApiClient.API_SERVICE.deleteEvento("bearer "+token,atracao.getId());
         call.enqueue(new Callback<DeleteEventoResponse>() {
             @Override
             public void onResponse(Call<DeleteEventoResponse> call, Response<DeleteEventoResponse> response) {
                 if(response.isSuccessful()){
                     Log.d("Logger","deleteEventos ok");
-                    Toast.makeText(DetalheEvento.this,"Evento deletado com sucesso!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"Evento deletado com sucesso!",Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
-                    onBackPressed();
                 }else {
                     dialog.dismiss();
                     try {
                         ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
                         Log.e("Logger", "deleteEventos ServerResponse "+error.getErrorDescription());
-                        Toast.makeText(DetalheEvento.this,error.getErrorDescription(),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(),error.getErrorDescription(),Toast.LENGTH_SHORT).show();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -211,9 +210,9 @@ public class DetalheEvento extends AppCompatActivity implements View.OnClickList
     }
 
     private AlertDialog createLoadingDialog(){
-        final AlertDialog dialog = new AlertDialog.Builder(this).create();
+        final AlertDialog dialog = new AlertDialog.Builder(getContext()).create();
 
-        View dialogView = getLayoutInflater().inflate(R.layout.dialog_aguarde,null);
+        View dialogView = getActivity().getLayoutInflater().inflate(R.layout.dialog_aguarde,null);
         dialog.setView(dialogView);
         dialog.setTitle("Enviando");
         dialog.setCancelable(false);
@@ -221,12 +220,12 @@ public class DetalheEvento extends AppCompatActivity implements View.OnClickList
     }
 
     private void lembrarEvento(){
-        DiscoveryTripBD bd = new DiscoveryTripBD(this);
+        DiscoveryTripBD bd = new DiscoveryTripBD(getContext());
         bd.insertLembretesTable(atracao);
     }
 
     private void postInterestedEvent(){
-        String token = AcessToken.recuperar(this.getSharedPreferences("acessToken", Context.MODE_PRIVATE));
+        String token = AcessToken.recuperar(this.getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Call<ResponseBody> call = ApiClient.API_SERVICE.interestedEvent("bearer "+token, atracao.getId());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -245,3 +244,4 @@ public class DetalheEvento extends AppCompatActivity implements View.OnClickList
 
     }
 }
+

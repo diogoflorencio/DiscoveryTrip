@@ -2,7 +2,6 @@ package com.example.diogo.discoverytrip.Fragments;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -21,8 +20,6 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.diogo.discoverytrip.Activities.DetalheEvento;
-import com.example.diogo.discoverytrip.Activities.DetalhesPontosTuristicosActivity;
 import com.example.diogo.discoverytrip.Activities.HomeActivity;
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.Model.Atracao;
@@ -75,14 +72,18 @@ public class HomeFragment extends Fragment implements LocationListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Atracao atracao = (Atracao) parent.getAdapter().getItem(position);
                 if(atracao.getType().equals(HomeActivity.EVENT_TYPE)){
-                    DetalheEvento.atracao = atracao;
-                    DetalheEvento.visualizationType = VisualizationType.Lembrar_Evento;
-                    startActivity(new Intent(getContext(),DetalheEvento.class));
+                    DetalhesEventoFragment.atracao = atracao;
+                    DetalhesEventoFragment.visualizationType = VisualizationType.Lembrar_Evento;
+
+                    HomeActivity activity = (HomeActivity) getActivity();
+                    activity.changeFragment(new DetalhesEventoFragment());
                 }
                 else{
-                    DetalhesPontosTuristicosActivity.pontoTuristico = atracao;
-                    DetalhesPontosTuristicosActivity.visualizationType = VisualizationType.Visualizar;
-                    startActivity(new Intent(getContext(),DetalhesPontosTuristicosActivity.class));
+                    DetalhesPontoTuristicoFragment.pontoTuristico = atracao;
+                    DetalhesPontoTuristicoFragment.visualizationType = VisualizationType.Visualizar;
+
+                    HomeActivity activity = (HomeActivity) getActivity();
+                    activity.changeFragment(new DetalhesPontoTuristicoFragment());
                 }
             }
         });
