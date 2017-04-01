@@ -126,4 +126,7 @@ public interface ApiInterface {
 
     @POST("/api/events/{id}/interestme")
     Call<ResponseBody> interestedEvent(@Header("Authorization") String token, @Path("id") String eventId);
+
+    @GET("/api/search/name")
+    Call<SearchResponse> search(@Header("Authorization") String token, @Query("text") String text);
 }

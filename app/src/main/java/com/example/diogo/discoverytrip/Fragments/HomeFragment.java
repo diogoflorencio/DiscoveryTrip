@@ -16,6 +16,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -49,6 +51,8 @@ public class HomeFragment extends Fragment implements LocationListener {
     private double latitude, longitude;
     private ListView listView;
     private boolean get = true;
+    private Button searchOK;
+    private EditText searchText;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -82,7 +86,14 @@ public class HomeFragment extends Fragment implements LocationListener {
                 }
             }
         });
-
+        searchText  = (EditText) rootView.findViewById(R.id.pnt_search_edt);
+        searchOK = (Button) rootView.findViewById(R.id.pnt_search_ok_btn);
+        searchOK.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                search();
+            }
+        });
         return rootView;
     }
 
@@ -200,5 +211,31 @@ public class HomeFragment extends Fragment implements LocationListener {
                 ActivityCompat.requestPermissions(this.getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
                         REQUEST_LOCATION);
         } else locationManager.removeUpdates(this);
+    }
+
+    private void search(){
+        String token = AcessToken.recuperar(getActivity().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
+        Call<SearchResponse> call = ApiClient.API_SERVICE.search("bearer "+token,searchText.getText().toString());
+        call.enqueue(new Callback<SearchResponse>() {
+            @Override
+            public void onResponse(Call<SearchResponse> call, Response<SearchResponse> response) {
+                if(response.isSuccessful()){
+                    List<Atracao> atracoes = response.body().getAtracoes();
+                    if(atracoes != null){
+                        Log.d("Logger","Setting listview adapter");
+                        ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getActivity(),
+                                getActivity().getLayoutInflater(),
+                                atracoes);
+                        listView.setAdapter(adapter);
+                    }else
+                        Toast.makeText(getActivity(),"Sem resultados para pesquisa",Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SearchResponse> call, Throwable t) {
+                Toast.makeText(getActivity(),"Erro ao se conectar com o servidor!",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
