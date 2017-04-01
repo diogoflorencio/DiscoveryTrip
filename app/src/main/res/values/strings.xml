@@ -60,6 +60,7 @@
     <string name="validate_price">Informe um preço</string>
     <string name="validate_any_field">Nenhum dos campos foi alterado</string>
     <string name="validate_photo">Selecione uma foto</string>
+    <string name="validate_max_photo">Limite de imagens selecionadas atingido</string>
 
     //AppLoginJson strings
     <string name="login_id">discoveryTrip</string>
