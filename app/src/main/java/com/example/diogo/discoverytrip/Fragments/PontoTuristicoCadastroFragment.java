@@ -79,6 +79,9 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
                              Bundle savedInstanceState) {
         Log.d("Logger", "PontoTuristicoCadastroFragment onCreate");
         View rootView = inflater.inflate(R.layout.fragment_ponto_turistico_cadastro, container, false);
+
+        getActivity().setTitle(R.string.ponto_turistico_label);
+
         startGPS();
         Button cadastrarBtn = (Button) rootView.findViewById(R.id.pntRegister_btn);
         cadastrarBtn.setOnClickListener(this);

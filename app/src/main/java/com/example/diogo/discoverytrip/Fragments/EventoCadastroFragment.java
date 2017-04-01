@@ -85,6 +85,8 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         startGPS();
         View rootView = inflater.inflate(R.layout.fragment_evento_cadastro, container, false);
 
+        getActivity().setTitle(R.string.evento_label);
+
         rootView.findViewById(R.id.evConfirm_btn).setOnClickListener(this);
         rootView.findViewById(R.id.evCancel_btn).setOnClickListener(this);
         rootView.findViewById(R.id.evCamera_btn).setOnClickListener(this);

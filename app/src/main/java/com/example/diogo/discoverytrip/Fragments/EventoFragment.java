@@ -56,6 +56,8 @@ public class EventoFragment extends Fragment implements View.OnClickListener {
         Log.d("Logger", "EventoFragment onCreate");
         View rootView = inflater.inflate(R.layout.fragment_evento, container, false);
 
+        getActivity().setTitle(R.string.evento_label);
+
         rootView.findViewById(R.id.createEvent_btn).setOnClickListener(this);
 
         tabHost = (TabHost) rootView.findViewById(R.id.tabhost_eventos);
