@@ -216,8 +216,8 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
             } catch (DataInputException exception){
                 Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
             }
-            Log.d("Logger","Seleciona imagem size " + selectedPictures.size());
             Log.d("Logger","Seleciona imagem" + foto.getPath());
+            Log.d("Logger","Seleciona imagem real" + getPathFromURI(foto));
         }
 
         if(requestCode == CAM_REQUEST && resultCode == RESULT_OK) {
@@ -236,7 +236,6 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
                     } catch (DataInputException exception){
                         Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
                     }
-                    Log.d("Logger","Seleciona imagem size " + selectedPictures.size());
                     Log.d("Logger","Seleciona imagem" + foto.getPath());
                     if (!file.delete()) {
                         Log.d("logMarker", "Failed to delete " + file);
@@ -331,22 +330,17 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
             //o coordenadas não foram escolhidas pela "map activity"
             parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
             parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
-            Log.d("Logger","Location add pnt latitude: "+latitude+" longitude: "+longitude);
         }
 
         parametersMap.put("category",helper.createPartFrom(ptCatg_value));
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Log.d("Token",token);
-        //List<byte[]> fotos = new ArrayList<>();
         Log.d("Logger", "parametersMap " + parametersMap.toString());
         Log.d("Logger", "name " + ptName_value + " description " + ptDesc_value + " category " + ptCatg_value);
 
         final AlertDialog dialog = createLoadingDialog();
         dialog.show();
-        //Call<AttractionResponse> call = ApiClient.API_SERVICE.cadastrarPontoTuristico("bearer "+token,parametersMap,helper.loadPhoto("photos",foto));
-        Log.d("Logger","Location sendata0");
-        MultipartBody.Part picture = helper.loadPhoto("photos",foto);
 
         MultipartBody.Part picture1 = null;
         MultipartBody.Part picture2 = null;
@@ -382,7 +376,6 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
             @Override
             public void onResponse(Call<AttractionResponse> call, Response<AttractionResponse> response) {
                 if(response.isSuccessful()) {
-                    Log.d("Logger","Cadastro ponto turístico ok");
                     Toast.makeText(getActivity(), R.string.pt_cadastro_sucesso,Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                     backToHome();
@@ -404,7 +397,6 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
                 // Log error here since request failed
                 Toast.makeText(getContext(), "Erro ao se conectar com o servidor!", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
-                Log.e("Logger", t.toString());
             }
         });
     }
@@ -439,10 +431,6 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
 
         if(descVal_txt.getText().toString().trim().isEmpty()){
             throw new DataInputException(getString(R.string.validate_description));
-        }
-
-        if(foto == null){
-            throw new DataInputException(getString(R.string.validate_photo));
         }
 
         if(selectedPictures.size() == 0){
