@@ -63,16 +63,14 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
     public EditText nameVal_txt, descVal_txt;
     private TextView pntPictureCnt_txt;
     private ImageView pictureImgView;
-    private Uri foto = null;
     private List<Uri> selectedPictures;
     Spinner ptCategory_spn;
     private final int CAM_REQUEST = 1313;
     private final int CAM_SELECT = 1234;
-    private String mCurrentPhotoPath;
     private double latitude,longitude;
     private LocationManager locationManager;
     private static final int REQUEST_LOCATION = 2;
-    static final int PNTTURISTICOCAD = 0001;
+    static final int PNTTURISTICOCAD = 1;
 
     public PontoTuristicoCadastroFragment() {
         Log.d("Logger", "PontoTuristicoCadastroFragment PontoTuristicoCadastroFragment");
@@ -88,7 +86,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
         Log.d("Logger", "PontoTuristicoCadastroFragment onCreate");
         View rootView = inflater.inflate(R.layout.fragment_ponto_turistico_cadastro, container, false);
 
-        getActivity().setTitle(R.string.ponto_turistico_label);
+        getActivity().setTitle(R.string.cadastro_ponto_turistico_label);
         selectedPictures = new ArrayList<Uri>();
 
         startGPS();
@@ -206,6 +204,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
         Log.d("Logger","PontoTuristicoCadastroFragment onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
 
+        Uri foto = null;
         if(requestCode == CAM_SELECT && resultCode == RESULT_OK) {
             Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult CAM_SELECT " + CAM_SELECT);
             foto = data.getData();
@@ -424,7 +423,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
     private void validateFields() throws DataInputException {
         Log.d("Logger", "PontoTuristicoCadastroFragment validate");
         if(nameVal_txt.getText().toString().trim().isEmpty()){
-            throw new DataInputException("Digite o nome do ponto turístico!");
+            throw new DataInputException(getString(R.string.validate_pnt_name));
         }
 
         if(descVal_txt.getText().toString().trim().isEmpty()){

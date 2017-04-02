@@ -69,14 +69,13 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
     Spinner evKind_spn;
     private final int CAM_REQUEST = 1313;
     private final int CAM_SELECT = 1234;
-    private String mCurrentPhotoPath;
     private Uri foto = null;
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss'Z'");
     private SimpleDateFormat normalDateFormat = new SimpleDateFormat("dd/M/yyyy");
     private double latitude,longitude;
     private LocationManager locationManager;
     private static final int REQUEST_LOCATION = 2;
-    static final int PNTTURISTICOCAD = 0001;
+    static final int EVENTOCAD = 1;
 
     public EventoCadastroFragment() {
         Log.d("Logger", "EventoCadastroFragment EventoCadastroFragment");
@@ -90,7 +89,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         startGPS();
         View rootView = inflater.inflate(R.layout.fragment_evento_cadastro, container, false);
 
-        getActivity().setTitle(R.string.evento_label);
+        getActivity().setTitle(R.string.cadastro_evento_label);
 
         rootView.findViewById(R.id.evConfirm_btn).setOnClickListener(this);
         rootView.findViewById(R.id.evCancel_btn).setOnClickListener(this);
@@ -252,7 +251,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
     private void openMapActivity(){
         Log.d("Logger", "PontoTuristicoCadastroFragment openMapActivity");
         Intent mapIntent = new Intent(getActivity(), MapsActivity.class);
-        startActivityForResult(mapIntent, PNTTURISTICOCAD);
+        startActivityForResult(mapIntent, EVENTOCAD);
     }
 
     private void startCameraActivity() {
@@ -315,8 +314,8 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
             }
         }
 
-        if(requestCode == PNTTURISTICOCAD  && resultCode == RESULT_OK) {
-            Log.d("Logger", "EventoCadastroFragment onActivityResult PNTTURISTICOCAD " + PNTTURISTICOCAD);
+        if(requestCode == EVENTOCAD  && resultCode == RESULT_OK) {
+            Log.d("Logger", "EventoCadastroFragment onActivityResult EVENTOCAD " + EVENTOCAD);
 
             try{
                 getActivity().getIntent().putExtra("Lat", data.getStringExtra("Lat"));
@@ -355,7 +354,7 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
     private void validateFields() throws DataInputException {
         Log.d("Logger", "EventoCadastroFragment validateFields");
         if(nameVal_txt.getText().toString().trim().isEmpty()){
-            throw new DataInputException("Digite o nome do evento!");
+            throw new DataInputException(getString(R.string.validate_event_name));
         }
 
         if(dateFimVal_txt.getText().toString().trim().isEmpty()){

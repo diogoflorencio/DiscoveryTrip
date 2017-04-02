@@ -7,11 +7,13 @@
 
     <string name="action_settings">Settings</string>
 
-    <string name="evento_label">Evento</string>
+    <string name="evento_label">Eventos</string>
+    <string name="cadastro_evento_label">Cadastro de eventos</string>
     <string name="home_label">Home</string>
     <string name="localizacao_label">Localização</string>
     <string name="perfil_label">Perfil</string>
     <string name="ponto_turistico_label">Ponto turístico</string>
+    <string name="cadastro_ponto_turistico_label">Cadastro de ponto turístico</string>
 
     //CadastroActivity strings
     <string name="falha_conexao">Falha na conexão com o servidor!</string>
@@ -45,11 +47,13 @@
     <string name="conection_failed">Conexao falhou</string>
 
     //Validção strings
-    <string name="validate_name">Digite seu nome!</string>
-    <string name="validate_email">Digite um email válido!</string>
-    <string name="validate_password_match">Senhas estão diferentes!</string>
-    <string name="validate_password_lenght">Senha deve ter no mínimo 6 caracteres!</string>
-    <string name="validate_password_empty">Digite sua senha!</string>
+    <string name="validate_name">Informe seu nome</string>
+    <string name="validate_event_name">Informe o nome do evento</string>
+    <string name="validate_pnt_name">Informe o nome do ponto turístico</string>
+    <string name="validate_email">Digite um email válido</string>
+    <string name="validate_password_match">Senhas estão diferentes</string>
+    <string name="validate_password_lenght">Senha deve ter no mínimo 6 caracteres</string>
+    <string name="validate_password_empty">Digite sua senha</string>
     <string name="validate_category">Informe uma categoria</string>
     <string name="validate_description">Informe uma descrição</string>
     <string name="validate_date_begin">Informe uma data de inicio</string>
