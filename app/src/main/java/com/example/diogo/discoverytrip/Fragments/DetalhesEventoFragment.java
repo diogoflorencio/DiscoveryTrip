@@ -25,6 +25,7 @@ import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ServerResponses.DeleteEventoResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
+import com.example.diogo.discoverytrip.Util.ListAdapterPontosTuristicos;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -92,7 +93,7 @@ public class DetalhesEventoFragment extends Fragment implements View.OnClickList
         }
 
         if(atracao.getPhotoId() != null && !atracao.getPhotoId().equals("")){
-            //loadImage(foto);
+            ListAdapterPontosTuristicos.loadImage(foto,atracao.getPhotoId(),getContext());
         }
 
         if(atracao.getLocation() != null && atracao.getLocation().getStreetName() != null){
@@ -116,43 +117,6 @@ public class DetalhesEventoFragment extends Fragment implements View.OnClickList
             lembrar.setVisibility(View.INVISIBLE);
         }
         return view;
-    }
-
-    private void loadImage(final ImageView imgView){
-        final Handler handler = new Handler();
-        retrofit2.Call<ResponseBody> call = ApiClient.API_SERVICE.downloadFoto("bearer "+ AcessToken.recuperar(getActivity().getSharedPreferences("acessToken", Context.MODE_PRIVATE)),
-                atracao.getPhotoId());
-        call.enqueue(new retrofit2.Callback<ResponseBody>() {
-
-            @Override
-            public void onResponse(retrofit2.Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    InputStream input = response.body().byteStream();
-                    //Convert a foto em Bitmap
-                    final Bitmap img = BitmapFactory.decodeStream(input);
-                    //Coloca a foto na imageView
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            imgView.setImageBitmap(img);
-                        }
-                    });
-                } else {
-                    try {
-                        ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                        Log.e("Logger","Carregando foto erro: "+error.getErrorDescription());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(retrofit2.Call<ResponseBody> call, Throwable t) {
-                // Log error here since request failed
-                Log.e("Logger","Erro ao baixar imagem");
-            }
-        });
     }
 
     @Override
