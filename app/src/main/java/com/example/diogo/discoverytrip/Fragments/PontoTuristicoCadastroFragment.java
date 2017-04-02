@@ -14,7 +14,6 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -40,17 +39,15 @@ import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.MultiRequestHelper;
 import com.example.diogo.discoverytrip.REST.ServerResponses.AttractionResponse;
 import com.example.diogo.discoverytrip.REST.ServerResponses.ErrorResponse;
-import com.google.android.gms.vision.text.Text;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -219,8 +216,8 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
             } catch (DataInputException exception){
                 Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
             }
-            Log.d("Logger","Seleciona imagem size " + selectedPictures.size());
             Log.d("Logger","Seleciona imagem" + foto.getPath());
+            Log.d("Logger","Seleciona imagem real" + getPathFromURI(foto));
         }
 
         if(requestCode == CAM_REQUEST && resultCode == RESULT_OK) {
@@ -239,7 +236,6 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
                     } catch (DataInputException exception){
                         Toast.makeText(this.getActivity(),exception.getMessage(),Toast.LENGTH_SHORT).show();
                     }
-                    Log.d("Logger","Seleciona imagem size " + selectedPictures.size());
                     Log.d("Logger","Seleciona imagem" + foto.getPath());
                     if (!file.delete()) {
                         Log.d("logMarker", "Failed to delete " + file);
@@ -334,25 +330,50 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
             //o coordenadas não foram escolhidas pela "map activity"
             parametersMap.put("latitude",helper.createPartFrom(String.valueOf(latitude)));
             parametersMap.put("longitude",helper.createPartFrom(String.valueOf(longitude)));
-            Log.d("Logger","Location add pnt latitude: "+latitude+" longitude: "+longitude);
         }
 
         parametersMap.put("category",helper.createPartFrom(ptCatg_value));
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Log.d("Token",token);
-        //List<byte[]> fotos = new ArrayList<>();
         Log.d("Logger", "parametersMap " + parametersMap.toString());
         Log.d("Logger", "name " + ptName_value + " description " + ptDesc_value + " category " + ptCatg_value);
 
         final AlertDialog dialog = createLoadingDialog();
         dialog.show();
-        Call<AttractionResponse> call = ApiClient.API_SERVICE.cadastrarPontoTuristico("bearer "+token,parametersMap,helper.loadPhoto("photos",foto),helper.loadPhoto("photos",foto));
+        MultipartBody.Part picture1 = null;
+        MultipartBody.Part picture2 = null;
+        MultipartBody.Part picture3 = null;
+        MultipartBody.Part picture4 = null;
+        MultipartBody.Part picture5 = null;
+        MultipartBody.Part picture6 = null;
+        MultipartBody.Part picture7 = null;
+        MultipartBody.Part picture8 = null;
+        MultipartBody.Part picture9 = null;
+        MultipartBody.Part picture10 = null;
+
+        try {
+            picture1 = helper.loadPhoto("photos", selectedPictures.get(0));
+            picture2 = helper.loadPhoto("photos", selectedPictures.get(1));
+            picture3 = helper.loadPhoto("photos", selectedPictures.get(2));
+            picture4 = helper.loadPhoto("photos", selectedPictures.get(3));
+            picture5 = helper.loadPhoto("photos", selectedPictures.get(4));
+            picture6 = helper.loadPhoto("photos", selectedPictures.get(5));
+            picture7 = helper.loadPhoto("photos", selectedPictures.get(6));
+            picture8 = helper.loadPhoto("photos", selectedPictures.get(7));
+            picture9 = helper.loadPhoto("photos", selectedPictures.get(8));
+            picture10 = helper.loadPhoto("photos", selectedPictures.get(9));
+        }
+        catch (Exception e){
+            //nao tinham as 10 fotos, então so instaciou as que tinham
+            e.printStackTrace();
+        }
+
+        Call<AttractionResponse> call = ApiClient.API_SERVICE.cadastrarPontoTuristico("bearer "+token,parametersMap, picture1, picture2, picture3, picture4, picture5, picture6, picture7, picture8, picture9, picture10);
         call.enqueue(new Callback<AttractionResponse>() {
             @Override
             public void onResponse(Call<AttractionResponse> call, Response<AttractionResponse> response) {
                 if(response.isSuccessful()) {
-                    Log.d("Logger","Cadastro ponto turístico ok");
                     Toast.makeText(getActivity(), R.string.pt_cadastro_sucesso,Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
                     backToHome();
@@ -374,7 +395,6 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
                 // Log error here since request failed
                 Toast.makeText(getContext(), "Erro ao se conectar com o servidor!", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
-                Log.e("Logger", t.toString());
             }
         });
     }
@@ -411,7 +431,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
             throw new DataInputException(getString(R.string.validate_description));
         }
 
-        if(foto == null){
+        if(selectedPictures.size() == 0){
             throw new DataInputException(getString(R.string.validate_photo));
         }
     }

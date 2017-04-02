@@ -435,7 +435,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
 
         if (dateInicioVal_txt.getText().toString().trim().isEmpty()){
             Date dateBegin = new Date();
-            dateBegin.toString();
             dateBegin.setHours(0);
             dateBegin.setMinutes(59);
             dateBegin.setSeconds(59);
@@ -443,7 +442,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         }else{
             try {
                 Date dateBegin = normalDateFormat.parse(eventDateBegin_value);
-                dateBegin.toString();
                 dateBegin.setHours(horaInicio);
                 dateBegin.setMinutes(minutoInicio);
                 dateBegin.setSeconds(0);
@@ -457,7 +455,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
 
         try {
             Date dateEnd = normalDateFormat.parse(eventDateEnd_value);
-            dateEnd.toString();
             dateEnd.setHours(horaFim);
             dateEnd.setMinutes(minutoFim);
             dateEnd.setSeconds(1);
@@ -510,7 +507,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                 public void onResponse(Call<AddEventoResponse> call, Response<AddEventoResponse> response) {
                     dialog.dismiss();
                     if (response.isSuccessful()) {
-                        Log.d("Logger", "Cadastro de evento OK");
                         Toast.makeText(getActivity(), R.string.ev_cadastro_sucesso, Toast.LENGTH_SHORT).show();
                         backToHome();
                     } else {

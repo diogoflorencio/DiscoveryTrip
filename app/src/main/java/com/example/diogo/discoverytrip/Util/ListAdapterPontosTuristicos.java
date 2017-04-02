@@ -90,6 +90,7 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
         }
         else{
             photoId = atracoes.get(position).getPhotos().get(0);
+            Log.d("Logger","image array: " + atracoes.get(position).getPhotos());
         }
 
         retrofit2.Call<ResponseBody> call = ApiClient.API_SERVICE.downloadFoto("bearer "+AcessToken.recuperar(context.getSharedPreferences("acessToken", Context.MODE_PRIVATE)),
