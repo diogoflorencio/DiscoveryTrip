@@ -247,16 +247,14 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
         }
 
         if(requestCode == PNTTURISTICOCAD  && resultCode == RESULT_OK) {
-            Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult PNTTURISTICOCAD " + PNTTURISTICOCAD);
+            Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult PNTTURISTICOCAD");
 
             try{
-                Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult PNTTURISTICOCAD1 " + data.getStringExtra("Lat"));
                 getActivity().getIntent().putExtra("Lat", data.getStringExtra("Lat"));
             } catch (Exception e) {
                 e.printStackTrace();
             }
             try{
-                Log.d("Logger", "PontoTuristicoCadastroFragment onActivityResult PNTTURISTICOCAD2 " + data.getStringExtra("Lng"));
                 getActivity().getIntent().putExtra("Lng", data.getStringExtra("Lng"));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -336,7 +334,6 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Log.d("Token",token);
-        Log.d("Logger", "parametersMap " + parametersMap.toString());
         Log.d("Logger", "name " + ptName_value + " description " + ptDesc_value + " category " + ptCatg_value);
 
         final AlertDialog dialog = createLoadingDialog();
@@ -354,6 +351,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
         MultipartBody.Part picture10 = null;
 
         try {
+            Log.d("Logger","Carregando imagem getPathFromURI" + getPathFromURI(selectedPictures.get(0)));
             picture1 = helper.loadPhoto("photos", selectedPictures.get(0));
             picture2 = helper.loadPhoto("photos", selectedPictures.get(1));
             picture3 = helper.loadPhoto("photos", selectedPictures.get(2));

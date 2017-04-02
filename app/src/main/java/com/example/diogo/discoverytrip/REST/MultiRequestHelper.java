@@ -12,10 +12,6 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-/**
- * Created by renato on 11/02/17.
- */
-
 public class MultiRequestHelper {
 
     Context context;
@@ -32,7 +28,9 @@ public class MultiRequestHelper {
      * @return parte da request contendo a foto desejada
      */
     public MultipartBody.Part loadPhoto(String partName, Uri imageUri){
-        Log.d("Logger","Carregando imagem "+imageUri.getPath());
+        Log.d("Logger", "MultiRequestHelper loadPhoto");
+        Log.d("Logger","Carregando imagem1 "+imageUri.getPath());
+        Log.d("Logger","Carregando imagem2 "+getRealPathFromURI(imageUri));
         /*InputStream stream = null;
         stream = context.getContentResolver().openInputStream(imageUri);
         Bitmap bitmap = BitmapFactory.decodeStream(stream);
@@ -40,10 +38,12 @@ public class MultiRequestHelper {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);*/
 
         File file = new File(getRealPathFromURI(imageUri));
+        Log.d("Logger", "MultiRequestHelper loadPhoto1");
 
         // create RequestBody instance from file
         RequestBody requestFile =
                 RequestBody.create(MediaType.parse(context.getContentResolver().getType(imageUri)), file);
+        Log.d("Logger", "MultiRequestHelper loadPhoto2");
 
         // MultipartBody.Part is used to send also the actual file name
         return MultipartBody.Part.createFormData(partName, file.getName(), requestFile);
@@ -55,11 +55,13 @@ public class MultiRequestHelper {
      * @return parte do form para ser adicionada no mapa
      */
     public RequestBody createPartFrom(String parameterValue) {
+        Log.d("Logger", "MultiRequestHelper createPartFrom");
         return RequestBody.create(
                 okhttp3.MultipartBody.FORM, parameterValue);
     }
 
     private String getRealPathFromURI(Uri uri) {
+        Log.d("Logger", "MultiRequestHelper getRealPathFromURI");
         Cursor cursor = context.getContentResolver().query(uri, null, null, null, null);
         cursor.moveToFirst();
         int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);

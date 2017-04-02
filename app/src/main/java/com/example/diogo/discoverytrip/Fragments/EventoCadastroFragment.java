@@ -13,7 +13,6 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -52,6 +51,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -146,13 +146,11 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                     horaInicio = hour;
                     minutoInicio = minute;
                     timeInicioVal_txt.setText(horaInicio+":"+minutoInicio);
-                    Log.d("Logger", "horaInicio " + timeInicioVal_txt.getText());
                     break;
                 case "Fim":
                     horaFim = hour;
                     minutoFim = minute;
                     timeFimVal_txt.setText(horaFim+":"+minutoFim);
-                    Log.d("Logger", "horaFim " + timeFimVal_txt.getText());
                     break;
             }
         }
@@ -187,8 +185,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         catch (Exception e){
             e.printStackTrace();
         }
-
-        Log.d("Logger", "data " + dateInicioVal_txt.getText());
     }
 
     @Override
@@ -293,14 +289,14 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == CAM_SELECT && resultCode == RESULT_OK) {
-            Log.d("Logger", "EventoCadastroFragment onActivityResult CAM_SELECT " + CAM_SELECT);
+            Log.d("Logger", "EventoCadastroFragment onActivityResult CAM_SELECT");
             foto = data.getData();
             displayPicture(foto);
             Log.d("Logger","Seleciona imagem" + foto.getPath());
         }
 
         if(requestCode == CAM_REQUEST && resultCode == RESULT_OK) {
-            Log.d("Logger", "EventoCadastroFragment onActivityResult CAM_REQUEST " + CAM_REQUEST);
+            Log.d("Logger", "EventoCadastroFragment onActivityResult CAM_REQUEST");
             try{
                 foto = data.getData();
             } catch (Exception e){
@@ -323,13 +319,11 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
             Log.d("Logger", "EventoCadastroFragment onActivityResult PNTTURISTICOCAD " + PNTTURISTICOCAD);
 
             try{
-                Log.d("Logger", "EventoCadastroFragment onActivityResult PNTTURISTICOCAD1 " + data.getStringExtra("Lat"));
                 getActivity().getIntent().putExtra("Lat", data.getStringExtra("Lat"));
             } catch (Exception e) {
                 e.printStackTrace();
             }
             try{
-                Log.d("Logger", "EventoCadastroFragment onActivityResult PNTTURISTICOCAD2 " + data.getStringExtra("Lng"));
                 getActivity().getIntent().putExtra("Lng", data.getStringExtra("Lng"));
             } catch (Exception e) {
                 e.printStackTrace();
@@ -409,9 +403,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         String eventDateBegin_value = dateInicioVal_txt.getText().toString();
         String eventDateEnd_value = dateFimVal_txt.getText().toString();
 
-        Log.d("Logger","DateBegin txt "+ eventDateBegin_value);
-        Log.d("Logger","DateEnd txt "+ eventDateEnd_value);
-
         String eventPrice_value = null;
 
         try{
@@ -450,7 +441,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                 e.printStackTrace();
             }
         }
-        Log.d("Logger","DateBegin formated "+ eventDateBegin_formated);
 
 
         try {
@@ -459,7 +449,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
             dateEnd.setMinutes(minutoFim);
             dateEnd.setSeconds(1);
             eventDateEnd_formated = dateFormat.format(dateEnd);
-            Log.d("Logger","DateEnd formated "+ eventDateEnd_formated);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -475,7 +464,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
 
         parametersMap.put("kind",helper.createPartFrom(eventKind_value));
         parametersMap.put("price",helper.createPartFrom(eventPrice_value));
-        Log.d("Logger","DateEnd price "+ eventPrice_value);
 
         try{
             //o fragmento veio pela "map activity"
@@ -490,8 +478,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
 
         String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Log.d("Token",token);
-        //List<byte[]> fotos = new ArrayList<>();
-        Log.d("Logger", "parametersMap " + parametersMap.toString());
         Log.d("Logger", "name " + eventName_value + " description " + eventDesc_value +
                 " startDate " + eventDateBegin_formated  + " endDate " + eventDateEnd_formated  +
                 " kind " + eventKind_value  + " price " + eventPrice_value);
@@ -499,9 +485,19 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
         final AlertDialog dialog = createLoadingDialog();
         dialog.show();
 
-        if(foto != null){
-            Log.d("Logger","Tem foto");
-            Call<AddEventoResponse> call = ApiClient.API_SERVICE.cadastrarEvento("bearer " + token, parametersMap,helper.loadPhoto("photo",foto));
+        MultipartBody.Part picture = null;
+
+        try {
+            picture = helper.loadPhoto("photo",foto);
+        }
+        catch (Exception e){
+            Log.d("Logger", "Uri invalido");
+            e.printStackTrace();
+        }
+
+        //if(foto != null){
+            //Call<AddEventoResponse> call = ApiClient.API_SERVICE.cadastrarEvento("bearer " + token, parametersMap,helper.loadPhoto("photo",foto));
+            Call<AddEventoResponse> call = ApiClient.API_SERVICE.cadastrarEvento("bearer " + token, parametersMap, picture);
             call.enqueue(new Callback<AddEventoResponse>() {
                 @Override
                 public void onResponse(Call<AddEventoResponse> call, Response<AddEventoResponse> response) {
@@ -512,7 +508,6 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                     } else {
                         try {
                             ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                            Log.e("Logger", "Server error: "+error.getErrorType()+", "+error.getErrorDescription());
                             Toast.makeText(getContext(),error.getErrorDescription(),Toast.LENGTH_SHORT).show();
                         } catch (IOException e) {
                             e.printStackTrace();
@@ -528,37 +523,35 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
                     Log.e("App Server Error", t.toString());
                 }
             });
-        }
-        else {
-            Call<AddEventoResponse> call = ApiClient.API_SERVICE.cadastrarEvento("bearer " + token, parametersMap);
-            call.enqueue(new Callback<AddEventoResponse>() {
-                @Override
-                public void onResponse(Call<AddEventoResponse> call, Response<AddEventoResponse> response) {
-                    dialog.dismiss();
-                    if (response.isSuccessful()) {
-                        Log.d("Logger", "Cadastro de evento OK");
-                        Toast.makeText(getActivity(), R.string.ev_cadastro_sucesso, Toast.LENGTH_SHORT).show();
-                        backToHome();
-                    } else {
-                        try {
-                            ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                            Log.e("Logger", "Server error: "+error.getErrorType()+", "+error.getErrorDescription());
-                            Toast.makeText(getContext(),error.getErrorDescription(),Toast.LENGTH_SHORT).show();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<AddEventoResponse> call, Throwable t) {
-                    dialog.dismiss();
-                    // Log error here since request failed
-                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.e("App Server Error", t.toString());
-                }
-            });
-        }
+//        }
+//        else {
+//            Call<AddEventoResponse> call = ApiClient.API_SERVICE.cadastrarEvento("bearer " + token, parametersMap);
+//            call.enqueue(new Callback<AddEventoResponse>() {
+//                @Override
+//                public void onResponse(Call<AddEventoResponse> call, Response<AddEventoResponse> response) {
+//                    dialog.dismiss();
+//                    if (response.isSuccessful()) {
+//                        Toast.makeText(getActivity(), R.string.ev_cadastro_sucesso, Toast.LENGTH_SHORT).show();
+//                        backToHome();
+//                    } else {
+//                        try {
+//                            ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
+//                            Toast.makeText(getContext(),error.getErrorDescription(),Toast.LENGTH_SHORT).show();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<AddEventoResponse> call, Throwable t) {
+//                    dialog.dismiss();
+//                    // Log error here since request failed
+//                    Toast.makeText(getContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
+//                    Log.e("App Server Error", t.toString());
+//                }
+//            });
+//        }
     }
 
     private AlertDialog createLoadingDialog(){
