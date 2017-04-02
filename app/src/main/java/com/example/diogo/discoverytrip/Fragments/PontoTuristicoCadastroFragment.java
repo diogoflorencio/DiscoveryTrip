@@ -347,7 +347,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
 
         final AlertDialog dialog = createLoadingDialog();
         dialog.show();
-        Call<AttractionResponse> call = ApiClient.API_SERVICE.cadastrarPontoTuristico("bearer "+token,parametersMap,helper.loadPhoto("photos",foto));
+        Call<AttractionResponse> call = ApiClient.API_SERVICE.cadastrarPontoTuristico("bearer "+token,parametersMap,helper.loadPhoto("photos",foto),helper.loadPhoto("photos",foto));
         call.enqueue(new Callback<AttractionResponse>() {
             @Override
             public void onResponse(Call<AttractionResponse> call, Response<AttractionResponse> response) {
