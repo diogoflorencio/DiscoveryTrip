@@ -57,7 +57,8 @@
                     android:layout_alignParentRight="false"
                     android:layout_weight="1"
                     android:shadowColor="@android:color/black"
-                    android:textAlignment="viewEnd" />
+                    android:textAlignment="viewEnd"
+                    android:textSize="18sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -86,7 +87,8 @@
                     android:layout_alignParentRight="false"
                     android:layout_alignStart="@+id/userName"
                     android:layout_weight="1"
-                    android:textAlignment="viewEnd" />
+                    android:textAlignment="viewEnd"
+                    android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
 
