@@ -131,10 +131,15 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
                                 //Convert a foto em Bitmap
                                 final Bitmap img = BitmapFactory.decodeStream(input);
 
-                                //Coloca a foto na imageView
-                                imgView.setImageBitmap(img);
-
                                 saveImageToInternalStorage(photoId,img,context);
+
+                                //Coloca a foto na imageView
+                                try {
+                                    imgView.setImageBitmap(loadImageFromInternalStorage(photoId,context));
+                                } catch (FileNotFoundException e1) {
+                                    Log.e("Logger","Erro ao carregar foto");
+                                    e1.printStackTrace();
+                                }
 
                             } else {
                                 try {

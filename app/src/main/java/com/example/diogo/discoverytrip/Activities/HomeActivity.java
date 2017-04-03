@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -18,14 +19,10 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
-import com.example.diogo.discoverytrip.DataBase.DiscoveryTripBD;
 import com.example.diogo.discoverytrip.Fragments.EventoFragment;
 import com.example.diogo.discoverytrip.Fragments.HomeFragment;
-import com.example.diogo.discoverytrip.Fragments.LocalizacaoFragment;
 import com.example.diogo.discoverytrip.Fragments.PerfilFragment;
 import com.example.diogo.discoverytrip.Fragments.PontoTuristicoFragment;
-import com.example.diogo.discoverytrip.Model.Atracao;
-import com.example.diogo.discoverytrip.Model.Localizacao;
 import com.example.diogo.discoverytrip.Model.RefreshTokenManeger;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.Service.ServiceLembrete;
@@ -46,7 +43,7 @@ public class HomeActivity extends AppCompatActivity
     private GoogleApiClient mGoogleApiClient;
     public static final String EVENT_TYPE = "Event", POINT_TYPE = "Attraction";
     private View background;
-    private boolean isAtHome;
+    private int currentScreen = 0;
     private NavigationView navigationView;
 
     /**
@@ -60,7 +57,6 @@ public class HomeActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         background = findViewById(R.id.home_activity_background);
-        isAtHome = true;
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -71,6 +67,7 @@ public class HomeActivity extends AppCompatActivity
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        currentScreen = R.id.nav_home;
         buildGooglePlusConfigs();
         createHomeFragment();
         /*start ServiceLembrete*/
@@ -150,22 +147,22 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_home:
                 Log.d("Logger", "Home localizacao");
                 fragment = new HomeFragment();
-                isAtHome = true;
+                currentScreen = R.id.nav_home;
                 break;
             case R.id.nav_perfil:
                 Log.d("Logger", "Home localizacao");
                 fragment = new PerfilFragment();
-                isAtHome = false;
+                currentScreen = R.id.nav_perfil;
                 break;
             case R.id.nav_ponto_turistico:
                 Log.d("Logger", "Home localizacao");
                 fragment = new PontoTuristicoFragment();
-                isAtHome = false;
+                currentScreen = R.id.nav_ponto_turistico;
                 break;
             case R.id.nav_evento:
                 Log.d("Logger", "Home localizacao");
                 fragment = new EventoFragment();
-                isAtHome = false;
+                currentScreen = R.id.nav_evento;
                 break;
         }
 
@@ -196,8 +193,10 @@ public class HomeActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         Log.d("Logger", "Home onBackPressed");
-        if(!isAtHome){
-            navigationView.getMenu().performIdentifierAction(R.id.nav_home,0);
+
+        if(currentScreen != R.id.nav_home){
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.popBackStackImmediate();
             return;
         }
 
@@ -207,7 +206,7 @@ public class HomeActivity extends AppCompatActivity
         } else {
             super.onBackPressed();
         }
-
+        finish();
     }
 
     public void changeFragment(Fragment fragment){
@@ -218,6 +217,7 @@ public class HomeActivity extends AppCompatActivity
         }
         fragmentManager.setCustomAnimations(R.anim.left_in, R.anim.right_out);
         fragmentManager.replace(R.id.content_home, fragment);
+        fragmentManager.addToBackStack(null);
         fragmentManager.commit();
     }
 
