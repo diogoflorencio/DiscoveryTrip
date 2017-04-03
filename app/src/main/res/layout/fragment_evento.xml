@@ -11,9 +11,10 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/ev_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:alpha="0.5"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/event_background" />
     </RelativeLayout>
@@ -21,8 +22,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:background="@color/discoverytrip_view_background">
+        android:layout_margin="5dp">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/createEvent_btn"
@@ -47,6 +47,7 @@
                 android:id="@+id/tabhost_eventos"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:alpha="0.7"
                 android:background="@color/cardview_light_background">
 
                 <LinearLayout

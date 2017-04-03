@@ -1,4 +1,5 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,90 +8,94 @@
     android:alpha="0.7"
     android:background="@color/cardview_light_background">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/ptEdt_background"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.5"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/home_background" />
+    </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_margin="5dp">
 
             <TextView
-                android:text="Email:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:id="@+id/textView2"
-                android:textSize="18sp"
-                android:layout_marginTop="70dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:layout_below="@+id/pfeName_txt"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_marginTop="70dp"
+                android:text="Email:"
+                android:textSize="18sp" />
 
             <TextView
-                android:text="Edição de perfil"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/pfeTitle_txt"
-                android:layout_row="0"
-                android:layout_column="1"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true" />
-
-            <TextView
-                android:text="Nome:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:layout_row="1"
-                android:layout_column="0"
                 android:id="@+id/pfeName_txt"
-                android:layout_marginTop="91dp"
-                android:layout_below="@+id/pfeTitle_txt"
-                android:layout_toLeftOf="@+id/pfeTitle_txt"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/pfeTitle_txt"
+                android:layout_column="0"
+                android:layout_marginTop="91dp"
+                android:layout_row="1"
+                android:layout_toLeftOf="@+id/pfeTitle_txt"
+                android:text="Nome:"
+                android:textSize="18sp" />
+
+            <EditText
                 android:id="@+id/pfeName_edt"
-                android:layout_alignTop="@+id/pfeName_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignTop="@+id/pfeName_txt"
+                android:ems="10"
+                android:inputType="textPersonName" />
 
             <TextView
-                android:text="Senha:"
+                android:id="@+id/pfeEmail_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/pfeEmail_txt"
-                android:textSize="18sp"
-                android:layout_marginTop="81dp"
-                android:layout_below="@+id/textView2"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textView2"
+                android:layout_marginTop="81dp"
+                android:text="Senha:"
+                android:textSize="18sp" />
 
             <EditText
+                android:id="@+id/pfeEmail_edt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/pfeEmail_edt"
                 android:layout_alignBaseline="@+id/textView2"
                 android:layout_alignBottom="@+id/textView2"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:ems="10"
+                android:inputType="textPersonName" />
 
             <EditText
+                android:id="@+id/pfeSenha_editPerfil"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:ems="10"
-                android:id="@+id/pfeSenha_editPerfil"
                 android:layout_alignBottom="@+id/pfeEmail_txt"
+                android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                android:ems="10"
+                android:inputType="textPassword" />
 
             <Button
                 android:id="@+id/pfeCancel_btn"
