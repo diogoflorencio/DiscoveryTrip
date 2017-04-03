@@ -28,6 +28,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
@@ -40,6 +41,7 @@ import static com.example.diogo.discoverytrip.Activities.HomeActivity.EVENT_TYPE
  * Created by renato on 07/02/17.
  */
 public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
+    private List<View> views;
     private LayoutInflater inflater;
     private List<Atracao> atracoes;
     private Activity context;
@@ -54,10 +56,15 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
         this.inflater = inflater;
         this.atracoes = atracoes;
         this.context = context;
+        this.views = new ArrayList<>();
     }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent){
+        if(views.size() == atracoes.size()){
+            return views.get(position);
+        }
+
         Log.d("Logger","getView "+position);
         final Atracao atracao = atracoes.get(position);
         View view = inflater.inflate(R.layout.item_ponto_turistico, null, true);
@@ -93,6 +100,7 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
             }).start();
         }
 
+        views.add(view);
         return view;
     }
 
