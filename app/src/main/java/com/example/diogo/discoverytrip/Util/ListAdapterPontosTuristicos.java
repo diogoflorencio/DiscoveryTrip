@@ -61,7 +61,7 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent){
-        if(views.size() == atracoes.size()){
+        if(views.size() > position){
             return views.get(position);
         }
 
@@ -105,13 +105,12 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
     }
 
     public static void loadImage(final ImageView imgView, final String photoId, final Context context){
-        Log.d("Logger","loadImage");
         try{
             semaphore.acquire();
         }catch (Exception e){
             e.printStackTrace();
         }
-
+        Log.d("Logger","loadImage");
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -164,7 +163,7 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
     private static void saveImageToInternalStorage(String imageName, Bitmap imagem, Context context){
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        imagem.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        imagem.compress(Bitmap.CompressFormat.JPEG, 20, stream);
         byte[] byteArray = stream.toByteArray();
 
         try{
