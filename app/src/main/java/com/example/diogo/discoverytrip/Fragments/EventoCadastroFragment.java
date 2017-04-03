@@ -292,6 +292,8 @@ public class EventoCadastroFragment extends Fragment implements LocationListener
             foto = data.getData();
             displayPicture(foto);
             Log.d("Logger","Seleciona imagem" + foto.getPath());
+            Log.d("Logger","Seleciona imagem1" + getPathFromURI(foto));
+            Log.d("Logger","Seleciona imagem2" + foto.toString());
         }
 
         if(requestCode == CAM_REQUEST && resultCode == RESULT_OK) {
