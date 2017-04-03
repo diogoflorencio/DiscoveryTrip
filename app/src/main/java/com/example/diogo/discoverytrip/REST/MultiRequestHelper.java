@@ -29,8 +29,6 @@ public class MultiRequestHelper {
      */
     public MultipartBody.Part loadPhoto(String partName, Uri imageUri){
         Log.d("Logger", "MultiRequestHelper loadPhoto");
-        Log.d("Logger","Carregando imagem1 "+imageUri.getPath());
-        Log.d("Logger","Carregando imagem2 "+getRealPathFromURI(imageUri));
         /*InputStream stream = null;
         stream = context.getContentResolver().openInputStream(imageUri);
         Bitmap bitmap = BitmapFactory.decodeStream(stream);
