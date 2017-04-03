@@ -8,12 +8,12 @@
     <string name="action_settings">Settings</string>
 
     <string name="evento_label">Eventos</string>
-    <string name="cadastro_evento_label">Cadastro de eventos</string>
+    <string name="cadastro_evento_label">Novo evento</string>
     <string name="home_label">Home</string>
     <string name="localizacao_label">Localização</string>
     <string name="perfil_label">Perfil</string>
     <string name="ponto_turistico_label">Ponto turístico</string>
-    <string name="cadastro_ponto_turistico_label">Cadastro de ponto turístico</string>
+    <string name="cadastro_ponto_turistico_label">Novo ponto turístico></string>
 
     //CadastroActivity strings
     <string name="falha_conexao">Falha na conexão com o servidor!</string>
