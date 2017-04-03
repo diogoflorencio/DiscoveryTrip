@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,152 +7,171 @@
     android:alpha="0.7"
     android:background="@color/cardview_light_background">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_height="match_parent">
 
-        <RelativeLayout
+        <ImageView
+            android:id="@+id/ptCad__background"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:alpha="0.5"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/ponto_turistico_background" />
+    </RelativeLayout>
 
-            <Button
-                android:id="@+id/pntMap_btn"
-                android:layout_width="60dp"
-                android:layout_height="50dp"
-                android:background="@drawable/map_icon"
-                android:layout_alignTop="@+id/ponto_turistico_btnFoto"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/pntName_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/pntTuristico_txt"
-                android:layout_marginTop="86dp"
-                android:layout_weight="1"
-                android:text="Nome"
-                android:textSize="18sp" />
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
 
-            <TextView
-                android:text="Descrição"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/pntDesc_txt"
-                android:textSize="18sp"
-                android:layout_below="@+id/pntCat_txt"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="27dp"
-                android:layout_weight="1" />
-
-            <TextView
-                android:text="Categoria"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/pntCat_txt"
-                android:textSize="18sp"
-                android:layout_below="@+id/pntName_txt"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_marginTop="25dp"
-                android:layout_weight="1" />
-
-            <EditText
-                android:id="@+id/pntNameVal_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:layout_above="@+id/ptCategory_spn"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-
-            <EditText
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:inputType="textPersonName"
-                android:ems="10"
-                android:id="@+id/pntDescVal_txt"
-                android:layout_alignTop="@+id/pntDesc_txt"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
-
-            <Button
-                android:id="@+id/ponto_turistico_btnFoto"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/pntDescVal_txt"
-                android:layout_centerHorizontal="true"
-                android:background="@drawable/styled_button"
-                android:text="Selecionar Foto" />
-
-            <Spinner
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/ptCategory_spn"
-                android:layout_alignTop="@+id/pntCat_txt"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignLeft="@+id/pntNameVal_txt"
-                android:layout_alignStart="@+id/pntNameVal_txt" />
+                android:layout_height="match_parent"
+                android:layout_margin="5dp">
 
-            <Button
-                android:id="@+id/pntCamera_btn"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_below="@+id/pntDescVal_txt"
-                android:background="@drawable/ic_menu_camera" />
+                <Button
+                    android:id="@+id/pntMap_btn"
+                    android:layout_width="60dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignTop="@+id/ponto_turistico_btnFoto"
+                    android:background="@drawable/map_icon" />
 
-            <Button
-                android:id="@+id/pntCancel_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/styled_button"
-                android:text="Cancelar" />
+                <TextView
+                    android:id="@+id/pntName_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/pntTuristico_txt"
+                    android:layout_marginTop="86dp"
+                    android:layout_weight="1"
+                    android:text="Nome"
+                    android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/pntPictureCnt_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0/10"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                android:layout_below="@+id/ponto_turistico_btnFoto"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true" />
+                <TextView
+                    android:id="@+id/pntDesc_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/pntCat_txt"
+                    android:layout_marginTop="27dp"
+                    android:layout_weight="1"
+                    android:text="Descrição"
+                    android:textSize="18sp" />
 
-            <Button
-                android:id="@+id/pntRegister_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/ponto_turistico_btnFoto"
-                android:layout_marginTop="22dp"
-                android:background="@drawable/styled_button"
-                android:text="Confirmar" />
+                <TextView
+                    android:id="@+id/pntCat_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/pntName_txt"
+                    android:layout_marginTop="25dp"
+                    android:layout_weight="1"
+                    android:text="Categoria"
+                    android:textSize="18sp" />
 
-            <ImageView
-                android:id="@+id/pntPictureImgView"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:scaleType="fitXY"
-                app:srcCompat="@android:drawable/ic_menu_report_image"
-                android:layout_below="@+id/pntDescVal_txt"
-                android:layout_toRightOf="@+id/ponto_turistico_btnFoto"
-                android:layout_toEndOf="@+id/ponto_turistico_btnFoto" />
+                <EditText
+                    android:id="@+id/pntNameVal_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/ptCategory_spn"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:ems="10"
+                    android:inputType="textPersonName" />
 
-        </RelativeLayout>
-    </ScrollView>
+                <EditText
+                    android:id="@+id/pntDescVal_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignTop="@+id/pntDesc_txt"
+                    android:ems="10"
+                    android:inputType="textPersonName" />
+
+                <Button
+                    android:id="@+id/ponto_turistico_btnFoto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/pntDescVal_txt"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/styled_button"
+                    android:text="Selecionar Foto" />
+
+                <Spinner
+                    android:id="@+id/ptCategory_spn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/pntNameVal_txt"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignStart="@+id/pntNameVal_txt"
+                    android:layout_alignTop="@+id/pntCat_txt" />
+
+                <Button
+                    android:id="@+id/pntCamera_btn"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/pntDescVal_txt"
+                    android:background="@drawable/ic_menu_camera" />
+
+                <Button
+                    android:id="@+id/pntCancel_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/styled_button"
+                    android:text="Cancelar" />
+
+                <TextView
+                    android:id="@+id/pntPictureCnt_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/ponto_turistico_btnFoto"
+                    android:text="0/10"
+                    android:textAlignment="center"
+                    android:textSize="18sp" />
+
+                <Button
+                    android:id="@+id/pntRegister_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/ponto_turistico_btnFoto"
+                    android:layout_marginTop="22dp"
+                    android:background="@drawable/styled_button"
+                    android:text="Confirmar" />
+
+                <ImageView
+                    android:id="@+id/pntPictureImgView"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_below="@+id/pntDescVal_txt"
+                    android:layout_toEndOf="@+id/ponto_turistico_btnFoto"
+                    android:layout_toRightOf="@+id/ponto_turistico_btnFoto"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@android:drawable/ic_menu_report_image" />
+
+            </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
 
 
-</RelativeLayout>
+</FrameLayout>

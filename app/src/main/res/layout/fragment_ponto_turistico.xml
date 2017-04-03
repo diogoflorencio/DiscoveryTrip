@@ -11,9 +11,10 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/pt__background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/ponto_turistico_background" />
     </RelativeLayout>
@@ -21,8 +22,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="5dp"
-        android:background="@color/discoverytrip_view_background">
+        android:layout_margin="5dp">
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/createPntTuristico_btn"
@@ -38,6 +38,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:alpha="0.7"
+            android:background="@color/discoverytrip_view_background"
             android:orientation="vertical"
             android:weightSum="1">
 

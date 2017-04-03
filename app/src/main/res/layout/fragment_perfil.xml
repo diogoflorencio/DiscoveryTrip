@@ -1,4 +1,5 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,90 +8,98 @@
     android:alpha="0.7"
     android:background="@color/cardview_light_background">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:text="Perfil"
-            android:layout_width="match_parent"
+        <ImageView
+            android:id="@+id/pf_background"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/pfPerfil_txt"
-            android:textSize="24sp"
-            android:layout_row="0"
-            android:layout_column="1"
-            android:layout_alignParentTop="false"
-            android:layout_centerHorizontal="false"
-            android:layout_gravity="center_vertical|center_horizontal"
-            android:gravity="center_horizontal" />
+            android:alpha="0.5"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/home_background" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="5dp">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <TextView
-                android:text="Nome:"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="18sp"
-                android:layout_column="0"
-                android:id="@+id/pfName_txt"
-                android:layout_below="@+id/pfPerfil_txt"
-                android:layout_alignParentLeft="false"
-                android:layout_alignParentStart="false" />
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/userName"
-                android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/pfName_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentStart="false"
+                    android:layout_below="@+id/pfPerfil_txt"
+                    android:layout_column="0"
+                    android:text="Nome:"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/pfName_txt"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentRight="false"
+                    android:layout_weight="1"
+                    android:shadowColor="@android:color/black"
+                    android:textAlignment="viewEnd" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/pfName_txt"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentRight="false"
-                android:layout_weight="1"
-                android:textAlignment="viewEnd" />
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/pfEmail_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/pfName_txt"
+                    android:text="Email:"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/userEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/pfEmail_txt"
+                    android:layout_alignLeft="@+id/userName"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentRight="false"
+                    android:layout_alignStart="@+id/userName"
+                    android:layout_weight="1"
+                    android:textAlignment="viewEnd" />
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/pfConfirm_btn"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp">
-
-            <TextView
-                android:text="Email:"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/pfEmail_txt"
-                android:textSize="18sp"
-                android:layout_below="@+id/pfName_txt"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true" />
-
-            <TextView
-                android:id="@+id/userEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/pfEmail_txt"
-                android:layout_alignLeft="@+id/userName"
-                android:layout_alignParentEnd="false"
-                android:layout_alignParentRight="false"
-                android:layout_alignStart="@+id/userName"
-                android:layout_weight="1"
-                android:textAlignment="viewEnd" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/pfConfirm_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/styled_button"
-        android:text="Editar"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/styled_button"
+            android:text="Editar" />
+    </RelativeLayout>
 
 
-</RelativeLayout>
+</FrameLayout>

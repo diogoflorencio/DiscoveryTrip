@@ -6,19 +6,31 @@
     android:clickable="true"
     tools:context="com.example.diogo.discoverytrip.Fragments.EventoCadastroFragment">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/evCad__background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/event_background" />
+    </RelativeLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0.7"
-                android:background="@color/cardview_light_background"
                 android:orientation="vertical">
 
                 <TextView
@@ -42,7 +54,6 @@
                         android:layout_alignParentStart="true"
                         android:layout_below="@+id/eventCreation_txt"
                         android:layout_weight="1"
-                        android:alpha="1"
                         android:text="Nome"
                         android:textSize="18sp" />
 
@@ -54,7 +65,6 @@
                         android:layout_toLeftOf="@+id/evCancel_btn"
                         android:layout_toStartOf="@+id/evCancel_btn"
                         android:layout_weight="1"
-                        android:alpha="1"
                         android:ems="10"
                         android:inputType="textPersonName" />
 
