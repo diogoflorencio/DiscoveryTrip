@@ -46,6 +46,7 @@
                     android:layout_below="@+id/pfPerfil_txt"
                     android:layout_column="0"
                     android:text="Nome:"
+                    android:textColor="@android:color/black"
                     android:textSize="18sp" />
 
                 <TextView
@@ -58,6 +59,7 @@
                     android:layout_weight="1"
                     android:shadowColor="@android:color/black"
                     android:textAlignment="viewEnd"
+                    android:textColor="@android:color/black"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -75,6 +77,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_below="@+id/pfName_txt"
                     android:text="Email:"
+                    android:textColor="@android:color/black"
                     android:textSize="18sp" />
 
                 <TextView
@@ -88,6 +91,7 @@
                     android:layout_alignStart="@+id/userName"
                     android:layout_weight="1"
                     android:textAlignment="viewEnd"
+                    android:textColor="@android:color/black"
                     android:textSize="18sp" />
             </LinearLayout>
         </LinearLayout>
@@ -100,7 +104,8 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:background="@drawable/styled_button"
-            android:text="Editar" />
+            android:text="Editar"
+            android:textColor="@android:color/black" />
     </RelativeLayout>
 
 

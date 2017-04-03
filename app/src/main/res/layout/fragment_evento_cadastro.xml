@@ -55,6 +55,7 @@
                         android:layout_below="@+id/eventCreation_txt"
                         android:layout_weight="1"
                         android:text="Nome"
+                        android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
                     <EditText
@@ -66,7 +67,8 @@
                         android:layout_toStartOf="@+id/evCancel_btn"
                         android:layout_weight="1"
                         android:ems="10"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:textColor="@android:color/black" />
 
                 </LinearLayout>
 
@@ -86,6 +88,8 @@
                         android:layout_below="@+id/evName_txt"
                         android:layout_weight="1"
                         android:text="Data de inicio"
+                        android:textAllCaps="false"
+                        android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
                     <TextView
@@ -93,6 +97,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
                     <Button
@@ -119,6 +124,7 @@
                         android:layout_below="@+id/evName_txt"
                         android:layout_weight="1"
                         android:text="Hora de inicio"
+                        android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
                     <TextView
@@ -126,6 +132,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
                     <Button
@@ -151,6 +158,7 @@
                         android:layout_below="@+id/evName_txt"
                         android:layout_weight="1"
                         android:text="Data de fim"
+                        android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
                     <TextView
@@ -158,6 +166,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
                     <Button
@@ -184,6 +193,7 @@
                         android:layout_below="@+id/evName_txt"
                         android:layout_weight="1"
                         android:text="Hora de fim"
+                        android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
                     <TextView
@@ -191,6 +201,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
+                        android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
                     <Button
@@ -215,6 +226,7 @@
                         android:layout_alignParentStart="false"
                         android:layout_centerVertical="false"
                         android:text="Tipo"
+                        android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
                     <Spinner
@@ -241,6 +253,7 @@
                         android:layout_alignParentStart="true"
                         android:layout_weight="1"
                         android:text="Descrição"
+                        android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
                     <EditText
@@ -252,7 +265,8 @@
                         android:layout_alignTop="@+id/evDesc_txt"
                         android:layout_weight="1"
                         android:ems="10"
-                        android:inputType="textPersonName" />
+                        android:inputType="textPersonName"
+                        android:textColor="@android:color/black" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -270,6 +284,7 @@
                         android:layout_below="@+id/evKind_txt"
                         android:layout_weight="1"
                         android:text="Preço"
+                        android:textColor="@android:color/black"
                         android:textSize="18sp" />
 
                     <EditText
@@ -281,7 +296,8 @@
                         android:layout_alignTop="@+id/evPrice_txt"
                         android:layout_weight="1"
                         android:ems="10"
-                        android:inputType="numberDecimal" />
+                        android:inputType="numberDecimal"
+                        android:textColor="@android:color/black" />
 
                 </LinearLayout>
 
@@ -302,7 +318,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:background="@drawable/styled_button"
-                        android:text="Selecionar Foto" />
+                        android:text="Selecionar Foto"
+                        android:textColor="@android:color/black" />
 
                     <ImageView
                         android:id="@+id/evPictureImgView"
@@ -337,7 +354,8 @@
                         android:layout_gravity="bottom"
                         android:layout_weight="1"
                         android:background="@drawable/styled_button"
-                        android:text="Confirmar" />
+                        android:text="Confirmar"
+                        android:textColor="@android:color/black" />
 
                     <Button
                         android:id="@+id/evCancel_btn"
@@ -349,7 +367,8 @@
                         android:layout_gravity="bottom"
                         android:layout_weight="1"
                         android:background="@drawable/styled_button"
-                        android:text="Cancelar" />
+                        android:text="Cancelar"
+                        android:textColor="@android:color/black" />
 
                 </LinearLayout>
 
