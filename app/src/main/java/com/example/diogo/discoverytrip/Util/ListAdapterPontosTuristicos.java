@@ -72,20 +72,27 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
         if(atracao.getType().equals(EVENT_TYPE)){
             if(atracao.getPhotoId() != null){
                 photoId = atracao.getPhotoId();
+                final String finalPhotoId = photoId;
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadImage(foto, finalPhotoId, context);
+                    }
+                }).start();
             }
         }
         else{
             icone.setImageResource(R.drawable.ponto_turistico_icon);
             photoId = atracao.getPhotos().get(0);
+            final String finalPhotoId1 = photoId;
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    loadImage(foto, finalPhotoId1, context);
+                }
+            }).start();
         }
 
-        final String finalPhotoId = photoId;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                loadImage(foto, finalPhotoId, context);
-            }
-        }).start();
         return view;
     }
 
