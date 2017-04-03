@@ -53,8 +53,6 @@ public class DetalhesPontoTuristicoFragment extends Fragment implements View.OnC
         // Inflate the layout for this fragment
         View view =inflater.inflate(R.layout.fragment_detalhes_ponto_turistico, container, false);
 
-        ListAdapterPontosTuristicos.loadImage(foto,pontoTuristico.getPhotos().get(0),getContext());
-
         titulo = (TextView) view.findViewById(R.id.detalhes_pt_titulo);
         descricao = (TextView) view.findViewById(R.id.detalhes_pt_descricao);
         endereco = (TextView) view.findViewById(R.id.detalhes_pt_endereco);
@@ -82,6 +80,12 @@ public class DetalhesPontoTuristicoFragment extends Fragment implements View.OnC
             deletar.setEnabled(false);
             deletar.setVisibility(View.INVISIBLE);
         }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                ListAdapterPontosTuristicos.loadImage(foto,pontoTuristico.getPhotos().get(0),getContext());
+            }
+        }).start();
 
         return view;
     }

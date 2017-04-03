@@ -168,7 +168,7 @@ public class ListAdapterPontosTuristicos extends ArrayAdapter<Atracao>{
     private static void saveImageToInternalStorage(String imageName, Bitmap imagem, Context context){
 
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        imagem.compress(Bitmap.CompressFormat.JPEG, 20, stream);
+        imagem.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         byte[] byteArray = stream.toByteArray();
 
         try{

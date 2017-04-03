@@ -196,7 +196,7 @@ public class HomeActivity extends AppCompatActivity
 
         if(currentScreen != R.id.nav_home){
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.popBackStackImmediate();
+            fragmentManager.popBackStack();
             return;
         }
 

@@ -93,7 +93,12 @@ public class DetalhesEventoFragment extends Fragment implements View.OnClickList
         }
 
         if(atracao.getPhotoId() != null && !atracao.getPhotoId().equals("")){
-            ListAdapterPontosTuristicos.loadImage(foto,atracao.getPhotoId(),getContext());
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    ListAdapterPontosTuristicos.loadImage(foto,atracao.getPhotoId(),getContext());
+                }
+            }).start();
         }
 
         if(atracao.getLocation() != null && atracao.getLocation().getStreetName() != null){
@@ -133,12 +138,6 @@ public class DetalhesEventoFragment extends Fragment implements View.OnClickList
                 deleteEvent();
                 break;
         }
-    }
-
-    @Override
-    public void onDestroy(){
-        super.onDestroy();
-        atracao = null;
     }
 
     private void deleteEvent(){
@@ -208,4 +207,3 @@ public class DetalhesEventoFragment extends Fragment implements View.OnClickList
 
     }
 }
-

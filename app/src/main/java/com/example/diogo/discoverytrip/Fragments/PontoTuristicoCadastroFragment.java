@@ -391,6 +391,7 @@ public class PontoTuristicoCadastroFragment extends Fragment implements Location
             public void onFailure(Call<AttractionResponse> call, Throwable t) {
                 // Log error here since request failed
                 Toast.makeText(getContext(), "Erro ao se conectar com o servidor!", Toast.LENGTH_SHORT).show();
+                Log.e("Looger",t.toString());
                 dialog.dismiss();
             }
         });
