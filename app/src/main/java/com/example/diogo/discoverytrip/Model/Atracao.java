@@ -42,6 +42,17 @@ public class Atracao {
     @SerializedName("endDate")
     private String endDate;
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    @SerializedName("category")
+    private String category;
+
     public String getType() {
         return type;
     }
