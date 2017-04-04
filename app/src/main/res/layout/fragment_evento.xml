@@ -14,7 +14,6 @@
             android:id="@+id/ev_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.5"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/event_background" />
     </RelativeLayout>
@@ -47,8 +46,7 @@
                 android:id="@+id/tabhost_eventos"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0.7"
-                android:background="@color/cardview_light_background">
+                android:background="@color/discoverytrip_view_background">
 
                 <LinearLayout
                     android:layout_width="match_parent"
