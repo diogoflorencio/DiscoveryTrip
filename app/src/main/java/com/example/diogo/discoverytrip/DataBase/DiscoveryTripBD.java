@@ -68,7 +68,7 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
 
     public void insertLembretesTable(Atracao atracao){
         SQLiteDatabase db = this.getWritableDatabase();
-
+        deleteLembreteTable(atracao);
         ContentValues values = new ContentValues();
         values.put(LembretesTable.Column.COLUMN_Id, atracao.getId());
         values.put(LembretesTable.Column.COLUMN_Nome, atracao.getName());
