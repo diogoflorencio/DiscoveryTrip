@@ -2,6 +2,7 @@ package com.example.diogo.discoverytrip.Fragments;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -100,9 +101,30 @@ public class DetalhesPontoTuristicoFragment extends Fragment implements View.OnC
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.detalhes_pt_delete:
-                deleteEvent();
+                confirmDelete();
                 break;
         }
+    }
+
+    private void confirmDelete(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Confirmar");
+        builder.setMessage("Tem certeza que deseja deletar esse evento?");
+        builder.setCancelable(false);
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteEvent();
+            }
+        });
+        builder.show();
     }
 
     private void deleteEvent(){
