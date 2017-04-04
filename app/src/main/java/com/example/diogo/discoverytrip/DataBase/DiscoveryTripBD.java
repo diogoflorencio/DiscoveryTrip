@@ -33,6 +33,23 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
     /* Constantes  do DiscoveryTrip.bd */
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "DiscoveryTrip.bd";
+    private String[] projection = {
+            LembretesTable.Column._ID,
+            LembretesTable.Column.COLUMN_Nome,
+            LembretesTable.Column.COLUMN_Descricao,
+            LembretesTable.Column.COLUMN_Data_Start,
+            LembretesTable.Column.COLUMN_Data_End,
+            LembretesTable.Column.COLUMN_Latitude,
+            LembretesTable.Column.COLUMN_Longitude,
+            LembretesTable.Column.COLUMN_Pais,
+            LembretesTable.Column.COLUMN_Cidade,
+            LembretesTable.Column.COLUMN_Rua,
+            LembretesTable.Column.COLUMN_Numero,
+            LembretesTable.Column.COLUMN_FotoID,
+            LembretesTable.Column.COLUMN_King,
+            LembretesTable.Column.COLUMN_Price,
+            LembretesTable.Column.COLUMN_Type
+    };
 
     public DiscoveryTripBD(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -55,7 +72,8 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
         values.put(LembretesTable.Column.COLUMN_Nome, atracao.getName());
         values.put(LembretesTable.Column.COLUMN_Descricao, atracao.getDescription());
-        values.put(LembretesTable.Column.COLUMN_Data, atracao.getEndDate());
+        values.put(LembretesTable.Column.COLUMN_Data_Start, atracao.getStartDate());
+        values.put(LembretesTable.Column.COLUMN_Data_End, atracao.getEndDate());
         values.put(LembretesTable.Column.COLUMN_Latitude, atracao.getLocation().getLatitude());
         values.put(LembretesTable.Column.COLUMN_Longitude, atracao.getLocation().getLongitude());
         values.put(LembretesTable.Column.COLUMN_Pais, atracao.getLocation().getCountry());
@@ -63,6 +81,8 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
         values.put(LembretesTable.Column.COLUMN_Rua, atracao.getLocation().getStreetName());
         values.put(LembretesTable.Column.COLUMN_Numero, atracao.getLocation().getStreetNumber());
         values.put(LembretesTable.Column.COLUMN_FotoID, atracao.getPhotoId());
+        values.put(LembretesTable.Column.COLUMN_King, atracao.getKind());
+        values.put(LembretesTable.Column.COLUMN_Price, atracao.getPrice());
         values.put(LembretesTable.Column.COLUMN_Type, atracao.getType());
 
         // Insert the new row, returning the primary key value of the new row
@@ -73,14 +93,7 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
     public List<Atracao> selectDayLembretesTable(){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String[] projection = {
-                LembretesTable.Column.COLUMN_Nome,
-                LembretesTable.Column.COLUMN_Descricao,
-                LembretesTable.Column.COLUMN_Type
-        };
-
-
-        String selection = LembretesTable.Column.COLUMN_Data + " = ?";
+        String selection = LembretesTable.Column.COLUMN_Data_Start + " = ?";
         String[] selectionArgs = {DataHoraSystem.data()};
 
         String sortOrder =
@@ -102,21 +115,6 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
     public List<Atracao> selectAllLembretesTable(){
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String[] projection = {
-                LembretesTable.Column._ID,
-                LembretesTable.Column.COLUMN_Nome,
-                LembretesTable.Column.COLUMN_Descricao,
-                LembretesTable.Column.COLUMN_Data,
-                LembretesTable.Column.COLUMN_Latitude,
-                LembretesTable.Column.COLUMN_Longitude,
-                LembretesTable.Column.COLUMN_Pais,
-                LembretesTable.Column.COLUMN_Cidade,
-                LembretesTable.Column.COLUMN_Rua,
-                LembretesTable.Column.COLUMN_Numero,
-                LembretesTable.Column.COLUMN_FotoID,
-                LembretesTable.Column.COLUMN_Type
-        };
-
         String sortOrder =
                 LembretesTable.Column.COLUMN_Nome + " DESC";
 
@@ -135,7 +133,7 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
     /*deleta os lembretes do dia corrente*/
     public void deleteLembretesTable(){
         SQLiteDatabase db = this.getWritableDatabase();
-        String selection = LembretesTable.Column.COLUMN_Data + " LIKE ?";
+        String selection = LembretesTable.Column.COLUMN_Data_Start + " LIKE ?";
         String[] selectionArgs = { DataHoraSystem.data() };
         db.delete(LembretesTable.TABLE_NAME, selection, selectionArgs);
     }
@@ -165,9 +163,12 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
                 atracao.setId(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column._ID)));
                 atracao.setNome(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Nome)));
                 atracao.setDescricao(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Descricao)));
-                atracao.setEndDate(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Data)));
+                atracao.setStartDate(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Data_Start)));
+                atracao.setEndDate(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Data_End)));
                 atracao.setLocalizacao(localizacao);
                 atracao.setPhotoId(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_FotoID)));
+                atracao.setKind(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_King)));
+                atracao.setPrice(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Price)));
                 atracao.setType(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Type)));
 
                 atracoes.add(atracao);

@@ -11,7 +11,8 @@ public abstract class LembretesTable {
     public static class Column implements BaseColumns {
         public static final String COLUMN_Nome = "nome";
         public static final String COLUMN_Descricao = "descricao";
-        public static final String COLUMN_Data = "data";
+        public static final String COLUMN_Data_Start = "dataStart";
+        public static final String COLUMN_Data_End = "dataEnd";
         public static final String COLUMN_Latitude = "latitude";
         public static final String COLUMN_Longitude= "longitude";
         public static final String COLUMN_Pais = "pais";
@@ -19,6 +20,8 @@ public abstract class LembretesTable {
         public static final String COLUMN_Rua = "rua";
         public static final String COLUMN_Numero = "numero";
         public static final String COLUMN_FotoID = "fotoId";
+        public static final String COLUMN_King = "king";
+        public static final String COLUMN_Price = "price";
         public static final String COLUMN_Type = "type";
     }
 
@@ -31,7 +34,8 @@ public abstract class LembretesTable {
                     Column._ID + " INTEGER PRIMARY KEY," +
                     Column.COLUMN_Nome + TEXT_TYPE + COLUMN_SEP +
                     Column.COLUMN_Descricao + TEXT_TYPE + COLUMN_SEP +
-                    Column.COLUMN_Data + TEXT_TYPE + COLUMN_SEP +
+                    Column.COLUMN_Data_Start + TEXT_TYPE + COLUMN_SEP +
+                    Column.COLUMN_Data_End + TEXT_TYPE + COLUMN_SEP +
                     Column.COLUMN_Latitude + TEXT_TYPE + COLUMN_SEP +
                     Column.COLUMN_Longitude + TEXT_TYPE + COLUMN_SEP +
                     Column.COLUMN_Pais + TEXT_TYPE + COLUMN_SEP +
@@ -39,6 +43,8 @@ public abstract class LembretesTable {
                     Column.COLUMN_Rua + TEXT_TYPE + COLUMN_SEP +
                     Column.COLUMN_Numero + TEXT_TYPE + COLUMN_SEP +
                     Column.COLUMN_FotoID + TEXT_TYPE + COLUMN_SEP +
+                    Column.COLUMN_King + TEXT_TYPE + COLUMN_SEP +
+                    Column.COLUMN_Price + TEXT_TYPE + COLUMN_SEP +
                     Column.COLUMN_Type + TEXT_TYPE + " )";
 
     protected static final String SQL_DELETE_ENTRIES =
