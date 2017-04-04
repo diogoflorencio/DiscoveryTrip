@@ -38,22 +38,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.7"
             android:background="@color/discoverytrip_view_background"
-            android:orientation="vertical"
-            android:weightSum="1">
+            android:orientation="vertical">
 
             <ListView
                 android:id="@+id/meus_ponto_turistico_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:alpha="0.7"
-                android:background="@color/cardview_light_background"
-                android:orientation="vertical"></LinearLayout>
         </LinearLayout>
 
     </RelativeLayout>
