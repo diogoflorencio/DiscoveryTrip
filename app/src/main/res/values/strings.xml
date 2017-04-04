@@ -13,7 +13,7 @@
     <string name="localizacao_label">Localização</string>
     <string name="perfil_label">Perfil</string>
     <string name="edicao_perfil_label">Edição de perfil</string>
-    <string name="ponto_turistico_label">Ponto turístico</string>
+    <string name="ponto_turistico_label">Meus pontos turísticos</string>
     <string name="cadastro_ponto_turistico_label">Novo ponto turístico</string>
 
     //CadastroActivity strings
