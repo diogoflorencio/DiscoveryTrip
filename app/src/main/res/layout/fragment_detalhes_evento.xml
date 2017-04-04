@@ -164,6 +164,7 @@
                     android:layout_alignParentBottom="false"
                     android:layout_below="@+id/detalhe_evento_preco"
                     android:layout_centerHorizontal="true"
+                    android:background="@drawable/styled_button"
                     android:text="Marcar presença" />
 
             </RelativeLayout>
