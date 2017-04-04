@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
+    android:clickable="false"
     tools:context="com.example.diogo.discoverytrip.Fragments.EventoCadastroFragment">
 
     <RelativeLayout
@@ -14,7 +14,6 @@
             android:id="@+id/evCad__background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.5"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/event_background" />
     </RelativeLayout>
@@ -26,7 +25,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:background="@color/discoverytrip_view_background">
 
             <LinearLayout
                 android:layout_width="match_parent"

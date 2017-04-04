@@ -3,10 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
-    tools:context="com.example.diogo.discoverytrip.Fragments.PerfilEditFragment"
-    android:alpha="0.7"
-    android:background="@color/cardview_light_background">
+    android:clickable="false"
+    tools:context="com.example.diogo.discoverytrip.Fragments.PerfilEditFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,7 +14,6 @@
             android:id="@+id/ptEdt_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:alpha="0.5"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/home_background" />
     </RelativeLayout>
@@ -28,7 +25,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="5dp">
+            android:layout_margin="5dp"
+            android:background="@color/discoverytrip_view_background">
 
             <TextView
                 android:id="@+id/textView2"

@@ -3,9 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.diogo.discoverytrip.Fragments.PontoTuristicoCadastroFragment"
-    android:alpha="0.7"
-    android:background="@color/cardview_light_background">
+    tools:context="com.example.diogo.discoverytrip.Fragments.PontoTuristicoCadastroFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,14 +13,15 @@
             android:id="@+id/ptCad__background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:alpha="0.5"
             android:scaleType="fitXY"
             app:srcCompat="@drawable/ponto_turistico_background" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_margin="5dp"
+        android:background="@color/discoverytrip_view_background">
 
         <ScrollView
             android:layout_width="match_parent"
