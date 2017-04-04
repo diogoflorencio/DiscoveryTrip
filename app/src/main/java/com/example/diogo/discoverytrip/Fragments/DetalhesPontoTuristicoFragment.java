@@ -70,6 +70,7 @@ public class DetalhesPontoTuristicoFragment extends Fragment implements View.OnC
         descricao.setText(pontoTuristico.getDescription());
         latitude.setText(pontoTuristico.getLocation().getLatitude());
         longitude.setText(pontoTuristico.getLocation().getLongitude());
+        categoria.setText(pontoTuristico.getCategory());
 
         if(pontoTuristico.getLocation().getStreetName() != null){
             endereco.setText("Rua "+pontoTuristico.getLocation().getStreetName()+

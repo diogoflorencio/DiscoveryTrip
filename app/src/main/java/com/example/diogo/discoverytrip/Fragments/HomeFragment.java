@@ -141,6 +141,11 @@ public class HomeFragment extends Fragment implements LocationListener {
                             ListAdapterPontosTuristicos adapter = new ListAdapterPontosTuristicos(getActivity(),
                                     getActivity().getLayoutInflater(),
                                     atracoes);
+                            for (Atracao atrac:atracoes
+                                 ) {
+                                Log.d("Logger",atrac.getName());
+                                Log.d("Logger","Category "+atrac.getCategory());
+                            }
                             listView.setAdapter(adapter);
                         }
                     }
