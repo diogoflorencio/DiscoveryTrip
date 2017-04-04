@@ -115,11 +115,11 @@ public interface ApiInterface {
     @GET("/api/points")
     Call<SearchResponse> userPoints(@Header("Authorization") String accessToken);
 
-    @DELETE("/api/points")
-    Call<DeleteEventoResponse> deleteEvento(@Header("Authorization") String accessToken, @Query("id") String id);
+    @DELETE("/api/points/{id}")
+    Call<DeleteEventoResponse> deleteEvento(@Header("Authorization") String accessToken, @Path("id") String id);
 
-    @DELETE("/api/points")
-    Call<DeleteAttractionResponse> deleteAttraction(@Header("Authorization") String accessToken, @Query("id") String id);
+    @DELETE("/api/points/{id}")
+    Call<DeleteAttractionResponse> deleteAttraction(@Header("Authorization") String accessToken, @Path("id") String id);
 
     @GET("/api/events/interestme")
     Call<SearchResponse> eventsOfDay(@Header("Authorization") String accessToken);

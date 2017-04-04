@@ -45,6 +45,7 @@ public class HomeActivity extends AppCompatActivity
     private View background;
     private int currentScreen = 0;
     private NavigationView navigationView;
+    private boolean entrou = true;
 
     /**
      * Metodo responsavel por gerenciar a criacao de um objeto 'HomeActivity'
