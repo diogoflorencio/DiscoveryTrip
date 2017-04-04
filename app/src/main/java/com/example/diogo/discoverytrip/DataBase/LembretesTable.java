@@ -9,6 +9,7 @@ import android.provider.BaseColumns;
 public abstract class LembretesTable {
 
     public static class Column implements BaseColumns {
+        public static final String COLUMN_Id = "id";
         public static final String COLUMN_Nome = "nome";
         public static final String COLUMN_Descricao = "descricao";
         public static final String COLUMN_Data_Start = "dataStart";
@@ -32,6 +33,7 @@ public abstract class LembretesTable {
     protected static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " +TABLE_NAME + " (" +
                     Column._ID + " INTEGER PRIMARY KEY," +
+                    Column.COLUMN_Id + TEXT_TYPE + COLUMN_SEP +
                     Column.COLUMN_Nome + TEXT_TYPE + COLUMN_SEP +
                     Column.COLUMN_Descricao + TEXT_TYPE + COLUMN_SEP +
                     Column.COLUMN_Data_Start + TEXT_TYPE + COLUMN_SEP +

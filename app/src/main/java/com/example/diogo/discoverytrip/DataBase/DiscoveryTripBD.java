@@ -34,7 +34,7 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "DiscoveryTrip.bd";
     private String[] projection = {
-            LembretesTable.Column._ID,
+            LembretesTable.Column.COLUMN_Id,
             LembretesTable.Column.COLUMN_Nome,
             LembretesTable.Column.COLUMN_Descricao,
             LembretesTable.Column.COLUMN_Data_Start,
@@ -70,6 +70,7 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
+        values.put(LembretesTable.Column.COLUMN_Id, atracao.getId());
         values.put(LembretesTable.Column.COLUMN_Nome, atracao.getName());
         values.put(LembretesTable.Column.COLUMN_Descricao, atracao.getDescription());
         values.put(LembretesTable.Column.COLUMN_Data_Start, atracao.getStartDate());
@@ -141,7 +142,7 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
     /*deleta um lembrete por id*/
     public void deleteLembreteTable(Atracao atracao){
         SQLiteDatabase db = this.getWritableDatabase();
-        String selection = LembretesTable.Column._ID + " LIKE ?";
+        String selection = LembretesTable.Column.COLUMN_Id + " LIKE ?";
         String[] selectionArgs = { atracao.getId() };
         db.delete(LembretesTable.TABLE_NAME, selection, selectionArgs);
     }
@@ -160,7 +161,7 @@ public class DiscoveryTripBD extends SQLiteOpenHelper {
                 localizacao.setStreetName(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Rua)));
                 localizacao.setStreetNumber(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Numero)));
 
-                atracao.setId(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column._ID)));
+                atracao.setId(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Id)));
                 atracao.setNome(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Nome)));
                 atracao.setDescricao(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Descricao)));
                 atracao.setStartDate(cursor.getString(cursor.getColumnIndexOrThrow(LembretesTable.Column.COLUMN_Data_Start)));

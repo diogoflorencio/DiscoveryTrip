@@ -157,6 +157,7 @@ public class DetalhesEventoFragment extends Fragment implements View.OnClickList
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 deleteEvent();
+                deleteEventBD();
             }
         });
         builder.show();
@@ -219,7 +220,7 @@ public class DetalhesEventoFragment extends Fragment implements View.OnClickList
                 if(response.isSuccessful())
                     Log.d("Logger","InterestedEvent ok");
                 else
-                    Log.d("Logger","InterestedEvent error request");
+                    Log.d("Logger","InterestedEvent error:" + response.message());
             }
 
             @Override
@@ -227,6 +228,10 @@ public class DetalhesEventoFragment extends Fragment implements View.OnClickList
                 Log.d("Logger","InterestedEvent failure");
             }
         });
+    }
 
+    private void deleteEventBD(){
+        DiscoveryTripBD bd = new DiscoveryTripBD(getActivity());
+        bd.deleteLembreteTable(atracao);
     }
 }
