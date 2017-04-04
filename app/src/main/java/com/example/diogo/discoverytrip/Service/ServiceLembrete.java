@@ -15,6 +15,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.diogo.discoverytrip.Activities.HomeActivity;
+import com.example.diogo.discoverytrip.Activities.NotificacaoActivity;
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.DataBase.DiscoveryTripBD;
 import com.example.diogo.discoverytrip.DataHora.DataHoraSystem;
@@ -104,10 +105,7 @@ public class ServiceLembrete extends Service {
     }
 
     private void enviaNotificacao() {
-        /*Obs. falta inserir activity que trata dos lembretes no notificationIntent
-        * falta redenrizar icon para notificação.
-        * */
-        Intent notificationIntent = new Intent(this, HomeActivity.class);
+        Intent notificationIntent = new Intent(this, NotificacaoActivity.class);
 
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0,
                 notificationIntent, 0);
@@ -125,8 +123,7 @@ public class ServiceLembrete extends Service {
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(R.mipmap.icon, notification);
 
-        /*som da notificação
-        * Obs. definir toque da notificação*/
+        /*som da notificação*/
         try{
             Uri som = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             Ringtone toque = RingtoneManager.getRingtone(this,som);

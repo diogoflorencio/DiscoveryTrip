@@ -164,7 +164,7 @@ public class DetalhesEventoFragment extends Fragment implements View.OnClickList
     private void deleteEvent(){
         final AlertDialog dialog = createLoadingDialog();
         dialog.show();
-
+        Log.d("Logger", "id : "+atracao.getId());
         String token = AcessToken.recuperar(getActivity().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
         Call<DeleteEventoResponse> call = ApiClient.API_SERVICE.deleteEvento("bearer "+token,atracao.getId());
         call.enqueue(new Callback<DeleteEventoResponse>() {
