@@ -159,6 +159,7 @@ public class DetalhesEventoFragment extends Fragment implements View.OnClickList
                 deleteEvent();
             }
         });
+        builder.show();
     }
 
     private void deleteEvent(){

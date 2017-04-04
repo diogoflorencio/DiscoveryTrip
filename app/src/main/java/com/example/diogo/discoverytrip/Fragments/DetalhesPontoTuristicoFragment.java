@@ -124,6 +124,7 @@ public class DetalhesPontoTuristicoFragment extends Fragment implements View.OnC
                 deleteEvent();
             }
         });
+        builder.show();
     }
 
     private void deleteEvent(){
