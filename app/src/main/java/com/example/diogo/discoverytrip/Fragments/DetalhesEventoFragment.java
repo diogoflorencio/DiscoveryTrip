@@ -2,6 +2,7 @@ package com.example.diogo.discoverytrip.Fragments;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -85,7 +86,7 @@ public class DetalhesEventoFragment extends Fragment implements View.OnClickList
             e.printStackTrace();
         }
 
-        if(atracao.getPrice() != null && !atracao.getPrice().equals("")){
+        if(atracao.getPrice() != null && !atracao.getPrice().equals("0")){
             preco.setText("R$ "+atracao.getPrice());
         }
         else{
@@ -135,9 +136,29 @@ public class DetalhesEventoFragment extends Fragment implements View.OnClickList
                 
                 break;
             case R.id.detalhe_evento_deletar:
-                deleteEvent();
+                confirmDelete();
                 break;
         }
+    }
+
+    private void confirmDelete(){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Confirmar");
+        builder.setMessage("Tem certeza que deseja deletar esse evento?");
+        builder.setCancelable(false);
+        builder.setNegativeButton("Não", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+
+        builder.setPositiveButton("Sim", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deleteEvent();
+            }
+        });
     }
 
     private void deleteEvent(){
@@ -153,6 +174,7 @@ public class DetalhesEventoFragment extends Fragment implements View.OnClickList
                     Log.d("Logger","deleteEventos ok");
                     Toast.makeText(getContext(),"Evento deletado com sucesso!",Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
+                    getActivity().onBackPressed();
                 }else {
                     dialog.dismiss();
                     try {

@@ -9,12 +9,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TabHost;
 
 import com.example.diogo.discoverytrip.Activities.HomeActivity;
 import com.example.diogo.discoverytrip.DataBase.AcessToken;
 import com.example.diogo.discoverytrip.Model.Atracao;
+import com.example.diogo.discoverytrip.Model.VisualizationType;
 import com.example.diogo.discoverytrip.R;
 import com.example.diogo.discoverytrip.REST.ApiClient;
 import com.example.diogo.discoverytrip.REST.ServerResponses.DeleteAttractionResponse;
@@ -54,6 +56,19 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
         rootView.findViewById(R.id.createPntTuristico_btn).setOnClickListener(this);
 
         listViewMeusPontosTuristicos = (ListView) rootView.findViewById(R.id.meus_ponto_turistico_list);
+
+        listViewMeusPontosTuristicos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Atracao atracao = (Atracao) parent.getAdapter().getItem(position);
+
+                DetalhesPontoTuristicoFragment.pontoTuristico = atracao;
+                DetalhesPontoTuristicoFragment.visualizationType = VisualizationType.Editar;
+
+                HomeActivity activity = (HomeActivity) getActivity();
+                activity.changeFragment(new DetalhesPontoTuristicoFragment());
+            }
+        });
 
         getUserPoints();
         return rootView;
@@ -104,31 +119,6 @@ public class PontoTuristicoFragment extends Fragment implements View.OnClickList
             @Override
             public void onFailure(Call<SearchResponse> call, Throwable t) {
                 Log.e("Logger","UserPoints error: "+t.toString());
-            }
-        });
-    }
-
-    private void deletePoints(String id){
-        String token = AcessToken.recuperar(getContext().getSharedPreferences("acessToken", Context.MODE_PRIVATE));
-        Call<DeleteAttractionResponse> call = ApiClient.API_SERVICE.deleteAttraction("bearer "+token,id);
-        call.enqueue(new Callback<DeleteAttractionResponse>() {
-            @Override
-            public void onResponse(Call<DeleteAttractionResponse> call, Response<DeleteAttractionResponse> response) {
-                if(response.isSuccessful()) {
-                    Log.d("Logger", "deletePoints ok");
-                }else {
-                    try {
-                        ErrorResponse error = ApiClient.errorBodyConverter.convert(response.errorBody());
-                        Log.e("Logger", "deletePoints ServerResponse "+error.getErrorDescription());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<DeleteAttractionResponse> call, Throwable t) {
-                Log.e("Logger","deletePoints error: "+t.toString());
             }
         });
     }
